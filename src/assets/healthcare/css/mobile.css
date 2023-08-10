@@ -12,7 +12,7 @@ width:100%;
   div#socilaBtn {
     position: relative;
     top: 15px;
-    right: 69px;
+    right: 51px;
   }
   div#filter {
     position: relative;
@@ -153,7 +153,7 @@ width:100%;
     top:10px;
   }
   #searchArticle {
-    margin: 45px 0 0 0;
+    margin: 58px 0 0 0;
   }
 
   #Article {
@@ -216,7 +216,7 @@ width:100%;
     margin-right: 60px;
   }
 }
-.breadcrumb{padding: 1rem 1rem 4rem 1rem;}
+.breadcrumb{padding: 1rem 1rem 10rem 1rem;}
 #center-well #share-icons-regions{
   position: absolute;
   top: 60px;
@@ -232,7 +232,7 @@ width:100%;
   div#socilaBtn {
     position: relative;
     /* top: 0px; */
-    right: -15px;
+    right: 53px;
   }
   div#filter {
     position: relative;
@@ -522,9 +522,9 @@ width:100%;
     left: 14px;
     top: 5px;
   }
-  .breadcrumb {
+  /* .breadcrumb {
     padding: 3rem 1rem;
-  }
+  } */
   #share-icons-regions {
     position: relative;
     flex-direction: column-reverse;
