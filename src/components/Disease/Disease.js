@@ -1,3 +1,4 @@
+ 
 import React, { Component } from 'react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -1114,4 +1115,4 @@ diseasePosts(dcName) {                     // For specific blogs like "/blogs/di
 }
  
 
-export default Disease;
+export default Disease;
