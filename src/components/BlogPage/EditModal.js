@@ -115,7 +115,6 @@ const EditModal = (props) => {
             axios.post(`${backendHost}/article/${editId.id}`, {
                 "title":title,
                 "friendly_name": articleDisplay,
-                // "subheading": "1",,                
                 "content_type": contentType,
                 "type": type,
                 // "keywords": "1",
