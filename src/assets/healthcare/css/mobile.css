@@ -6,6 +6,7 @@ display:none;
 width:100%;
 } 
 
+}/* ----------- iPhone 4 and 4S ----------- */
 
 @media only screen and (min-width: 220px) and (max-width: 480px) {
   div#socilaBtn {
