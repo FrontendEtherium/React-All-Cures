@@ -23,9 +23,9 @@ function Disease() {
                                       <div >
                 <div className="container">
                 <div >
-                <div className="card-title h3  py-2 border-bottom" id='dis'> All Diseases </div> </div>
+                <div className="card-title h3 mt-5 py-2 border-bottom" id='dis'> All Diseases </div> </div>
                        
-    <div class="grid-container">
+    <div class="grid-container mt-5 ">
   <div class="grid-item">
       <Link to="/searchcategory/disease/1">
          Arthritis
@@ -206,4 +206,4 @@ function Disease() {
 
 
 }
-export default Disease
+export default Disease
