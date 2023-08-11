@@ -17,6 +17,7 @@ function Disease() {
     <div>
         <Header/>
 
+                                      {/* <h1>DISEASEE STARTING FROM  A</h1> */}
 
 
                                       <div >
@@ -205,4 +206,4 @@ function Disease() {
 
 
 }
-export default Disease;
+export default Disease
