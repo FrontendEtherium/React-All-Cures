@@ -96,7 +96,7 @@ const handleImageChange = (e) => {
                         </Form.Group>
 
                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
-                            <Form.Label>Enter Ad Count <b> (Optional)</b></Form.Label>
+                            <Form.Label>Enter Ad Impression <b> (Optional)</b></Form.Label>
                             <Form.Control  value={emaill} onChange={(e) => setEmail(e.target.value)} type="text" name=""
                             placeholder="Enter AdCount..." />
                         </Form.Group>
