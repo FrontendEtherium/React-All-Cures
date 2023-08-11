@@ -115,6 +115,7 @@ const EditModal = (props) => {
             axios.post(`${backendHost}/article/${editId.id}`, {
                 "title":title,
                 "friendly_name": articleDisplay,
+                // "subheading": "1",,                
                 "content_type": contentType,
                 "type": type,
                 // "keywords": "1",
@@ -288,6 +289,7 @@ const EditModal = (props) => {
         }
     }
 
+    
     useEffect(() => {
         if(editId.id){
             getPosts()
@@ -326,6 +328,24 @@ const EditModal = (props) => {
         setFeaturedArticle(farticle);
     }
     
+     const sanitizer = (input) => {
+        const output = {
+          ...input,
+          blocks: input.blocks.map((block) => {
+            if (block.type === 'link') {
+              return {
+                ...block,
+                data: {
+                  ...block.data,
+                  target: '_blank', // Add target="_blank" for hyperlinks
+                },
+              };
+            }
+            return block;
+          }),
+        };
+        return output;
+      };
 
     const submitArticleForm = async e => {
         setafterSubmitLoad(true)
@@ -374,27 +394,6 @@ const EditModal = (props) => {
             Alert('Some error occured! Please try again later.')
         })
     }
-
-
-    const sanitizer = (input) => {
-        const output = {
-          ...input,
-          blocks: input.blocks.map((block) => {
-            if (block.type === 'link') {
-              return {
-                ...block,
-                data: {
-                  ...block.data,
-                  target: '_blank', // Add target="_blank" for hyperlinks
-                },
-              };
-            }
-            return block;
-          }),
-        };
-        return output;
-      };
-
 
     const handleImageSubmission = () => {
         // e.preventDefault()
@@ -738,7 +737,7 @@ const EditModal = (props) => {
                                     // enableReInitialize = {true}
                                     instanceRef={instance => (instanceRef.current = instance)}
                                     tools = {EDITOR_JS_TOOLS} 
-                                    sanitizer={sanitizer}
+				    sanitizer={sanitizer}
                                     />
                                 }
                                 {
@@ -747,7 +746,7 @@ const EditModal = (props) => {
                                     onChange={handleSave}
                                     instanceRef={instance => (instanceRef.current = instance)}
                                     tools = {EDITOR_JS_TOOLS} 
-                                    sanitizer={sanitizer}
+				    sanitizer={sanitizer}
                                     />
                                     : null
                                 }
