@@ -206,4 +206,4 @@ function Disease() {
 
 
 }
-export default Disease
+export default Disease;
