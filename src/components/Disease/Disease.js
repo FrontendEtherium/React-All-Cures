@@ -1,4 +1,3 @@
- 
 import React, { Component } from 'react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -40,6 +39,10 @@ import { userAccess } from '../UserAccess';
 import Date from '../Date'
 import { imagePath } from '../../image-path'
 import { faKeybase } from '@fortawesome/free-brands-svg-icons';
+
+
+//  const demo= "https://th.bing.com/th/id/OIP.aSZQ5_JSSJtWgll70PQLzQAAAA?pid=ImgDet&rs=1";
+
 const options = {
   responsiveClass: true,
   nav: true,
@@ -94,6 +97,7 @@ class Disease extends Component {
       showCuresCards: false,
       modalState: false,
       url:window.location.href,
+      ads:[],
     };
     this.handleShows = this.handleShows.bind(this);
    
@@ -226,6 +230,29 @@ showModal() {
       pageLoad();
       this.pageLoading();
   }
+
+
+  fetchData = async () => {
+    try {
+    
+      const response = await axios.get('https://jsonplaceholder.typicode.com/posts/1');
+      this.setState({
+        ads: response.data,
+      });
+    } catch (error) {
+      this.setState({
+        error: error.message,
+
+      });
+    }
+  };
+         
+     componentDidMount(){
+      
+      this.fetchData();
+
+     }
+
   postSubscribtion() {
     //  var mobileNumber = this.state.mobile.split('+')
     var phoneNumber = this.state.value.split('+')[1]
@@ -547,6 +574,10 @@ diseasePosts(dcName) {                     // For specific blogs like "/blogs/di
     var artContent = items.content;
     var a = JSON.parse(decodeURIComponent(artContent))
     var b = a.blocks
+
+
+       
+
     return (
     <div>
 
@@ -593,7 +624,47 @@ diseasePosts(dcName) {                     // For specific blogs like "/blogs/di
           }    
             </div>
             <button className="btn pl-4 mt-2 " id="left-menu-ad" data-toggle="modal"data-target=".bd-example-modal-lg">
-              <img className="pl-4" src={PersianAd} alt="ad"/>
+              {/* {
+              (demo?<span style={{width:"20%"}}><img src="https://th.bing.com/th/id/OIP.aSZQ5_JSSJtWgll70PQLzQAAAA?pid=ImgDet&rs=1"/></span>
+              :<img className="pl-4" src={PersianAd} alt="ad"/>)
+  } */}
+
+
+                {/* {
+                  this.state.ads?(
+                    this.state.ads.map((i)=>(
+                      
+                    
+                      <img key={i.id} src={i.imageUrl} alt="avatar"/>
+                    
+                  ))
+                  ):<img className="pl-4" src={PersianAd} alt="ad"/>
+              
+                } */}
+
+
+
+
+
+                 {
+                  this.state.ads?(
+
+                    this.state.ads !== null ? (
+
+                    this.state.ads.map((i)=>(
+                      
+                    
+                      <img key={i.id} src={i.imageUrl} alt="avatar"/>
+                    
+                  ))  ):  <img className="pl-4" src={PersianAd} alt="ad"/>
+
+                  
+                  ):<img className="pl-4" src={PersianAd} alt="ad"/>
+              
+                }
+
+
+
             </button>
           </div>
           
@@ -616,9 +687,9 @@ diseasePosts(dcName) {                     // For specific blogs like "/blogs/di
                   
                 </Breadcrumb.Item>
                 
-                <div id="share-icons-regions">
+                <div id="share-icons-regions" className="d-flex">
                 {/* Sharing icons */}
-                <div id="socilaBtn">
+                <div id="socilaBtn" className="mt-1">
                 <FacebookShareButton
                   url={encodeURI(`https://all-cures.com${this.props.location.pathname}`)}
                   quote={`All-Cures - ${items.title}`}
@@ -648,11 +719,14 @@ diseasePosts(dcName) {                     // For specific blogs like "/blogs/di
               <div className="share-buttons-region ml-2" id="filter">
               
               <div className="d-flex justify-content-end margin-auto" id="article-acc-to-regions">
-                
-              { finalRegions?
+                 
+
+
+                 <div   >
+               { finalRegions?
                   finalRegions.map(i => i.countryname!== null && (
                    <Dropdown key={i.countryname}>
-                      <Dropdown.Toggle className="mr-2 btn btn-info color-white">
+                      <Dropdown.Toggle className="mr-2 my-1 btn btn-info color-white">
                         <span className="color-white">{i.countryname}</span>
                       </Dropdown.Toggle>
                     <Dropdown.Menu>
@@ -687,7 +761,62 @@ diseasePosts(dcName) {                     // For specific blogs like "/blogs/di
                 </Dropdown>
                   ))
                 : null
-              }
+              } 
+                      </div>
+
+
+                      {/* <div className="d-md-none">
+                      <OwlCarousel nav="true" items={5} margin={10} autoPlay="true" {...options} >
+          {finalRegions
+            ? finalRegions.map((i) => i.countryname !== null && (
+
+
+              <Dropdown key={i.countryname}>
+              <Dropdown.Toggle className="mr-2 btn btn-info color-white">
+                <span className="color-white">{i.countryname}</span>
+              </Dropdown.Toggle>
+            <Dropdown.Menu>
+            {
+              this.state.regionalPost.map(j => j.countryname === i.countryname 
+                &&(
+                <>
+                <Dropdown.Item href="#" className="pt-2" key={j.countryname}>
+                <Link to={ `/cure/${j.article_id}` }  className="d-flex justify-content-between align-items-center mr-2">
+                  <div className="d-flex justify-content-between align-items-center mb-2"id="artBtn">
+                    <div>                  
+                      <div className="card-title mr-5">{j.title.substr(0,25)+'...'}</div>
+                    </div>
+                    <div>
+                      {
+                        j.type.includes(1)?
+                          <div className="chip overview">Overview</div>
+                        : j.type.includes(2)?
+                          <div className="chip cure">Cures</div>
+                        : j.type.includes(3)?
+                          <div className="chip symptoms">Symptoms</div>
+                        : null
+                      }
+                    </div>
+                  </div>
+                </Link>
+                </Dropdown.Item>
+                </>
+              ))
+            }
+          </Dropdown.Menu>
+        </Dropdown>
+              
+            ))
+            : null
+          }
+        </OwlCarousel>
+      </div> */}
+    
+
+
+
+
+
                 </div>
                 </div>
                 </div>
@@ -1115,4 +1244,4 @@ diseasePosts(dcName) {                     // For specific blogs like "/blogs/di
 }
  
 
-export default Disease;
+export default Disease;
