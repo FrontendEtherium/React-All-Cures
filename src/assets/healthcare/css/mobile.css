@@ -6,13 +6,13 @@ display:none;
 width:100%;
 } 
 
-}
+}/* ----------- iPhone 4 and 4S ----------- */
 
 @media only screen and (min-width: 220px) and (max-width: 480px) {
   div#socilaBtn {
     position: relative;
     top: 15px;
-    right: 51px;
+    right: 69px;
   }
   div#filter {
     position: relative;
@@ -153,7 +153,7 @@ width:100%;
     top:10px;
   }
   #searchArticle {
-    margin: 58px 0 0 0;
+    margin: 45px 0 0 0;
   }
 
   #Article {
@@ -216,13 +216,13 @@ width:100%;
     margin-right: 60px;
   }
 }
-.breadcrumb{padding: 1rem 1rem 10rem 1rem;}
+.breadcrumb{padding: 1rem 1rem 4rem 1rem;}
 #center-well #share-icons-regions{
   position: absolute;
   top: 60px;
 }
 #socilaBtn{
-  /* position: absolute; */
+  position: absolute;
   right: 28px;
 }
 /* ----------- iPhone 5, 5S, 5C and 5SE ----------- */
@@ -231,8 +231,8 @@ width:100%;
 @media only screen and (min-width: 320px) and (max-width: 568px) {
   div#socilaBtn {
     position: relative;
-    /* top: 0px; */
-    right: 53px;
+    top: 0px;
+    right: -15px;
   }
   div#filter {
     position: relative;
@@ -257,8 +257,7 @@ width:100%;
   }
 
   #article-acc-to-regions{
-    /* flex-direction: column; */
-    
+    flex-direction: column;
   }
 
   #starMob {
@@ -368,13 +367,9 @@ width:100%;
 
 /* Portrait and Landscape */
 @media only screen and (min-width: 375px) and (max-width: 914px) {
-
-
- 
-
   div#socilaBtn {
     position: relative;
-    /* top: 15px; */
+    top: 15px;
     right: 69px;
   }
   div#filter {
@@ -383,10 +378,7 @@ width:100%;
     top: 5px;
   }
   .breadcrumb {
-    /* padding: 3rem 1rem; */
-        
-    padding-bottom: 11rem;
-    
+    padding: 3rem 1rem;
   }
   #share-icons-regions {
     position: relative;
@@ -522,9 +514,9 @@ width:100%;
     left: 14px;
     top: 5px;
   }
-  /* .breadcrumb {
+  .breadcrumb {
     padding: 3rem 1rem;
-  } */
+  }
   #share-icons-regions {
     position: relative;
     flex-direction: column-reverse;
@@ -1313,6 +1305,6 @@ width:100%;
   /* } */
 
   /* .city-name.col-md-5 {
-    margin-top: -90px;
-  } */
+    margin-top: -90px;
+  } */
 }
