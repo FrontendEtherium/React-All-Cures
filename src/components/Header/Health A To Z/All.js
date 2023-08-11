@@ -17,7 +17,6 @@ function Disease() {
     <div>
         <Header/>
 
-                                      {/* <h1>DISEASEE STARTING FROM  A</h1> */}
 
 
                                       <div >
