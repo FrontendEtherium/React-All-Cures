@@ -41,7 +41,7 @@ import { imagePath } from '../../image-path'
 import { faKeybase } from '@fortawesome/free-brands-svg-icons';
 
 
-//  const demo= "https://th.bing.com/th/id/OIP.aSZQ5_JSSJtWgll70PQLzQAAAA?pid=ImgDet&rs=1";
+
 
 const options = {
   responsiveClass: true,
@@ -232,26 +232,8 @@ showModal() {
   }
 
 
-  fetchData = async () => {
-    try {
+ 
     
-      const response = await axios.get('https://jsonplaceholder.typicode.com/posts/1');
-      this.setState({
-        ads: response.data,
-      });
-    } catch (error) {
-      this.setState({
-        error: error.message,
-
-      });
-    }
-  };
-         
-     componentDidMount(){
-      
-      this.fetchData();
-
-     }
 
   postSubscribtion() {
     //  var mobileNumber = this.state.mobile.split('+')
@@ -624,44 +606,13 @@ diseasePosts(dcName) {                     // For specific blogs like "/blogs/di
           }    
             </div>
             <button className="btn pl-4 mt-2 " id="left-menu-ad" data-toggle="modal"data-target=".bd-example-modal-lg">
-              {/* {
-              (demo?<span style={{width:"20%"}}><img src="https://th.bing.com/th/id/OIP.aSZQ5_JSSJtWgll70PQLzQAAAA?pid=ImgDet&rs=1"/></span>
-              :<img className="pl-4" src={PersianAd} alt="ad"/>)
-  } */}
-
-
-                {/* {
-                  this.state.ads?(
-                    this.state.ads.map((i)=>(
-                      
-                    
-                      <img key={i.id} src={i.imageUrl} alt="avatar"/>
-                    
-                  ))
-                  ):<img className="pl-4" src={PersianAd} alt="ad"/>
-              
-                } */}
+             
+                            <img className="pl-4" src={PersianAd} alt="ad"/>
+               
 
 
 
-
-
-                 {
-                  this.state.ads?(
-
-                    this.state.ads !== null ? (
-
-                    this.state.ads.map((i)=>(
-                      
-                    
-                      <img key={i.id} src={i.imageUrl} alt="avatar"/>
-                    
-                  ))  ):  <img className="pl-4" src={PersianAd} alt="ad"/>
-
-                  
-                  ):<img className="pl-4" src={PersianAd} alt="ad"/>
-              
-                }
+                
 
 
 
