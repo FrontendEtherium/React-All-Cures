@@ -422,7 +422,7 @@ postLead = (id) => {
                         <div className="profile-infoL-card">
                           <div className="profile-info-name" id="DocDetails">
                             <div className="h4 font-weight-bold">
-                              {items.prefix} {items.docname_first} {items.docname_middle}{" "}
+                              {items.prefix}. {items.docname_first} {items.docname_middle}{" "}
                               {items.docname_last}{" "}
                                {/* Show average rating */}
                             {
