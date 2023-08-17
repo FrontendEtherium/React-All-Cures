@@ -687,7 +687,7 @@ diseasePosts(dcName) {                     // For specific blogs like "/blogs/di
                            {
                             this.state.ads?(
                               this.state.ads!=="All Ads are Served"?
-                              <img className="pl-5 mt-5" src={this.state.ads} alt="ad"/>:
+                              <img className="pl-5 mt-5" id="left-menu-ad" src={this.state.ads} alt="ad"/>:
                               <button className="btn pl-4 mt-2 " id="left-menu-ad" data-toggle="modal"data-target=".bd-example-modal-lg">
                                  <img className="pl-4" src={PersianAd} alt="ad"/>
                                  </button>
@@ -1080,8 +1080,8 @@ diseasePosts(dcName) {                     // For specific blogs like "/blogs/di
             </Link>
            
          </div>
-<div className="modal fade bd-example-modal-lg" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div className="modal-dialog modal-lg">
+<div className="modal fade bd-example-modal-lg" id="diseaseModal" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div className="modal-dialog modal-lg"  id="diseaseModal">
     <div className="modal-content">
     <div className="modal-header">
         
@@ -1210,7 +1210,7 @@ diseasePosts(dcName) {                     // For specific blogs like "/blogs/di
 
 <div className={"modal fade" + (this.state.modalState ? " show d-block" : " d-none")} tabIndex="-1" role="dialog">
 
-  <div className="modal-dialog modal-lg">
+  <div className="modal-dialog modal-lg"  id="diseaseModal">
     <div className="modal-content">
     <div className="modal-header">
         
