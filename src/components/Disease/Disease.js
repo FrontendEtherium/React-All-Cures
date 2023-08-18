@@ -253,7 +253,7 @@ showModal() {
          
   fetchData = async () => {
     try {
-      const response = await axios.get(`${backendHost}/sponsored/list/ads/url`);
+      const response = await axios.get(`${backendHost}/sponsored/list/ads/url/2`);
       console.log("API call successful"); // Check if this log is printed
 
       this.setState({
