@@ -37,6 +37,8 @@ import { userAccess } from '../UserAccess'
 import ArticlePreview from './ArticlePreview'
 import TrendingArticles from './TrendingArticles';
 import FeaturedArticles from './FeaturedArticles';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+
 env.REACT_APP = 'http://117.241.171.115:8080/cures';
 
 class Home extends Component {
@@ -79,7 +81,8 @@ class Home extends Component {
             Pincode: '',
             name: '',
             subscription: '',  
-         }
+         },
+         ads:''
         
     };      
   }
@@ -159,6 +162,28 @@ class Home extends Component {
       null
       )
  }
+
+ fetchData = async () => {
+   try {
+     const response = await axios.get(`${backendHost}/sponsored/list/ads/url/1`);
+     console.log("API call successful"); // Check if this log is printed
+
+     this.setState({
+       ads: response.data,
+     });
+   } catch (error) {
+     this.setState({
+       error: error.message,
+     });
+   }
+ };
+    componentDidMount(){
+     
+     this.fetchData();
+
+    }
+         
+
    
      postSubscribtion() {
         var phoneNumber = this.state.value.split('+')[1];
@@ -299,28 +324,33 @@ class Home extends Component {
                   <div className="container">
                      <div className="row">
                         <div className="header" style={{width:"100%"}}>
-                           <div className=" logo mt-3"> 
+                           <div className=" logo mt-3 ml-4" > 
                               <Link to='/home'>
                                 <img src={Heart} alt="All Cures Logo"/>
                                 <span>All Cures</span>
                               </Link>
                            </div>
-                           <div class="fgrow"><Navbar bg="light" expand="lg">
-  <Container>
+                          
+                  <div class="fgrow">
+                <Navbar bg="light" expand="lg">
+                  <Container>
   
-    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-    <Navbar.Collapse id="basic-navbar-nav"  >
-      <Nav className="me-auto">
-        <Nav.Link href="/home" id="basic-nav-dropdown">Home</Nav.Link>
+              <Navbar.Toggle aria-controls="basic-navbar-nav" />
+              <Navbar.Collapse id="basic-navbar-nav"  >
+               <Nav className="me-auto">
+                  <Nav.Link href="/home" id="basic-nav-dropdown">Home</Nav.Link>
        
-        <NavDropdown title="Categories" id="basic-nav-dropdown" renderMenuOnMount={true}>
+               <NavDropdown title={<span>Categories <ArrowDropDownIcon /></span>} id="basic-nav-dropdown"renderMenuOnMount={true} >
           <NavDropdown.Item href="/searchcategory/disease/1">Arthritis</NavDropdown.Item>
           <NavDropdown.Item href="/searchcategory/disease/74"> Diabetes</NavDropdown.Item>
           <NavDropdown.Item href="/searchcategory/disease/50">Hypertension</NavDropdown.Item>
           <NavDropdown.Divider />
           <NavDropdown.Item href="/allcategory">View More</NavDropdown.Item>
         </NavDropdown>
-        <NavDropdown title="Trending Cures" id="basic-nav-dropdown" renderMenuOnMount={true}>
+
+
+        
+        <NavDropdown  title={<span> Trending Cures<ArrowDropDownIcon /></span>} id="basic-nav-dropdown" renderMenuOnMount={true}>
           <NavDropdown.Item href="/searchmedicine/medicinetype/1">Ayurveda</NavDropdown.Item>
           <NavDropdown.Item href="/searchmedicine/medicinetype/4"> Chinese Medicine</NavDropdown.Item>
           <NavDropdown.Item href="/searchmedicine/medicinetype/3">Persian</NavDropdown.Item>
@@ -333,10 +363,12 @@ class Home extends Component {
         </NavDropdown>
        
         <Nav.Link href="/AboutUs" id="basic-nav-dropdown">About Us</Nav.Link>
+        
       </Nav>
     </Navbar.Collapse>
   </Container>
-</Navbar></div>
+</Navbar>
+</div>
                            <form onSubmit={(e) => this.articleSearch(e)} className="searchHeader" id="searchArticle">
                               <div className="col-md-12 row">
                                  <div className="col-md-10 p-0">    
@@ -372,7 +404,7 @@ class Home extends Component {
                               </div>
                            </form>
 
-                           <div className="loginSign">
+                           <div className="loginSign d-flex">
                            {
                               userAccess?
                               <Link className="btn mr-2 primary-btn-color loginSignbtn color-blue-dark" id="Article" to="/article">
@@ -508,7 +540,7 @@ class Home extends Component {
                         We are passionate about giving our users the unique 
                         experience that is both fulfilling and wholesome.</h1>
                         <h2  style={{display:'none'}}>Ayurveda, Homeopathy, Chinese Medicine, Persian, Unani</h2>
-                     <div className="h4 mt-4" itemprop="Category">Choose by Category</div>
+                     <div className="h4 mt-4" itemprop="Category">Choose by Diseases</div>
                   </div>
                   {/* <!-- Nav tabs --> */}
                   {/* <ul>
@@ -542,6 +574,36 @@ class Home extends Component {
       </section>
 
 
+
+{/* <section className="mb-5 mt-2" >
+   <div className="container" id="sponsered">
+      <img src="https://www.gourmetads.com/wp-content/uploads/2021/06/Barilla-970x90-Super-Leaderboard.jpg.webp"
+      alt="avatar"/>
+      <img src="https://www.redcarpetweb.com/wp-content/uploads/2016/03/970X90.jpg"
+      alt="avatar"/>
+      <img src="https://helpfulsheep.com/2017-07-25-google-adsense-ad-sizes/970x90.png"
+      alt="avatar"/>
+      <img src="https://www.5banners.com/store/img/cms/00123.gif"
+      alt="avatar"/>
+      </div>
+   
+   
+</section> */}
+
+                      
+
+{
+                            this.state.ads&&(
+                              this.state.ads!=="All Ads are Served" && (
+                                 <div className="container">
+                              <img className="mb-4"  src={this.state.ads} alt="ad"/>
+                              </div>
+                              )
+                            )
+                            
+         }  
+              
+
       <section className="mb-5 mt-2">
       <div className="container" id='trends'>
             <div className="row">
@@ -571,7 +633,7 @@ class Home extends Component {
          <div className="container">
             <div className="row">
                <div className="comman-heading">
-               <div className="h4 mt-4">Choose by Specialists</div>
+               <div className="h4 mt-4">Choose by Doctors</div>
                </div>
             </div>
             <div className="row">
@@ -779,4 +841,4 @@ function ToggleButton(props) {
    )
 }
 
-export default Home;
+export default Home;
