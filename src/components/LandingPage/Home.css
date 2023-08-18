@@ -173,6 +173,6 @@ button.active {
   }
 
   .pagination-preview button:last-child {
-    display: inline;
-  }
+    display: inline;
+  }
 }
