@@ -17,13 +17,14 @@ function App() {
   const [last, setLast] = useState();
   const [status,setStatus] = useState('')
   const [authorAddr, setAddr] = useState()
-  const [emaill, setEmail] = useState()
+  const [firstList, setFirstList] = useState()
   const [type,setType] = useState()
   const[id,setId] = useState()
  const[pinCode,setPinCode] = useState()
  const [startDate, setStart] = useState(Date)
  const [endDate, setEnd] = useState(Date)
   const [alert,setAlert] = useState()
+  const[companyList,setCompanyList] = useState([])
 
   
   const submitForm = (e) => {
@@ -45,7 +46,22 @@ function App() {
 }
 
 
+const getHospital = () => {
+    axios.get(`${backendHost}/article/all/table/Companies`)
+    .then(res => {
+        
+        setCompanyList(res.data)
+    })
+    .catch(err => 
+        console.log(err)
+    )
+}
+useEffect(() => {
+    
+    getHospital()
+
  
+}, [])
 
   return (
       
@@ -57,10 +73,17 @@ function App() {
                         <div className="card-title h3 text-center py-2 border-bottom"> <b> (Create Campaign)</b></div>
                         <form onSubmit={submitForm}>
                             <div className="row m-4">
-                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
-                            <Form.Label>Enter Company Name  <b> (Required)</b></Form.Label>
-                            <Form.Control value={first} onChange={(e) => setFirst(e.target.value)}  type="text" name=""
-                            placeholder="Enter Company Name..." required/>
+                            <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                        <label htmlFor="">Enter Company <b>(Required)</b></label>
+                        <select name="hospital" value={first} onChange={(e) => setFirst(e.target.value)} placeholder=" Enter Company" required="" className="form-control">
+<option>Select Company</option>
+    {companyList.map((c) => {
+        
+        return (
+            <option value={c[0]}>{c[1]}</option>
+        )
+    })}
+</select>
                         </Form.Group>
                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
                             <Form.Label>Enter Campaign Name  <b> (Optional)</b></Form.Label>
@@ -83,7 +106,7 @@ function App() {
                     
                         {
                             alert?
-                                <Alert variant="success" className="h6 mx-3">Campaign Create successfully!!</Alert>
+                                <Alert variant="success" className="h6 mx-3">Campaign Created successfully!!</Alert>
                                 : null
                         }
                      
