@@ -255,9 +255,10 @@ showModal() {
     try {
       const response = await axios.get(`${backendHost}/sponsored/list/ads/url/2`);
       console.log("API call successful"); // Check if this log is printed
+      const newResponse=`https://uat.all-cures.com:444${response.data}`
 
       this.setState({
-        ads: response.data,
+        ads: newResponse,
       });
     } catch (error) {
       this.setState({
@@ -663,28 +664,15 @@ diseasePosts(dcName) {                     // For specific blogs like "/blogs/di
 
 
 
-                    {/* <img className="pl-4" src={PersianAd} alt="ad"/> */}
+        
+{/* 
+                    <button className="btn pl-4 mt-2 " id="left-menu-ad" data-toggle="modal"data-target=".bd-example-modal-lg">
+                                 <img className="pl-4" src={PersianAd} alt="ad"/>
+                                 </button> */}
 
-
-
-                 {/* {
-                  this.state.ads?(
-
-                    this.state.ads !== "All Ads are Served" ? (
-
-                    this.state.ads.map((i)=>(
-                      
-                    
-                      <img key={i.id} src={i.imageUrl} alt="avatar"/>
-                    
-                  ))  ):  <img className="pl-4" src={PersianAd} alt="ad"/>
-
-                  
-                  ):<img className="pl-4" src={PersianAd} alt="ad"/>
-              
-                } */}
+                 
                            
-                           {
+                            {
                             this.state.ads?(
                               this.state.ads!=="All Ads are Served"?
                               <img className="pl-5 mt-5" id="left-menu-ad" src={this.state.ads} alt="ad"/>:
@@ -695,7 +683,7 @@ diseasePosts(dcName) {                     // For specific blogs like "/blogs/di
                             :  <button className="btn pl-4 mt-2 " id="left-menu-ad" data-toggle="modal"data-target=".bd-example-modal-lg">
                             <img className="pl-4" src={PersianAd} alt="ad"/>
                             </button>
-                           }
+                           } 
 
 
             
