@@ -167,9 +167,11 @@ class Home extends Component {
    try {
      const response = await axios.get(`${backendHost}/sponsored/list/ads/url/1`);
      console.log("API call successful"); // Check if this log is printed
-
+          
+    const newResponse=`https://uat.all-cures.com:444${response.data}`
      this.setState({
-       ads: response.data,
+      //  ads: response.data,
+          ads: newResponse,
      });
    } catch (error) {
      this.setState({
