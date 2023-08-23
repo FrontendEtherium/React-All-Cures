@@ -86,7 +86,7 @@ useEffect(() => {
 </select>
                         </Form.Group>
                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
-                            <Form.Label>Enter Campaign Name  <b> (Optional)</b></Form.Label>
+                            <Form.Label>Enter Campaign Name  <b> (Required)</b></Form.Label>
                             <Form.Control  value={middle} onChange={(e) => setMiddle(e.target.value)} type="text" name=""
                             placeholder="Enter Campaign Name..." />
                         </Form.Group>
