@@ -167,11 +167,14 @@ class Home extends Component {
    try {
      const response = await axios.get(`${backendHost}/sponsored/list/ads/url/1`);
      console.log("API call successful"); // Check if this log is printed
-          
+      
+
     const newResponse=`https://uat.all-cures.com:444${response.data}`
+    console.log(newResponse)
      this.setState({
       //  ads: response.data,
           ads: newResponse,
+          
      });
    } catch (error) {
      this.setState({
@@ -594,16 +597,29 @@ class Home extends Component {
 
                       
 
-{
-                            this.state.ads&&(
-                              this.state.ads!=="All Ads are Served" && (
+{/* {
+                           
+                              this.state.ads!=="https://uat.all-cures.com:444All Ads are Served" ? (
                                  <div className="container">
-                              <img className="mb-4"  src={this.state.ads} alt="ad"/>
+                                    <div>
+                              <img className="mb-4"  src={this.state.ads}/>
                               </div>
-                              )
-                            )
+                              </div>
+                              ):null
                             
-         }  
+                            
+         }   */}
+
+
+{
+                           
+                           this.state.ads!=="https://uat.all-cures.com:444All Ads are Served"?
+                           <img className="pl-5 mt-5" id="left-menu-ad" src={this.state.ads} alt="ad"/>:
+                           null
+                         
+                        
+                        } 
+
               
 
       <section className="mb-5 mt-2">
