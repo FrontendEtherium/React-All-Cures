@@ -580,21 +580,6 @@ class Home extends Component {
 
 
 
-{/* <section className="mb-5 mt-2" >
-   <div className="container" id="sponsered">
-      <img src="https://www.gourmetads.com/wp-content/uploads/2021/06/Barilla-970x90-Super-Leaderboard.jpg.webp"
-      alt="avatar"/>
-      <img src="https://www.redcarpetweb.com/wp-content/uploads/2016/03/970X90.jpg"
-      alt="avatar"/>
-      <img src="https://helpfulsheep.com/2017-07-25-google-adsense-ad-sizes/970x90.png"
-      alt="avatar"/>
-      <img src="https://www.5banners.com/store/img/cms/00123.gif"
-      alt="avatar"/>
-      </div>
-   
-   
-</section> */}
-
                       
 
 {/* {
@@ -612,10 +597,11 @@ class Home extends Component {
 
 
 {
-                           
+                           this.state.ads?
                            this.state.ads!=="https://uat.all-cures.com:444All Ads are Served"?
-                           <img className="pl-5 mt-5" id="left-menu-ad" src={this.state.ads} alt="ad"/>:
-                           null
+                           
+                           <img className="pl-5 mb-5 ml-1" id="left-menu-ad" src={this.state.ads} alt="ad"/>:
+                           null:null
                          
                         
                         } 
