@@ -673,17 +673,18 @@ diseasePosts(dcName) {                     // For specific blogs like "/blogs/di
                  
                            
                             {
-                            this.state.ads?(
-                              this.state.ads!=="All Ads are Served"?
-                              <img className="pl-5 mt-5" id="left-menu-ad" src={this.state.ads} alt="ad"/>:
+                           
+                              this.state.ads!=="https://uat.all-cures.com:444All Ads are Served"?
+                              <img className="pl-5 mt-5" id="left-menu-ad" src={this.state.ads} alt="adjjjj"/>:
                               <button className="btn pl-4 mt-2 " id="left-menu-ad" data-toggle="modal"data-target=".bd-example-modal-lg">
-                                 <img className="pl-4" src={PersianAd} alt="ad"/>
+                                 <img className="pl-4" src={PersianAd} alt="adhhh"/>
                                  </button>
-                            )
-                            :  <button className="btn pl-4 mt-2 " id="left-menu-ad" data-toggle="modal"data-target=".bd-example-modal-lg">
-                            <img className="pl-4" src={PersianAd} alt="ad"/>
-                            </button>
+                            
+                           
                            } 
+
+
+
 
 
             
@@ -968,6 +969,21 @@ diseasePosts(dcName) {                     // For specific blogs like "/blogs/di
                Add To Favourite
              </Button> */}
 
+
+                                           
+{
+                userAccess?
+                  <div id="favbutton">   
+                  {
+                          this.state.favourite.length === 0  ?
+                     <Favourite  article_id={this.props.match.params.id.split('-')[0]}/>
+                     :<Favourites  article_id={this.props.match.params.id.split('-')[0]}/>
+                  }
+                     </div>
+                : null
+              }
+
+
           </div>
 
            
@@ -986,6 +1002,8 @@ diseasePosts(dcName) {                     // For specific blogs like "/blogs/di
               }
                       
                       <span id="docRate">
+
+                         
           <ArticleRating article_id={this.props.match.params.id.split('-')[0]} />
           </span>
 
@@ -1000,17 +1018,22 @@ diseasePosts(dcName) {                     // For specific blogs like "/blogs/di
                   </>
                 : null
               }
+                              
+                              
+{/*                               
                                     {
                 userAccess?
-                  <>   
+                  <div id="favbutton">   
                   {
                           this.state.favourite.length === 0  ?
                      <Favourite  article_id={this.props.match.params.id.split('-')[0]}/>
                      :<Favourites  article_id={this.props.match.params.id.split('-')[0]}/>
                   }
-                     </>
+                     </div>
                 : null
-              }
+              } */}
+              
+
 
                <h4>Source :  <a href="https://all-cures.com/Editorial">https://all-cures.com/Editorial</a></h4>
              
