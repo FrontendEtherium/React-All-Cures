@@ -644,27 +644,8 @@ diseasePosts(dcName) {                     // For specific blogs like "/blogs/di
           }    
             </div>
             
-              {/* {
-              (demo?<span style={{width:"20%"}}><img src="https://th.bing.com/th/id/OIP.aSZQ5_JSSJtWgll70PQLzQAAAA?pid=ImgDet&rs=1"/></span>
-              :<img className="pl-4" src={PersianAd} alt="ad"/>)
-  } */}
+             
 
-
-                {/* {
-                  this.state.ads?(
-                    this.state.ads.map((i)=>(
-                      
-                    
-                      <img key={i.id} src={i.imageUrl} alt="avatar"/>
-                    
-                  ))
-                  ):<img className="pl-4" src={PersianAd} alt="ad"/>
-              
-                } */}
-
-
-
-        
 {/* 
                     <button className="btn pl-4 mt-2 " id="left-menu-ad" data-toggle="modal"data-target=".bd-example-modal-lg">
                                  <img className="pl-4" src={PersianAd} alt="ad"/>
@@ -673,10 +654,14 @@ diseasePosts(dcName) {                     // For specific blogs like "/blogs/di
                  
                            
                             {
+                              this.state.ads?
                            
                               this.state.ads!=="https://uat.all-cures.com:444All Ads are Served"?
-                              <img className="pl-5 mt-5" id="left-menu-ad" src={this.state.ads} alt="adjjjj"/>:
+                              <img className="pl-4 mt-5" id="left-menu-ad" src={this.state.ads} alt="adjjjj"/>:
                               <button className="btn pl-4 mt-2 " id="left-menu-ad" data-toggle="modal"data-target=".bd-example-modal-lg">
+                                 <img className="pl-4" src={PersianAd} alt="adhhh"/>
+                                 </button>:
+                                 <button className="btn pl-4 mt-2 " id="left-menu-ad" data-toggle="modal"data-target=".bd-example-modal-lg">
                                  <img className="pl-4" src={PersianAd} alt="adhhh"/>
                                  </button>
                             
