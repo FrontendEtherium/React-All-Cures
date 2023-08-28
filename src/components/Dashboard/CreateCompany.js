@@ -10,6 +10,7 @@ function App() {
   const [emaill, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [alert, setAlert] = useState('');
+  const [isError,setIsError]=useState(false);
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -83,6 +84,7 @@ function App() {
                   type="text"
                   name=""
                   placeholder="Enter Contact Person..."
+                  required
                 />
               </Form.Group>
 
@@ -94,18 +96,41 @@ function App() {
                   type="text"
                   name=""
                   placeholder="Enter Company Email..."
+                  required
+                  
                 />
               </Form.Group>
 
               <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
                 <Form.Label>Enter Phone Number <b> (Required)</b></Form.Label>
-                <Form.Control
+                {/* <Form.Control
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  type="text"
+                  type="number"
                   name=""
                   placeholder="Enter Phone Number..."
-                />
+                  required
+                /> */}
+
+
+
+<Form.Control
+                              value={phone}
+                              error={isError}
+                              type="number" 
+                                  name=""
+                             placeholder="Enter Phone Number..."
+                               required
+                               onChange={(e) => {
+                             setPhone(e.target.value);
+                         if (e.target.value.length > 10) {
+                          setIsError(true);
+                            } else {
+                         setIsError(false);
+                                  }
+                                          }}
+                                              />
+            {isError && <p className="text-danger">Please enter a valid 10-digit phone number.</p>}
               </Form.Group>
 
               {alert && (
