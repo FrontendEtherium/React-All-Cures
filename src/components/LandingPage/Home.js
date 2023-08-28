@@ -184,7 +184,10 @@ class Home extends Component {
  };
     componentDidMount(){
      
-     this.fetchData();
+     setTimeout(() => {
+         console.log('delay')
+         this.fetchData();
+     }, 20000);
 
     }
          
