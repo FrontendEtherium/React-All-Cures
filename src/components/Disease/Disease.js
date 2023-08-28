@@ -232,31 +232,65 @@ showModal() {
   }
 
 
+
+         
   // fetchData = async () => {
   //   try {
-    
-  //     const response = await axios.get('https://uat.all-cures.com:444/cures/sponsored/list/ads/url');
-  //     console.log("aaaaa")
+  //     const response = await axios.get(`${backendHost}/sponsored/list/ads/url/2`);
+  //     console.log("API call successful"); // Check if this log is printed
+  //     const newResponse=`https://uat.all-cures.com:444${response.data}`
 
   //     this.setState({
-  //       ads: response.data,
+  //       ads: newResponse,
   //     });
   //   } catch (error) {
   //     this.setState({
   //       error: error.message,
-
   //     });
-      
   //   }
-   
   // };
-         
-  fetchData = async () => {
-    try {
-      const response = await axios.get(`${backendHost}/sponsored/list/ads/url/2`);
-      console.log("API call successful"); // Check if this log is printed
-      const newResponse=`https://uat.all-cures.com:444${response.data}`
 
+  // fetchData = async (parent_dc_id) => {
+  //   console.log('DC_Cond:', parent_dc_id); // Add this line to check if parent_dc_id is passed
+  //   try {
+  //     // Send parent_dc_id as a request parameter
+  //     const response = await axios.get(`${backendHost}/sponsored/list/ads/url/2`, {
+  //       params: {
+  //         'DC_Cond': parent_dc_id,
+  //       },
+  //     });
+  //     console.log("API call successful"); // Check if this log is printed
+  //     const newResponse = `https://uat.all-cures.com:444${response.data}`;
+  
+  //     this.setState({
+  //       ads: newResponse,
+  //     });
+  //   } catch (error) {
+  //     this.setState({
+  //       error: error.message,
+  //     });
+  //   }
+  // };
+
+  fetchData = async (parent_dc_id) => {
+    console.log('DC_Cond:', parent_dc_id); // Check if parent_dc_id is passed correctly
+    try {
+      // Send parent_dc_id as a request parameter
+      const response = await axios.get(`${backendHost}/sponsored/list/ads/url/2`, {
+        params: {
+          DC_Cond: parent_dc_id,
+        },
+      });
+      console.log("API call successful");
+      
+      // Check the response data
+      console.log("Response data:", response.data);
+  
+      const newResponse = `https://uat.all-cures.com:444${response.data}`;
+  
+      // Check if state is being updated correctly
+      console.log("New Response:", newResponse);
+  
       this.setState({
         ads: newResponse,
       });
@@ -266,11 +300,7 @@ showModal() {
       });
     }
   };
-     componentDidMount(){
-      
-      this.fetchData();
-
-     }
+  
 
   postSubscribtion() {
     //  var mobileNumber = this.state.mobile.split('+')
@@ -483,37 +513,50 @@ showModal() {
     .catch(err => null)
 }
 
-//  pageLoad = async () => {
-//   await axios.post(`${backendHost}/{article_id}/{userId}`)
-//   .then(res => {
-//      this.setState({
-//         afterSubmitLoad: false
-//      })
-     
-//     })
-//     .catch(err => {   
-//   })
-// }
-// pageLoad();
 
-diseasePosts(dcName) {                     // For specific blogs like "/blogs/diabetes"
-  fetch(`${backendHost}/isearch/${dcName}`)
-  .then((res) => res.json())
-  .then((json) => {
-    // setLoaded(true)
-    var temp= []
-    json.forEach(i => {
-      if(i.pubstatus_id === 3){
-        temp.push(i)
+
+diseasePosts(dcName) {
+  return fetch(`${backendHost}/isearch/${dcName}`)
+    .then((res) => res.json())
+    .then((json) => {
+      // Filter the response to get only entries with pubstatus_id === 3
+      const filteredItems = json.filter((item) => item.pubstatus_id === 3);
+
+      // Extract parent_dc_id from the first item (assuming there's at least one item)
+      const parent_dc_id = filteredItems.length > 0 ? filteredItems[0].parent_dc_id : null;
+      console.log('parent_dc_id:', parent_dc_id); // Add this line to check the value
+      // Return parent_dc_id
+      if (parent_dc_id != null) {
+        // Call fetchData with the extracted parent_dc_id
+        setTimeout(() => {
+          console.log('delay')
+          this.fetchData(parent_dc_id);
+        }, 20000);
       }
-    });
-    this.setState({
-      carouselItems: temp
+      // return parent_dc_id;
+
+
     })
-  })
-  .catch(err => null)
+    .catch((err) => null);
 }
 
+
+componentDidMount() {
+  setTimeout(() => {
+    console.log('delay');
+
+    // Call diseasePosts to get the parent_dc_id
+    
+    this.diseasePosts(this.state.items.dc_name)
+      .then((parent_dc_id) => {
+    
+      })
+      .catch((error) => {
+        // Handle any errors here
+        console.error(error);
+      });
+  },);
+}
   componentDidMount() {
   
     window.scrollTo(0, 0);
@@ -524,7 +567,9 @@ diseasePosts(dcName) {                     // For specific blogs like "/blogs/di
     
     this.getDisease()
     this.pageLoading()
-    this.fetchData();
+    // this.fetchData();
+
+
 
     const canonicalLink = document.createElement('link');
     canonicalLink.rel = 'canonical';
