@@ -168,7 +168,6 @@ export default function UpdatePromo(props) {
                 placeholder="Campaign here..."
               >
                 <option value="">{code}</option>
-                <option value="">Select Campaign</option>
                 {campaignList.map((c) => (
                   <option key={c[0]} value={c[0]}>
                     {c[2]}
@@ -196,7 +195,6 @@ export default function UpdatePromo(props) {
                 onChange={(e) => setMax(e.target.value)}
               >
                 <option value="">{maxLimit}</option>
-                <option value="">Enter Disease Condition</option>
                 {companyList.map((c) => (
                   <option key={c[0]} value={c[0]}>
                     {c[1]}
@@ -213,7 +211,6 @@ export default function UpdatePromo(props) {
                 onChange={(e) => setActive(e.target.value)}
               >
                 <option value="">{active}</option>
-                <option value="">Enter Ad Type</option>
                 {adsList.map((c) => (
                   <option key={c[0]} value={c[0]}>
                     {c[1]}
@@ -253,7 +250,7 @@ export default function UpdatePromo(props) {
             </Form.Group>
 
             <div className="col-lg-6 form-group">
-              <label htmlFor="">Featured Article</label>
+              <label htmlFor="">Review Status</label>
               <select
                 multiple
                 name="featured"
