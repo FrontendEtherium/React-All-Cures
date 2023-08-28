@@ -22,6 +22,7 @@ function App() {
   const [image, setImage] = useState(null);
   const [companyList, setCompanyList] = useState([]);
   const [adsList, setAdsList] = useState([]);
+  const [condition,setCondition]=useState('')
 
   const submitForm = async (e) => {
     e.preventDefault();
@@ -36,6 +37,7 @@ function App() {
       StartDate: startDate,
       EndDate: endDate,
       ImageAltText: alt,
+      AdTargetID:condition
     };
 
     // Log AdMap data before sending
@@ -191,7 +193,35 @@ function App() {
                 </select>
               </Form.Group>
 
-              <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
+
+
+              <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                        <label htmlFor="">Enter Ad Condition  <b>(Required)</b></label>
+                        <select name="hospital" value={condition} onChange={(e) => setCondition(e.target.value)} placeholder="Select Ad Condition" required className="form-control">
+                    <option>Select Ad Condition</option>
+    
+                    <option value='1'>Generic</option>
+                    <option value='2'>Target</option>
+                        </select>
+                        </Form.Group>
+                        { condition=='2' &&
+
+                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                        <label htmlFor="">Enter DiseaseCondition  <b>(Required)</b></label>
+                        <select name="hospital" value={middle} onChange={(e) => setMiddle(e.target.value)} placeholder=" Enter Company" required className="form-control">
+                 <option>Select Diseases</option>
+                   {companyList.map((c) => {
+        
+                   return (
+                       <option value={c[0]}>{c[1]}</option>
+                       )
+                          })}
+                           </select>
+                        </Form.Group>
+                              }
+
+
+              {/* <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
                 <label htmlFor="">Enter DiseaseCondition <b>(Required)</b></label>
                 <select
                   name="hospital"
@@ -206,7 +236,7 @@ function App() {
                     return <option value={c[0]}>{c[1]}</option>;
                   })}
                 </select>
-              </Form.Group>
+              </Form.Group> */}
 
               <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
                 <label htmlFor="">Enter Ad Type <b>(Required)</b></label>
@@ -250,8 +280,9 @@ function App() {
                 <Form.Control
                   value={emaill}
                   onChange={(e) => setEmail(e.target.value)}
-                  type="text"
+                  type="number"
                   name=""
+                  required
                   placeholder="Enter AdCount..."
                 />
               </Form.Group>
