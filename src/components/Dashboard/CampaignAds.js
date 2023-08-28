@@ -9,7 +9,7 @@ import { Alert, Form } from 'react-bootstrap';
 function App() {
   const [first, setFirst] = useState();
   const [middle, setMiddle] = useState();
-  const [last, setLast] = useState('Banner'); // Default AdType to Banner
+  const [last, setLast] = useState(1); // Default AdType to Banner (mapped to 1)
   const [status, setStatus] = useState('');
   const [campaignList, setCampaignList] = useState([]);
   const [emaill, setEmail] = useState();
@@ -25,7 +25,7 @@ function App() {
 
   const submitForm = async (e) => {
     e.preventDefault();
-  
+
     const AdMap = {
       CampaignID: first,
       DiseaseCondition: middle,
@@ -37,16 +37,16 @@ function App() {
       EndDate: endDate,
       ImageAltText: alt,
     };
-  
+
     // Log AdMap data before sending
     console.log('AdMap:', AdMap);
-  
+
     const formData = new FormData();
     formData.append('AdMap', JSON.stringify(AdMap)); // Convert AdMap object to JSON and append it to formData
     if (image) {
       formData.append('image', image);
     }
-  
+
     axios
       .post(`${backendHost}/sponsored/create/ad`, formData, {
         headers: {
@@ -61,7 +61,7 @@ function App() {
         } else {
           setAlertMessage('An error occurred. Please contact the development team.');
         }
-  
+
         setTimeout(() => {
           setAlertMessage('');
         }, 3000); // Hide alert after 3 seconds
@@ -74,7 +74,6 @@ function App() {
         }, 3000); // Hide alert after 3 seconds
       });
   };
-  
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
@@ -89,7 +88,7 @@ function App() {
       const fileSize = file.size / 1024;
       const [width, height] = await getImageDimensions(file);
 
-      if (adType === 'Banner') {
+      if (adType === 1) { // Check for integer value instead of 'Banner'
         if (width !== 970 || height !== 90) {
           setAlertMessage('Invalid image dimensions for Banner. Please upload an image with dimensions 970x90.');
           setImage(null);
@@ -97,7 +96,7 @@ function App() {
           setAlertMessage('Image size for Banner is too large. Please upload an image with size up to 100KB.');
           setImage(null);
         }
-      } else if (adType === 'Left') {
+      } else if (adType === 2) { // Check for integer value instead of 'Left'
         if (width !== 156 || height !== 514) {
           setAlertMessage('Invalid image dimensions for Left. Please upload an image with dimensions 156x514.');
           setImage(null);
@@ -157,6 +156,15 @@ function App() {
     getCampaign();
   }, []);
 
+  const handleAdTypeChange = (e) => {
+    const selectedValue = e.target.value;
+    const adTypeToValueMap = {
+      Banner: 1,
+      Left: 2,
+    };
+    setLast(adTypeToValueMap[selectedValue]);
+  };
+
   return (
     <div className="promo-page">
       <div className="container">
@@ -204,8 +212,8 @@ function App() {
                 <label htmlFor="">Enter Ad Type <b>(Required)</b></label>
                 <select
                   name="hospital"
-                  value={last}
-                  onChange={(e) => setLast(e.target.value)}
+                  value={last === 1 ? 'Banner' : 'Left'} // Convert integer value back to string for the select input
+                  onChange={handleAdTypeChange}
                   placeholder=" Enter Company"
                   required=""
                   className="form-control"
