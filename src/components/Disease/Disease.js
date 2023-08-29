@@ -232,45 +232,28 @@ showModal() {
   }
 
 
+   fetchDatas = async (disease_condition_id) => {
+    console.log('DC_cond',disease_condition_id)
+    try {
+      const response = await axios.get(`${backendHost}/sponsored/list/ads/url/2`,{
+      params: {
+        DC_Cond: disease_condition_id,
+      },
+    })
 
-         
-  // fetchData = async () => {
-  //   try {
-  //     const response = await axios.get(`${backendHost}/sponsored/list/ads/url/2`);
-  //     console.log("API call successful"); // Check if this log is printed
-  //     const newResponse=`https://uat.all-cures.com:444${response.data}`
+    
+      console.log("API call successful"); // Check if this log is printed
+      const newResponse=`https://uat.all-cures.com:444${response.data}`
 
-  //     this.setState({
-  //       ads: newResponse,
-  //     });
-  //   } catch (error) {
-  //     this.setState({
-  //       error: error.message,
-  //     });
-  //   }
-  // };
-
-  // fetchData = async (parent_dc_id) => {
-  //   console.log('DC_Cond:', parent_dc_id); // Add this line to check if parent_dc_id is passed
-  //   try {
-  //     // Send parent_dc_id as a request parameter
-  //     const response = await axios.get(`${backendHost}/sponsored/list/ads/url/2`, {
-  //       params: {
-  //         'DC_Cond': parent_dc_id,
-  //       },
-  //     });
-  //     console.log("API call successful"); // Check if this log is printed
-  //     const newResponse = `https://uat.all-cures.com:444${response.data}`;
-  
-  //     this.setState({
-  //       ads: newResponse,
-  //     });
-  //   } catch (error) {
-  //     this.setState({
-  //       error: error.message,
-  //     });
-  //   }
-  // };
+      this.setState({
+        ads: newResponse,
+      });
+    } catch (error) {
+      this.setState({
+        error: error.message,
+      });
+    }
+  };
 
   fetchData = async (parent_dc_id) => {
     console.log('DC_Cond:', parent_dc_id); // Check if parent_dc_id is passed correctly
@@ -519,22 +502,40 @@ diseasePosts(dcName) {
   return fetch(`${backendHost}/isearch/${dcName}`)
     .then((res) => res.json())
     .then((json) => {
+
+      var temp= []
+      json.forEach(i => {
+        if(i.pubstatus_id === 3){
+          temp.push(i)
+        }
+      });
+      this.setState({
+        carouselItems: temp
+      })
       // Filter the response to get only entries with pubstatus_id === 3
       const filteredItems = json.filter((item) => item.pubstatus_id === 3);
 
       // Extract parent_dc_id from the first item (assuming there's at least one item)
       const parent_dc_id = filteredItems.length > 0 ? filteredItems[0].parent_dc_id : null;
-      console.log('parent_dc_id:', parent_dc_id); // Add this line to check the value
+      const disease_condition_id = filteredItems.length > 0 ? filteredItems[0].disease_condition_id : null;
+
+      console.log('parent_dc_id:', parent_dc_id);
+      console.log('disease_condition_id:',disease_condition_id) 
       // Return parent_dc_id
-      if (parent_dc_id != null) {
+      if (parent_dc_id != 0) {
         // Call fetchData with the extracted parent_dc_id
         setTimeout(() => {
-          console.log('delay')
+          console.log('delayd not null')
           this.fetchData(parent_dc_id);
-        }, 20000);
+        }, 5000);
       }
-      // return parent_dc_id;
-
+         
+      else {
+        setTimeout(() => {
+          console.log('delayd null')
+          this.fetchDatas(disease_condition_id);
+        }, 5000);
+      }
 
     })
     .catch((err) => null);
@@ -543,12 +544,9 @@ diseasePosts(dcName) {
 
 componentDidMount() {
   setTimeout(() => {
-    console.log('delay');
-
-    // Call diseasePosts to get the parent_dc_id
-    
+    console.log('delay');    
     this.diseasePosts(this.state.items.dc_name)
-      .then((parent_dc_id) => {
+      .then(() => {
     
       })
       .catch((error) => {
@@ -567,7 +565,6 @@ componentDidMount() {
     
     this.getDisease()
     this.pageLoading()
-    // this.fetchData();
 
 
 
