@@ -166,7 +166,7 @@ class Home extends Component {
  fetchData = async () => {
    try {
      const response = await axios.get(`${backendHost}/sponsored/list/ads/url/1`);
-     console.log("API call successful"); // Check if this log is printed
+     console.log("esponse API call successful",response); // Check if this log is printed
       
 
     const newResponse=`https://uat.all-cures.com:444${response.data}`
@@ -184,10 +184,11 @@ class Home extends Component {
  };
     componentDidMount(){
      
-     setTimeout(() => {
+      setTimeout(() => {
          console.log('delay')
          this.fetchData();
-     }, 20000);
+     }, 5000);
+     
 
     }
          
@@ -600,13 +601,14 @@ class Home extends Component {
 
 
 {
+                           
                            this.state.ads?
                            this.state.ads!=="https://uat.all-cures.com:444All Ads are Served"?
-                           
-                           <img className="pl-5 mb-5 ml-1" id="left-menu-ad" src={this.state.ads} alt="ad"/>:
+                           <div className="container">
+                           <img className=" mb-5 ml-1" id="left-menu-ad" src={this.state.ads} alt="ad"/> </div>:
                            null:null
                          
-                        
+                     
                         } 
 
               
