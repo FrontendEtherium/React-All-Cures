@@ -6,6 +6,7 @@ import history from '../../history';
 import { userId } from '../../UserId';
 import { backendHost } from '../../../api-config';
 import { Description } from '@material-ui/icons';
+import { parse } from 'date-fns/esm';
 
 export default function UpdatePromo(props) {
   const [code, setCode] = useState('');
@@ -20,9 +21,10 @@ export default function UpdatePromo(props) {
   const [review, setReview] = useState(''); // Assuming 'review' is a string
   const [count, setCount] = useState('');
   const [companyList, setCompanyList] = useState([]);
-
+  const[targetName,setTargetName] = useState('')
   const [submitAlert, setAlert] = useState(false);
   const [promoData, setPromo] = useState([]);
+  const[targetList,setTargetList] = useState([]);
 
   const search = useLocation().search;
   const id = new URLSearchParams(search).get('updatecampaignads');
@@ -37,6 +39,7 @@ export default function UpdatePromo(props) {
     description: '',
     review: '',
     count: '',
+    targetName:''
   });
 
   const fetchPromo = (e) => {
@@ -55,6 +58,7 @@ export default function UpdatePromo(props) {
           description: promoData.AdDescription,
           review: promoData.ReviewStatus.toString(), 
           count: promoData.AdCount.toString(),
+          targetName:promoData.AdTargetName,
         });
         setCode(promoData.CampaignName);
         setStart(promoData.StartDate.split('T')[0]);
@@ -65,6 +69,7 @@ export default function UpdatePromo(props) {
         setDescription(promoData.AdDescription);
         setReview(promoData.ReviewStatus.toString());
         setCount(promoData.AdCount.toString());
+        setTargetName(promoData.AdTargetName)
       })
       .catch((err) => {
         return;
@@ -72,7 +77,7 @@ export default function UpdatePromo(props) {
   };
 
   const getHospital = () => {
-    axios.get(`${backendHost}/article/all/table/disease_condition`).then((res) => {
+    axios.get(`${backendHost}/sponsored/getall/parent_disease_id`).then((res) => {
       setCompanyList(res.data);
     }).catch((err) => {
       console.log(err);
@@ -95,12 +100,21 @@ export default function UpdatePromo(props) {
     });
   };
 
+  const getAdsTypes = ()=>{
+    axios.get(`${backendHost}/sponsored/list/adstargettypes`).then((res) => {
+      setTargetList(res.data);
+    }).catch((err) =>{
+      console.log(err);
+    });
+    };
+
   useEffect(() => {
     document.title = "All Cures | Dashboard | Update Promo";
     fetchPromo();
     getHospital();
     getAds();
     getCampaign();
+    getAdsTypes();
     // eslint-disable-next-line
   }, []);
 
@@ -138,7 +152,9 @@ export default function UpdatePromo(props) {
     if (count !== initialState.count) {
       updatedFields.AdCount = parseInt(count);
     }
-
+    if(targetName !==initialState.targetName){
+      updatedFields.AdTargetName= parseInt(targetName);
+    }
     // Check if any fields have changed before making the PUT request
     if (Object.keys(updatedFields).length > 0) {
       axios
@@ -168,6 +184,7 @@ export default function UpdatePromo(props) {
                 placeholder="Campaign here..."
               >
                 <option value="">{code}</option>
+                <option value="">Select Campaign</option>
                 {campaignList.map((c) => (
                   <option key={c[0]} value={c[0]}>
                     {c[2]}
@@ -187,6 +204,25 @@ export default function UpdatePromo(props) {
               />
             </Form.Group>
 
+
+            <Form.Group className="col-md-6 float-left">
+              <Form.Label>Enter Ad Target Type</Form.Label>
+              <Form.Control
+                as="select"
+                value={targetName}
+                onChange={(e) => setTargetName(e.target.value)}
+              >
+                <option value="">{targetName}</option>
+                <option value="">Enter Ad Target Type</option>
+                {targetList.map((c) => (
+                  <option key={c[0]} value={c[0]}>
+                    {c[1]}
+                  </option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+                 
+            { (targetName=='Target'|| targetName=='2') &&
             <Form.Group className="col-md-6 float-left">
               <Form.Label>Enter Disease Condition</Form.Label>
               <Form.Control
@@ -195,6 +231,7 @@ export default function UpdatePromo(props) {
                 onChange={(e) => setMax(e.target.value)}
               >
                 <option value="">{maxLimit}</option>
+                <option value="">Enter Disease Condition</option>
                 {companyList.map((c) => (
                   <option key={c[0]} value={c[0]}>
                     {c[1]}
@@ -202,6 +239,7 @@ export default function UpdatePromo(props) {
                 ))}
               </Form.Control>
             </Form.Group>
+                            }
 
             <Form.Group className="col-md-6 float-left">
               <Form.Label>Enter Ad Type</Form.Label>
@@ -211,8 +249,9 @@ export default function UpdatePromo(props) {
                 onChange={(e) => setActive(e.target.value)}
               >
                 <option value="">{active}</option>
+                <option value="">Enter Ad Type</option>
                 {adsList.map((c) => (
-                  <option key={c[0]} value={c[0]}>
+                  <option key={c[0]} value={c[1]}>
                     {c[1]}
                   </option>
                 ))}
@@ -250,7 +289,7 @@ export default function UpdatePromo(props) {
             </Form.Group>
 
             <div className="col-lg-6 form-group">
-              <label htmlFor="">Review Status</label>
+              <label htmlFor="">Featured Article</label>
               <select
                 multiple
                 name="featured"
@@ -279,6 +318,6 @@ export default function UpdatePromo(props) {
           </div>
         </form>
       </div>
-    </div>
-  );
+    </div>
+  );
 }
