@@ -125,14 +125,17 @@ function App() {
     });
   };
 
-  const getHospital = () => {
-    axios
-      .get(`${backendHost}/article/all/table/disease_condition`)
-      .then((res) => {
-        setCompanyList(res.data);
-      })
-      .catch((err) => console.log(err));
-  };
+const getHospital = () => {
+    axios.get(`${backendHost}/sponsored/getall/parent_disease_id `)
+    .then(res => {
+        console.log(res)
+        console.log(res.data)
+        setCompanyList(res.data)
+    })
+    .catch(err => 
+        console.log(err)
+    )
+}
 
   const getAds = () => {
     axios
