@@ -289,7 +289,7 @@ export default function UpdatePromo(props) {
             </Form.Group>
 
             <div className="col-lg-6 form-group">
-              <label htmlFor="">Featured Article</label>
+              <label htmlFor="">Review Status</label>
               <select
                 multiple
                 name="featured"
