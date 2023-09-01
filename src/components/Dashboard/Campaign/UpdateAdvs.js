@@ -6,7 +6,6 @@ import history from '../../history';
 import { userId } from '../../UserId';
 import { backendHost } from '../../../api-config';
 import { Description } from '@material-ui/icons';
-import { parse } from 'date-fns/esm';
 
 export default function UpdatePromo(props) {
   const [code, setCode] = useState('');
@@ -21,10 +20,11 @@ export default function UpdatePromo(props) {
   const [review, setReview] = useState(''); // Assuming 'review' is a string
   const [count, setCount] = useState('');
   const [companyList, setCompanyList] = useState([]);
+  const[targetList,setTargetList] = useState([]);
+
   const[targetName,setTargetName] = useState('')
   const [submitAlert, setAlert] = useState(false);
   const [promoData, setPromo] = useState([]);
-  const[targetList,setTargetList] = useState([]);
 
   const search = useLocation().search;
   const id = new URLSearchParams(search).get('updatecampaignads');
@@ -39,7 +39,6 @@ export default function UpdatePromo(props) {
     description: '',
     review: '',
     count: '',
-    targetName:''
   });
 
   const fetchPromo = (e) => {
@@ -152,9 +151,11 @@ export default function UpdatePromo(props) {
     if (count !== initialState.count) {
       updatedFields.AdCount = parseInt(count);
     }
+
     if(targetName !==initialState.targetName){
-      updatedFields.AdTargetName= parseInt(targetName);
-    }
+            updatedFields.AdTargetID= parseInt(targetName);
+        }
+
     // Check if any fields have changed before making the PUT request
     if (Object.keys(updatedFields).length > 0) {
       axios
@@ -184,7 +185,6 @@ export default function UpdatePromo(props) {
                 placeholder="Campaign here..."
               >
                 <option value="">{code}</option>
-                <option value="">Select Campaign</option>
                 {campaignList.map((c) => (
                   <option key={c[0]} value={c[0]}>
                     {c[2]}
@@ -204,7 +204,7 @@ export default function UpdatePromo(props) {
               />
             </Form.Group>
 
-                  <Form.Group className="col-md-6 float-left">
+            <Form.Group className="col-md-6 float-left">
               <Form.Label>AD End Date</Form.Label>
               <Form.Control
                 type="Date"
@@ -215,6 +215,7 @@ export default function UpdatePromo(props) {
               />
             </Form.Group>
 
+            
             <Form.Group className="col-md-6 float-left">
               <Form.Label>Enter Ad Target Type</Form.Label>
               <Form.Control
@@ -259,9 +260,8 @@ export default function UpdatePromo(props) {
                 onChange={(e) => setActive(e.target.value)}
               >
                 <option value="">{active}</option>
-                <option value="">Enter Ad Type</option>
                 {adsList.map((c) => (
-                  <option key={c[0]} value={c[1]}>
+                  <option key={c[0]} value={c[0]}>
                     {c[1]}
                   </option>
                 ))}
