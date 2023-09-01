@@ -204,6 +204,16 @@ export default function UpdatePromo(props) {
               />
             </Form.Group>
 
+                  <Form.Group className="col-md-6 float-left">
+              <Form.Label>AD End Date</Form.Label>
+              <Form.Control
+                type="Date"
+                defaultValue={endDate}
+                onChange={(e) => setEnd(e.target.value)}
+                name=""
+                placeholder="End Date here..."
+              />
+            </Form.Group>
 
             <Form.Group className="col-md-6 float-left">
               <Form.Label>Enter Ad Target Type</Form.Label>
