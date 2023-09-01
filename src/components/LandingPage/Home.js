@@ -604,7 +604,7 @@ class Home extends Component {
                            
                            this.state.ads?
                            this.state.ads!=="https://uat.all-cures.com:444All Ads are Served"?
-                           <div className="container">
+                           <div className="container d-flex justify-content-center">
                            <img className=" mb-5 ml-1" id="left-menu-ad" src={this.state.ads} alt="ad"/> </div>:
                            null:null
                          
