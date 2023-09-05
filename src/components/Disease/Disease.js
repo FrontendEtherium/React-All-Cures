@@ -98,6 +98,8 @@ class Disease extends Component {
       modalState: false,
       url:window.location.href,
       ads:'',
+      isAdsLoaded: false,
+      adId:''
     };
     this.handleShows = this.handleShows.bind(this);
    
@@ -268,14 +270,29 @@ showModal() {
       
       // Check the response data
       console.log("Response data:", response.data);
-  
+
+      if(response.data!= 'All Ads are Served'){
+      const id=response.data.split('/')[3]
+      const ids=id.match(/\d+/)
+       const adsId=ids[0]
+
+      console.log(adsId)
+         console.log(id)
+
+         this.setState({
+           adId:adsId
+         });
+
+      }
       const newResponse = `https://uat.all-cures.com:444${response.data}`;
   
       // Check if state is being updated correctly
       console.log("New Response:", newResponse);
   
       this.setState({
-        ads: newResponse,
+
+       ads: newResponse,
+      
       });
     } catch (error) {
       this.setState({
@@ -411,6 +428,7 @@ showModal() {
     fetch(`${backendHost}/isearch/treatmentregions/${this.state.items.disease_condition_id}`)       // /isearch/treatmentregions/${this.state.diseaseCondition}
     .then((res) => res.json())
     .then((json) => {
+      console.log('regional posts')
       this.setState({
         regionPostsLoaded: true,
         regionalPost: json,
@@ -485,9 +503,16 @@ showModal() {
     })
     
 }
+
+handleClick = (ad) => {
+  
+  console.log('Image clicked!',ad);
+  axios.put(`${backendHost}/ads/clicks/${ad}`)
+}
  getDisease = () => {
     axios.get(`${backendHost}/article/all/table/disease_condition`)
     .then(res => {
+      console.log('getdisease')
         this.setState({
           diseaseList:res.data
         })
@@ -496,9 +521,9 @@ showModal() {
     .catch(err => null)
 }
 
+ 
 
-
-fetchParentDiseaseId(id) {
+  fetchParentDiseaseId(id) { 
   return fetch(`${backendHost}/sponsored/parent_disease_id/${id}`)
     .then((res) => res.json())
     .then((json) => {
@@ -509,12 +534,15 @@ fetchParentDiseaseId(id) {
       console.log('parent_dc_id:', json.parent_dc_id);
       
         if(json.parent_dc_id != 0){
-        setTimeout(() => {
+      
           console.log('delayd not null')
          
           this.fetchData(json.parent_dc_id);
           
-        }, 5000);
+          this.setState({
+            isAdsLoaded:true
+          })
+         
       }
       
 
@@ -528,6 +556,7 @@ diseasePosts(dcName) {
   return fetch(`${backendHost}/isearch/${dcName}`)
     .then((res) => res.json())
     .then((json) => {
+      console.log('disease posts')
 
       var temp= []
       json.forEach(i => {
@@ -557,7 +586,7 @@ componentDidMount() {
       });
   },);
 }
-  componentDidMount() {
+    componentDidMount() {
   
     window.scrollTo(0, 0);
     this.fetchBlog()
@@ -567,8 +596,10 @@ componentDidMount() {
     
     this.getDisease()
     this.pageLoading()
-    this.fetchParentDiseaseId( this.props.match.params.id.split('-')[0])
 
+    window.onload = () => {
+    this.fetchParentDiseaseId( this.props.match.params.id.split('-')[0])
+    }
 
     const canonicalLink = document.createElement('link');
     canonicalLink.rel = 'canonical';
@@ -697,19 +728,25 @@ componentDidMount() {
 
                  
                            
-                            {
+                            { 
+                            //  isAdsLoaded?
                               this.state.ads?
                            
                               this.state.ads!=="https://uat.all-cures.com:444All Ads are Served"?
-                              <img className="pl-4 mt-5" id="left-menu-ad" src={this.state.ads} alt="adjjjj"/>:
+                             <div className="d-flex justify-content-center">
+                               <img className="mt-5" id="left-menu-ad" src={this.state.ads} alt="adjjjj"
+                              onClick={() => this.handleClick(this.state.adId)}
+                               />
+                               </div>:
                               <button className="btn pl-4 mt-2 " id="left-menu-ad" data-toggle="modal"data-target=".bd-example-modal-lg">
-                                 <img className="pl-4" src={PersianAd} alt="adhhh"/>
-                                 </button>:
-                                 <button className="btn pl-4 mt-2 " id="left-menu-ad" data-toggle="modal"data-target=".bd-example-modal-lg">
-                                 <img className="pl-4" src={PersianAd} alt="adhhh"/>
-                                 </button>
+                                 <img className="pl-4" src={PersianAd} alt="adhhh"
+                                 />
+                                 </button>:null
+                                //  <button className="btn pl-4 mt-2 " id="left-menu-ad" data-toggle="modal"data-target=".bd-example-modal-lg">
+                                //  <img className="pl-4" src={PersianAd} alt="adhhh"/>
+                                //  </button> 
                             
-                           
+                          //  :null
                            } 
 
 
