@@ -84,7 +84,7 @@ export default function UpdatePromo(props) {
   };
 
   const getAds = () => {
-    axios.get(`${backendHost}/article/all/table/AdsTypes`).then((res) => {
+    axios.get(`${backendHost}/sponsored/list/adsslottypes`).then((res) => {
       setAdsList(res.data);
     }).catch((err) => {
       console.log(err);
@@ -100,7 +100,7 @@ export default function UpdatePromo(props) {
   };
 
   const getAdsTypes = ()=>{
-    axios.get(`${backendHost}/sponsored/list/adstargettypes`).then((res) => {
+    axios.get(`${backendHost}/sponsored/list/adstypes`).then((res) => {
       setTargetList(res.data);
     }).catch((err) =>{
       console.log(err);
