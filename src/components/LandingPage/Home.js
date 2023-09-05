@@ -82,7 +82,8 @@ class Home extends Component {
             name: '',
             subscription: '',  
          },
-         ads:''
+         ads:'',
+         adId:'',
         
     };      
   }
@@ -90,10 +91,12 @@ class Home extends Component {
  
  
  componentDidMount(){
+  
     if(userId){
        this.setState({modalShow: false})
     }
    const loadUsers = async () => {
+      
       await axios.get(`${backendHost}/city/all`)
       .then(res => {
          this.setState ({
@@ -149,7 +152,8 @@ class Home extends Component {
    }
  }
 
- diseasePosts(){                     // For specific cures like "/cures/diabetes"
+ diseasePosts(){                   // For specific cures like "/cures/diabetes"
+   console.log('not delayed')
    fetch(`${backendHost}/isearch/${this.state.param.type}`)
      .then((res) => res.json())
      .then((json) => {
@@ -166,8 +170,22 @@ class Home extends Component {
  fetchData = async () => {
    try {
      const response = await axios.get(`${backendHost}/sponsored/list/ads/url/1`);
-     console.log("esponse API call successful",response); // Check if this log is printed
-      
+     console.log("response API call successful",response); // Check if this log is printed
+        
+
+     if(response.data!= 'All Ads are Served'){
+      const id=response.data.split('/')[3]
+      const ids=id.match(/\d+/)
+       const adsId=ids[0]
+
+      console.log(adsId)
+         console.log(id)
+
+         this.setState({
+           adId:adsId
+         });
+
+      }
 
     const newResponse=`https://uat.all-cures.com:444${response.data}`
     console.log(newResponse)
@@ -182,14 +200,21 @@ class Home extends Component {
      });
    }
  };
-    componentDidMount(){
-     
-      setTimeout(() => {
-         console.log('delay')
-         this.fetchData();
-     }, 5000);
+          componentDidMount(){
      
 
+            window.onload = () => {
+         console.log('delay')
+           this.fetchData();
+            }
+     
+
+    }
+
+    handleClick = (ad) => {
+  
+      console.log('Image clicked!',ad);
+      axios.put(`${backendHost}/ads/clicks/${ad}`)
     }
          
 
@@ -605,7 +630,9 @@ class Home extends Component {
                            this.state.ads?
                            this.state.ads!=="https://uat.all-cures.com:444All Ads are Served"?
                            <div className="container d-flex justify-content-center">
-                           <img className=" mb-5 ml-1" id="left-menu-ad" src={this.state.ads} alt="ad"/> </div>:
+                           <img className=" mb-5 ml-1" id="left-menu-ad" src={this.state.ads} alt="ad"
+                            onClick={() => this.handleClick(this.state.adId)}
+                           /> </div>:
                            null:null
                          
                      
