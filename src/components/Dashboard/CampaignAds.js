@@ -104,7 +104,7 @@ const getHospital = () => {
 }
 
 const getAds = () => {
-    axios.get(`${backendHost}/article/all/table/AdsTypes `)
+    axios.get(`${backendHost}/sponsored/list/adsslottypes `)
     .then(res => {
         
         setAdsList(res.data)
