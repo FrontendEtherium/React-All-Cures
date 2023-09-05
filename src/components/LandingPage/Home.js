@@ -214,7 +214,7 @@ class Home extends Component {
     handleClick = (ad) => {
   
       console.log('Image clicked!',ad);
-      axios.put(`${backendHost}/ads/clicks/${ad}`)
+      axios.put(`${backendHost}/sponsored/ads/clicks/${ad}`)
     }
          
 
