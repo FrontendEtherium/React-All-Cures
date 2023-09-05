@@ -36,13 +36,14 @@ const AllAdds = () => {
                             <div className="card-title h4"><span className="font-weight-bold">CampaignName: </span>{i.CampaignName}</div>
                             {/* <div className="card-body"> */}
                             <div className="pb-2"><span className="font-weight-bold">DiseaseConditionName:</span> {i.DiseaseConditionName}</div>
-                            <div className="pb-2"><span className="font-weight-bold">AdTypeName:</span> {i.AdTypeName}</div>
+                            <div className="pb-2"><span className="font-weight-bold">AdTypeName:</span> {i.SlotName}</div>
 
                                 <div className="pb-2"><span className="font-weight-bold">Ad Description:</span> {i.AdDescription}</div>
                                 <div className="pb-2"><span className="font-weight-bold">Ad Count:</span> {i.AdCount}</div>
                                <div className="pb-2"><span className="font-weight-bold">AdTitle:</span> {i.AdTitle}</div>
                                 <div className="pb-2"><span className="font-weight-bold">Start Date:</span> {i.StartDate}</div>
                                 <div className="pb-2"><span className="font-weight-bold">End Date:</span> {i.EndDate}</div>
+                                <div className="pb-2"><span className="font-weight-bold">Ad Target Name:</span> {i.AdTypeName}</div>
                         
                                
 
@@ -71,13 +72,14 @@ const AllAdds = () => {
                             <div className="card-title h4"><span className="font-weight-bold">CampaignName: </span>{i.CampaignName}</div>
                             {/* <div className="card-body"> */}
                             <div className="pb-2"><span className="font-weight-bold">DiseaseConditionName:</span> {i.DiseaseConditionName}</div>
-                            <div className="pb-2"><span className="font-weight-bold">AdTypeName:</span> {i.AdTypeName}</div>
+                            <div className="pb-2"><span className="font-weight-bold">AdTypeName:</span> {i.SlotName}</div>
 
                                 <div className="pb-2"><span className="font-weight-bold">Ad Description:</span> {i.AdDescription}</div>
                                 <div className="pb-2"><span className="font-weight-bold">Ad Count:</span> {i.AdCount}</div>
                                <div className="pb-2"><span className="font-weight-bold">AdTitle:</span> {i.AdTitle}</div>
                                 <div className="pb-2"><span className="font-weight-bold">Start Date:</span> {i.StartDate}</div>
                                 <div className="pb-2"><span className="font-weight-bold">End Date:</span> {i.EndDate}</div>
+                                <div className="pb-2"><span className="font-weight-bold">Ad Target Name:</span> {i.AdTypeName}</div>
                         
                                
 
@@ -103,4 +105,4 @@ const AllAdds = () => {
   )
 }
 
-export default AllAdds
+export default AllAdds
