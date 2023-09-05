@@ -170,6 +170,8 @@ showModal() {
       fetch(`${backendHost}/article/title/${id}`)
       .then((res) => res.json())
       .then((json) => {
+
+         
         this.setState({
           isLoaded: true,
           items: json,
@@ -507,7 +509,7 @@ showModal() {
 handleClick = (ad) => {
   
   console.log('Image clicked!',ad);
-  axios.put(`${backendHost}/ads/clicks/${ad}`)
+  axios.put(`${backendHost}/sponsored/ads/clicks/${ad}`)
 }
  getDisease = () => {
     axios.get(`${backendHost}/article/all/table/disease_condition`)
