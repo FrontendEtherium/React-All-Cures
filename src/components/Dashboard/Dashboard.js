@@ -21,7 +21,6 @@ import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-//import { mainListItems, secondaryListItems } from './listItems';
 import Promo from './Promo/CreatePromo'
 import GetPromo from './Promo/GetPromo';
 import UpdatePromo from './Promo/UpdatePromo';
@@ -40,8 +39,18 @@ import { backendHost } from '../../api-config';
 import { ImageUpload } from './ImageUpload';
 import createTypography from '@material-ui/core/styles/createTypography';
 import EditTip from './EditTip';
-import Tip from './Tip'
+import Tip from './Tip';
 import TipDetails from "./TipDetails";
+import CreateCompany from "./CreateCompany";
+import Campign from "./Campign";
+import CampaignAds from "./CampaignAds";
+import CompanyList from './Campaign/CompanyList';
+import CampaignList from './Campaign/CampaignList';
+import CampaignAdvs from './Campaign/CampaignAdvs';
+import UpdateCompany from './Campaign/UpdateCompany';
+import UpdateCampaign from './Campaign/UpdateCampaign';
+import UpdateAdvs from './Campaign/UpdateAdvs';
+
 
 
 
@@ -433,8 +442,63 @@ function RenderComponent(props){
   // 
   } 
   
+  else if(props.search.split('=')[0] === '?createcompany'){
+    return(
+      <CreateCompany search={props.search}/>
+    )
   
+  } 
   
+  else if(props.search.split('=')[0] === '?createcampaign'){
+    return(
+      <Campign search={props.search}/>
+    )
+  
+  } 
+
+  else if(props.search.split('=')[0] === '?createcampaignads'){
+    return(
+      <CampaignAds search={props.search}/>
+    )
+  
+  } 
+
+  else if(props.search.split('=')[0] === '?companylist'){
+    return(
+      <CompanyList search={props.search}/>
+    )
+  
+  }
+  else if(props.search.split('=')[0] === '?campaignlist'){
+    return(
+      <CampaignList search={props.search}/>
+    )
+  
+  }
+  else if(props.search.split('=')[0] === '?campaignadslist'){
+    return(
+      <CampaignAdvs search={props.search}/>
+    )
+  
+  }
+  else if(props.search.split('=')[0] === '?updatecampaignads'){
+    return(
+      <UpdateAdvs search={props.search}/>
+    )
+  
+  }
+  else if(props.search.split('=')[0] === '?updatecampaignlist'){
+    return(
+      <UpdateCampaign search={props.search}/>
+    )
+  
+  }
+  else if(props.search.split('=')[0] === '?updatecompany'){
+    return(
+      <UpdateCompany search={props.search}/>
+    )
+  
+  }
   else if(props.search.split('=')[0] === '?upload-img'){
     return(
       <ImageUpload search = {props.search}/>

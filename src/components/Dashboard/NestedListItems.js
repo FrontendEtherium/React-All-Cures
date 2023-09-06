@@ -30,6 +30,8 @@ export default function NestedListItems() {
   const [openn, setOpenn] = React.useState(false);
   const [opennn, setOpennn] = React.useState(false);
   const [opennnn, setOpennnn] = React.useState(false);
+  const [opennnnn, setOpennnnn] = React.useState(false);
+
   const [openx, setOpenx] = React.useState(false);
   const handleClick4 = () => {
     setOpenx(!openx);
@@ -47,6 +49,10 @@ setOpenn(!openn);
   const handleClick3 = () => {
     setOpennnn(!opennnn);
   };
+  const handleClick5 = () => {
+    setOpennnnn(!opennnnn);
+  };
+
 
   return (
     <List
@@ -317,7 +323,78 @@ setOpenn(!openn);
         </List>
       </Collapse>
      
+      <ListItem button onClick={handleClick5} style={{backgroundColor:'lightblue'}}>
+        <ListItemIcon>
+        <BarChartIcon />
+        </ListItemIcon>
+        <ListItemText primary="ADVS SECTION" />
+        {opennnnn ? <ExpandLess /> : <ExpandMore />}
+      </ListItem>
+      <Collapse in={opennnnn} timeout="auto" >
+        <List component="div" disablePadding>
 
+          <ListItem button>
+            <ListItemIcon>
+              <BarChartIcon />
+            </ListItemIcon>
+            {/* <ListItemText primary="Reports" /> */}
+            <Link to="/dashboard?createcompany">
+              <ListItemText primary="Create Company" />
+            </Link>
+          </ListItem>
+
+          <ListItem button>
+            <ListItemIcon>
+              <BarChartIcon />
+            </ListItemIcon>
+            {/* <ListItemText primary="Reports" /> */}
+            <Link to="/dashboard?companylist">
+              <ListItemText primary="Company List" />
+            </Link>
+          </ListItem>
+         
+          <ListItem button>
+            <ListItemIcon>
+              <BarChartIcon />
+            </ListItemIcon>
+            {/* <ListItemText primary="Reports" /> */}
+            <Link to="/dashboard?createcampaign">
+              <ListItemText primary="Create Campaign" />
+            </Link>
+          </ListItem>
+
+          <ListItem button>
+            <ListItemIcon>
+              <BarChartIcon />
+            </ListItemIcon>
+            {/* <ListItemText primary="Reports" /> */}
+            <Link to="/dashboard?campaignlist">
+              <ListItemText primary="Campaign List" />
+            </Link>
+          </ListItem>
+
+          <ListItem button>
+            <ListItemIcon>
+              <BarChartIcon />
+            </ListItemIcon>
+            {/* <ListItemText primary="Reports" /> */}
+            <Link to="/dashboard?createcampaignads">
+              <ListItemText primary="Create Campaign Ads" />
+            </Link>
+          </ListItem>
+
+          <ListItem button>
+            <ListItemIcon>
+              <BarChartIcon />
+            </ListItemIcon>
+            {/* <ListItemText primary="Reports" /> */}
+            <Link to="/dashboard?campaignadslist">
+              <ListItemText primary="Campaign Ads List" />
+            </Link>
+          </ListItem>
+
+        </List>
+      </Collapse>
       
     </List>
   );
