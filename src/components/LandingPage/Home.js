@@ -37,6 +37,8 @@ import { userAccess } from '../UserAccess'
 import ArticlePreview from './ArticlePreview'
 import TrendingArticles from './TrendingArticles';
 import FeaturedArticles from './FeaturedArticles';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+
 env.REACT_APP = 'http://117.241.171.115:8080/cures';
 
 class Home extends Component {
@@ -79,7 +81,9 @@ class Home extends Component {
             Pincode: '',
             name: '',
             subscription: '',  
-         }
+         },
+         ads:'',
+         adId:'',
         
     };      
   }
@@ -87,10 +91,12 @@ class Home extends Component {
  
  
  componentDidMount(){
+  
     if(userId){
        this.setState({modalShow: false})
     }
    const loadUsers = async () => {
+      
       await axios.get(`${backendHost}/city/all`)
       .then(res => {
          this.setState ({
@@ -146,7 +152,8 @@ class Home extends Component {
    }
  }
 
- diseasePosts(){                     // For specific cures like "/cures/diabetes"
+ diseasePosts(){                   // For specific cures like "/cures/diabetes"
+   console.log('not delayed')
    fetch(`${backendHost}/isearch/${this.state.param.type}`)
      .then((res) => res.json())
      .then((json) => {
@@ -159,6 +166,58 @@ class Home extends Component {
       null
       )
  }
+
+ fetchData = async () => {
+   try {
+     const response = await axios.get(`${backendHost}/sponsored/list/ads/url/1`);
+     console.log("response API call successful",response); // Check if this log is printed
+        
+
+     if(response.data!= 'All Ads are Served'){
+      const id=response.data.split('/')[3]
+      const ids=id.match(/\d+/)
+       const adsId=ids[0]
+
+      console.log(adsId)
+         console.log(id)
+
+         this.setState({
+           adId:adsId
+         });
+
+      }
+
+    const newResponse=`https://uat.all-cures.com:444${response.data}`
+    console.log(newResponse)
+     this.setState({
+      //  ads: response.data,
+          ads: newResponse,
+          
+     });
+   } catch (error) {
+     this.setState({
+       error: error.message,
+     });
+   }
+ };
+          componentDidMount(){
+     
+
+            window.onload = () => {
+         console.log('delay')
+           this.fetchData();
+            }
+     
+
+    }
+
+    handleClick = (ad) => {
+  
+      console.log('Image clicked!',ad);
+      axios.put(`${backendHost}/sponsored/ads/clicks/${ad}`)
+    }
+         
+
    
      postSubscribtion() {
         var phoneNumber = this.state.value.split('+')[1];
@@ -299,28 +358,33 @@ class Home extends Component {
                   <div className="container">
                      <div className="row">
                         <div className="header" style={{width:"100%"}}>
-                           <div className=" logo mt-3"> 
+                           <div className=" logo mt-3 ml-4" > 
                               <Link to='/home'>
                                 <img src={Heart} alt="All Cures Logo"/>
                                 <span>All Cures</span>
                               </Link>
                            </div>
-                           <div class="fgrow"><Navbar bg="light" expand="lg">
-  <Container>
+                          
+                  <div class="fgrow">
+                <Navbar bg="light" expand="lg">
+                  <Container>
   
-    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-    <Navbar.Collapse id="basic-navbar-nav"  >
-      <Nav className="me-auto">
-        <Nav.Link href="/home" id="basic-nav-dropdown">Home</Nav.Link>
+              <Navbar.Toggle aria-controls="basic-navbar-nav" />
+              <Navbar.Collapse id="basic-navbar-nav"  >
+               <Nav className="me-auto">
+                  <Nav.Link href="/home" id="basic-nav-dropdown">Home</Nav.Link>
        
-        <NavDropdown title="Categories" id="basic-nav-dropdown" renderMenuOnMount={true}>
+               <NavDropdown title={<span>Categories <ArrowDropDownIcon /></span>} id="basic-nav-dropdown"renderMenuOnMount={true} >
           <NavDropdown.Item href="/searchcategory/disease/1">Arthritis</NavDropdown.Item>
           <NavDropdown.Item href="/searchcategory/disease/74"> Diabetes</NavDropdown.Item>
           <NavDropdown.Item href="/searchcategory/disease/50">Hypertension</NavDropdown.Item>
           <NavDropdown.Divider />
           <NavDropdown.Item href="/allcategory">View More</NavDropdown.Item>
         </NavDropdown>
-        <NavDropdown title="Trending Cures" id="basic-nav-dropdown" renderMenuOnMount={true}>
+
+
+        
+        <NavDropdown  title={<span> Trending Cures<ArrowDropDownIcon /></span>} id="basic-nav-dropdown" renderMenuOnMount={true}>
           <NavDropdown.Item href="/searchmedicine/medicinetype/1">Ayurveda</NavDropdown.Item>
           <NavDropdown.Item href="/searchmedicine/medicinetype/4"> Chinese Medicine</NavDropdown.Item>
           <NavDropdown.Item href="/searchmedicine/medicinetype/3">Persian</NavDropdown.Item>
@@ -333,10 +397,12 @@ class Home extends Component {
         </NavDropdown>
        
         <Nav.Link href="/AboutUs" id="basic-nav-dropdown">About Us</Nav.Link>
+        
       </Nav>
     </Navbar.Collapse>
   </Container>
-</Navbar></div>
+</Navbar>
+</div>
                            <form onSubmit={(e) => this.articleSearch(e)} className="searchHeader" id="searchArticle">
                               <div className="col-md-12 row">
                                  <div className="col-md-10 p-0">    
@@ -372,7 +438,7 @@ class Home extends Component {
                               </div>
                            </form>
 
-                           <div className="loginSign">
+                           <div className="loginSign d-flex">
                            {
                               userAccess?
                               <Link className="btn mr-2 primary-btn-color loginSignbtn color-blue-dark" id="Article" to="/article">
@@ -541,6 +607,38 @@ class Home extends Component {
          </div>
       </section>
 
+
+
+                      
+
+{/* {
+                           
+                              this.state.ads!=="https://uat.all-cures.com:444All Ads are Served" ? (
+                                 <div className="container">
+                                    <div>
+                              <img className="mb-4"  src={this.state.ads}/>
+                              </div>
+                              </div>
+                              ):null
+                            
+                            
+         }   */}
+
+
+{
+                           
+                           this.state.ads?
+                           this.state.ads!=="https://uat.all-cures.com:444All Ads are Served"?
+                           <div className="container d-flex justify-content-center">
+                           <img className=" mb-5 ml-1" id="left-menu-ad" src={this.state.ads} alt="ad"
+                            onClick={() => this.handleClick(this.state.adId)}
+                           /> </div>:
+                           null:null
+                         
+                     
+                        } 
+
+              
 
       <section className="mb-5 mt-2">
       <div className="container" id='trends'>
