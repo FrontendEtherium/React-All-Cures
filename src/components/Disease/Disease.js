@@ -98,6 +98,8 @@ class Disease extends Component {
       modalState: false,
       url:window.location.href,
       ads:'',
+      isAdsLoaded: false,
+      adId:''
     };
     this.handleShows = this.handleShows.bind(this);
    
@@ -168,6 +170,8 @@ showModal() {
       fetch(`${backendHost}/article/title/${id}`)
       .then((res) => res.json())
       .then((json) => {
+
+         
         this.setState({
           isLoaded: true,
           items: json,
@@ -232,32 +236,21 @@ showModal() {
   }
 
 
-  // fetchData = async () => {
+  //  fetchDatas = async (disease_condition_id) => {
+  //   console.log('DC_cond',disease_condition_id)
   //   try {
+  //     const response = await axios.get(`${backendHost}/sponsored/list/ads/url/2`,{
+  //     params: {
+  //       DC_Cond: disease_condition_id,
+  //     },
+  //   })
+
     
-  //     const response = await axios.get('https://uat.all-cures.com:444/cures/sponsored/list/ads/url');
-  //     console.log("aaaaa")
-
-  //     this.setState({
-  //       ads: response.data,
-  //     });
-  //   } catch (error) {
-  //     this.setState({
-  //       error: error.message,
-
-  //     });
-      
-  //   }
-   
-  // };
-         
-  // fetchData = async () => {
-  //   try {
-  //     const response = await axios.get(`${backendHost}/sponsored/list/ads/url/2`);
   //     console.log("API call successful"); // Check if this log is printed
+  //     const newResponse=`https://uat.all-cures.com:444${response.data}`
 
   //     this.setState({
-  //       ads: response.data,
+  //       ads: newResponse,
   //     });
   //   } catch (error) {
   //     this.setState({
@@ -265,11 +258,51 @@ showModal() {
   //     });
   //   }
   // };
-  //    componentDidMount(){
-      
-  //     this.fetchData();
 
-  //    }
+  fetchData = async (parent_dc_id) => {
+    console.log('DC_Cond:', parent_dc_id); // Check if parent_dc_id is passed correctly
+    try {
+      // Send parent_dc_id as a request parameter
+      const response = await axios.get(`${backendHost}/sponsored/list/ads/url/2`, {
+        params: {
+          DC_Cond: parent_dc_id,
+        },
+      });
+      console.log("API call successful");
+      
+      // Check the response data
+      console.log("Response data:", response.data);
+
+      if(response.data!= 'All Ads are Served'){
+      const id=response.data.split('/')[3]
+      const ids=id.match(/\d+/)
+       const adsId=ids[0]
+
+      console.log(adsId)
+         console.log(id)
+
+         this.setState({
+           adId:adsId
+         });
+
+      }
+      const newResponse = `https://uat.all-cures.com:444${response.data}`;
+  
+      // Check if state is being updated correctly
+      console.log("New Response:", newResponse);
+  
+      this.setState({
+
+       ads: newResponse,
+      
+      });
+    } catch (error) {
+      this.setState({
+        error: error.message,
+      });
+    }
+  };
+  
 
   postSubscribtion() {
     //  var mobileNumber = this.state.mobile.split('+')
@@ -397,6 +430,7 @@ showModal() {
     fetch(`${backendHost}/isearch/treatmentregions/${this.state.items.disease_condition_id}`)       // /isearch/treatmentregions/${this.state.diseaseCondition}
     .then((res) => res.json())
     .then((json) => {
+      console.log('regional posts')
       this.setState({
         regionPostsLoaded: true,
         regionalPost: json,
@@ -471,9 +505,16 @@ showModal() {
     })
     
 }
+
+handleClick = (ad) => {
+  
+  console.log('Image clicked!',ad);
+  axios.put(`${backendHost}/sponsored/ads/clicks/${ad}`)
+}
  getDisease = () => {
     axios.get(`${backendHost}/article/all/table/disease_condition`)
     .then(res => {
+      console.log('getdisease')
         this.setState({
           diseaseList:res.data
         })
@@ -482,38 +523,72 @@ showModal() {
     .catch(err => null)
 }
 
-//  pageLoad = async () => {
-//   await axios.post(`${backendHost}/{article_id}/{userId}`)
-//   .then(res => {
-//      this.setState({
-//         afterSubmitLoad: false
-//      })
-     
-//     })
-//     .catch(err => {   
-//   })
-// }
-// pageLoad();
+ 
 
-diseasePosts(dcName) {                     // For specific blogs like "/blogs/diabetes"
-  fetch(`${backendHost}/isearch/${dcName}`)
-  .then((res) => res.json())
-  .then((json) => {
-    // setLoaded(true)
-    var temp= []
-    json.forEach(i => {
-      if(i.pubstatus_id === 3){
-        temp.push(i)
+  fetchParentDiseaseId(id) { 
+  return fetch(`${backendHost}/sponsored/parent_disease_id/${id}`)
+    .then((res) => res.json())
+    .then((json) => {
+        
+      console.log('recieved',id)
+       console.log(json.parent_dc_id)
+     
+      console.log('parent_dc_id:', json.parent_dc_id);
+      
+        if(json.parent_dc_id != 0){
+      
+          console.log('delayd not null')
+         
+          this.fetchData(json.parent_dc_id);
+          
+          this.setState({
+            isAdsLoaded:true
+          })
+         
       }
-    });
-    this.setState({
-      carouselItems: temp
+      
+
     })
-  })
-  .catch(err => null)
+    .catch((err) => null);
 }
 
-  componentDidMount() {
+
+
+diseasePosts(dcName) {
+  return fetch(`${backendHost}/isearch/${dcName}`)
+    .then((res) => res.json())
+    .then((json) => {
+      console.log('disease posts')
+
+      var temp= []
+      json.forEach(i => {
+        if(i.pubstatus_id === 3){
+          temp.push(i)
+        }
+      });
+      this.setState({
+        carouselItems: temp
+      })
+      
+    })
+    .catch((err) => null);
+}
+
+
+componentDidMount() {
+  setTimeout(() => {
+    console.log('delay');    
+    this.diseasePosts(this.state.items.dc_name)
+      .then(() => {
+    
+      })
+      .catch((error) => {
+        // Handle any errors here
+        console.error(error);
+      });
+  },);
+}
+    componentDidMount() {
   
     window.scrollTo(0, 0);
     this.fetchBlog()
@@ -523,7 +598,10 @@ diseasePosts(dcName) {                     // For specific blogs like "/blogs/di
     
     this.getDisease()
     this.pageLoading()
-    // this.fetchData();
+
+    setTimeout (() =>{
+    this.fetchParentDiseaseId( this.props.match.params.id.split('-')[0])
+    },1000)
 
     const canonicalLink = document.createElement('link');
     canonicalLink.rel = 'canonical';
@@ -643,46 +721,38 @@ diseasePosts(dcName) {                     // For specific blogs like "/blogs/di
           }    
             </div>
             
-              {/* {
-              (demo?<span style={{width:"20%"}}><img src="https://th.bing.com/th/id/OIP.aSZQ5_JSSJtWgll70PQLzQAAAA?pid=ImgDet&rs=1"/></span>
-              :<img className="pl-4" src={PersianAd} alt="ad"/>)
-  } */}
+             
 
-
-                {/* {
-                  this.state.ads?(
-                    this.state.ads.map((i)=>(
-                      
-                    
-                      <img key={i.id} src={i.imageUrl} alt="avatar"/>
-                    
-                  ))
-                  ):<img className="pl-4" src={PersianAd} alt="ad"/>
-              
-                } */}
-
-
-
-        
-
+{/* 
                     <button className="btn pl-4 mt-2 " id="left-menu-ad" data-toggle="modal"data-target=".bd-example-modal-lg">
                                  <img className="pl-4" src={PersianAd} alt="ad"/>
-                                 </button>
+                                 </button> */}
 
                  
                            
-                           {/* {
-                            this.state.ads?(
-                              this.state.ads!=="All Ads are Served"?
-                              <img className="pl-5 mt-5" id="left-menu-ad" src={this.state.ads} alt="ad"/>:
+                            { 
+                            //  isAdsLoaded?
+                              this.state.ads?
+                           
+                              this.state.ads!=="https://uat.all-cures.com:444All Ads are Served"?
+                             <div className="d-flex justify-content-center">
+                               <img className="mt-5" id="left-menu-ad" src={this.state.ads} alt="adjjjj"
+                              onClick={() => this.handleClick(this.state.adId)}
+                               />
+                               </div>:
                               <button className="btn pl-4 mt-2 " id="left-menu-ad" data-toggle="modal"data-target=".bd-example-modal-lg">
-                                 <img className="pl-4" src={PersianAd} alt="ad"/>
-                                 </button>
-                            )
-                            :  <button className="btn pl-4 mt-2 " id="left-menu-ad" data-toggle="modal"data-target=".bd-example-modal-lg">
-                            <img className="pl-4" src={PersianAd} alt="ad"/>
-                            </button>
-                           } */}
+                                 <img className="pl-4" src={PersianAd} alt="adhhh"
+                                 />
+                                 </button>:null
+                                //  <button className="btn pl-4 mt-2 " id="left-menu-ad" data-toggle="modal"data-target=".bd-example-modal-lg">
+                                //  <img className="pl-4" src={PersianAd} alt="adhhh"/>
+                                //  </button> 
+                            
+                          //  :null
+                           } 
+
+
+
 
 
             
@@ -967,6 +1037,21 @@ diseasePosts(dcName) {                     // For specific blogs like "/blogs/di
                Add To Favourite
              </Button> */}
 
+
+                                           
+{
+                userAccess?
+                  <div id="favbutton">   
+                  {
+                          this.state.favourite.length === 0  ?
+                     <Favourite  article_id={this.props.match.params.id.split('-')[0]}/>
+                     :<Favourites  article_id={this.props.match.params.id.split('-')[0]}/>
+                  }
+                     </div>
+                : null
+              }
+
+
           </div>
 
            
@@ -985,6 +1070,8 @@ diseasePosts(dcName) {                     // For specific blogs like "/blogs/di
               }
                       
                       <span id="docRate">
+
+                         
           <ArticleRating article_id={this.props.match.params.id.split('-')[0]} />
           </span>
 
@@ -999,17 +1086,22 @@ diseasePosts(dcName) {                     // For specific blogs like "/blogs/di
                   </>
                 : null
               }
+                              
+                              
+{/*                               
                                     {
                 userAccess?
-                  <>   
+                  <div id="favbutton">   
                   {
                           this.state.favourite.length === 0  ?
                      <Favourite  article_id={this.props.match.params.id.split('-')[0]}/>
                      :<Favourites  article_id={this.props.match.params.id.split('-')[0]}/>
                   }
-                     </>
+                     </div>
                 : null
-              }
+              } */}
+              
+
 
                <h4>Source :  <a href="https://all-cures.com/Editorial">https://all-cures.com/Editorial</a></h4>
              
