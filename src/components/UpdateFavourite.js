@@ -37,7 +37,8 @@ const favouriteForm = (e) => {
 
                                         {
                                             alert?
-                                                <Alert variant="success" className="h6 mx-3 success">Remove From Your Favourite List successfully!!</Alert>
+                                                
+                                               <Alert variant="success" className="h6 mx-3 success" id="success-fav">Removed From Your Favourite List successfully!!</Alert>
                                                 : null
                                         }
                                 
