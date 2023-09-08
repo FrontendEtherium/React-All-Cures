@@ -2459,7 +2459,9 @@ padding:0.22rem;
   left:-15%;
  
 }
-
+#success-fav{
+  bottom:-175px;
+}
 /* {
   box-sizing: border-box;
 } */
