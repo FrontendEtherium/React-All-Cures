@@ -98,7 +98,7 @@ class Disease extends Component {
       modalState: false,
       url:window.location.href,
       ads:'',
-      isAdsLoaded: false,
+      isWindowLoaded: false,
       adId:''
     };
     this.handleShows = this.handleShows.bind(this);
@@ -144,53 +144,115 @@ handleShows() {
 showModal() {
   this.setState({ modalState: !this.state.modalState });
 }
-  fetchBlog = () => {
-    var id = this.props.match.params.id.split('-')[0]
-    if(/^[0-9]+$/.test (id)){           // Test if URL contains article_id or TITLE
-      fetch(`${backendHost}/article/${id}`)       // if URL contains article_id
-      .then((res) => res.json())
-      .then((json) => {
-        this.setState({
-          isLoaded: true,
-          items: json,
-        }, 
-        () => {
-          this.fetchCountriesCures()
-          this.regionalPosts()
-          this.diseasePosts(this.state.items.dc_name)
-          this.comments(this.props.match.params.id.split('-')[0])
-          this.getRating(this.props.match.params.id.split('-')[0])
-          this.getRate(this.props.match.params.id.split('-')[0])
-          this.getFavourite(this.props.match.params.id.split('-')[0])
-          document.title = `${this.state.items.title}`
-        });
-      });
-    } else {                                                    // if URL contains title
 
-      fetch(`${backendHost}/article/title/${id}`)
-      .then((res) => res.json())
-      .then((json) => {
 
-         
-        this.setState({
-          isLoaded: true,
-          items: json,
-        }, 
-        () => {
-          this.fetchCountriesCures()
-          this.regionalPosts()
-          this.diseasePosts(this.state.items.dc_name)
-          this.comments(this.props.match.params.id.split('-')[0])
-          this.getRating(this.props.match.params.id.split('-')[0])
-          this.getRate(this.props.match.params.id.split('-')[0])
-          this.getFavourite(this.props.match.params.id.split('-')[0])
-          document.title = `${this.state.items.title}`
-        });
-      });
-    }
+
+fetchBlog = async() => {
+  var id = this.props.match.params.id.split('-')[0]
+  if(/^[0-9]+$/.test (id)){           // Test if URL contains article_id or TITLE
+
+    Promise.all([
+      fetch(`${backendHost}/article/${id}`) // if URL contains article_id
+        .then((res) => res.json()),
+      fetch(`${backendHost}/sponsored/parent_disease_id/${this.props.match.params.id.split('-')[0]}`)
+        .then((res) => res.json()),
+        
+    ])
     
-  }
+    
+    .then(([json, json_new]) => {
 
+
+      
+      console.log(json)
+     
+        this.setState({
+          isLoaded: true,
+          items: json,
+        }, () => {
+          this.regionalPosts(json.disease_condition_id);
+      this.diseasePosts(json.dc_name);
+      
+          this.fetchCountriesCures();
+          this.comments(this.props.match.params.id.split('-')[0]);
+          this.getRating(this.props.match.params.id.split('-')[0]);
+          this.getRate(this.props.match.params.id.split('-')[0]);
+          this.getFavourite(this.props.match.params.id.split('-')[0]);
+          document.title = `${this.state.items.title}`;
+        });
+
+        
+      console.log('id', this.props.match.params.id.split('-')[0]);
+      console.log('parent_dc_id:', json_new.parent_dc_id);
+      if (json_new.parent_dc_id !== 0) {
+        console.log('delayed not null');
+        this.fetchData(json_new.parent_dc_id);
+      }
+      
+    });
+  
+  
+  
+  }
+   else {                                                    // if URL contains title
+
+   
+    Promise.all([
+      fetch(`${backendHost}/article/title/${id}`) // if URL contains article_id
+        .then((res) => res.json()),
+      fetch(`${backendHost}/sponsored/parent_disease_id/${this.props.match.params.id.split('-')[0]}`)
+        .then((res) => res.json()),
+       
+    ])
+    
+    
+    .then(([json, json_new]) => {
+
+    
+        this.setState({
+          isLoaded: true,
+          items: json,
+        }, () => {
+          this.regionalPosts(json.disease_condition_id);
+           this.diseasePosts(json.dc_name);
+      
+      
+          this.fetchCountriesCures();
+          this.comments(this.props.match.params.id.split('-')[0]);
+          this.getRating(this.props.match.params.id.split('-')[0]);
+          this.getRate(this.props.match.params.id.split('-')[0]);
+          this.getFavourite(this.props.match.params.id.split('-')[0]);
+          document.title = `${this.state.items.title}`;
+        });
+
+             
+        console.log('id', this.props.match.params.id.split('-')[0]);
+      console.log('parent_dc_id:', json_new.parent_dc_id);
+      if (json_new.parent_dc_id !== 0) {
+        console.log('delayed not null');
+        this.fetchData(json_new.parent_dc_id);
+      }
+      
+    });
+
+    
+    
+    
+  
+  
+  }
+  
+}
+
+
+
+
+
+
+
+
+
+ 
   Alert = (msg) => {
     this.setState({
        showAlert:true,
@@ -426,8 +488,8 @@ showModal() {
       })
       .catch(err => null)
   }
-  regionalPosts(){
-    fetch(`${backendHost}/isearch/treatmentregions/${this.state.items.disease_condition_id}`)       // /isearch/treatmentregions/${this.state.diseaseCondition}
+  regionalPosts(id){
+    fetch(`${backendHost}/isearch/treatmentregions/${id}`)       // /isearch/treatmentregions/${this.state.diseaseCondition}
     .then((res) => res.json())
     .then((json) => {
       console.log('regional posts')
@@ -525,32 +587,32 @@ handleClick = (ad) => {
 
  
 
-  fetchParentDiseaseId(id) { 
-  return fetch(`${backendHost}/sponsored/parent_disease_id/${id}`)
-    .then((res) => res.json())
-    .then((json) => {
+//   fetchParentDiseaseId(id) { 
+//   return fetch(`${backendHost}/sponsored/parent_disease_id/${id}`)
+//     .then((res) => res.json())
+//     .then((json) => {
         
-      console.log('recieved',id)
-       console.log(json.parent_dc_id)
+//       console.log('recieved',id)
+//        console.log(json.parent_dc_id)
      
-      console.log('parent_dc_id:', json.parent_dc_id);
+//       console.log('parent_dc_id:', json.parent_dc_id);
       
-        if(json.parent_dc_id != 0){
+//         if(json.parent_dc_id != 0){
       
-          console.log('delayd not null')
+//           console.log('delayd not null')
          
-          this.fetchData(json.parent_dc_id);
+//           this.fetchData(json.parent_dc_id);
           
-          this.setState({
-            isAdsLoaded:true
-          })
+//           this.setState({
+//             isAdsLoaded:true
+//           })
          
-      }
+//       }
       
 
-    })
-    .catch((err) => null);
-}
+//     })
+//     .catch((err) => null);
+// }
 
 
 
@@ -568,6 +630,7 @@ diseasePosts(dcName) {
       });
       this.setState({
         carouselItems: temp
+        
       })
       
     })
@@ -575,33 +638,44 @@ diseasePosts(dcName) {
 }
 
 
-componentDidMount() {
-  setTimeout(() => {
-    console.log('delay');    
-    this.diseasePosts(this.state.items.dc_name)
-      .then(() => {
+//  componentDidMount() {
+//   setTimeout(() => {
+//     console.log('delay');    
+//     this.diseasePosts(this.state.items.dc_name)
+//       .then(() => {
     
-      })
-      .catch((error) => {
-        // Handle any errors here
-        console.error(error);
-      });
-  },);
-}
+//       })
+//       .catch((error) => {
+//         // Handle any errors here
+//         console.error(error);
+//       });
+//   },);
+// }
+
+
+
+
     componentDidMount() {
   
     window.scrollTo(0, 0);
     this.fetchBlog()
-    this.handleShow()
+     this.handleShow()
     console.log ('url',window.location.href)
     
     
     this.getDisease()
     this.pageLoading()
 
-    window.onload = () => {
-    this.fetchParentDiseaseId( this.props.match.params.id.split('-')[0])
-    }
+    // window.onload = () => {
+    //   this.setState({
+    //     isWindowLoaded:true
+    //   })
+    // this.fetchParentDiseaseId( this.props.match.params.id.split('-')[0])
+    // }
+
+
+   
+
 
     const canonicalLink = document.createElement('link');
     canonicalLink.rel = 'canonical';
@@ -731,7 +805,7 @@ componentDidMount() {
                  
                            
                             { 
-                            //  isAdsLoaded?
+                               
                               this.state.ads?
                            
                               this.state.ads!=="https://uat.all-cures.com:444All Ads are Served"?
@@ -743,12 +817,15 @@ componentDidMount() {
                               <button className="btn pl-4 mt-2 " id="left-menu-ad" data-toggle="modal"data-target=".bd-example-modal-lg">
                                  <img className="pl-4" src={PersianAd} alt="adhhh"
                                  />
-                                 </button>:null
-                                //  <button className="btn pl-4 mt-2 " id="left-menu-ad" data-toggle="modal"data-target=".bd-example-modal-lg">
+                                 </button>
+                                 :null
+                                 
+                                 
+                                // : <button className="btn pl-4 mt-2 " id="left-menu-ad" data-toggle="modal"data-target=".bd-example-modal-lg">
                                 //  <img className="pl-4" src={PersianAd} alt="adhhh"/>
                                 //  </button> 
                             
-                          //  :null
+                         
                            } 
 
 
@@ -1356,4 +1433,4 @@ componentDidMount() {
 }
  
 
-export default Disease;
+export default Disease;
