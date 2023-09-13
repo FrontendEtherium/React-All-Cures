@@ -10,13 +10,48 @@ import axios from 'axios';
 const AllCompanies = () => {
 
   const [allCompanies, setAllCompanies] = useState([])
+  const[searchName,setSearchName]=useState("")
+  const[searchDate,setSearchDate]=useState()
+  const [searchValue, setSearchValue] = useState('');
+  const [searchType, setSearchType] = useState('name'); // Default search type is by name
+
+
+
   const fetchCompany = (e) => {
-      axios.get(`${backendHost}/sponsored/all/companies`)
+    const searchCriteria = {};
+
+
+    if(searchValue){
+
+        if (searchType === 'name') {
+            searchCriteria.CompanyName = searchValue;
+          } else if (searchType === 'date') {
+            searchCriteria.CreateDate = searchValue;
+          }
+      
+          axios
+            .post(`${backendHost}/sponsored/search/companies`, searchCriteria)
+            .then((res) => {
+              setAllCompanies(res.data);
+            })
+            .catch((res) => {
+              return;
+            });
+    
+
+    }
+  
+
+   
+   
+   else{
+    axios.get(`${backendHost}/sponsored/all/companies`)
       .then(res => {
           setAllCompanies(res.data)
       })
       .catch(res => {return})
   }
+}
   useEffect(() => {
       document.title = "All Cures | Dashboard | Sponsered"
       fetchCompany();
@@ -34,6 +69,44 @@ const AllCompanies = () => {
 
   return (
     <>
+
+<div className="row ml-2 mt-3" >
+     
+     {/* <div class="col-5"> 
+     <input type="text" value={searchName}   onChange={(e) => setSearchName(e.target.value)} placeholder="Search With Company Name" className="form-control" required/>
+     </div>
+     <div class="col-5"> 
+     <input type="text" value={searchDate}   onChange={(e) => setSearchDate(e.target.value)} placeholder="Search With Create Date" className="form-control" required/>
+     </div> */}
+
+
+
+<div className="col-md-5">
+          <input
+            type="text"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            placeholder={`Search By ${searchType === 'name' ? 'Company Name' : 'Create Date'}`}
+            className="form-control "
+            required
+          />
+        </div>
+
+        <div className="col-md-3 mt-2">
+          <select
+            className="form-control "
+            value={searchType}
+            onChange={(e) => setSearchType(e.target.value)}
+          >
+            <option value="name"> Search by Company Name</option>
+            <option value="date">Search by Create Date</option>
+          </select>
+        </div>
+
+    
+     <button className=' btn btn-primary btn-sm mt-2 ' style={{ height: '35px' }} id='' onClick={(e) => fetchCompany(e)}>Search  <i class="fa fa-search"></i></button>
+     </div>
+     
 
 <div className="container mb-4">
                 <div className="row">
