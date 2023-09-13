@@ -10,12 +10,53 @@ import axios from 'axios';
 const AllAdds = () => {
 
     const [allAdds, setAllAdds] = useState([])
+    const [searchValue, setSearchValue] = useState('');
+    const [searchType, setSearchType] = useState('name'); // Default search type is by name
+  
+
     const fetchad= (e) => {
+
+        const searchCriteria = {};
+
+    if(searchValue){
+
+        if (searchType === 'name') {
+            searchCriteria.CampaignName = searchValue;
+          } else if (searchType === 'date') {
+            searchCriteria.CreateDate = searchValue;
+          }
+         else if (searchType === 'startDate') {
+             searchCriteria.StartDate = searchValue;
+          }
+          else if (searchType === 'endDate') {
+            searchCriteria.EndDate = searchValue;
+         }
+         else if (searchType === 'type') {
+            searchCriteria.AdTypeName = searchValue;
+         }
+         else if (searchType === 'slot') {
+            searchCriteria.SlotName = searchValue;
+         }
+      
+          axios
+            .post(`${backendHost}/sponsored/search/campaignsads`, searchCriteria)
+            .then((res) => {
+                setAllAdds(res.data);
+            })
+            .catch((res) => {
+              return;
+            });
+    
+
+    }
+    else{
+
         axios.get(`${backendHost}/sponsored/get/all/ads`)
         .then(res => {
             setAllAdds(res.data)
         })
         .catch(res => {return})
+    }
     }
     useEffect(() => {
         document.title = "All Cures | Dashboard | Sponsered"
@@ -25,6 +66,47 @@ const AllAdds = () => {
   
   return (
     <>
+
+         
+<div className="row ml-2 mt-3" >
+
+
+    
+<div className="col-md-5">
+          <input
+            type="text"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            // placeholder={`Search By ${searchType === 'name' ? ' Campaign Name' : 'Create Date'}`}
+
+            placeholder={`Search By ${searchType === 'name' ? 'Campaign Name' : searchType === 'date' ? 'Create Date' : searchType === 'startDate' ? 'Start Date' : searchType === 'endDate' ? 'End Date' : searchType === 'type' ? 'Ad Type Name' : searchType === 'slot' ? 'Slot Name' : ''}`}
+
+            className="form-control "
+            required
+          />
+        </div>
+
+        <div className="col-md-3 mt-2">
+          <select
+            className="form-control "
+            value={searchType}
+            onChange={(e) => setSearchType(e.target.value)}
+          >
+            <option value="name"> Search by Campaign Name</option>
+            <option value="date">Search by Create Date</option>
+            <option value="startDate">Search by Start Date</option>
+            <option value="endDate">Search by End Date</option>
+            <option value="type">Search by Ad Type(Generic/Target)</option>
+            <option value="slot">Search by Slot(Banner/left)</option>
+          </select>
+        </div>
+
+        
+     <button className=' btn btn-primary btn-sm mt-2 ' style={{ height: '35px' }} id='' onClick={(e) => fetchad(e)}>Search  <i class="fa fa-search"></i></button>
+
+    </div>
+           
+
       <div className="container mb-4">
                 <div className="row">
             {
@@ -105,4 +187,4 @@ const AllAdds = () => {
   )
 }
 
-export default AllAdds
+export default AllAdds
