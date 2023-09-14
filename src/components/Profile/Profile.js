@@ -427,7 +427,8 @@ postLead = (id) => {
                                {/* Show average rating */}
                             {
                               this.state.ratingValue ?
-                                <div className="average-rating mt-2 mb-4" id="doctor-avg-rating">
+                                
+				       <div className=" mt-2 mb-4" id="doctor-avg-rating">
                                   <span class="fa fa-star opacity-7"></span>
                                   <span class="fa fa-star opacity-7"></span>
                                   <span class="fa fa-star opacity-7"></span>
