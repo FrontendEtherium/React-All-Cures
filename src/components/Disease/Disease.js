@@ -1097,10 +1097,10 @@ diseasePosts(dcName) {
               {/* Author */}
               {
                 items.authors_name?
-                  <div className='h5 text-left ml-3 mb-2'><span>Author:</span> {items.authored_by.includes(7)? items.authors_name: <Link to={`/profile/${items.reg_doc_pat_id}`}> {items.authors_name}</Link>}</div>
+                  <div className='h5 text-left ml-3 mb-2'><span>Author: </span> {items.authored_by.includes(7)? items.authors_name: <Link to={`/profile/${items.reg_doc_pat_id}`}> {items.authors_name}</Link>}</div>
                   : null
               }
-                  <div className='h6 text-muted text-left ml-3 mb-4'><>Published on:</> 
+                  <div className='h6 text-muted text-left ml-3 mb-4'><span>Published on: </span>  
                   {items.published_date? 
                   <Date dateString={items.published_date} />
                   : items.published_date}</div>
@@ -1178,9 +1178,9 @@ diseasePosts(dcName) {
                 : null
               } */}
               
+                <h4>Source :  <a href="https://all-cures.com/Editorial" style={{textTransform:"none"}}>https://all-cures.com/Editorial</a></h4>
 
-
-               <h4>Source :  <a href="https://all-cures.com/Editorial">https://all-cures.com/Editorial</a></h4>
+               
              
             <div id="comments-column">              
 
