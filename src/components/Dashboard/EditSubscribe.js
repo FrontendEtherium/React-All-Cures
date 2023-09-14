@@ -183,12 +183,12 @@ class LoginInfo extends Component {
             }</div>
               <Header/>
              <div className="container">
-                <div className="h2 text-center my-3">Edit Subscribe</div>
+                <div className="h2 text-center " style={{marginTop:"2rem"}}>Edit Subscribe</div>
         <div className="card mb-5">
 
         <div className="row">
                   
-                  <div className="col-lg-6 form-group">
+                  <div className="col-lg-6 form-group ml-3 mt-3">
                                 <label htmlFor="">Type</label>
                                 <select 
                     multiple
@@ -278,7 +278,7 @@ class LoginInfo extends Component {
                                 <Form.Control value={this.state.subscribedDisease} onChange={(e) =>  this.setState({subscribedDisease:e.target.subscribedDisease})}  type="text" name="" required/>
                             </Form.Group>
                            
-            <button className="bcolor rounded py-2" onClick={( ) => {this.postSubscribtion(this.state.mobile)}}>
+            <button className=" rounded py-2 my-2" id="bcolor" onClick={( ) => {this.postSubscribtion(this.state.mobile)}}>
                                    Submit
                                 </button>
                                 </div>
