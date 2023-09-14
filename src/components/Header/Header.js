@@ -242,7 +242,7 @@ import { userAccess } from "../UserAccess";
                                           : [] 
                                        : []}
                                        sx={{ width: 150}}
-                                       renderInput={(params) => <TextField {...params} label="Search Cures" required />}
+                                       renderInput={(params) => <TextField {...params} label="Search Cures"  />}
                                     />
                                  </div>
                                  <div className="col-md-2 p-0 mainBtn">
