@@ -853,6 +853,11 @@ diseasePosts(dcName) {
                   }
                   
                 </Breadcrumb.Item>
+
+                    
+                <Breadcrumb.Item className='mt-1 pb-2'id="s1">
+                  {items.medicine_type_name}
+                  </Breadcrumb.Item>   
                 
                 <div id="share-icons-regions" className="d-flex">
                 {/* Sharing icons */}
@@ -1178,7 +1183,7 @@ diseasePosts(dcName) {
                 : null
               } */}
               
-                <h4>Source :  <a href="https://all-cures.com/Editorial" style={{textTransform:"none"}}>https://all-cures.com/Editorial</a></h4>
+                <h4>Source :  <a href="https://all-cures.com/Editorial" style={{textTransform:"none"}}>https://all-cures.com/editorial</a></h4>
 
                
              
