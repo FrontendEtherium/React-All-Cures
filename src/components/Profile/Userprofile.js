@@ -138,7 +138,7 @@ const onError = (e) => {
               <div className="row">
                 <div className="col-md-8 pd-0">
                   <div className="profile-card clearfix">
-                    <div className="col-md-3">
+                    <div className="col-md-3 mr-3">
                       <div className="profileImageBlok">
                         <div className="profile-card-img text-center">
                           {/* <i className="fas fa-user-md fa-6x"></i> */}
@@ -154,12 +154,12 @@ const onError = (e) => {
                       </div>
                     </div>
                     <div className="col-md-9">
-                      <div className="profile-info">
+                      <div id="profile-info">
                         <div className="profile-infoL-card">
                           <div className="profile-info-name" id="DocDetails">
                           <div className="h4 font-weight-bold">
                           <div>
-            <div className="h4 text-capitalize">Names: {firstName} {lastName}</div>
+            <div className="h4 text-capitalize">Name: {firstName} {lastName}</div>
             <div className="h5"><span className=''>Email:</span> {email}</div>
            {<div className="h5"><span className=''>Mobile:</span> {mobile}</div>}
             {/* <div className="h5"><span className=''>Registration Type:</span> {regType}</div> */}
