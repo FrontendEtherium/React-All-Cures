@@ -17,7 +17,7 @@ width:100%;
   div#filter {
     position: relative;
     left: 14px;
-    top: 5px;
+    margin-top: 11px;
   }
   .copyRight p {
     padding-top: 16px;
@@ -28,10 +28,13 @@ width:100%;
     margin-right: 40px;
   }
 
-  .breadcrumb {
-    padding: 3rem 1rem;
+  /* .breadcrumb {
+    padding: 2rem 1rem;
+  } */
+  .breadcrumb{
+    padding-top: 2rem;
+      padding-bottom: 0px;
   }
-
   #center-well #share-icons-regions{
     position: absolute;
     top: 30px;
@@ -221,7 +224,12 @@ width:100%;
     margin-right: 60px;
   }
 }
-.breadcrumb{padding: 1rem 1rem 4rem 1rem;}
+
+/* .breadcrumb{padding: 1rem 1rem } */
+.breadcrumb{
+  padding-top: 1rem;
+    padding-bottom: 0px;
+}
 #center-well #share-icons-regions{
   position: absolute;
   top: 50px;
@@ -242,16 +250,19 @@ width:100%;
   div#filter {
     position: relative;
     left: 14px;
-    top: 5px;
+    margin-top: 16px;
   }
-  .breadcrumb {
-    padding: 2rem 1rem 12rem;
+  /* .breadcrumb {
+    padding: 2rem 1rem ;
+  } */
+  .breadcrumb{
+    padding-top: 2rem;
+      padding-bottom: 0px;
   }
-
 
   #center-well #share-icons-regions{
     position: absolute;
-    top: 35px;
+    margin-top: 35px;
   }
 
 
@@ -393,14 +404,19 @@ width:100%;
   div#filter {
     position: relative;
     left: 14px;
-    top: 5px;
+    margin-top: 1px;
   }
-  .breadcrumb {
-    /* padding: 3rem 1rem; */
+  /* .breadcrumb {
+    padding: 2rem 1rem;
         
-    padding-bottom: 7rem;
     
+  } */
+
+  .breadcrumb{
+    padding-top: 2rem;
+      padding-bottom: 0px;
   }
+  
   #share-icons-regions {
     position: relative;
     flex-direction: column-reverse;
@@ -533,11 +549,16 @@ width:100%;
   div#filter {
     position: relative;
     left: 14px;
-    top: 5px;
+    margin-top: 1px;
   }
   /* .breadcrumb {
-    padding: 3rem 1rem;
+    padding: 2rem 0rem;
   } */
+
+  .breadcrumb{
+    padding-top: 2rem;
+      padding-bottom: 0px;
+  }
   #share-icons-regions {
     position: relative;
     flex-direction: column-reverse;
@@ -902,11 +923,16 @@ width:100%;
   div#filter {
     position: relative;
     left: 14px;
-    top: -20px;
+    /* top: 30px; */
   }
 
-  .breadcrumb {
+  /* .breadcrumb {
     padding: 2rem 1rem;
+  } */
+
+  .breadcrumb{
+    padding-top:1rem;
+    padding-bottom:0px;
   }
   #share-icons-regions {
     position: relative;
@@ -1326,6 +1352,6 @@ width:100%;
   /* } */
 
   /* .city-name.col-md-5 {
-    margin-top: -90px;
-  } */
+    margin-top: -90px;
+  } */
 }
