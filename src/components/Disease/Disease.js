@@ -842,6 +842,9 @@ diseasePosts(dcName) {
           
           <Col  md={7} id="page-content-wrapper" className="col-xs-12 pb-5">
             <div id="center-well" className="">
+
+             
+                
               <Breadcrumb >
                    
                 <Breadcrumb.Item className='mt-1 pb-2' href="/"id="s1">Home</Breadcrumb.Item>                                     
@@ -863,37 +866,16 @@ diseasePosts(dcName) {
                 <Breadcrumb.Item className='mt-1 pb-2'id="s1">
                   {items.medicine_type_name}
                   </Breadcrumb.Item>   
+             
+              </Breadcrumb>
                 
-                <div id="share-icons-regions" className="d-flex">
+              <div  className="  px-2 py-2"style={{backgroundColor:"#e9ecef",transform:" translateY(-25px)"}}>
+
+              <div id="" className="">
                 {/* Sharing icons */}
-                <div id="socilaBtn" className="mt-1">
-                <FacebookShareButton
-                  url={encodeURI(`https://all-cures.com${this.props.location.pathname}`)}
-                  quote={`All-Cures - ${items.title}`}
-                  hashtag={`#allCures#${items.title}`}
-                  className="socialMediaButton"
-                >
-                  <FacebookIcon size={36} />
-                </FacebookShareButton>
-                <TwitterShareButton
-                  url={encodeURI(`https://all-cures.com${this.props.location.pathname}`)}
-                  title={`All-Cures - ${items.title}`}
-                  hashtag={`#allCures#${items.title}`}
-                  className="socialMediaButton"
-                >
-                  <TwitterIcon size={36} />
-                </TwitterShareButton>
-                <WhatsappShareButton
-                  url={encodeURI(`https://all-cures.com${this.props.location.pathname}`)}
-                  title={`*All Cures -* ${items.title}`}
-                  separator=": "
-                  className="socialMediaButton"
-                >
-                  <WhatsappIcon size={36} />
-                </WhatsappShareButton>
-              </div>
+          
               
-              <div className="share-buttons-region ml-2" id="filter">
+              <div className="  share-buttons-region ml-2" id="filter" >
               
               <div className="d-flex justify-content-end margin-auto" id="article-acc-to-regions">
                  
@@ -996,9 +978,41 @@ diseasePosts(dcName) {
 
                 </div>
                 </div>
+
+                <div id="" className="">
+                <FacebookShareButton
+                  url={encodeURI(`https://all-cures.com${this.props.location.pathname}`)}
+                  quote={`All-Cures - ${items.title}`}
+                  hashtag={`#allCures#${items.title}`}
+                  className="socialMediaButton"
+                >
+                  <FacebookIcon size={36} />
+                </FacebookShareButton>
+                <TwitterShareButton
+                  url={encodeURI(`https://all-cures.com${this.props.location.pathname}`)}
+                  title={`All-Cures - ${items.title}`}
+                  hashtag={`#allCures#${items.title}`}
+                  className="socialMediaButton"
+                >
+                  <TwitterIcon size={36} />
+                </TwitterShareButton>
+                <WhatsappShareButton
+                  url={encodeURI(`https://all-cures.com${this.props.location.pathname}`)}
+                  title={`*All Cures -* ${items.title}`}
+                  separator=": "
+                  className="socialMediaButton"
+                >
+                  <WhatsappIcon size={36} />
+                </WhatsappShareButton>
+              </div>
+
                 </div>
-              </Breadcrumb>
-              
+
+
+
+
+
+              </div>
               {
                 this.props.match.params.cureType?
                 null
