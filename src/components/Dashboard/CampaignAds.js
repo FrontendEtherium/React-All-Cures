@@ -29,6 +29,7 @@ function App() {
   const[companyList,setCompanyList] = useState([])
   const[adsList,setAdsList] = useState([])
   const [condition, setCondition] = useState('');
+  const[appImage,setAppImage]=useState(null)
   
 
 
@@ -61,7 +62,12 @@ function App() {
     if (image) {
       formData.append('image', image);
     }
+
+    if (appImage) {
+      formData.append('mobile_image',appImage);
+    }
   
+    console.log(formData.json)
     axios.post(`${backendHost}/sponsored/create/ad`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -149,6 +155,36 @@ const handleImageChange = async (e) => {
     }, 3000);
   }
 };
+
+
+
+const handleAppImageChange = async (e) => {
+  const file = e.target.files[0];
+  setAppImage(file);
+
+  console.log('Image selected:', {
+    appImage: file.name,
+  });
+
+  if (file) {
+    const fileSize = file.size / 1024;
+    const [width, height] = await getImageDimensions(file);
+
+    if (width !== 300 || height !== 50) {
+      setAlertMessage('Invalid image dimensions for Mobile Banner. Please upload an image with dimensions 300x50.');
+      setAppImage(null);
+    } else if (fileSize > 100) {
+      setAlertMessage('Image size for Banner is too large. Please upload an image with size up to 100KB.');
+      setAppImage(null);
+    }
+
+    // Hide alert after 3 seconds
+    setTimeout(() => {
+      setAlertMessage('');
+    }, 3000);
+  }
+};
+
 
 const getImageDimensions = (file) => {
   return new Promise((resolve) => {
@@ -333,9 +369,16 @@ const handleAdTypeChange = (e) => {
                             placeholder="Enter ImageAltText..." />
                         </Form.Group>
                        
-<Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
-                <Form.Label>Upload Image</Form.Label>
+              <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
+                <Form.Label>Upload Image for Web</Form.Label>
                 <Form.Control type="file" accept="image/*" onChange={handleImageChange} />
+              </Form.Group>
+
+
+                       
+              <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
+                <Form.Label>Upload Image for App</Form.Label>
+                <Form.Control type="file" accept="image/*" onChange={handleAppImageChange} />
               </Form.Group>
 
 
