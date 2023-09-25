@@ -46,6 +46,7 @@ class Home extends Component {
       super(props);
       const params = props.match.params
       this.state = {
+         isUnaniDropdownOpen: false,
          afterSubmitLoad: false,
          showAlert: false,
          alertMsg: '',
@@ -315,6 +316,15 @@ class Home extends Component {
        })
     }
 
+
+    handleUnaniMouseEnter = () => {
+      this.setState({ isUnaniDropdownOpen: true });
+    };
+  
+    handleUnaniMouseLeave = () => {
+      this.setState({ isUnaniDropdownOpen: false });
+    };
+
    onSearch = (e) => {
       var { city, name } = this.state
       e.preventDefault()
@@ -366,42 +376,60 @@ class Home extends Component {
                            </div>
                           
                   <div class="fgrow">
-                <Navbar bg="light" expand="lg">
-                  <Container>
-  
-              <Navbar.Toggle aria-controls="basic-navbar-nav" />
-              <Navbar.Collapse id="basic-navbar-nav"  >
-               <Nav className="me-auto">
-                  <Nav.Link href="/home" id="basic-nav-dropdown">Home</Nav.Link>
-       
-               <NavDropdown title={<span>Categories <ArrowDropDownIcon /></span>} id="basic-nav-dropdown"renderMenuOnMount={true} >
-          <NavDropdown.Item href="/searchcategory/disease/1">Arthritis</NavDropdown.Item>
-          <NavDropdown.Item href="/searchcategory/disease/74"> Diabetes</NavDropdown.Item>
-          <NavDropdown.Item href="/searchcategory/disease/50">Hypertension</NavDropdown.Item>
-          <NavDropdown.Divider />
-          <NavDropdown.Item href="/allcategory">View More</NavDropdown.Item>
-        </NavDropdown>
-
-
-        
-        <NavDropdown  title={<span> Trending Cures<ArrowDropDownIcon /></span>} id="basic-nav-dropdown" renderMenuOnMount={true}>
-          <NavDropdown.Item href="/searchmedicine/medicinetype/1">Ayurveda</NavDropdown.Item>
-          <NavDropdown.Item href="/searchmedicine/medicinetype/4"> Chinese Medicine</NavDropdown.Item>
-          <NavDropdown.Item href="/searchmedicine/medicinetype/3">Persian</NavDropdown.Item>
-          <NavDropdown.Item href="/searchmedicine/medicinetype/2">Unani</NavDropdown.Item>
-          <NavDropdown.Item href="/searchmedicine/medicinetype/8">Homeopathy</NavDropdown.Item>
-
-          <NavDropdown.Item href="/searchmedicine/medicinetype/6">Japanese</NavDropdown.Item>
-          <NavDropdown.Item href="/searchmedicine/medicinetype/5">Scandinavian</NavDropdown.Item>
-        
-        </NavDropdown>
-       
-        <Nav.Link href="/AboutUs" id="basic-nav-dropdown">About Us</Nav.Link>
-        
-      </Nav>
-    </Navbar.Collapse>
-  </Container>
-</Navbar>
+               
+                  <nav class="navbar navbar-expand-lg navbar-light bg-light newHeader">
+                              
+                              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                          <span class="navbar-toggler-icon"></span>
+                                  </button>
+                                  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+     <ul class="navbar-nav">
+       <li class="nav-item">
+         <a class="nav-link" href="/home">Home</a>
+       </li>
+       <li class="nav-item dropdown">
+         <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
+         <div class="dropdown-menu" aria-labelledby="categoriesDropdown">
+           <a class="dropdown-item" href="/searchcategory/disease/1">Arthritis</a>
+           <a class="dropdown-item" href="/searchcategory/disease/74">Diabetes</a>
+           <a class="dropdown-item" href="/searchcategory/disease/50">Hypertension</a>
+           <div class="dropdown-divider"></div>
+           <a class="dropdown-item" href="/allcategory">View More</a>
+         </div>
+       </li>
+       <li class="nav-item dropdown ">
+         <a class="nav-link dropdown-toggle" href="#" id="trendingCuresDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Trending Cures</a>
+         <div class="dropdown-menu" aria-labelledby="trendingCuresDropdown">
+           <a class="dropdown-item" href="/searchmedicine/medicinetype/1">Ayurveda</a>
+           <a class="dropdown-item" href="/searchmedicine/medicinetype/4">Chinese Medicine</a>
+           <a class="dropdown-item" href="/searchmedicine/medicinetype/12" onMouseEnter={this.handleUnaniMouseEnter} onMouseLeave={this.handleUnaniMouseLeave}>Arabic
+   
+                  <li className="nav-item dropdown newDropdown" onMouseEnter={this.handleUnaniMouseEnter} onMouseLeave={this.handleUnaniMouseLeave}>
+             <a className="nav-link dropdown-toggle" href="#" id="unaniDropdownToggle" role="button" data-bs-toggle="dropdown">
+            <span style={{fontSize:"1rem",color:" #212529"}}>  <ArrowDropDownIcon/></span>  
+             </a>
+             {this.state.isUnaniDropdownOpen && (
+               <ul className="dropdown-menu newDropdown-menu" aria-labelledby="unaniDropdownToggle">
+                 <li>
+                   <a className="dropdown-item" href="/searchmedicine/medicinetype/2"> Unani</a>
+                 </li>
+                 <li>
+                   <a className="dropdown-item" href="/searchmedicine/medicinetype/3">Persian</a>
+                 </li>
+               </ul>
+             )}
+           </li>
+           </a>
+           <a class="dropdown-item" href="/searchmedicine/medicinetype/6">Japanese</a>
+           <a class="dropdown-item" href="/searchmedicine/medicinetype/5">Scandinavian</a>
+         </div>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="/AboutUs">About Us</a>
+       </li>
+     </ul>
+     </div>
+   </nav>
 </div>
                            <form onSubmit={(e) => this.articleSearch(e)} className="searchHeader" id="searchArticle">
                               <div className="col-md-12 row">
@@ -877,4 +905,4 @@ function ToggleButton(props) {
    )
 }
 
-export default Home;
+export default Home;
