@@ -862,6 +862,18 @@ diseasePosts(dcName) {
                   
                 </Breadcrumb.Item>
 
+
+                {
+                  (items.parent_Medicine_type!=null) &&(
+                  <Breadcrumb.Item className='mt-1 pb-2'id="s1">
+                  {items.parent_Medicine_type}
+                  </Breadcrumb.Item>   
+             
+            
+                  )
+
+                }
+
                     
                 <Breadcrumb.Item className='mt-1 pb-2'id="s1">
                   {items.medicine_type_name}
