@@ -61,6 +61,21 @@ const TrendingArticles = () => {
                         </div>
                     </Link>
                 </div>
+
+
+
+
+
+                
+                <div className=" my-3">
+                    <Link to="/searchmedicine/medicinetype/12">
+                    <div className="card d-flex justify-content-between">
+                        <div className="h5 text-dark col-md-6 text-center">Arabic</div>
+                        <div className="col-md-6 rounded" id="arabic">
+                        </div>
+                    </div>
+                    </Link>
+                </div>
            
 
                 <div className=" my-3">
@@ -72,6 +87,9 @@ const TrendingArticles = () => {
                     </div>
                     </Link>
                 </div>
+
+
+
 
                 <div className=" my-3">
                     <Link to="/searchmedicine/medicinetype/2">
