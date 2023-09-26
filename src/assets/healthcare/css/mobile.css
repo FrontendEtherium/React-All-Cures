@@ -229,6 +229,7 @@ width:100%;
 .breadcrumb{
   padding-top: 1rem;
     padding-bottom: 0px;
+   margin-bottom:0rem;
 }
 #center-well #share-icons-regions{
   position: absolute;
