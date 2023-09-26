@@ -881,7 +881,8 @@ diseasePosts(dcName) {
              
               </Breadcrumb>
                 
-              <div  className="  px-2 py-2"style={{backgroundColor:"#e9ecef",transform:" translateY(-25px)"}}>
+             
+                    <div  className="  px-2 py-2"style={{backgroundColor:"#e9ecef"}}>
 
               <div id="" className="">
                 {/* Sharing icons */}
