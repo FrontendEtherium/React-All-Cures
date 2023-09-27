@@ -51,6 +51,21 @@
       
     </script>
 
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add canonical link
+    const canonicalLink = document.createElement('link');
+    canonicalLink.rel = 'canonical';
+    canonicalLink.href = window.location.href;
+    document.head.appendChild(canonicalLink);
+
+  });
+
+  
+  </script>
+  
+
     <!-- <script data-ad-client="ca-pub-1868323564522249" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>  -->
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -65,7 +80,7 @@ client=ca-pub-1868323564522249"
      crossorigin="anonymous"></script>
 
   </head>
- <body>
+  <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <div id="modal-root"></div>
@@ -78,6 +93,8 @@ client=ca-pub-1868323564522249"
     <!-- <script>
       window.HTMLReactParser(/* string */);
     </script> -->
+
+    <!-- <script src="script.js"></script> -->
   </body>
   <footer>
       <!-- Quantcast Tag -->
@@ -104,6 +121,5 @@ uid:"allcuresinfo@gmail.com"
 <img src="//pixel.quantserve.com/pixel/p-V-0EWjCrjcKRm.gif" border="0" height="1" width="1" alt="Quantcast"/>
 </div>
 </noscript>
-<!-- End Quantcast tag -->
   </footer>
 </html>
