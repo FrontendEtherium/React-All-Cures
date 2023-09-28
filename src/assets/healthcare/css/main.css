@@ -1022,10 +1022,11 @@ a.appBTN {
   bottom: -217px;
   right: 30px;
 }
+
 .innerapp img {
   position: absolute;
-  top: 61px;
-  right: -5px;
+  top: 0px;
+  right: -15px;
 }
 .subscribe h1 {
   font-weight: 500;
