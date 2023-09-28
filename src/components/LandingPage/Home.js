@@ -5,9 +5,7 @@ import Cookies from 'js-cookie';
 import Heart from"../../assets/img/heart.png";
 import Doct from "../../assets/img/doct.png";
 
-import Floater from "../../assets/img/floater.png"
-import Floater1 from "../../assets/img/floater1.png"
-import Floater2 from "../../assets/img/floater2.png"
+
 
 import axios from 'axios';
 import { Navbar} from "react-bootstrap"
