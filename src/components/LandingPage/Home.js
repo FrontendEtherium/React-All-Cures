@@ -4,6 +4,11 @@ import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import Heart from"../../assets/img/heart.png";
 import Doct from "../../assets/img/doct.png";
+
+import Floater from "../../assets/img/floater.png"
+import Floater1 from "../../assets/img/floater1.png"
+import Floater2 from "../../assets/img/floater2.png"
+
 import axios from 'axios';
 import { Navbar} from "react-bootstrap"
 import { Nav,NavDropdown,Container} from "react-bootstrap"
@@ -46,6 +51,10 @@ class Home extends Component {
       super(props);
       const params = props.match.params
       this.state = {
+
+
+         images:[],
+      currentIndex: 0,
          isUnaniDropdownOpen: false,
          afterSubmitLoad: false,
          showAlert: false,
@@ -111,6 +120,8 @@ class Home extends Component {
     }
     loadUsers();
 
+
+
    const loaddoctor = async () => {
       await axios.get(`${backendHost}/IntegratedActionController`)
       .then(res => {
@@ -140,7 +151,46 @@ class Home extends Component {
     .catch(res => 
        null
     )
- }
+
+
+  
+
+    
+   }
+
+       
+   
+    loadFloater = async() => {
+      console.log("checkgin the api 123");
+         console.log('call floater')
+    await  axios.get(`${backendHost}/data/newsletter/get`)
+     .then(res => {
+        console.log(res.data)
+        this.setState ({
+          images:res.data
+        })
+     })
+     .catch(res =>  null)
+   console.log("1232121 testing");
+   };
+  
+
+   floaterShow=()=>{
+      setInterval(this.rotateImages, 3000);
+   }
+  
+  
+   
+   
+   rotateImages = () => {
+      this.setState((prevState) => ({
+        currentIndex: (prevState.currentIndex + 1) % this.state.images.length,
+      }));
+    };
+
+
+
+ 
 
  componentDidUpdate(prevProps, prevState){
    if(prevState.article !== this.state.article && this.state.article){
@@ -202,10 +252,11 @@ class Home extends Component {
    }
  };
           componentDidMount(){
-     
-
-            window.onload = () => {
+         
+         window.onload = () => {
          console.log('delay')
+          this.loadFloater();
+
            this.fetchData();
             }
      
@@ -765,7 +816,8 @@ class Home extends Component {
       </section> */}
       <div>
          
-         <button id="mobile-subscribe-fixed-btn" className="btn newsletter-icon rounded subscribe-btn newsletter_float" data-toggle="modal"data-target=".bd-example-modal-lg">
+         <button id="mobile-subscribe-fixed-btn" className="btn newsletter-icon rounded subscribe-btn newsletter_float" data-toggle="modal"data-target=".bd-example-modal-lg"
+         onClick={this.floaterShow}>
       Subscribe
      
             </button>
@@ -777,7 +829,7 @@ class Home extends Component {
             </Link>
            
          </div>
-<div className="modal fade bd-example-modal-lg" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div className="modal fade bd-example-modal-lg mt-5" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div className="modal-dialog modal-lg">
     <div className="modal-content">
     <div className="modal-header">
@@ -792,8 +844,16 @@ class Home extends Component {
                <div className="appStoreBg clearfix" style={{display:"flex",width: "100%",flexWrap: 'wrap'}}>
                   <div className="col-md-6 col-sm-6 col-sx-12">
                      <div className="innerapp">
-                        <div className="doc-img">
-                           <img src={Doct} alt="doct"/>
+                        <div className="doc-img ">
+
+                           {this.state.images?(
+                         
+                          <img src={`https://uat.all-cures.com:444${this.state.images[this.state.currentIndex]}`} alt="doct"  style={{maxHeight:"400px",width:"405px"}}/>)
+                          :  <img src={Doct} alt="doctor"  style={{maxHeight:"400px",width:"405px"}}/> 
+                          
+                          }
+
+
                         </div>
                        
                      </div>
@@ -855,6 +915,19 @@ function ToggleButton(props) {
                                Profile
                       </Link>
              </Dropdown.Item>
+
+
+{/* web stories */}
+
+             {/* <Dropdown.Item>
+             <Link  className="text-dark btn" to='/webstories'>
+                               webstories
+                      </Link>
+             </Dropdown.Item> */}
+
+
+
+
              <Dropdown.Item >
                <Link to="/editSubscribe" className="text-dark btn">
                   Edit Subscription</Link>
