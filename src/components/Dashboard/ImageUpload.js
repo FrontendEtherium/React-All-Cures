@@ -4,6 +4,7 @@ import { backendHost } from '../../api-config';
 
 export const ImageUpload = () => {
     const [imageType, setImageType] = useState('')
+    const [floater, setFloater] = useState('')
     const [id, setId] = useState('')
     const [showAlert, setShowAlert] = useState(false)
     const [alertMsg, setAlertMsg] = useState(true)
@@ -47,6 +48,32 @@ export const ImageUpload = () => {
 		.catch((error) => {
     		return
 		});
+
+
+
+        //   post request for newsletter floater
+
+
+
+        const formsData = new FormData();
+		formsData.append('image', selectedFile);
+
+        fetch(`${backendHost}/data/newsletter/upload`,
+			{
+                method: 'POST',
+				body: formsData,
+			}
+		)
+        .then((response) => response.json())
+		.then((result) => {
+            Alert('Image uploaded successfully.')
+    		// console.log('Success:', result);
+		})
+		.catch((error) => {
+    		return
+		});
+
+
 	}
 
     return(
@@ -59,9 +86,10 @@ export const ImageUpload = () => {
                     </div>
             }
             <div className="upload-image">
-                <div className="container mt-2">
+                <div className="container mt-5">
                     <button className='btn btn-success w-25 h5 mr-3' onClick={(e)=> setImageType('doctor')}>Upload Doctor's Image</button>
-                    <button className='btn btn-danger w-25 h5' onClick={(e)=> setImageType('article')}>Upload Article Image</button>
+                    <button className='btn btn-danger w-25 h5 mr-3' onClick={(e)=> setImageType('article')}>Upload Article Image</button>
+                    <button className='btn btn-secondary w-30 h5 ' onClick={(e)=> setFloater('floater')}>Upload Newsletter Floater Image</button>
                     {
                         imageType?
                         <>
@@ -139,6 +167,61 @@ export const ImageUpload = () => {
                             
                             </>
                         : null
+                    }
+
+
+                    {
+                        floater &&<>
+                         <div>
+                        <div className="card my-3">
+                            <div className="card-title h5 text-center py-2 border-bottom text-capitalize">Upload {floater} Image</div>
+                                <form onSubmit={(e) => handleSubmission(e)}>
+                                    
+                                    <div className="col-md-6 float-left" style={{zIndex: 2}}>
+                                    <input type="file" name="file" onChange={changeHandler} required/>
+
+                                    {isFilePicked ? (
+
+                                        <div>
+
+                                            <p>Filename: {selectedFile.name}</p>
+
+                                            <p>Filetype: {selectedFile.type}</p>
+
+                                            <p>Size in bytes: {selectedFile.size}</p>
+
+                                            <p>
+
+                                                lastModifiedDate:{' '}
+
+                                                {selectedFile.lastModifiedDate.toLocaleDateString()}
+
+                                            </p>
+
+                                        </div>
+
+                                    ) : (
+
+                                        <p>Select a file to show details</p>
+
+                                    )}
+                                    </div>
+                                    <div className="col-md-12 text-center">
+                                        <button type="submit" className="btn btn-dark col-md-12 mb-4">Submit</button>
+                                    </div>
+                                </form>
+
+                            </div>
+{/* 			
+
+			<div>
+
+				<button className='btn btn-primary' onClick={handleSubmission}>Submit</button>
+
+			</div> */}
+
+		</div>
+                        </>
                     }
                 </div>
             </div>
