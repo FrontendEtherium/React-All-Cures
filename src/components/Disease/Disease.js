@@ -154,8 +154,8 @@ fetchBlog = async() => {
     Promise.all([
       fetch(`${backendHost}/article/${id}`) // if URL contains article_id
         .then((res) => res.json()),
-      fetch(`${backendHost}/sponsored/parent_disease_id/${this.props.match.params.id.split('-')[0]}`)
-        .then((res) => res.json()),
+      // fetch(`${backendHost}/sponsored/parent_disease_id/${this.props.match.params.id.split('-')[0]}`)
+      //   .then((res) => res.json()),
         
     ])
     
@@ -170,24 +170,27 @@ fetchBlog = async() => {
           isLoaded: true,
           items: json,
         }, () => {
-          this.regionalPosts(json.disease_condition_id);
-      this.diseasePosts(json.dc_name);
+            this.regionalPosts(json.disease_condition_id);
+            this.diseasePosts(json.dc_name);
+            this.getDisease()
       
           this.fetchCountriesCures();
           this.comments(this.props.match.params.id.split('-')[0]);
           this.getRating(this.props.match.params.id.split('-')[0]);
           this.getRate(this.props.match.params.id.split('-')[0]);
           this.getFavourite(this.props.match.params.id.split('-')[0]);
+          this.fetchParentDiseaseId( this.props.match.params.id.split('-')[0])
+
           document.title = `${this.state.items.title}`;
         });
 
         
       console.log('id', this.props.match.params.id.split('-')[0]);
-      console.log('parent_dc_id:', json_new.parent_dc_id);
-      if (json_new.parent_dc_id !== 0) {
-        console.log('delayed not null');
-        this.fetchData(json_new.parent_dc_id);
-      }
+      // console.log('parent_dc_id:', json_new.parent_dc_id);
+      // if (json_new.parent_dc_id !== 0) {
+      //   console.log('delayed not null');
+      //   this.fetchData(json_new.parent_dc_id);
+      // }
       
     });
   
@@ -200,8 +203,8 @@ fetchBlog = async() => {
     Promise.all([
       fetch(`${backendHost}/article/title/${id}`) // if URL contains article_id
         .then((res) => res.json()),
-      fetch(`${backendHost}/sponsored/parent_disease_id/${this.props.match.params.id.split('-')[0]}`)
-        .then((res) => res.json()),
+      // fetch(`${backendHost}/sponsored/parent_disease_id/${this.props.match.params.id.split('-')[0]}`)
+      //   .then((res) => res.json()),
        
     ])
     
@@ -215,6 +218,7 @@ fetchBlog = async() => {
         }, () => {
           this.regionalPosts(json.disease_condition_id);
            this.diseasePosts(json.dc_name);
+           this.getDisease()
       
       
           this.fetchCountriesCures();
@@ -222,16 +226,17 @@ fetchBlog = async() => {
           this.getRating(this.props.match.params.id.split('-')[0]);
           this.getRate(this.props.match.params.id.split('-')[0]);
           this.getFavourite(this.props.match.params.id.split('-')[0]);
+          this.fetchParentDiseaseId( this.props.match.params.id.split('-')[0])
           document.title = `${this.state.items.title}`;
         });
 
              
         console.log('id', this.props.match.params.id.split('-')[0]);
-      console.log('parent_dc_id:', json_new.parent_dc_id);
-      if (json_new.parent_dc_id !== 0) {
-        console.log('delayed not null');
-        this.fetchData(json_new.parent_dc_id);
-      }
+      // console.log('parent_dc_id:', json_new.parent_dc_id);
+      // if (json_new.parent_dc_id !== 0) {
+      //   console.log('delayed not null');
+      //   this.fetchData(json_new.parent_dc_id);
+      // }
       
     });
 
@@ -587,32 +592,32 @@ handleClick = (ad) => {
 
  
 
-//   fetchParentDiseaseId(id) { 
-//   return fetch(`${backendHost}/sponsored/parent_disease_id/${id}`)
-//     .then((res) => res.json())
-//     .then((json) => {
+  fetchParentDiseaseId(id) { 
+  return fetch(`${backendHost}/sponsored/parent_disease_id/${id}`)
+    .then((res) => res.json())
+    .then((json) => {
         
-//       console.log('recieved',id)
-//        console.log(json.parent_dc_id)
+      console.log('recieved',id)
+       console.log(json.parent_dc_id)
      
-//       console.log('parent_dc_id:', json.parent_dc_id);
+      console.log('parent_dc_id:', json.parent_dc_id);
       
-//         if(json.parent_dc_id != 0){
+        if(json.parent_dc_id != 0){
       
-//           console.log('delayd not null')
+          console.log('delayd not null')
          
-//           this.fetchData(json.parent_dc_id);
+          this.fetchData(json.parent_dc_id);
           
-//           this.setState({
-//             isAdsLoaded:true
-//           })
+          this.setState({
+            isAdsLoaded:true
+          })
          
-//       }
+      }
       
 
-//     })
-//     .catch((err) => null);
-// }
+    })
+    .catch((err) => null);
+}
 
 
 
@@ -663,7 +668,7 @@ diseasePosts(dcName) {
     console.log ('url',window.location.href)
     
     
-    this.getDisease()
+    // this.getDisease()
     this.pageLoading()
 
     // window.onload = () => {
@@ -837,6 +842,9 @@ diseasePosts(dcName) {
           
           <Col  md={7} id="page-content-wrapper" className="col-xs-12 pb-5">
             <div id="center-well" className="">
+
+             
+                
               <Breadcrumb >
                    
                 <Breadcrumb.Item className='mt-1 pb-2' href="/"id="s1">Home</Breadcrumb.Item>                                     
@@ -854,41 +862,33 @@ diseasePosts(dcName) {
                   
                 </Breadcrumb.Item>
 
+
+                {
+                  (items.parent_Medicine_type!=null) &&(
+                  <Breadcrumb.Item className='mt-1 pb-2'id="s1">
+                  {items.parent_Medicine_type}
+                  </Breadcrumb.Item>   
+             
+            
+                  )
+
+                }
+
                     
                 <Breadcrumb.Item className='mt-1 pb-2'id="s1">
                   {items.medicine_type_name}
                   </Breadcrumb.Item>   
+             
+              </Breadcrumb>
                 
-                <div id="share-icons-regions" className="d-flex">
+             
+                    <div  className="  px-2 py-2"style={{backgroundColor:"#e9ecef"}}>
+
+              <div id="" className="">
                 {/* Sharing icons */}
-                <div id="socilaBtn" className="mt-1">
-                <FacebookShareButton
-                  url={encodeURI(`https://all-cures.com${this.props.location.pathname}`)}
-                  quote={`All-Cures - ${items.title}`}
-                  hashtag={`#allCures#${items.title}`}
-                  className="socialMediaButton"
-                >
-                  <FacebookIcon size={36} />
-                </FacebookShareButton>
-                <TwitterShareButton
-                  url={encodeURI(`https://all-cures.com${this.props.location.pathname}`)}
-                  title={`All-Cures - ${items.title}`}
-                  hashtag={`#allCures#${items.title}`}
-                  className="socialMediaButton"
-                >
-                  <TwitterIcon size={36} />
-                </TwitterShareButton>
-                <WhatsappShareButton
-                  url={encodeURI(`https://all-cures.com${this.props.location.pathname}`)}
-                  title={`*All Cures -* ${items.title}`}
-                  separator=": "
-                  className="socialMediaButton"
-                >
-                  <WhatsappIcon size={36} />
-                </WhatsappShareButton>
-              </div>
+          
               
-              <div className="share-buttons-region ml-2" id="filter">
+              <div className="  share-buttons-region ml-2" id="filter" >
               
               <div className="d-flex justify-content-end margin-auto" id="article-acc-to-regions">
                  
@@ -991,9 +991,41 @@ diseasePosts(dcName) {
 
                 </div>
                 </div>
+
+                <div id="" className="">
+                <FacebookShareButton
+                  url={encodeURI(`https://all-cures.com${this.props.location.pathname}`)}
+                  quote={`All-Cures - ${items.title}`}
+                  hashtag={`#allCures#${items.title}`}
+                  className="socialMediaButton"
+                >
+                  <FacebookIcon size={36} />
+                </FacebookShareButton>
+                <TwitterShareButton
+                  url={encodeURI(`https://all-cures.com${this.props.location.pathname}`)}
+                  title={`All-Cures - ${items.title}`}
+                  hashtag={`#allCures#${items.title}`}
+                  className="socialMediaButton"
+                >
+                  <TwitterIcon size={36} />
+                </TwitterShareButton>
+                <WhatsappShareButton
+                  url={encodeURI(`https://all-cures.com${this.props.location.pathname}`)}
+                  title={`*All Cures -* ${items.title}`}
+                  separator=": "
+                  className="socialMediaButton"
+                >
+                  <WhatsappIcon size={36} />
+                </WhatsappShareButton>
+              </div>
+
                 </div>
-              </Breadcrumb>
-              
+
+
+
+
+
+              </div>
               {
                 this.props.match.params.cureType?
                 null
@@ -1183,9 +1215,10 @@ diseasePosts(dcName) {
                 : null
               } */}
               
-                <h4>Source :  <a href="https://all-cures.com/Editorial" style={{textTransform:"none"}}>https://all-cures.com/editorial</a></h4>
 
-               
+
+              
+                <h4>Source :  <a href="https://all-cures.com/Editorial" style={{textTransform:"none"}}>https://all-cures.com/editorial</a></h4>
              
             <div id="comments-column">              
 
