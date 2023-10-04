@@ -847,7 +847,7 @@ class Home extends Component {
                            {this.state.images.length>0?(
                          
                           <img src={`https://uat.all-cures.com:444${this.state.images[this.state.currentIndex]}`} alt="doct"  style={{maxHeight:"400px",width:"405px"}}/>)
-                          :  <img src={Doct} alt="doctor"  style={{maxHeight:"400px",width:"405px"}}/> 
+                          :  <img src={Doct} alt="doctor"  style={{maxHeight:"400px",width:"397px"}}/> 
                           
                           }
 
