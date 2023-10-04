@@ -1,3 +1,14 @@
+
+@media (min-width: 992px){
+.navbar-expand-lg {
+    
+    padding: 0.5rem;
+
+}
+}
+
+
+
 @media only screen and (max-width: 768px) {
   .article-search#article-search {
     margin-top: 3.6rem;
@@ -103,6 +114,15 @@
   background-size: cover;
 }
 
+
+
+.trending-articles #arabic {
+  background: url("../../assets/healthcare/img/images/Trending-Cures/arabic.jpg")
+    center center no-repeat;
+  background-size: cover;
+}
+
+
 .trending-articles .col-4 {
   width: 100%;
 }
@@ -165,4 +185,82 @@ button.active {
   .pagination-preview button:last-child {
     display: inline;
   }
+}
+
+
+
+
+
+.dropdown .newDropdown{
+     
+  /* margin-left:16px; */
+       margin-top:-15px;
+  margin-bottom:-5px;
+  /* margin-right:28px; */
+  left:-46px;
+}
+.dropdown-menu  .newDropdown-menu{
+  left:5px ;
+  top:40%;
+}
+
+
+
+@media only screen and (min-width: 300px) and (max-width: 990px) {
+
+
+.dropdown-item{
+padding: .25rem .25rem;
+padding-left:1rem !important;
+}
+
+
+.bg-light{
+background-color: #fff !important;
+max-width:fit-content  !important;
+
+}
+.dropdown .newDropdown{
+max-width:fit-content !important;
+left:-10px;
+
+
+
+}
+.dropdown-menu  .newDropdown-menu{
+left:-5px ;
+top:40%;
+max-width:fit-content  !important;
+
+
+}
+.dropdown-menu{
+max-width:fit-content  !important;
+min-width: 8rem;
+}
+
+.dropdown .drop_down_child {
+
+}
+
+.dropdown-menu .drop_down_child{
+max-width: 5rem;
+padding: .5rem 0;
+transform: translateX(-100px);
+}
+.arrow{
+margin-left:20px !important;
+margin-top: 15px !important;
+
+}
+
+
+.dropdown-menu .drop_down_child {
+display: block;
+
+
+}
+
+
+
 }
