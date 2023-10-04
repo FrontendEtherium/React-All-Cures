@@ -8,7 +8,36 @@ import axios from 'axios';
 const AllCampaigns = () => {
 
   const [allCampaigns, setAllCampaigns] = useState([])
+  const [searchValue, setSearchValue] = useState('');
+  const [searchType, setSearchType] = useState('name'); // Default search type is by name
+
+
   const fetchCampaign = (e) => {
+
+    const searchCriteria = {};
+
+    if(searchValue){
+
+        if (searchType === 'name') {
+            searchCriteria.CampaignName = searchValue;
+          } else if (searchType === 'date') {
+            searchCriteria.CreateDate = searchValue;
+          }
+      
+          axios
+            .post(`${backendHost}/sponsored/search/campaigns`, searchCriteria)
+            .then((res) => {
+                setAllCampaigns(res.data);
+            })
+            .catch((res) => {
+              return;
+            });
+    
+
+    }
+  
+    else{
+
       axios.get(`${backendHost}/sponsored/all/campaigns`)
       .then(res => {
           setAllCampaigns(res.data)
@@ -17,6 +46,8 @@ const AllCampaigns = () => {
 
     
       .catch(res => {return})
+
+    }
   }
   useEffect(() => {
       document.title = "All Cures | Dashboard | Sponsered"
@@ -36,6 +67,38 @@ const AllCampaigns = () => {
 
   return (
     <>
+
+
+<div className="row ml-2 mt-3" >
+
+
+    
+<div className="col-md-5">
+          <input
+            type="text"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            placeholder={`Search By ${searchType === 'name' ? ' Campaign Name' : 'Create Date'}`}
+            className="form-control "
+            required
+          />
+        </div>
+
+        <div className="col-md-3 mt-2">
+          <select
+            className="form-control "
+            value={searchType}
+            onChange={(e) => setSearchType(e.target.value)}
+          >
+            <option value="name"> Search by Campaign Name</option>
+            <option value="date">Search by Create Date</option>
+          </select>
+        </div>
+
+        
+     <button className=' btn btn-primary btn-sm mt-2 ' style={{ height: '35px' }} id='' onClick={(e) => fetchCampaign(e)}>Search  <i class="fa fa-search"></i></button>
+
+    </div>
 
 <div className="container mb-4">
                 <div className="row">
