@@ -73,6 +73,10 @@ class Disease extends Component {
     super(props);
     this.childDiv = React.createRef()
     this.state = { 
+
+      
+      images:[],
+      currentIndex: 0,
       items: [],
       carouselItems: [],
       comment: [],
@@ -119,6 +123,10 @@ class Disease extends Component {
     return setTimeout(() => {
       this.setState({
          modalState: true
+
+      }
+      , () => {
+        this.floaterShow();
 
       })
    }, 9000);
@@ -179,7 +187,8 @@ fetchBlog = async() => {
           this.getRating(this.props.match.params.id.split('-')[0]);
           this.getRate(this.props.match.params.id.split('-')[0]);
           this.getFavourite(this.props.match.params.id.split('-')[0]);
-          this.fetchParentDiseaseId( this.props.match.params.id.split('-')[0])
+          this.fetchParentDiseaseId( this.props.match.params.id.split('-')[0]);
+          this.loadFloater();
 
           document.title = `${this.state.items.title}`;
         });
@@ -226,7 +235,9 @@ fetchBlog = async() => {
           this.getRating(this.props.match.params.id.split('-')[0]);
           this.getRate(this.props.match.params.id.split('-')[0]);
           this.getFavourite(this.props.match.params.id.split('-')[0]);
-          this.fetchParentDiseaseId( this.props.match.params.id.split('-')[0])
+          this.fetchParentDiseaseId( this.props.match.params.id.split('-')[0]);
+          this.loadFloater();
+          
           document.title = `${this.state.items.title}`;
         });
 
@@ -250,6 +261,35 @@ fetchBlog = async() => {
 }
 
 
+
+loadFloater = async() => {
+  console.log("checkgin the api 123");
+     console.log('call floater')
+await  axios.get(`${backendHost}/data/newsletter/get`)
+ .then(res => {
+    console.log(res.data)
+    console.log("image");
+    this.setState ({
+      images:res.data
+    })
+ })
+ .catch(res =>  null)
+console.log("1232121 testing");
+};
+
+
+floaterShow=()=>{
+  setInterval(this.rotateImages, 3000);
+}
+
+
+
+
+rotateImages = () => {
+  this.setState((prevState) => ({
+    currentIndex: (prevState.currentIndex + 1) % this.state.images.length,
+  }));
+};
 
 
 
@@ -881,8 +921,7 @@ diseasePosts(dcName) {
              
               </Breadcrumb>
                 
-             
-                    <div  className="  px-2 py-2"style={{backgroundColor:"#e9ecef"}}>
+              <div  className="  px-2 py-2"style={{backgroundColor:"#e9ecef"}}>
 
               <div id="" className="">
                 {/* Sharing icons */}
@@ -1422,7 +1461,15 @@ diseasePosts(dcName) {
                   <div className="col-md-6 col-sm-6 col-sx-12">
                      <div className="innerapp">
                         <div className="doc-img">
-                           <img src={Doct} alt="doct"/>
+                           {/* <img src={Doct} alt="doct"/> */}
+
+                           {this.state.images.length>0 ?(
+                         
+                         <img src={`https://uat.all-cures.com:444${this.state.images[this.state.currentIndex]}`} alt="doct"  style={{maxHeight:"400px",width:"405px"}}/>)
+                         :  <img src={Doct} alt="doctor"  style={{maxHeight:"400px",width:"397px"}}/> 
+                         
+                         }
+
                         </div>
                        
                      </div>
