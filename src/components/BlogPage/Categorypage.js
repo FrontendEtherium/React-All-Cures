@@ -62,18 +62,30 @@ export default class Categorypage extends Component{
         }
         
       }
-      categoryPosts(disease_condition_id){                     // For specific blogs like "/blogs/diabetes"
-        // if(type){
-          fetch(`${backendHost}/isearch/diseases/${disease_condition_id}`)
-          .then((res) => res.json())
-          .then((json) => {
-            this.setState({
-              isLoaded: true,
-              items: json,
-            });
-          })
-          .catch(err => {return})
-        // }
+        categoryPosts(disease_condition_id) {
+        const headers = new Headers({
+          'Authorization': 'Bearer local@7KpRq3XvF9' 
+        });
+      
+        fetch(`${backendHost}/isearch/diseases/${disease_condition_id}`, {
+          method: 'GET',
+          headers: headers
+        })
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return res.json();
+        })
+        .then((json) => {
+          this.setState({
+            isLoaded: true,
+            items: json,
+          });
+        })
+        .catch(err => {
+          console.error(err);
+        });
       }
       componentDidMount() {
         // if(this.props.match.params.type === undefined){
