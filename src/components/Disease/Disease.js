@@ -353,7 +353,7 @@ fetchBlog = async() => {
          });
 
       }
-      const newResponse = `https://uat.all-cures.com:444${response.data}`;
+      const newResponse = `https://all-cures.com:444${response.data}`;
   
       // Check if state is being updated correctly
       console.log("New Response:", newResponse);
@@ -813,7 +813,7 @@ diseasePosts(dcName) {
                                
                               this.state.ads?
                            
-                              this.state.ads!=="https://uat.all-cures.com:444All Ads are Served"?
+                              this.state.ads!=="https://all-cures.com:444All Ads are Served"?
                              <div className="d-flex justify-content-center">
                                <img className="mt-5" id="left-menu-ad" src={this.state.ads} alt="adjjjj"
                               onClick={() => this.handleClick(this.state.adId)}
