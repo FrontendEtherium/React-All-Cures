@@ -236,7 +236,7 @@ class Home extends Component {
 
       }
 
-    const newResponse=`https://uat.all-cures.com:444${response.data}`
+    const newResponse=`https://all-cures.com:444${response.data}`
     console.log(newResponse)
      this.setState({
       //  ads: response.data,
@@ -705,7 +705,7 @@ class Home extends Component {
 {
                            
                            this.state.ads?
-                           this.state.ads!=="https://uat.all-cures.com:444All Ads are Served"?
+                           this.state.ads!=="https://all-cures.com:444All Ads are Served"?
                            <div className="container d-flex justify-content-center">
                            <img className=" mb-5 ml-1" id="left-menu-ad" src={this.state.ads} alt="ad"
                             onClick={() => this.handleClick(this.state.adId)}
@@ -846,7 +846,7 @@ class Home extends Component {
 
                            {this.state.images.length>0?(
                          
-                          <img src={`https://uat.all-cures.com:444${this.state.images[this.state.currentIndex]}`} alt="doct"  style={{maxHeight:"400px",width:"405px"}}/>)
+                          <img src={`https://all-cures.com:444${this.state.images[this.state.currentIndex]}`} alt="doct"  style={{maxHeight:"400px",width:"405px"}}/>)
                           :  <img src={Doct} alt="doctor"  style={{maxHeight:"400px",width:"397px"}}/> 
                           
                           }
