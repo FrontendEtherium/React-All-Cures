@@ -196,7 +196,7 @@ class Footer extends Component {
                </div>
                <div className="col-md-3 col-sm-3 col-sx-12">
                   <div className="footer-inner">
-                     <h1>Download the All-Cures App here:</h1>
+                     <h1>Download the All-Cures App heress:</h1>
                { /*  <a href="https://www.facebook.com/All-Cures-100610265834385" target="_blank" rel="noreferrer">
                               <span>
                                  <img src={AppStore} alt="Facebook Link" height="40px" width="150px"></img>
