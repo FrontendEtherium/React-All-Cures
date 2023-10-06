@@ -2,7 +2,7 @@
   "name": "all-cures1",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://all-cures.com",
+  "homepage": "https://uat.all-cures.com",
   "reactSnap": {
     "inlineCss": true,
     "skipThirdPartyRequests": true,
