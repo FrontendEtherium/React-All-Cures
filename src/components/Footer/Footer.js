@@ -6,6 +6,7 @@ import Facebook from '../../assets/icon/facebook.svg';
 import Instagram from '../../assets/icon/instagram.svg';
 import Linkedin from '../../assets/icon/linkedin.svg';
 import GooglePlay from '../../assets/icon/googleplay.png';
+import AppStore from '../../assets/icon/appstore.png';
 import Twitter from '../../assets/icon/twitter.svg';
 import { Link } from 'react-router-dom';
 import PhoneInput from 'react-phone-number-input';
@@ -195,7 +196,7 @@ class Footer extends Component {
                </div>
                <div className="col-md-3 col-sm-3 col-sx-12">
                   <div className="footer-inner">
-                     <h1>All Cures App Download here:</h1>
+                     <h1>Download the All-Cures App here:</h1>
                { /*  <a href="https://www.facebook.com/All-Cures-100610265834385" target="_blank" rel="noreferrer">
                               <span>
                                  <img src={AppStore} alt="Facebook Link" height="40px" width="150px"></img>
@@ -203,18 +204,16 @@ class Footer extends Component {
                               <span className="path1"></span>
                               <span className="path2"></span>
                            </a>*/}
-                            <a href="https://play.google.com/store/apps/details?id=com.allcures" target="_blank" rel="noreferrer">
+                           <a href="https://play.google.com/store/apps/details?id=com.allcures" target="_blank" rel="noreferrer">
                               <span>
-                                 <img src={GooglePlay} alt="Google Play Link" height="" width="150"
-                                 style={{width:"148px",maxHeight:"45px",marginBottom:"7px",marginRight:"5px"}}></img>
+                                 <img src={GooglePlay} alt="Google Play Link" height="" width="150" style={{width:"148px",maxHeight:"45px",marginBottom:"7px",marginRight:"5px"}}></img>
                               </span> 
                               <span className="path1"></span>
                               <span className="path2"></span>
                            </a>
                            <a href="https://apps.apple.com/in/app/all-cures/id1659590351" target="_blank" rel="noreferrer">
                               <span>
-                                 <img src={AppStore} alt="Apple Link" height="" width="150"
-                                  style={{width:"150px",maxHeight:"45px",marginBottom:"7px"}}></img>
+                                 <img src={AppStore} alt="Apple Link" height="" width="150"  style={{width:"150px",maxHeight:"45px",marginBottom:"7px"}}></img>
                               </span> 
                               <span className="path1"></span>
                               <span className="path2"></span>
