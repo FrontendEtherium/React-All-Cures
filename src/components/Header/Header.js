@@ -196,7 +196,7 @@ import { userAccess } from "../UserAccess";
                            <div className=" logo mt-3"> 
                               <Link to='/home'>
                                 <img src={Heart} alt="All Cures Logo"/>
-                                <span>All Curessssssss</span>
+                                <span>All Cures</span>
                               </Link>
                            </div>
 
