@@ -206,14 +206,18 @@ class Footer extends Component {
                            </a>*/}
                            <a href="https://play.google.com/store/apps/details?id=com.allcures" target="_blank" rel="noreferrer">
                               <span>
-                                 <img src={GooglePlay} alt="Google Play Link" height="" width="150"></img>
+                                 
+                              <img src={GooglePlay} alt="Google Play Link" height="" width="150"
+                                 style={{width:"148px",maxHeight:"45px",marginBottom:"7px",marginRight:"5px"}}></img>
                               </span> 
                               <span className="path1"></span>
                               <span className="path2"></span>
                            </a>
                            <a href="https://apps.apple.com/in/app/all-cures/id1659590351" target="_blank" rel="noreferrer">
                               <span>
-                                 <img src={AppStore} alt="Apple Link" height="" width="150"></img>
+                                 
+                                     <img src={AppStore} alt="Apple Link" height="" width="150"
+                                  style={{width:"150px",maxHeight:"45px",marginBottom:"7px"}}></img>
                               </span> 
                               <span className="path1"></span>
                               <span className="path2"></span>
