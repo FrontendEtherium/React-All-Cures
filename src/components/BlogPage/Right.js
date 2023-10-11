@@ -19,9 +19,24 @@ const Side = (props) => {
           .catch(err => {return}
         )
       }
-      function allPosts() {                        // For all available blogs "/blogs"
-        fetch(`${backendHost}/article/allkv`)
-          .then((res) => res.json())
+       function allPosts() {      
+        
+        console.log('token')
+        // For all available blogs "/blogs"
+
+        const headers = new Headers({
+            'Authorization': 'Bearer local@7KpRq3XvF9' 
+          });
+        fetch(`${backendHost}/article/allkv`,{
+            method: 'GET',
+            headers: headers
+        })
+          .then((res) => {
+          if (!res.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return res.json();
+        })
           .then((json) => {
             setisLoaded(true)
             setItems(json.reverse())
