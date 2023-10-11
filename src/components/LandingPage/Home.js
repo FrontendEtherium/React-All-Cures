@@ -103,6 +103,9 @@ class Home extends Component {
     if(userId){
        this.setState({modalShow: false})
     }
+
+     this.loadFloater();
+    
    const loadUsers = async () => {
       
       await axios.get(`${backendHost}/city/all`)
@@ -152,6 +155,10 @@ class Home extends Component {
 
 
   
+    window.onload = () => {
+
+    this.fetchData();
+    }
 
     
    }
@@ -249,17 +256,7 @@ class Home extends Component {
      });
    }
  };
-          componentDidMount(){
          
-         window.onload = () => {
-         console.log('delay')
-          this.loadFloater();
-
-           this.fetchData();
-            }
-     
-
-    }
 
     handleClick = (ad) => {
   
