@@ -26,15 +26,26 @@ export default class Medicinepage extends Component{
           articleFilter: 'recent'
         };
       }
-      allPosts(loadMore) {                        // For all available blogs "/blogs"
+       allPosts(loadMore) {                        // For all available blogs "/blogs"
+        const headers = new Headers({
+          'Authorization': 'Bearer local@7KpRq3XvF9' 
+        });
         if(loadMore === 'loadMore') {
           this.setState({LoadMore: false})
         }
         if(this.state.noMoreArticles){
           return
         } else {
-          fetch(`${backendHost}/article/allkv?limit=${this.state.limit}&offset=${this.state.offset}`)
-          .then((res) => res.json())
+          fetch(`${backendHost}/article/allkv?limit=${this.state.limit}&offset=${this.state.offset}`,{
+            method: 'GET',
+            headers: headers
+          })
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return res.json();
+          })
           .then((json) => {
             if(json.length === 0){
               this.setState({ noMoreArticles: true })
@@ -63,10 +74,24 @@ export default class Medicinepage extends Component{
         }
         
       }
-      medicinePosts(medicine_type){                     // For specific blogs like "/blogs/diabetes"
-        // if(type){
-          fetch(`${backendHost}/isearch/medicinetype/${medicine_type}`)
-          .then((res) => res.json())
+     medicinePosts(medicine_type){                     // For specific blogs like "/blogs/diabetes"
+        const headers = new Headers({
+          'Authorization': 'Bearer local@7KpRq3XvF9' 
+        });
+
+
+      
+          fetch(`${backendHost}/isearch/medicinetype/${medicine_type}`,{
+            method: 'GET',
+            headers: headers
+
+          })
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return res.json();
+          })
           .then((json) => {
             this.setState({
               isLoaded: true,
