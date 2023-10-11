@@ -56,20 +56,34 @@ const ArticlePreview = (props) => {
           .catch(err => null)
       }
 
-    function allPosts() {                        // For all available blogs "/blogs"
-        fetch(`${backendHost}/article/allkvfeatured`)
-          .then((res) => res.json())
-          .then((json) => {
-            var temp = []
-            json.forEach(i => {
-                temp.push(i)
-            });
-            setItems(temp)
-            setLoaded(true)
+   
+    function allPosts() {
+        const headers = new Headers({
+          'Authorization': 'Bearer local@7KpRq3XvF9' 
+        });
+      
+        fetch(`${backendHost}/article/allkvfeatured`, {
+          method: 'GET',
+          headers: headers
         })
-          .catch(err => null)
-    }
-
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return res.json();
+        })
+        .then((json) => {
+          var temp = []
+          json.forEach(i => {
+            temp.push(i)
+          });
+          setItems(temp)
+          setLoaded(true)
+        })
+        .catch(err => {
+          console.error(err);
+        });
+      }
 
     function IsJsonValid(str) {
         try {
