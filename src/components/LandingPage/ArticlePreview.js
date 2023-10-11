@@ -5,6 +5,8 @@ import CenterWell from '../Disease/CenterWell'
 import Heart from"../../assets/img/heart.png";
 import Date from '../Date'
 import { useHistory } from 'react-router';
+
+
 var Promise = require('es6-promise').Promise;
 
 const ArticlePreview = (props) => {
@@ -48,9 +50,24 @@ const ArticlePreview = (props) => {
 
       
     function allPosts() {                        // For all available blogs "/blogs"
+
+        
+
+        const headers = new Headers({
+            'Authorization': 'Bearer local@7KpRq3XvF9' 
+          })
+
         console.log('All Posts')
-        fetch(`${backendHost}/article/allkv?limit=9&offset=${offset}`)
-          .then((res) => res.json())
+        fetch(`${backendHost}/article/allkv?limit=9&offset=${offset}`,{
+            method:'GET',
+            headers: headers
+        })
+        .then((res) => {     //   .then((res) => res.json())
+            if (!res.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return res.json();
+          })
           .then((json) => {
             var temp = []
             if(articleFilter === props.dcName){
@@ -116,7 +133,25 @@ const ArticlePreview = (props) => {
     }
 
     useEffect(() => {
-        getJSON(`${backendHost}/article/allkv?limit=9&offset=${offset}`).then(json => {
+
+        
+        const headers = new Headers({
+            'Authorization': 'Bearer local@7KpRq3XvF9' 
+          });
+        fetch(`${backendHost}/article/allkv?limit=9&offset=${offset}`,{
+        
+            headers: headers
+        
+        })
+        .then((res) => {     //   .then((res) => res.json())
+            if (!res.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return res.json();
+          })
+        
+        .then(json => {
+            console.log('json 2')
             var temp = []
             if(articleFilter === props.dcName){
                 json.forEach(i => {
@@ -149,7 +184,24 @@ const ArticlePreview = (props) => {
     }, [])
 
     useEffect((e) => {
-        getJSON(`${backendHost}/article/allkv?limit=9&offset=${offset}`).then(json => {
+        
+
+        const headers = new Headers({
+            'Authorization': 'Bearer local@7KpRq3XvF9' 
+          });
+        fetch(`${backendHost}/article/allkv?limit=9&offset=${offset}`,{
+        
+            headers: headers
+        
+        })
+        .then((res) => {     //   .then((res) => res.json())
+            if (!res.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return res.json();
+          })
+        .then(json => {
+            console.log('json 1')
             var temp = []
             if(articleFilter === props.dcName){
                 json.forEach(i => {
