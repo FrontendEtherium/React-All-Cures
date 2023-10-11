@@ -49,9 +49,23 @@ const CarouselPreview = (props) => {
     //       .catch(err => null)
     //   }
 
+    
     function allPosts() {                        // For all available blogs "/blogs"
-        fetch(`${backendHost}/article/allkv`)
-          .then((res) => res.json())
+
+        const headers = new Headers({
+            'Authorization': 'Bearer local@7KpRq3XvF9' 
+          });
+
+        fetch(`${backendHost}/article/allkv`,{
+            method: 'GET',
+            headers: headers
+        })
+        .then((res) => {
+            if (!res.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return res.json();
+          })
           .then((json) => {
             var temp = []
             if(articleFilter === props.dcName){
@@ -111,6 +125,7 @@ const CarouselPreview = (props) => {
             null
         )
     }
+
 
     // function articleFilterClick(e, filter) {
     //     setArticleFilter(filter)
