@@ -28,14 +28,26 @@ export default class Blogpage extends Component{
       }
 
       allPosts(loadMore) {                        // For all available blogs "/blogs"
+        const headers = new Headers({
+          'Authorization': 'Bearer local@7KpRq3XvF9' 
+        });
+
         if(loadMore === 'loadMore') {
           this.setState({LoadMore: false})
         }
         if(this.state.noMoreArticles){
           return
         } else {
-          fetch(`${backendHost}/article/allkv?limit=${this.state.limit}&offset=${this.state.offset}`)
-          .then((res) => res.json())
+          fetch(`${backendHost}/article/allkv?limit=${this.state.limit}&offset=${this.state.offset}`,{
+            method: 'GET',
+            headers: headers
+          })
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return res.json();
+          })
           .then((json) => {
             if(json.length === 0){
               this.setState({ noMoreArticles: true })
@@ -56,9 +68,10 @@ export default class Blogpage extends Component{
                           temp.push(i)
                       }
                   });
-                  this.setState({isLoaded: true, items: temp.reverse()})
+                  
               }
               this.setState({LoadMore: true})
+              this.setState({isLoaded: true, items: temp.reverse()})
           })
           .catch(err => {return})
         }
