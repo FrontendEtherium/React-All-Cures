@@ -13,62 +13,36 @@ const AppBanner = () => {
 
     if (isMobileDevice) {
           
+            
+     setTimeout(() => {    
       setShowPopup(true);
+    }, 2000); 
     }
   }, []);
 
-  // const openAppOrStore = () => {
-  //   const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-        
-  //       if (/android/i.test(userAgent)) {
-          
-        
-  //               // Redirect to Play Store if the app didn't open in a reasonable time
-  //               window.location.href = 'https://play.google.com/store/apps/details?id=com.allcures&hl=en&gl=US';
-             
-  //       } if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-          
-            
-  //               // Redirect to App Store if the app didn't open in a reasonable time
-  //               window.location.href = 'https://apps.apple.com/in/app/all-cures/id1659590351';
-            
-  //       } 
-
-
-
-
-  //     }
-
   const openAppOrStore = () => {
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        
+        if (/android/i.test(userAgent)) {
+          
+        
+                // Redirect to Play Store if the app didn't open in a reasonable time
+                window.location.href = 'https://play.google.com/store/apps/details?id=com.allcures&hl=en&gl=US';
+             
+        } if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+          
+            
+                // Redirect to App Store if the app didn't open in a reasonable time
+                window.location.href = 'https://apps.apple.com/in/app/all-cures/id1659590351';
+            
+        } 
+
+
+
+
+      }
+
   
-    if (/android/i.test(userAgent)) {
-      // Check if the app is already installed
-      if (isAppInstalled) {
-        setTimeout(() => {
-          // Redirect to Play Store if the app didn't open in a reasonable time
-          window.location.href = 'https://play.google.com/store/apps/details?id=com.allcures&hl=en&gl=US';
-        }, 5000); // 1 second
-      } else {
-        // Redirect to Play Store immediately
-        window.location.href = 'https://play.google.com/store/apps/details?id=com.allcures&hl=en&gl=US';
-      }
-    } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-      // Check if the app is already installed
-      if (isAppInstalled) {
-        setTimeout(() => {
-          // Redirect to App Store if the app didn't open in a reasonable time
-          window.location.href = 'https://apps.apple.com/in/app/all-cures/id1659590351';
-        }, 5000); // 1 second
-      } else {
-        // Redirect to App Store immediately
-        window.location.href = 'https://apps.apple.com/in/app/all-cures/id1659590351';
-      }
-    }
-  }
-
-
-
 
 
   return (
