@@ -2877,3 +2877,12 @@ box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
  display: table;
 }
 }
+
+.hideScroll::-webkit-scrollbar {
+    width: 0.1rem; /* You can adjust the width */
+  }
+  
+  .hideScroll::-webkit-scrollbar-thumb {
+    background-color:transparent;
+    
+  }
