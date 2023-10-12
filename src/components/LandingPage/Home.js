@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import Heart from"../../assets/img/heart.png";
 import Doct from "../../assets/img/doct.png";
-
+import AppBanner from './AppBanner';
 
 
 import axios from 'axios';
@@ -667,6 +667,8 @@ class Home extends Component {
         </div>
       </section> 
 
+          <AppBanner/>
+                  
       <section className="mb-5 mt-2">
       <div className="container">
             <div className="row">
