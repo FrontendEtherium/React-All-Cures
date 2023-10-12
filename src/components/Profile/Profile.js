@@ -53,9 +53,11 @@ class Profile extends Component {
       alertMsg: '',
       show:false,
       docid: null,
+      initial:4,
     };
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
+    
   }
   showModal = () => {
     this.setState({ show: true });
@@ -128,8 +130,8 @@ postLead = (id) => {
 }
   // DOCTOR'S WRITTEN CURES
 
-  allPosts() {                        // For all available blogs "/blogs"
-    fetch(`${backendHost}/article/authallkv/reg_type/1/reg_doc_pat_id/${this.props.match.params.id.split('-')[0]}`)
+  allPosts=() =>{                        // For all available blogs "/blogs"
+    fetch(`${backendHost}/article/authallkv/reg_type/1/reg_doc_pat_id/${this.props.match.params.id.split('-')[0]}?offset=0&limit=${this.state.initial}`)
       .then((res) => res.json())
       .then((json) => {
         var temp = []
@@ -138,9 +140,10 @@ postLead = (id) => {
             temp.push(i)
           }
         });
-        this.setState({
-          articleItems: temp
-        })
+        this.setState(prevState => ({
+          articleItems: temp,
+          initial: prevState.initial + 4
+        }));
       })
       .catch(err =>
         {return}
@@ -253,6 +256,18 @@ postLead = (id) => {
     this.getRating(this.props.match.params.id.split('-')[0])
     this.getRate(this.props.match.params.id.split('-')[0])
     this.allPosts()
+	  
+	   const canonicalLink = document.createElement('link');
+    canonicalLink.rel = 'canonical';
+    canonicalLink.href = window.location.href;
+    document.head.appendChild(canonicalLink);
+
+    console.log('Canonical link:', canonicalLink);
+
+
+    return () => {
+      document.head.removeChild(canonicalLink);
+    };
   }
 
   setModalShow = (action) => {
@@ -479,7 +494,7 @@ postLead = (id) => {
 
                   <div className="aboutDr">
                     <div className="h4 font-weight-bold">
-                      About {items.prefix}. {items.docname_first} {items.docname_middle}{" "}
+                      About {items.prefix} .{items.docname_first} {items.docname_middle}{" "}
                       {items.docname_last}
 
                     </div>
@@ -673,12 +688,12 @@ userAccess?
                   }
                 </div>
                 <div className="col-md-4">
-                  <div className="profile-card doctors-article d-flex flex-column">
+                  <div className="profile-card doctors-article d-flex flex-column hideScroll" style={{overflowY:" auto",maxHeight:"960px"}}>
                     <div className="h5 font-weight-bold mb-3">
                       {/* No cures By Dr. {items.docname_first} {items.docname_middle} {items.docname_last} yet */}
                       <div className="text-center">Explore Cures</div></div>
                     {this.state.articleItems ?
-                      this.state.articleItems.map((i, index) => index < 2 && (
+                      this.state.articleItems.map((i, index) =>  (
                         <AllPost
                           id={i.article_id}
                           title={i.title}
@@ -700,6 +715,16 @@ userAccess?
                       ))
                       : null
                     }
+
+                        {this.state.articleItems.length>0 &&(
+                       
+                       <div className="d-grid mt-3 mb-5 text-center">
+      
+                     <button onClick={this.allPosts} type="button" className="btn btn-danger">
+                              Load More 
+                                 </button>
+                             </div>
+    )}
                   </div>
                 </div>
               </div>
