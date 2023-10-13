@@ -12,16 +12,16 @@ useEffect(()=>{
       
     
             // Redirect to Play Store if the app didn't open in a reasonable time
-        setTimeout(()=>{
+        
             window.location.href = 'https://play.google.com/store/apps/details?id=com.allcures&hl=en&gl=US';
-        },1000)
+       
     } if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
       
         
             // Redirect to App Store if the app didn't open in a reasonable time
-        setTimeout(()=>{
+       
             window.location.href = 'https://apps.apple.com/in/app/all-cures/id1659590351';
-         },1000)
+        
     } 
 
 },[])
