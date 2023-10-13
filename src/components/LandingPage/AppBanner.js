@@ -41,9 +41,10 @@ const AppBanner = () => {
     <div>
       {showPopup && (
         <div id="app-bnr">
-          <p> Download our app for the best experience.</p>
-          <button  onClick={openAppOrStore} className=" btn btn-secondary mb-2 mr-3">Open in App</button>
-          <button onClick={() => setShowPopup(false)}  className=" btn btn-secondary mb-2">Continue on the Website</button>
+           <p style={{textAlign:"center"}}>Download our app for the best experience.</p>
+   <div className=" d-flex justify-content-center" > <button   onClick={openAppOrStore} className=" btn btn-secondary mb-2">Open in App</button></div>
+        <div className=" d-flex justify-content-center"> <button onClick={() => setShowPopup(false)}  className=" btn btn-secondary mb-2">Stay on the Website</button></div>
+          
         </div>
       )}
 
