@@ -147,6 +147,7 @@ class Disease extends Component {
 
 handleShows() {
   this.setState({ modalState: !this.state.modalState });
+  this.handleModalClose();
 }
 
 showModal() {
@@ -277,12 +278,16 @@ await  axios.get(`${backendHost}/data/newsletter/get`)
 console.log("1232121 testing");
 };
 
-
+floaterInterval = null;
 floaterShow=()=>{
-  setInterval(this.rotateImages, 3000);
+   this.floaterInterval = setInterval(this.rotateImages, 3000);
 }
 
-
+handleModalClose = () => {
+  if (this.floaterInterval) {
+    clearInterval(this.floaterInterval);
+  }
+};
 
 
 rotateImages = () => {
