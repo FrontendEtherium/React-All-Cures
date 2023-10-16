@@ -179,12 +179,16 @@ class Home extends Component {
    console.log("1232121 testing");
    };
   
-
+   floaterInterval = null;
    floaterShow=()=>{
-      setInterval(this.rotateImages, 3000);
+      this.floaterInterval =  setInterval(this.rotateImages, 3000);
    }
   
-  
+  handleModalClose = () => {
+      if (this.floaterInterval) {
+        clearInterval(this.floaterInterval);
+      }
+    };
    
    
    rotateImages = () => {
@@ -832,7 +836,7 @@ class Home extends Component {
     <div className="modal-content">
     <div className="modal-header">
         
-        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+        <button type="button"  onClick={this.handleModalClose}className="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
