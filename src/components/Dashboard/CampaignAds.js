@@ -14,7 +14,7 @@ import { Alert, Form } from 'react-bootstrap';
 function App() {
   const [first, setFirst] = useState();
   const [middle, setMiddle] = useState();
-  const [last, setLast] = useState();
+  const [last, setLast] = useState(1); 
   const [status,setStatus] = useState('')
   const [campaignList,setCampaignList] = useState([])
   const [emaill, setEmail] = useState()
@@ -24,10 +24,12 @@ function App() {
  const [startDate, setStart] = useState(Date)
  const [endDate, setEnd] = useState(Date)
   const [alert,setAlert] = useState()
+  const [alertMessage, setAlertMessage] = useState('');
   const [image, setImage] = useState(null);
   const[companyList,setCompanyList] = useState([])
   const[adsList,setAdsList] = useState([])
   const [condition, setCondition] = useState('');
+  const[appImage,setAppImage]=useState(null)
   
 
 
@@ -60,35 +62,139 @@ function App() {
     if (image) {
       formData.append('image', image);
     }
+
+    if (appImage) {
+      formData.append('mobile_image',appImage);
+    }
   
+    console.log(formData)
     axios.post(`${backendHost}/sponsored/create/ad`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     })
-    .then(() => {
-      setAlert(true);
+    // .then(() => {
+    //   setAlert(true);
+    //   setTimeout(() => {
+    //     setAlert(false);
+    //   }, 4000);
+    // })
+    // .catch((error) => {
+    //   console.error('Error creating ad:', error);
+    // });
+
+    .then((response) => {
+      if (response.data === 1) {
+        setAlertMessage('Ads created successfully!!');
+      } else if (response.data === 0) {
+        setAlertMessage('Ads not created. Please check all fields and try again.');
+      } else {
+        setAlertMessage('An error occurred. Please contact the development team.');
+      }
+
       setTimeout(() => {
-        setAlert(false);
-      }, 4000);
+        setAlertMessage('');
+      }, 3000); // Hide alert after 3 seconds
     })
     .catch((error) => {
       console.error('Error creating ad:', error);
+      setAlertMessage('An error occurred. Please contact the development team.');
+      setTimeout(() => {
+        setAlertMessage('');
+      }, 3000); // Hide alert after 3 seconds
     });
 
-   
   };
   
   
 
-const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setImage(file);
+// const handleImageChange = (e) => {
+//     const file = e.target.files[0];
+//     setImage(file);
 
-    console.log("Image selected:", {
-      image: file.name,
-    });
-  };
+//     console.log("Image selected:", {
+//       image: file.name,
+//     });
+//   };
+
+
+const handleImageChange = async (e) => {
+  const file = e.target.files[0];
+  setImage(file);
+
+  console.log('Image selected:', {
+    image: file.name,
+  });
+
+  if (file) {
+    const adType = last;
+    const fileSize = file.size / 1024;
+    const [width, height] = await getImageDimensions(file);
+
+    if (adType === 1) { // Check for integer value instead of 'Banner'
+      if (width !== 970 || height !== 90) {
+        setAlertMessage('Invalid image dimensions for Banner. Please upload an image with dimensions 970x90.');
+        setImage(null);
+      } else if (fileSize > 100) {
+        setAlertMessage('Image size for Banner is too large. Please upload an image with size up to 100KB.');
+        setImage(null);
+      }
+    } else if (adType === 2) { // Check for integer value instead of 'Left'
+      if (width !== 156 || height !== 514) {
+        setAlertMessage('Invalid image dimensions for Left. Please upload an image with dimensions 156x514.');
+        setImage(null);
+      } else if (fileSize > 20) {
+        setAlertMessage('Image size for Left is too large. Please upload an image with size up to 20KB.');
+        setImage(null);
+      }
+    }
+
+    // Hide alert after 3 seconds
+    setTimeout(() => {
+      setAlertMessage('');
+    }, 3000);
+  }
+};
+
+
+
+const handleAppImageChange = async (e) => {
+  const file = e.target.files[0];
+  setAppImage(file);
+
+  console.log('Image selected:', {
+    appImage: file.name,
+  });
+
+  if (file) {
+    const fileSize = file.size / 1024;
+    const [width, height] = await getImageDimensions(file);
+
+    if (width !== 300 || height !== 50) {
+      setAlertMessage('Invalid image dimensions for Mobile Banner. Please upload an image with dimensions 300x50.');
+      setAppImage(null);
+    } else if (fileSize > 100) {
+      setAlertMessage('Image size for Banner is too large. Please upload an image with size up to 100KB.');
+      setAppImage(null);
+    }
+
+    // Hide alert after 3 seconds
+    setTimeout(() => {
+      setAlertMessage('');
+    }, 3000);
+  }
+};
+
+
+const getImageDimensions = (file) => {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      resolve([img.width, img.height]);
+    };
+    img.src = URL.createObjectURL(file);
+  });
+};
  
  
 
@@ -135,6 +241,15 @@ useEffect(() => {
     getCampaign()
 
 }, []) 
+
+const handleAdTypeChange = (e) => {
+  const selectedValue = e.target.value;
+  const adTypeToValueMap = {
+    Banner: 1,
+    Left: 2,
+  };
+  setLast(adTypeToValueMap[selectedValue]);
+};
 
   return (
       
@@ -199,7 +314,7 @@ useEffect(() => {
                               }
 
                     
-
+{/* 
                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}} >
                         <label htmlFor="">Enter Ad Type  <b>(Required)</b></label>
                         <select name="hospital" value={last} onChange={(e) => setLast(e.target.value)} placeholder=" Enter Company" required className="form-control">
@@ -211,7 +326,24 @@ useEffect(() => {
         )
     })}
 </select>
-                        </Form.Group>
+                        </Form.Group> */}
+
+
+                        
+              <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
+                <label htmlFor="">Enter Ad Type <b>(Required)</b></label>
+                <select
+                  name="hospital"
+                  value={last === 1 ? 'Banner' : 'Left'} // Convert integer value back to string for the select input
+                  onChange={handleAdTypeChange}
+                  placeholder=" Enter Company"
+                  required=""
+                  className="form-control"
+                >
+                  <option value="Banner">Banner</option>
+                  <option value="Left">Left</option>
+                </select>
+              </Form.Group>
 
                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
                             <Form.Label>Enter AD Title  <b> (Optional)</b></Form.Label>
@@ -236,15 +368,19 @@ useEffect(() => {
                             <Form.Control  value={alt} onChange={(e) => setAlt(e.target.value)} type="text" name=""
                             placeholder="Enter ImageAltText..." />
                         </Form.Group>
-                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                       
+              <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
+                <Form.Label>Upload Image for Web</Form.Label>
+                <Form.Control type="file" accept="image/*" onChange={handleImageChange} />
+              </Form.Group>
 
-                        <Form.Label>Upload Image</Form.Label>
-      <Form.Control
-        type="file"
-        accept="image/*"
-        onChange={handleImageChange}
-      />
-    </Form.Group>
+
+                       
+              <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
+                <Form.Label>Upload Image for App</Form.Label>
+                <Form.Control type="file" accept="image/*" onChange={handleAppImageChange} />
+              </Form.Group>
+
 
     <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
                             <Form.Label>AD Start Date</Form.Label>
@@ -260,11 +396,6 @@ useEffect(() => {
                     
                       
                     
-                        {
-                            alert?
-                                <Alert variant="success" className="h6 mx-3">Campaign Created successfully!!</Alert>
-                                : null
-                        }
                      
                         </div>
                         <div className="col-md-12 text-center">
@@ -272,6 +403,12 @@ useEffect(() => {
                         </div>
                         </Form>
                     </div>
+
+                    {alertMessage && (
+          <Alert variant="danger" className="h6 mx-3">
+            {alertMessage}
+          </Alert>
+        )}
 
                
                 </div>
