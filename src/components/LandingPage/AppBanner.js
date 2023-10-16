@@ -13,7 +13,9 @@ const AppBanner = () => {
 
     if (isMobileDevice) {
           
-      setShowPopup(true);
+      setTimeout(() => {    
+        setShowPopup(true);
+      }, 2000); 
     }
   }, []);
 
