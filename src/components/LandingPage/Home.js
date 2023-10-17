@@ -419,7 +419,7 @@ class Home extends Component {
                      <div className="row">
                         <div className="header" style={{width:"100%"}}>
                            <div className=" logo mt-3 ml-4" > 
-                              <Link to='/home'>
+                              <Link to='/'>
                                 <img src={Heart} alt="All Cures Logo"/>
                                 <span>All Cures</span>
                               </Link>
@@ -435,7 +435,7 @@ class Home extends Component {
                                   <div class="collapse navbar-collapse" id="navbarNavDropdown">
      <ul class="navbar-nav">
        <li class="nav-item">
-         <a class="nav-link" href="/home">Home</a>
+         <a class="nav-link" href="/">Home</a>
        </li>
        <li class="nav-item dropdown">
          <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
