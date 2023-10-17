@@ -136,7 +136,7 @@ const onError = (e) => {
           <section className="Profileleft" id="sectionMain">
             <div className="container">
               <div className="row">
-                <div className="col-md-8 pd-0">
+                <div className="col-lg-8 pd-0">
                   <div className="profile-card clearfix">
                     <div className="col-md-3 mr-3">
                       <div className="profileImageBlok">
@@ -175,7 +175,7 @@ const onError = (e) => {
           else{
             return<><div>
               <Link to={'/editsubscribe'}>
-              <button className='article-search btn btn-dark'>edit subscribe</button></Link>
+              <button className=' btn btn-dark'>edit subscribe</button></Link>
               </div></>
               
           }
