@@ -9,6 +9,7 @@ import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core"
+import Footer from "../Footer/Footer";
 
 
 
@@ -70,7 +71,7 @@ useEffect(()=>{
     <>
 
     <Header/>
-    <div style={{backgroundColor:"white",height:"100vh"}}>
+    <div>
    
    
     
@@ -116,57 +117,7 @@ useEffect(()=>{
 
 
 
-  {/* <div className="card shadow-sm  mr-3 mb-3" style={{maxWidth:"300px"}}> 
-      <a href="https://stories.all-cures.com/curing-low-blood-sugar" className="text-decoration-none">
-        <div className="card-body">
-          <img src={Floater} alt="img" style={{ width: "100%", maxHeight: "250px" }} />
-          <h5 className="card-title mt-2"><strong>title</strong></h5>
-          <p className="card-text" style={{ fontWeight: "400px" }}>des.</p>
-        </div>
-      </a>
-    </div>
 
-
-    <div className="card shadow-sm  mr-3 mb-3" style={{maxWidth:"300px"}}> 
-      <a href="https://stories.all-cures.com/curing-low-blood-sugar" className="text-decoration-none">
-        <div className="card-body">
-          <img src={Floater} alt="img" style={{ width: "100%", maxHeight: "250px" }} />
-          <h5 className="card-title mt-2"><strong>title</strong></h5>
-          <p className="card-text" style={{ fontWeight: "400px" }}>des.</p>
-        </div>
-      </a>
-    </div>
-
-
-    <div className="card shadow-sm  mr-3 mb-3" style={{maxWidth:"300px"}}> 
-      <a href="https://stories.all-cures.com/curing-low-blood-sugar" className="text-decoration-none">
-        <div className="card-body">
-          <img src={Floater} alt="img" style={{ width: "100%", maxHeight: "250px" }} />
-          <h5 className="card-title mt-2"><strong>title</strong></h5>
-          <p className="card-text" style={{ fontWeight: "400px" }}>des.</p>
-        </div>
-      </a>
-    </div>
-
-    <div className="card shadow-sm  mr-3 mb-3" style={{maxWidth:"300px"}}> 
-      <a href="https://stories.all-cures.com/curing-low-blood-sugar" className="text-decoration-none">
-        <div className="card-body">
-          <img src={Floater} alt="img" style={{ width: "100%", maxHeight: "250px" }} />
-          <h5 className="card-title mt-2"><strong>title</strong></h5>
-          <p className="card-text" style={{ fontWeight: "400px" }}>des.</p>
-        </div>
-      </a>
-    </div>
-
-    <div className="card shadow-sm  mr-3 mb-3" style={{maxWidth:"300px"}}> 
-      <a href="https://stories.all-cures.com/curing-low-blood-sugar" className="text-decoration-none">
-        <div className="card-body">
-          <img src={Floater} alt="img" style={{ width: "100%", maxHeight: "250px" }} />
-          <h5 className="card-title mt-2"><strong>title</strong></h5>
-          <p className="card-text" style={{ fontWeight: "400px" }}>des.</p>
-        </div>
-      </a>
-    </div> */}
 
 </OwlCarousel>
   ):"Loading"}
@@ -177,6 +128,7 @@ useEffect(()=>{
 
   
     </div>
+     <Footer/>
     </>
   );
 };
