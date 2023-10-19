@@ -50,6 +50,7 @@ import CampaignAdvs from './Campaign/CampaignAdvs';
 import UpdateCompany from './Campaign/UpdateCompany';
 import UpdateCampaign from './Campaign/UpdateCampaign';
 import UpdateAdvs from './Campaign/UpdateAdvs';
+import CreateWebStories from './CreateWebStories';
 
 
 
