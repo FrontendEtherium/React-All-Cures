@@ -41,7 +41,7 @@ import ArticlePreview from './ArticlePreview'
 import TrendingArticles from './TrendingArticles';
 import FeaturedArticles from './FeaturedArticles';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import AppBanner from './AppBanner';
+
 
 env.REACT_APP = 'http://117.241.171.115:8080/cures';
 
@@ -672,7 +672,7 @@ class Home extends Component {
       </section> 
 
       
-      <AppBanner/>
+    
                   
       <section className="mb-5 mt-2">
       <div className="container">
