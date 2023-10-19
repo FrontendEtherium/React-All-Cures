@@ -1,7 +1,6 @@
 import React,{useEffect,useState} from "react";
 import Header from "../Header/Header";
 import { Link } from "react-router-dom/cjs/react-router-dom";
-import Floater from "../../assets/img/floater.png"
 import axios from 'axios';
 import { backendHost } from '../../api-config';
 import'./WebStories.css'
