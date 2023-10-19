@@ -58,7 +58,7 @@ function App() {
         "city":parseInt(city),
         "state":parseInt(state),
         "country_code":parseInt(country),
-        "location":parseInt(location),
+        "location":location,
         "pincode":parseInt(pincode),
         "website_url":website
     
