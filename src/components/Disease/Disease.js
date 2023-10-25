@@ -734,7 +734,7 @@ componentDidMount() {
         // Use the title directly from the API response
         const title = json.title;
         
-        canonicalLink.href = `${window.location.origin}/cure/${id}-${title.replace(/\s+/g, '-').toLowerCase()}`;
+        canonicalLink.href = `${window.location.origin}/cure/${id}-${title.replace(/\s+/g, '-')}`;
         document.head.appendChild(canonicalLink);
 
         // Log the constructed canonical link to the console
