@@ -716,41 +716,28 @@ componentDidMount() {
   const canonicalLink = document.createElement('link');
   canonicalLink.rel = 'canonical';
 
-  const currentURL = window.location.href;
-  // Remove "www" from the URL if it's present
+  const currentURL = window.location.href.toLowerCase();
   const canonicalURL = currentURL.replace(/(https?:\/\/)?www\./, '$1');
 
-  if (canonicalURL.match(/\/cure\/\d+-[a-zA-Z0-9-]+/)) {
-    canonicalLink.href = canonicalURL;
-    // Log the constructed canonical link to the console
-    console.log('Canonical Link:', canonicalLink.outerHTML);
-  } else if (canonicalURL.match(/\/cure\/\d+/)) { // If URL contains only ID
+  if (canonicalURL.match(/\/cure\/\d+/)) {
     const id = this.props.match.params.id.split('-')[0];
 
-    // Fetch the title based on the ID
     fetch(`${backendHost}/article/${id}`)
       .then((res) => res.json())
       .then((json) => {
-        // Use the title directly from the API response
         const title = json.title;
-        
         canonicalLink.href = `${window.location.origin}/cure/${id}-${title.replace(/\s+/g, '-')}`;
         document.head.appendChild(canonicalLink);
-
-        // Log the constructed canonical link to the console
         console.log('Canonical Link:', canonicalLink.outerHTML);
       })
       .catch((err) => {
-        // Handle the error or use a default title
         canonicalLink.href = canonicalURL;
         document.head.appendChild(canonicalLink);
-
-        // Log the constructed canonical link to the console
         console.log('Canonical Link:', canonicalLink.outerHTML);
       });
   } else {
     canonicalLink.href = canonicalURL;
-    // Log the constructed canonical link to the console
+    document.head.appendChild(canonicalLink);
     console.log('Canonical Link:', canonicalLink.outerHTML);
   }
 }
