@@ -6,21 +6,21 @@ import AppBanner from "./components/LandingPage/AppBanner";
   
 const App = () => {
     
-    useEffect(() => {
-      const canonicalLink = document.createElement('link');
-      canonicalLink.rel = 'canonical';
-      canonicalLink.href = window.location.href;
-      document.head.appendChild(canonicalLink);
+    // useEffect(() => {
+    //   const canonicalLink = document.createElement('link');
+    //   canonicalLink.rel = 'canonical';
+    //   canonicalLink.href = window.location.href;
+    //   document.head.appendChild(canonicalLink);
 
-      console.log('Canonical link:', canonicalLink);
+    //   console.log('Canonical link:', canonicalLink);
 
   
-      return () => {
-        document.head.removeChild(canonicalLink);
-      };
+    //   return () => {
+    //     document.head.removeChild(canonicalLink);
+    //   };
 
 
-    }, []);
+    // }, []);
   
   return (
     <div>
