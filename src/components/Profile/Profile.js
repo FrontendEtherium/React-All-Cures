@@ -249,25 +249,76 @@ postLead = (id) => {
     }
   }
 
-  componentDidMount() {
-    window.scrollTo(0, 0);
-    this.fetchDoctorData(this.props.match.params.id.split('-')[0])
-    this.getComments(this.props.match.params.id.split('-')[0])
-    this.getRating(this.props.match.params.id.split('-')[0])
-    this.getRate(this.props.match.params.id.split('-')[0])
-    this.allPosts()
+  // componentDidMount() {
+  //   window.scrollTo(0, 0);
+  //   this.fetchDoctorData(this.props.match.params.id.split('-')[0])
+  //   this.getComments(this.props.match.params.id.split('-')[0])
+  //   this.getRating(this.props.match.params.id.split('-')[0])
+  //   this.getRate(this.props.match.params.id.split('-')[0])
+  //   this.allPosts()
 	  
-	   const canonicalLink = document.createElement('link');
+	 //   const canonicalLink = document.createElement('link');
+  //   canonicalLink.rel = 'canonical';
+  //   canonicalLink.href = window.location.href;
+  //   document.head.appendChild(canonicalLink);
+
+  //   console.log('Canonical link:', canonicalLink);
+
+
+  //   return () => {
+  //     document.head.removeChild(canonicalLink);
+  //   };
+  // }
+
+ componentDidMount() {
+    window.scrollTo(0, 0);
+    this.fetchDoctorData(this.props.match.params.id.split('-')[0]);
+    this.getComments(this.props.match.params.id.split('-')[0]);
+    this.getRating(this.props.match.params.id.split('-')[0]);
+    this.getRate(this.props.match.params.id.split('-')[0]);
+    this.allPosts();
+  
+    const canonicalLink = document.createElement('link');
     canonicalLink.rel = 'canonical';
-    canonicalLink.href = window.location.href;
-    document.head.appendChild(canonicalLink);
-
-    console.log('Canonical link:', canonicalLink);
-
-
-    return () => {
-      document.head.removeChild(canonicalLink);
-    };
+  
+    const currentURL = window.location.href;
+    // Remove "www" from the URL if it's present
+    const canonicalURL = currentURL.replace(/(https?:\/\/)?www\./, '$1');
+  
+    if (canonicalURL.match(/\/profile\/\d+-[a-zA-Z0-9-]+/)) {
+      canonicalLink.href = canonicalURL;
+      // Log the constructed canonical link to the console
+      console.log('Canonical Link:', canonicalLink.outerHTML);
+    } else if (canonicalURL.match(/\/profile\/\d+/)) { // If URL contains only ID
+      const id = this.props.match.params.id.split('-')[0];
+  
+      // Fetch the first name and last name based on the ID
+      fetch(`${backendHost}/DoctorsActionController?rowno=${id}&cmd=getProfile`)
+        .then((res) => res.json())
+        .then((json) => {
+          // Use the first name and last name directly from the API response
+          const firstName = json.docname_first;
+          const lastName = json.docname_last;
+  
+          canonicalLink.href = `${window.location.origin}/profile/${id}-${firstName}-${lastName}`;
+          document.head.appendChild(canonicalLink);
+  
+          // Log the constructed canonical link to the console
+          console.log('Canonical Link:', canonicalLink.outerHTML);
+        })
+        .catch((err) => {
+          // Handle the error or use a default name
+          canonicalLink.href = canonicalURL;
+          document.head.appendChild(canonicalLink);
+  
+          // Log the constructed canonical link to the console
+          console.log('Canonical Link:', canonicalLink.outerHTML);
+        });
+    } else {
+      canonicalLink.href = canonicalURL;
+      // Log the constructed canonical link to the console
+      console.log('Canonical Link:', canonicalLink.outerHTML);
+    }
   }
 
   setModalShow = (action) => {
