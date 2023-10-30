@@ -25,6 +25,8 @@ import ListIcon from '@material-ui/icons/List';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import HomeIcon from '@material-ui/icons/Home';
+import { userId} from './../UserId';
+
 export default function NestedListItems() {
   const [open, setOpen] = React.useState(false);
   const [openn, setOpenn] = React.useState(false);
@@ -141,7 +143,7 @@ setOpenn(!openn);
 
 
 
-
+   { ( userId==37  || userId==50) && (
 
       <ListItem button onClick={handleClick} style={{backgroundColor:'lightblue'}}>
       <ListItemIcon>
@@ -150,6 +152,9 @@ setOpenn(!openn);
         <ListItemText primary="ABOUT ARTICLE" />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
+
+      )}
+        
       <Collapse in={open} timeout="auto" >
         <List component="divw" disablePadding>
           <ListItem button>
@@ -283,6 +288,7 @@ setOpenn(!openn);
       </Collapse>
 
 
+               { ( userId==37 || userId==50) && (
       <ListItem button onClick={handleClick3} style={{backgroundColor:'lightblue'}}>
       <ListItemIcon>
               <LocalHospitalIcon />
@@ -290,6 +296,8 @@ setOpenn(!openn);
         <ListItemText primary="DOCTORS" />
         {opennnn ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
+          )}
+                 
       <Collapse in={opennnn} timeout="auto" >
         <List component="divw" disablePadding>
         <ListItem button>
