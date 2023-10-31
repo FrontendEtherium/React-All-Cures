@@ -581,7 +581,7 @@ class Home extends Component {
                                     name: newInputValue
                                  })
                               }}
-                              id="combo-box-demo"
+                              id="combo-box-demo-1"
                               options={
                                  this.state.doctorLoaded ?
                                     this.state.name?
@@ -614,7 +614,7 @@ class Home extends Component {
                                     city: newInputValue
                                  })
                               }}
-                              id="combo-box-demo"
+                              id="combo-box-demo-2"
                               options={this.state.city?
                                  this.state.city.length >= 1?
                                  this.state.cityList 
