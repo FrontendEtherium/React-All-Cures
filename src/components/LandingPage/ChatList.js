@@ -158,7 +158,7 @@ console.log('getid->',getId)
     <>
 
     <Header/>
-    <div className='p-3'>
+    <div className='p-4'>
      <div className='border'>
     <div className="container">
          <div className="chat">
