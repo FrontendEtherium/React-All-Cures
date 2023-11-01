@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { backendHost } from '../../api-config';
 import DummyDoc from "../../assets/healthcare/img/images/defaultDoc1.png";
 
 const DoctorsCard = ({rowno, firstName, lastName, primary_spl, hospital_affliated, state, country_code}) => {
