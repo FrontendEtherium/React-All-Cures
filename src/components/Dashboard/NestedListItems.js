@@ -288,7 +288,7 @@ setOpenn(!openn);
       </Collapse>
 
 
-               { ( userId==37 || userId==50) && (
+               { ( userId==37 || userId==50 || userId==51) && (
       <ListItem button onClick={handleClick3} style={{backgroundColor:'lightblue'}}>
       <ListItemIcon>
               <LocalHospitalIcon />
