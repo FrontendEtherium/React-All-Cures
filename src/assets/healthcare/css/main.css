@@ -801,12 +801,31 @@ position: absolute;
 #specialists .item-img img, #featured .item-img img,
 #doctor .item-img {
   background: no-repeat center center;
-  background-image: url(../img/images/defaultDoc2.png);
+/*   background-image: url(../img/images/defaultDoc2.png); */
   background-color: #c6dffe;
   width: 275px;
   height: 264px;
   vertical-align: middle;
   object-fit: cover;
+}
+
+#specialists .item-imgsBack , #featured .item-imgsBack,
+#doctor .item-imgsBack {
+  background: no-repeat center center;
+  background-color: #c6dffe;
+  width: 275px;
+  height: 264px;
+  vertical-align: middle;
+  object-fit: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-imgs{
+  width:167px !important;
+  height:170px;
+  
 }
 .color-gray {
   color: #353535;
