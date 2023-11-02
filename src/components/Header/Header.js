@@ -345,7 +345,7 @@ import { userAccess } from "../UserAccess";
                                     name: newInputValue
                                  })
                               }}
-                              id="combo-box-demo"
+                              id="combo-box-demo-1"
                               options={this.state.doctorLoaded ?
                                  this.state.name?
                                  this.state.name.length >= 1? 
@@ -374,7 +374,7 @@ import { userAccess } from "../UserAccess";
                                     city: newInputValue
                                  })
                               }}
-                              id="combo-box-demo"
+                              id="combo-box-demo-2"
                               options={this.state.city?
                                  this.state.city.length >= 1?
                                  this.state.cityList 
