@@ -1,20 +1,60 @@
-import React from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { backendHost } from '../../api-config';
+import DummyDoc from "../../assets/healthcare/img/images/defaultDoc1.png";
 
 const DoctorsCard = ({rowno, firstName, lastName, primary_spl, hospital_affliated, state, country_code}) => {
-
-   const onError = (e) => {
-      e.target.parentElement.innerHTML = `<i class="fas fa-user-md fa-10x"></i>`
-   }
    
+const[doctImage,setDoctImage]=useState([])
+const [isDefaultImage, setIsDefaultImage] = useState(false);
+   
+   useEffect(() => {
+   fetch(`${backendHost}/data/doctor/image`)
+       .then((res) => res.json())
+       .then((json) => {
+         console.log('doctorrrrrrrrr',json)
+
+
+        
+
+   let matchedImageLoc = DummyDoc; 
+
+   for (let i = 0; i < json.length; i++) {
+       if (json[i].rowno == rowno && json[i].img_Loc !=null) {
+
+         console.log('Rowno:', json[i].rowno, 'Passed Rowno:', rowno);
+           matchedImageLoc = `https://all-cures.com:444${json[i].img_Loc}`;
+           console.log('matched', matchedImageLoc)
+           break; // Break the loop once a match is found
+       }
+
+       else if(json[i].rowno == rowno && json[i].img_Loc ==null){
+
+         matchedImageLoc = DummyDoc;
+         setIsDefaultImage(true)
+        }
+   }
+
+   setDoctImage(matchedImageLoc)
+     
+})
+   
+       .catch((err) => {
+           console.error('Error fetching data:', err);
+       });
+}, []);
     return(
         <>
-         <div className="item" key={rowno}>
-    <div className="item-img">
-    {/* <object data="avatar.jpg" type="image/jpg"> */}
-      <img src={`https://all-cures.com:444/cures_articleimages/doctors/${rowno}.png`} 
-      onError={(e) => onError(e)}/>
-      {/* </object> */}
+
+        <div className="item" key={rowno}>
+    <div  className={`${isDefaultImage ? 'item-imgsBack' : 'item-img'}`} style={{backGroundColor:" #c6dffe"}}>
+{doctImage.length>0?
+  <img src={doctImage}   className={`${isDefaultImage ? 'item-imgs' : ''} `} alt="doc" />:
+  <i class="fas fa-user-md fa-10x"></i>
+  }
+    
+         
     </div>
     <div className="sider-contain">
        <div className="slider-heading">
