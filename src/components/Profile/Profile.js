@@ -545,7 +545,7 @@ postLead = (id) => {
 
                   <div className="aboutDr">
                     <div className="h4 font-weight-bold">
-                      About {items.prefix}.{items.docname_first} {items.docname_middle}{" "}
+                       About {items.prefix}. {items.docname_first} {items.docname_middle}{" "}
                       {items.docname_last}
 
                     </div>
