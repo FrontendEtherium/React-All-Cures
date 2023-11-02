@@ -293,6 +293,7 @@ getImg=() =>{
     this.getRating(this.props.match.params.id.split('-')[0]);
     this.getRate(this.props.match.params.id.split('-')[0]);
     this.allPosts();
+    this.getImg();
   
     const canonicalLink = document.createElement('link');
     canonicalLink.rel = 'canonical';
