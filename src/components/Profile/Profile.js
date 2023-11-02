@@ -54,6 +54,8 @@ class Profile extends Component {
       show:false,
       docid: null,
       initial:4,
+      doctImage:[],
+      isDefaultImage:false,
     };
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
@@ -149,7 +151,42 @@ postLead = (id) => {
         {return}
       )
   }
+getImg=() =>{                       
+    fetch(`${backendHost}/data/doctor/image`)
+      .then((res) => res.json())
+      .then((json) => {
+        console.log('doctorrrrrrrrr',json)
 
+
+        // setDoctImage(json)
+
+  let matchedImageLoc = ''; // Default image location
+
+  for (let i = 0; i < json.length; i++) {
+      if (json[i].rowno == this.state.items.rowno && json[i].img_Loc !=null) {
+
+        console.log('Rowno:', json[i].rowno, 'Passed Rowno:', this.state.items.rowno);
+          matchedImageLoc = `https://uat.all-cures.com:444${json[i].img_Loc}`;
+          console.log('matched', matchedImageLoc)
+          break; // Break the loop once a match is found
+      }
+
+      else if(json[i].rowno == this.state.items.rowno && json[i].img_Loc ==null){
+
+        // matchedImageLoc = this.onError();
+        this.setState({
+          isDefaultImage:true
+        })
+       }
+  }
+
+  this.setState({
+    doctImage:matchedImageLoc
+  })
+ 
+    
+})
+  }
   getComments = (id) => {
     axios.get(`${backendHost}/rating/target/${id}/targettype/1`)
       .then(res => {
@@ -333,11 +370,11 @@ postLead = (id) => {
       }).catch(err => {return});
   }
 
-  onError = (e) => {
-    if(e.target.parentElement){
-      e.target.parentElement.innerHTML = `<i class="fas fa-user-md fa-6x"></i>`
-    }
+ onError = (e) => {
+
+    e.target.parentElement.innerHTML = `<i class="fas fa-user-md fa-6x"></i>`
   }
+
 
   render() {
     var { isLoaded, items } = this.state;
@@ -406,10 +443,11 @@ postLead = (id) => {
                         We are passionate about giving our users the unique 
                         experience that is both fulfilling and wholesome.</h1>
                         <h2  style={{display:'none'}}>Ayurveda, Homeopathy, Chinese Medicine, Persian, Unani</h2>
-                        <img alt={items.docname_first} 
-                                src={`${imagePath}/cures_articleimages/doctors/${items.rowno}.png?d=${parseInt(Math.random() * 1000)}`} 
-                                onError = {(e) => this.onError(e)}
-                              />
+                          {this.state.doctImage.length>0 ?
+
+                              <img alt={items.docname_first} src={this.state.doctImage}/>
+                              : <i class="fas fa-user-md fa-6x"></i>}
+                          
                           
                         </div>
                           {
@@ -666,7 +704,13 @@ userAccess?
                   userId && items.subscription === 1 && userAccess != 1 ?
                   <>
 
-                   <Chat imageURL={`${imagePath}/cures_articleimages/doctors/${items.rowno}.png`}   items={items} docid={this.state.docid} />
+                     {this.state.doctImage.length>0 ?
+
+                         <Chat  imageURL={this.state.doctImage} items={items} docid={this.state.docid} /> 
+                           : 
+                           <Chat  dummy={<i class="fas fa-user-sm "></i>} items={items} docid={this.state.docid} />
+                    
+                        }
 
                   </>
                   :null
