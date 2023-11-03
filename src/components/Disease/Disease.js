@@ -753,37 +753,36 @@ componentDidMount() {
   const canonicalLink = document.createElement('link');
   canonicalLink.rel = 'canonical';
 
-  const currentURL = window.location.href.toLowerCase();
-  let canonicalURL = currentURL;
+ const currentURL = window.location.href.toLowerCase();
 
-  // Check if the URL starts with "www" and redirect if necessary
-  if (currentURL.startsWith('http://www.') || currentURL.startsWith('https://www.')) {
-    const nonWwwURL = currentURL.replace(/https?:\/\/(www\.)?/, 'http://');
-    window.location.href = nonWwwURL;
-    return; // Stop execution as we've redirected
-  }
+if (currentURL.startsWith('http://www.') || currentURL.startsWith('https://www.')) {
+  const nonWwwURL = currentURL.replace(/https?:\/\/(www\.)?/, 'http://');
+  window.location.href = nonWwwURL;
+  return; // Stop execution as we've redirected
+}
 
-  if (canonicalURL.match(/\/cure\/\d+/)) {
-    const id = this.props.match.params.id.split('-')[0];
+ if (canonicalURL.match(/\/cure\/\d+/)) {
+  const id = this.props.match.params.id.split('-')[0];
 
-    fetch(`${backendHost}/article/${id}`)
-      .then((res) => res.json())
-      .then((json) => {
-        const title = json.title;
-        canonicalLink.href = `${window.location.origin}/cure/${id}-${title.replace(/\s+/g, '-')}`;
-        document.head.appendChild(canonicalLink);
-        console.log('Canonical Link:', canonicalLink.outerHTML);
-      })
-      .catch((err) => {
-        canonicalLink.href = canonicalURL;
-        document.head.appendChild(canonicalLink);
-        console.log('Canonical Link:', canonicalLink.outerHTML);
-      });
-  } else {
-    canonicalLink.href = canonicalURL;
-    document.head.appendChild(canonicalLink);
-    console.log('Canonical Link:', canonicalLink.outerHTML);
-  }
+  fetch(`${backendHost}/article/${id}`)
+    .then((res) => res.json())
+    .then((json) => {
+      const title = json.title;
+      canonicalLink.href = `${window.location.origin}/cure/${id}-${title.replace(/\s+/g, '-')}`;
+      document.head.appendChild(canonicalLink);
+      console.log('Canonical Link:', canonicalLink.outerHTML);
+    })
+    .catch((err) => {
+      canonicalLink.href = canonicalURL;
+      document.head.appendChild(canonicalLink);
+      console.log('Canonical Link:', canonicalLink.outerHTML);
+    });
+} else {
+  canonicalLink.href = canonicalURL;
+  document.head.appendChild(canonicalLink);
+  console.log('Canonical Link:', canonicalLink.outerHTML);
+}
+
 }
 
 
