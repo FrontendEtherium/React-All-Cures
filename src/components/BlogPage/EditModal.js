@@ -1022,7 +1022,7 @@ By visiting this page on our website: <a href="https://www.all-cures.com">www.al
                         <div className='h5'>Content JSON Preview</div>
                         <textarea 
                             className='w-100' 
-                            value={contentSmall} 
+                            value={JSON.stringify(contentSmall)} 
                             onChange={(e)=> {
                                 setContentSmall(e.target.value)
                                 IsJsonValid(e.target.value)
