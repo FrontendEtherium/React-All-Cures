@@ -13,10 +13,6 @@ const [isDefaultImage, setIsDefaultImage] = useState(false);
    fetch(`${backendHost}/data/doctor/image`)
        .then((res) => res.json())
        .then((json) => {
-         console.log('doctorrrrrrrrr',json)
-
-
-        
 
    let matchedImageLoc = DummyDoc; 
 
