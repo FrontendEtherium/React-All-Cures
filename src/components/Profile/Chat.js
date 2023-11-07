@@ -172,11 +172,10 @@ if(res.data[0].Chat_id!=null){
           <button
             className="toggle-button"
             onClick={toggleChatBox}
-            style={{ marginTop: -290 , width:400}}
+            style={{ marginTop: -290, width:400 }}
           >
-            
-            <div className="d-flex align-items-center>
-  <div className="mr-2">
+           <div className="d-flex align-items-center">
+              <div className="mr-2">
             {props.imageURL &&
              <img
              src={props.imageURL}
@@ -190,15 +189,12 @@ if(res.data[0].Chat_id!=null){
             </div>
            }
            </div>
-            
-            <div style={{ fontSize: "18px", fontWeight: "bold" }}>
-  {" "}
-  {/* Chat With&nbsp; */}
-  {items.prefix}&nbsp;{items.docname_first} {items.docname_middle}{" "}
-  {items.docname_last}
-</div>
-</div>
-
+            <div style={{ fontSize: "16px", fontWeight: "bold" }}>
+              {" "}
+              {items.prefix} {items.docname_first} {items.docname_middle}{" "}
+              {items.docname_last}
+            </div>
+              </div>
           </button>
           <div className="chat-box">
             <div className="chat-list" ref={chatRef} style={{flex:1,overflowY:'auto'}} >
@@ -246,7 +242,6 @@ if(res.data[0].Chat_id!=null){
               </form>
             </div>
           </div>
-          
         </div>
       </form>
     </div>
