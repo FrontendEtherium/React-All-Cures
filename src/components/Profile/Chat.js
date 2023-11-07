@@ -172,15 +172,32 @@ if(res.data[0].Chat_id!=null){
           <button
             className="toggle-button"
             onClick={toggleChatBox}
-            style={{ marginTop: -290 }}
+            style={{ marginTop: -290 , width:400}}
           >
             
-            <span style={{ fontSize: "18px", fontWeight: "bold" }}>
+            <div className="d-flex align-items-center>
+  <div className="mr-2">
+            {props.imageURL &&
+             <img
+             src={props.imageURL}
+             alt="Chat Icon"
+             style={{ width: "20px", marginRight: "10px" }}
+           />}
+           {
+            props.dummy &&
+            <div  style={{ width: "20px",fontSize:"5px", marginRight: "10px" }}>
+               <i class="fas fa-user-md fa-6x"></i>
+            </div>
+           }
+           </div>
+            
+            <div style={{ fontSize: "18px", fontWeight: "bold" }}>
   {" "}
-  Chat With&nbsp;
+  {/* Chat With&nbsp; */}
   {items.prefix}&nbsp;{items.docname_first} {items.docname_middle}{" "}
   {items.docname_last}
-</span>
+</div>
+</div>
 
           </button>
           <div className="chat-box">
