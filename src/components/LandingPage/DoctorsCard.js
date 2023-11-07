@@ -23,9 +23,9 @@ const [isDefaultImage, setIsDefaultImage] = useState(false);
    for (let i = 0; i < json.length; i++) {
        if (json[i].rowno == rowno && json[i].img_Loc !=null) {
 
-         console.log('Rowno:', json[i].rowno, 'Passed Rowno:', rowno);
+        
            matchedImageLoc = `https://all-cures.com:444${json[i].img_Loc}`;
-           console.log('matched', matchedImageLoc)
+           
            break; // Break the loop once a match is found
        }
 
