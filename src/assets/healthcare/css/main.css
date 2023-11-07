@@ -2294,7 +2294,7 @@ div.MuiSelect-root.MuiSelect-select.MuiSelect-selectMenu.MuiInputBase-input.MuiI
   line-height: 38px;
   border-radius: 2px;
   background-color: #f1f1f1;
-  position: absolute;
+/*   position: absolute; */
     right: 5px;
 
 }
@@ -2653,7 +2653,7 @@ padding:0.22rem;
     /*right: 0.5rem;
     bottom: 0;*/
     left: 0.8rem;
-    /*bottom: -30px;*/
+    bottom: -30px;
     
   }
   .mtc{
