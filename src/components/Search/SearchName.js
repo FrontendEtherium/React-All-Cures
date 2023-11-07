@@ -138,6 +138,7 @@ class SearchName extends Component {
                           <ProfileTab
                             rowno = {i.map.rowno}
                             firstName = {i.map.docname_first}
+                            middleName={i.map.docname_middle}
                             lastName = {i.map.docname_last}
                             docid= {i.map.doctorid}
                             name = {i.map.name}
