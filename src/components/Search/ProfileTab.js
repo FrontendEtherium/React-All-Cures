@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { imagePath } from '../../image-path';
 
-const ProfileTab = ({ firstName, lastName, rowno, name, pSpl, hospital, state, country, eduTraining }) => {
+const ProfileTab = ({ firstName, lastName,middleName, rowno, name, pSpl, hospital, state, country, eduTraining }) => {
 
   const onError = (e) => {
     if(e.target.parentElement){
@@ -26,11 +26,11 @@ const ProfileTab = ({ firstName, lastName, rowno, name, pSpl, hospital, state, c
                     <p>{ratingVal}</p>
                   </div> */}
                   <div className="name">
-                  <h3>{name}</h3>
+                 <h3>Dr. {firstName} {middleName} {lastName}</h3>
                   <h5>{pSpl}</h5>           {/* Primary Specialization */}
                   <h5>{hospital} {state} {country}</h5>
                   {/* <h5>{eduTraining.substr(0, 90)}</h5> */}
-                  <h5 id="about">About {name}</h5>
+                   <h5>About Dr. {firstName} {lastName}</h5>
                     <p></p>
                   </div>
                   <div className="btn-group"> 
