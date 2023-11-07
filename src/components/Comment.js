@@ -45,12 +45,12 @@ const Comment = ({refreshComments, docid}) => {
         <>
             <div>
                 <form action="" onSubmit={(e) => postComment(e)} className="form-group">
-                    <label htmlFor="">Comment</label>
+                    <label htmlFor="commentField">Comment</label>
                     <textarea name="" 
                     onChange={(e) => {
                         setCmtText(e.target.value)
                     }}
-                    className="form-control" id="" cols="30" rows="3"></textarea>
+                    className="form-control" id="commentField" cols="30" rows="3"></textarea>
                     
                     {
                             succAlert?
