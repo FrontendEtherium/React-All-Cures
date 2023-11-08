@@ -106,7 +106,7 @@ const ArticlePreview = (props) => {
                         ))} */}
         <div className="container">
         
-            <div className="row" marginBottom={10}>
+            <div className="row" style={{marginBottom:"30px"}}>
             <div className="main-hero" id="main-hero">
               <h3 class="mt-5">My Favourite Cures</h3>
 
