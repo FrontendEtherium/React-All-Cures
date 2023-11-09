@@ -187,7 +187,9 @@ fetchBlog = async() => {
           this.comments(this.props.match.params.id.split('-')[0]);
           this.getRating(this.props.match.params.id.split('-')[0]);
           this.getRate(this.props.match.params.id.split('-')[0]);
-          this.getFavourite(this.props.match.params.id.split('-')[0]);
+          if (userAccess) {
+            this.getFavourite(this.props.match.params.id.split('-')[0]);
+          }
           this.fetchParentDiseaseId( this.props.match.params.id.split('-')[0]);
           this.loadFloater();
 
@@ -235,7 +237,10 @@ fetchBlog = async() => {
           this.comments(this.props.match.params.id.split('-')[0]);
           this.getRating(this.props.match.params.id.split('-')[0]);
           this.getRate(this.props.match.params.id.split('-')[0]);
-          this.getFavourite(this.props.match.params.id.split('-')[0]);
+           if (userAccess) {
+            this.getFavourite(this.props.match.params.id.split('-')[0]);
+          }
+          
           this.fetchParentDiseaseId( this.props.match.params.id.split('-')[0]);
           this.loadFloater();
           
