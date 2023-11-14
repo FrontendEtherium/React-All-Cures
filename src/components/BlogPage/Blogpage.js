@@ -343,9 +343,7 @@ export default class Blogpage extends Component{
                   this.state.noMoreArticles  && (this.state.articleFilter == 'recent'|| this.state.articleFilter == 'earliest')?
                     <div className='container h4 text-center mb-5 pb-2'>
                       You have reached end of page. Thanks!
-                      <div className='text-center'>
-                        <img src={Heart} alt="All Cures Logo" id="heartend" />
-                      </div>
+                     
                     </div>
                     : null
                 } 
