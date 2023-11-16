@@ -104,15 +104,26 @@ export default class Blogpage extends Component{
         .catch(err => {return})
       }
 
-      handleScroll = () => {
-        const bottom = Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight
-        if (bottom) {
-          this.setState({
-            // limit: this.state.limit + 25,
-            offset: this.state.offset + 15
-          }, () => this.allPosts('loadMore'));
+       handleScroll = () => {
+        const { articleFilter } = this.state;
+      
+        // Check if the selected tab is 'recent' or 'earliest'
+        if (articleFilter === 'recent' || articleFilter === 'earliest') {
+          const bottom =
+            Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight;
+      
+          if (bottom) {
+            this.setState(
+              {
+                offset: this.state.offset + 15,
+              },
+              () => this.allPosts('loadMore')
+            );
+            console.log('offset', this.state.offset);
+          }
         }
       };
+      
       // React.useEffect(() => {
         
       // }, []);
@@ -286,10 +297,11 @@ export default class Blogpage extends Component{
                     </ul>
                  </div>
                   }
-                  {
-                    items.length === 0 && (this.state.articleFilter !== 'recent' || this.props.match.params.type)?
-                    <div className='my-5 py-4 h5 container text-center'>We do not have any cures for this condition yet but our editorial team is working on it. In the meantime, if you have a cure, Please <Link to="/article">Click Here</Link> to add the cure to our site.</div>: null
-                  }
+                 
+{items.length === 0 && !this.state.isLoaded && (this.state.articleFilter !== 'recent' || this.props.match.params.type) ? (
+  <div className='my-5 py-4 h5 container text-center'>We do not have any cures for this condition yet but our editorial team is working on it. In the meantime, if you have a cure, Please <Link to="/article">Click Here</Link> to add the cure to our site.</div>
+) : null}
+
                     <div className="row mt-4" id="posts-container">
                     {items.map((i) => (
                       i.pubstatus_id === 3 ?            // Selects articles with publish status = 3 (Published)
@@ -320,19 +332,17 @@ export default class Blogpage extends Component{
                     </div>
                 </div>
                 {
-                  LoadMore?
+                  LoadMore  && (this.state.articleFilter == 'recent'|| this.state.articleFilter == 'earliest')?
                     <div className="loader my-4">
                       <img src={Heart} alt="All Cures Logo" id="heart"/>
                     </div>
                   : null
                 }
                 {
-                  this.state.noMoreArticles?
+                  this.state.noMoreArticles  && (this.state.articleFilter == 'recent'|| this.state.articleFilter == 'earliest')?
                     <div className='container h4 text-center mb-5 pb-2'>
                       You have reached end of page. Thanks!
-                      <div className='text-center'>
-                        <img src={Heart} alt="All Cures Logo" id="heartend" />
-                      </div>
+                      
                     </div>
                     : null
                 } 
