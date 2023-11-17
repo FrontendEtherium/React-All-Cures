@@ -812,7 +812,7 @@ position: absolute;
 #doctor .item-imgsBack {
   background: no-repeat center center;
   background-color: #c6dffe;
-  width: 275px;
+/*   width: 275px; */
   height: 264px;
   vertical-align: middle;
   object-fit: none;
@@ -825,6 +825,55 @@ position: absolute;
   width:167px !important;
   height:170px;
   
+}
+
+
+@media only screen and (min-width: 220px) and (max-width: 760px) {
+
+  #specialists .item-imgsBack , #featured .item-imgsBack,
+  #doctor .item-imgsBack {
+    background: no-repeat center center;
+    background-color: #c6dffe;
+    /* width: 236px; */
+    height: 264px;
+    vertical-align: middle;
+    object-fit: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  
+  .item-imgs{
+    width:167px !important;
+    height:170px;
+    /* padding-right: 6px; */
+    
+  }
+
+}
+
+@media only screen and (min-width: 768px) and (max-width: 912px) {
+
+  #specialists .item-imgsBack , #featured .item-imgsBack,
+  #doctor .item-imgsBack {
+    background: no-repeat center center;
+    background-color: #c6dffe;
+    width: 236px;
+    height: 264px;
+    vertical-align: middle;
+    object-fit: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .item-imgs{
+    width:167px !important;
+    height:170px;
+    /* padding-right: 6px; */
+    
+  }
+
 }
 
 .color-gray {
