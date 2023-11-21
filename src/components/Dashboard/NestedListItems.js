@@ -403,6 +403,15 @@ setOpenn(!openn);
 
         </List>
       </Collapse>
+
+                <ListItem button style={{backgroundColor:'lightblue'}}>
+        <ListItemIcon>
+          <DashboardIcon />
+        </ListItemIcon>
+        <Link to="/dashboard?createwebstories">
+          <ListItemText primary="Create Webstories" />
+        </Link>
+      </ListItem>
       
     </List>
   );
