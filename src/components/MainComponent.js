@@ -73,6 +73,7 @@ import Y from './Header/Health A To Z/Y'
 
 import Z from './Header/Health A To Z/Z'
 import AppRedirect from "./LandingPage/AppRedirect";
+import Webstories from "./WebStories/Webstories";
 
 
 
@@ -143,6 +144,7 @@ const Routes = (props) => {
        <Route exact path="/medical" component={Medical}/>
        <Route exact path="/chatlist" component={ChatList}/>
      <Route exact path="/appRedirect" component={AppRedirect} />
+     <Route exact path="/webStories" component={Webstories} />
 
 
 
