@@ -107,13 +107,13 @@ const handleImageChange = async (e) => {
                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
                             <Form.Label>Enter Web story Title </Form.Label>
                             <Form.Control  value={title} onChange={(e) => setTitle(e.target.value)} type="text" name=""
-                            placeholder="Enter Title..." />
+                            placeholder="Enter Title..." required />
                         </Form.Group>
 
                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
                             <Form.Label>Enter Web story Description </Form.Label>
                             <Form.Control  value={description} onChange={(e) => setDescription(e.target.value)} type="text" name=""
-                            placeholder="Enter Description..." />
+                            placeholder="Enter Description..." required />
                         </Form.Group>
 
 
@@ -121,7 +121,7 @@ const handleImageChange = async (e) => {
                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
                             <Form.Label>Enter Web story Link </Form.Label>
                             <Form.Control  value={link} onChange={(e) => setLink(e.target.value)} type="text" name=""
-                            placeholder="Enter Description..." />
+                            placeholder="Enter Description..." required />
                         </Form.Group>
 
                         
@@ -129,12 +129,12 @@ const handleImageChange = async (e) => {
                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
                             <Form.Label>Enter ImageAltText  <b> (Optional)</b></Form.Label>
                             <Form.Control  value={alt} onChange={(e) => setAlt(e.target.value)} type="text" name=""
-                            placeholder="Enter ImageAltText..." />
+                            placeholder="Enter ImageAltText..."required />
                         </Form.Group>
                        
               <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
                 <Form.Label>Upload Image </Form.Label>
-                <Form.Control type="file" accept="image/*" onChange={handleImageChange} />
+                <Form.Control type="file" accept="image/*" onChange={handleImageChange} required />
               </Form.Group>
 
 
