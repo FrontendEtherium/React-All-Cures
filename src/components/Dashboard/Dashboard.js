@@ -441,6 +441,13 @@ function RenderComponent(props){
     )
   // 
   } 
+
+    else if(props.search.split('=')[0] === '?createwebstories'){
+    return(
+      <CreateWebStories search={props.search}/>
+    )
+  
+  } 
   
   else if(props.search.split('=')[0] === '?createcompany'){
     return(
