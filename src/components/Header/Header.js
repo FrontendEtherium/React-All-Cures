@@ -426,6 +426,16 @@ function ToggleButton(props) {
                                Profile
                       </Link>
              </Dropdown.Item>
+
+
+               <Dropdown.Item>
+             <Link  className="text-dark btn" to='/webstories'>
+                               Webstories
+                      </Link>
+             </Dropdown.Item>
+
+
+                    
              <Dropdown.Item >
                <Link to="/editSubscribe" className="text-dark btn">
                   Edit Subscription</Link>
