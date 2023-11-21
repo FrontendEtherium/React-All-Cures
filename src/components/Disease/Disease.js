@@ -1166,7 +1166,7 @@ componentDidMount() {
                 <CarouselPreview type="cures" dcName={`${items.dc_name}`}/>
                 : <>
                    <div className="article-title-container">
-              <div className="h3 font-weight-bold text-decoration-underline">{items.title}</div>
+              <h1 className=" font-weight-bold text-decoration-underline">{items.title}</h1>
              
              
               
