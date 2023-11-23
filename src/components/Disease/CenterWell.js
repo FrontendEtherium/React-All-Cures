@@ -6,8 +6,10 @@ const CenterWell = ({pageTitle, index, imageUrl, content, type, text, title, mes
     var list;
     var rows;
     var textContent;
-    if(typeof(text) == "string"){
-        textContent = parse(text)
+    if(typeof(text) === "string"){
+        // Modify the HTML string to ensure it is wrapped in an <h2> tag
+      textContent = level === 2 ? `<h2>${text}</h2>` : text;
+        textContent = parse(textContent)
     }
     if(content){
         rows = content.map((row) => {
