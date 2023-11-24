@@ -1212,7 +1212,7 @@ button.appBtn:hover {
 }
 .copyRight p {
   padding-top: 16px;
-  margin-right: -110px;
+/*   margin-right: -110px; */
 }
 .footer-bootm .logo {
   padding-top: 8px;
