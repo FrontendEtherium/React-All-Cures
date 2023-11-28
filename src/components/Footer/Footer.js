@@ -235,24 +235,27 @@ class Footer extends Component {
             <div className='col-xs-12 disclaimer mb-3'>
                Disclaimer: Content available on All Cures website is not intended to be a substitute for professional medical advice, diagnosis, or treatment. It is strongly recommended to consult your physician or other qualified medical practitioner with any questions you may have regarding a medical condition. The website should not be used as a source for treatment of any medical condition.
                </div>
-             
-              
-               <div className="col-md-4 col-sm-4 col-sx-12">
-                  <div className="logo">
-                     <a href="/#">
-                        <img src={Heart} alt="All Cures Logo" /><span>All Cures</span>
-                    </a>
-                  </div>
-               </div>
-               
-               <div className="col-md-4 col-sm-4 col-sx-12">
-                  <div className="copyRight">
-                     <p>All rights reserved. Copyright <i className="far fa-copyright fa-1x"></i>2022 <a href='https://etheriumtech.com'>Etherium Technologies</a></p>
-                  </div>
                </div>
 
-               <div className="col-md-4 col-sm-4 col-sx-12" id="social">
-                  <div className="socia-media-footer">
+
+
+<div className="row">
+
+        <div className="col-md-4">
+        <div className="textSize logo">
+                     <a href="/#">
+                        <img src={Heart} alt="All Cures Logo"  style={{width:"40px"}}/><span>All Cures</span>
+                    </a>
+                  </div>
+         </div> 
+         <div className="col-md-4">
+         <div className="copyRight">
+                     <p>All rights reserved. Copyright <i className="far fa-copyright fa-1x"></i>2022 <a href='https://etheriumtech.com'>Etherium Technologies</a></p>
+                  </div>
+         </div>
+     
+        <div className="col-md-4">
+        <div className="socia-media-footer">
                      <ul>
                         <li>
                            <a href="https://www.facebook.com/All-Cures-100610265834385" target="_blank" rel="noreferrer">
@@ -290,24 +293,20 @@ class Footer extends Component {
                               <span className="path2"></span>
                            </a>
                         </li>
-                        {/* <li>
-                        <a href="/#">
-                              <span>
-                                 <img src={Twitter} alt="Twitter Link" height="30px" width="30px"></img>
-                              </span> 
-                              <span className="path1"></span>
-                              <span className="path2"></span>
-                           </a>
-                        </li> */}
+                      
                      </ul>
                   </div>
-               </div>
+         </div> 
+
+</div>
+
                <div className="back-top">
                <a href="#" id="scroll"style={{display: "block"}} >
                    <span></span>
                 </a>
                 </div>
-               </div>
+          
+           
                <div className='row'></div>
             </div>
          </div>
