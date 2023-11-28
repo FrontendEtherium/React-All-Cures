@@ -708,7 +708,7 @@ userAccess?
   </>
 : <div className='h5 mt-3'>Rate here</div>
 }
-        <div id="docRate">
+        <div id="">
           <Rating docid={this.props.match.params.id.split('-')[0]} ratingVal={this.state.rating} />
         </div>
   
