@@ -1208,6 +1208,13 @@ button.appBtn:hover {
     float: right;
   }
 }
+
+
+@media only screen and (max-width: 767px) {
+  .textSize{
+    font-size:18px;
+  }
+}
 .footer-bootm {
   background: #c4c4c4;
   padding: 20px 0 8px;
