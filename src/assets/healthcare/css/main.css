@@ -1204,8 +1204,16 @@ button.appBtn:hover {
   margin-right: 15px;
   font-size: 40px;
 }
-.socia-media-footer ul {
-  float: right;
+@media only screen and (min-width: 767px) {
+  .socia-media-footer ul {
+    float: right;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .textSize{
+    font-size:18px;
+  }
 }
 .footer-bootm {
   background: #c4c4c4;
@@ -1213,7 +1221,8 @@ button.appBtn:hover {
 }
 .copyRight p {
   padding-top: 16px;
-  margin-right: -110px;
+   font-size: 18px;
+/*   margin-right: -110px; */
 }
 .footer-bootm .logo {
   padding-top: 8px;
