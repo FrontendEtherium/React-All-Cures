@@ -47,7 +47,7 @@ const thirdExample = {
 
 
   return (
-    <div className="App">
+    <div className="">
       
     
       <ReactStars {...thirdExample} />
