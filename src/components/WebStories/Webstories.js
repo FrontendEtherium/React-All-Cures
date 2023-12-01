@@ -103,12 +103,14 @@ useEffect(()=>{
   {
   data &&(
   data.map((item) => (
-    <div className="card shadow-sm  mr-3 mb-3" style={{maxWidth:"300px"}}> 
+    <div className="card shadow-sm  mr-3 mb-3" style={{maxWidth:"300px",minHeight:"480px"}}> 
       <a href={item.link} className="text-decoration-none">
         <div className="card-body">
           <img src={`https://uat.all-cures.com:444${item.image}`} alt="img" style={{ width: "100%", maxHeight: "300px" }} />
           <h5 className="card-title mt-2"><strong>{item.title}</strong></h5>
-          <p className="card-text" style={{ fontWeight: "400px" }}>{item.description}.</p>
+           <p className="card-text textTruncate">
+                            {item.description}.
+                          </p>
         </div>
       </a>
     </div>
