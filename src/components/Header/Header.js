@@ -190,8 +190,8 @@ import { userAccess } from "../UserAccess";
          <div className="profilePage">
             <div className="">
                <section className="pageHeader zIndex-2" >
-                  <div className="container">
-                     <div className="row">
+                 <div  className="webAlign" >
+                     <div className="row d-flex">
                         <div className="header" style={{width:"100%"}}>
                            <div className=" logo mt-3"> 
                               <Link to='/'>
@@ -254,6 +254,9 @@ import { userAccess } from "../UserAccess";
     <li class="nav-item">
       <a class="nav-link" href="/AboutUs">About Us</a>
     </li>
+            <li className="nav-item">
+         <a className="nav-link" href="/webstories">Webstories</a>
+       </li>
   </ul>
   </div>
 </nav>
@@ -424,13 +427,6 @@ function ToggleButton(props) {
              <Dropdown.Item>
              <Link  className="text-dark btn" to={`/user/profile`}>
                                Profile
-                      </Link>
-             </Dropdown.Item>
-
-
-               <Dropdown.Item>
-             <Link  className="text-dark btn" to='/webstories'>
-                               Webstories
                       </Link>
              </Dropdown.Item>
 
