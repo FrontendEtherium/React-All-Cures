@@ -38,10 +38,13 @@
 
   }
   .logo{
-    flex-grow:1;
+/*     flex-grow:1; */
   }
   .fgrow{
     flex-grow:2;
+      justify-content:center !important;
+    display:flex !important;
+
   }
   .logo span {
     color: #00415e;
