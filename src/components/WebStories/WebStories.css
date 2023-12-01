@@ -1,9 +1,15 @@
 @media only screen and (max-width: 768px) {
     .webs{
         flex-direction:column;
-         margin-left:38px;
+        justify-content: center;
     }
   }
-
+.textTruncate {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    /* max-height: 3.6em; */
+  }
 
   
