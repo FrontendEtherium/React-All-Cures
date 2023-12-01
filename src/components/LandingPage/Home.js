@@ -415,8 +415,8 @@ class Home extends Component {
             <div className="profilePage">
             <div className="">
                <section className=" zIndex-2" >
-                  <div className="container">
-                     <div className="row">
+                   <div className="" style={{marginLeft:"120px",marginRight:"120px"}}>
+                     <div className="row d-flex">
                         <div className="header" style={{width:"100%"}}>
                            <div className=" logo mt-3 ml-4" > 
                               <Link to='/'>
@@ -476,6 +476,9 @@ class Home extends Component {
        </li>
        <li class="nav-item">
          <a class="nav-link" href="/AboutUs">About Us</a>
+       </li>
+               <li className="nav-item">
+         <a className="nav-link" href="webstories">Webstories</a>
        </li>
      </ul>
      </div>
