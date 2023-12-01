@@ -924,11 +924,7 @@ function ToggleButton(props) {
 
 {/* web stories */}
 
-             <Dropdown.Item>
-             <Link  className="text-dark btn" to='/webstories'>
-                               Webstories
-                      </Link>
-             </Dropdown.Item>
+            
 
 
 
