@@ -188,7 +188,7 @@ import { userAccess } from "../UserAccess";
    render() {
       return(
          <div className="profilePage">
-            <div className="">
+            <div className="webAlign">
                <section className="pageHeader zIndex-2" >
                   <div className="" style={{marginLeft:"120px",marginRight:"120px"}}>
                      <div className="row d-flex">
