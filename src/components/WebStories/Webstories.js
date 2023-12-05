@@ -101,21 +101,27 @@ useEffect(()=>{
   {data.length>0 ?(
                   <OwlCarousel className="owl-theme owl-loading" items={6} loop margin={150}  {...options}>
     
-  {
-  data &&(
-  data.map((item) => (
-    <div className="card shadow-sm  mr-3 mb-3" style={{maxWidth:"300px",minHeight:"480px"}}> 
+ {data &&
+  [...data].reverse().map((item) => (
+    <div
+      className="card shadow-sm  mr-3 mb-3 "
+      style={{ maxWidth: "300px", minHeight: "480px" }}
+    >
       <a href={item.link} className="text-decoration-none">
         <div className="card-body">
-          <img src={`https://all-cures.com:444${item.image}`} alt="img" style={{ width: "100%", maxHeight: "300px" }} />
-          <h5 className="card-title mt-2"><strong>{item.title}</strong></h5>
-         <p className="card-text textTruncate">
-                            {item.description}
-                          </p>
+          <img
+            src={`https://all-cures.com:444${item.image}`}
+            alt="img"
+            style={{ width: "100%", maxHeight: "300px" }}
+          />
+          <h5 className="card-title mt-2">
+            <strong>{item.title}</strong>
+          </h5>
+          <p className="card-text textTruncate">{item.description}</p>
         </div>
       </a>
     </div>
-)  ))} 
+  ))}
 
 
 
