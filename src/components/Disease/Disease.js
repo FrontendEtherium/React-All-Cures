@@ -1273,7 +1273,7 @@ componentDidMount() {
                             
                         }          
                   </>
-                : <div className='h4 mt-3'>Rate here</div>
+                : <div className='h5 mt-3'>Rate here</div>
               }
                       
                       <span id="docRate">
@@ -1311,7 +1311,7 @@ componentDidMount() {
 
 
               
-                <h4>Source :  <a href="https://all-cures.com/Editorial" style={{textTransform:"none"}}>https://all-cures.com/editorial</a></h4>
+                <h5>Source :  <a href="https://all-cures.com/Editorial" style={{textTransform:"none"}}>https://all-cures.com/editorial/</a></h5>
              
             <div id="comments-column">              
 
