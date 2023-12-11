@@ -749,7 +749,11 @@ diseasePosts(dcName) {
 
 
 componentDidMount() {
-  window.scrollTo(0, 0);
+ const isMobileView = window.innerWidth <= 768
+    window.scrollTo({
+      top: isMobileView ? 650 : 200, // Adjust the values as needed
+      behavior: 'smooth',
+    });
   this.fetchBlog();
   this.handleShow();
   this.getDisease();
