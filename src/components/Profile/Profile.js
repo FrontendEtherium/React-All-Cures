@@ -166,7 +166,7 @@ getImg=() =>{
       if (json[i].rowno == this.state.items.rowno && json[i].img_Loc !=null) {
 
         console.log('Rowno:', json[i].rowno, 'Passed Rowno:', this.state.items.rowno);
-          matchedImageLoc = `https://uat.all-cures.com:444${json[i].img_Loc}`;
+           matchedImageLoc = `https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp${json[i].img_Loc}`;
           console.log('matched', matchedImageLoc)
           break; // Break the loop once a match is found
       }
