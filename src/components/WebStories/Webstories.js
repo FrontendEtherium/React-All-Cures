@@ -109,7 +109,7 @@ useEffect(()=>{
       <a href={item.link} className="text-decoration-none">
         <div className="card-body">
           <img
-            src={`https://all-cures.com:444${item.image}`}
+            src={`https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp${item.image}`}
             alt="img"
             style={{ width: "100%", maxHeight: "300px" }}
           />
