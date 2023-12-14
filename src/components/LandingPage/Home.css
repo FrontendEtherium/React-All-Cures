@@ -25,10 +25,11 @@
 .banner {
   height: 49vh;
   position: relative;
-  background: url("../../assets/healthcare/img/images/Banner1-Full.jpg") center;
+  background: url("https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/Banner1-Full.2bbf7fa6.jpg") center;
   animation: carousel 30s ease-in-out infinite;
   opacity: 0.8;
 }
+
 
 .primary-btn-color {
   background-color: #00415e;
@@ -77,39 +78,39 @@
 }
 
 .trending-articles #yoga {
-  background: url("../../assets/healthcare/img/images/Trending-Cures/yoga.jpg")
+  background: url("https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/yoga.5ee733fb.jpg")
     center center no-repeat;
   background-size: cover;
 }
 .trending-articles #chinese {
-  background: url("../../assets/healthcare/img/images/Trending-Cures/chinese.jpg")
+  background: url("https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/chinese.61fb7adb.jpg")
     center center no-repeat;
   background-size: cover;
 }
 .trending-articles #ayurveda {
-  background: url("../../assets/healthcare/img/images/Trending-Cures/ayurvedic.jpg")
+  background: url("https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/ayurvedic.7f711065a91aa7a380d5.jpg")
     center center no-repeat;
   background-size: cover;
 }
 .trending-articles #homepathies {
-  background: url("../../assets/healthcare/img/images/Trending-Cures/Homepathy.jpg")
+  background: url("https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/Homepathy.c0bb70ee.jpg")
     center center no-repeat;
   background-size: cover;
 }
 
 .trending-articles #homeopathy {
-  background: url("../../assets/healthcare/img/images/Trending-Cures/homeopathy.jpg")
+  background: url("https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/homeopathy.00e187d4.jpg")
     center center no-repeat;
   background-size: cover;
 }
 .trending-articles #naturopathy {
-  background: url("../../assets/healthcare/img/images/Trending-Cures/herbal-naturopathic-medicine.jpg")
+  background: url("https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/herbal-naturopathic-medicine.1da7902d.jpg")
     center center no-repeat;
   background-size: cover;
 }
 
 .trending-articles #unani {
-  background: url("../../assets/healthcare/img/images/Trending-Cures/unani.jpg")
+  background: url("https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/unani.e04b046f.jpg")
     center center no-repeat;
   background-size: cover;
 }
@@ -117,11 +118,10 @@
 
 
 .trending-articles #arabic {
-  background: url("../../assets/healthcare/img/images/Trending-Cures/arabic.jpg")
+  background: url("https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/arabic.2d3d1b2b690f2a886fc1.jpg")
     center center no-repeat;
   background-size: cover;
 }
-
 
 .trending-articles .col-4 {
   width: 100%;
