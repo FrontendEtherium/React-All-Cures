@@ -1,1 +1,1 @@
-export const imagePath = 'https://all-cures.com:444/'
+export const imagePath = 'https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/'
