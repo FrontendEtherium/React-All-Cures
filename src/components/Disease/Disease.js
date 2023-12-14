@@ -1178,27 +1178,35 @@ componentDidMount() {
 
             {/* Center Well article main content */}
               <div id="article-main-content">
-                {b.map((i, idx) => (
-                  <CenterWell
-                    key={idx}
-                    pageTitle = {items.title}
-                    level = {i.data.level}
-                    content = {i.data.content}
-                    type = {i.type}
-                    text = {i.data.text}
-                    title = {i.data.title}
-                    message = {i.data.message}
-                    source = {i.data.source}
-                    embed = {i.data.embed}
-                    caption = {i.data.caption}
-                    alignment = {i.data.alignment}
-                    imageUrl = {i.data.file? i.data.file.url: null}
-                    link = {i.data.link}
-                    url = {i.data.url}
-                    item = {i.data.items}
-                    props = {this.props}
-                  />
-                ))}
+               {b.map((i, idx) => {
+  const fileUrl = i.data.file ? i.data.file.url : null;
+  const imageUrl = fileUrl
+    ? `https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-1000,f-webp/cures_articleimages/${fileUrl.replace(/^.*[\\/]/, '')}`
+    : null;
+
+ 
+  return (
+    <CenterWell
+      key={idx}
+      pageTitle={items.title}
+      level={i.data.level}
+      content={i.data.content}
+      type={i.type}
+      text={i.data.text}
+      title={i.data.title}
+      message={i.data.message}
+      source={i.data.source}
+      embed={i.data.embed}
+      caption={i.data.caption}
+      alignment={i.data.alignment}
+      imageUrl={imageUrl}
+      link={i.data.link}
+      url={i.data.url}
+      item={i.data.items}
+      props={this.props}
+    />
+  );
+})}
               </div>
               <hr/>
               {/* Author */}
@@ -1496,7 +1504,7 @@ componentDidMount() {
 
                            {this.state.images.length>0 ?(
                          
-                         <img src={`https://uat.all-cures.com:444${this.state.images[this.state.currentIndex]}`} alt="doct"  style={{maxHeight:"400px",width:"405px"}}/>)
+                          <img src={`https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp${this.state.images[this.state.currentIndex]}`} alt="doct"  style={{maxHeight:"400px",width:"405px"}}/>)
                          :  <img src={Doct} alt="doctor"  style={{maxHeight:"400px",width:"397px"}}/> 
                          
                          }
