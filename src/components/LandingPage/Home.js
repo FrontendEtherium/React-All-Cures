@@ -853,8 +853,9 @@ class Home extends Component {
 
                            {this.state.images?(
                          
-                          <img src={`https://uat.all-cures.com:444${this.state.images[this.state.currentIndex]}`} alt="doct"  style={{maxHeight:"400px",width:"405px"}}/>)
-                          :  <img src={Doct} alt="doctor"  style={{maxHeight:"400px",width:"405px"}}/> 
+                            <img src={`https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp${this.state.images[this.state.currentIndex]}`} alt="doct"  style={{maxHeight:"400px",width:"405px"}}/>)
+                          :  <img src={Doct} alt="doctor"  style={{maxHeight:"400px",width:"397px"}}/> 
+                          
                           
                           }
 
