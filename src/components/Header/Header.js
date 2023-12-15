@@ -195,7 +195,7 @@ import { userAccess } from "../UserAccess";
                         <div className="header" style={{width:"100%"}}>
                            <div className=" logo mt-3"> 
                               <Link to='/'>
-                                <img src={Heart} alt="All Cures Logo"/>
+                                <img src={'https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/heart.30b5f0b3cbbf79450c5a.png'} alt="All Cures Logo"/>
                                 <span>All Cures</span>
                               </Link>
                            </div>
