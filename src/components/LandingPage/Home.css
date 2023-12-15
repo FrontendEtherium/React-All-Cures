@@ -37,17 +37,17 @@
 
 @keyframes carousel {
   0% {
-    background: url("../../assets/healthcare/img/images/Banner1-Full.jpg")
+    background: url("https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-1000,f-webp/static/media/Banner1-Full.2bbf7fa6.jpg")
       center center no-repeat;
     background-size: cover;
   }
   25% {
-    background: url("../../assets/healthcare/img/images/Banner2.jpg") center
+    background: url("https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-1000,f-webp/static/media/Banner2.6d1792035b44ed4543f5.jpg") center
       center no-repeat;
     background-size: cover;
   }
   50% {
-    background: url("../../assets/healthcare/img/images/Banner3.jpg") center
+    background: url("https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-1000,f-webp/static/media/Banner3.0558b95054e6d24d9846.jpg") center
       center no-repeat;
     background-size: cover;
   }
