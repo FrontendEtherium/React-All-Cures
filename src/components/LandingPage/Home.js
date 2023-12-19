@@ -421,7 +421,7 @@ class Home extends Component {
                         <div className="header" style={{width:"100%"}}>
                            <div className=" logo mt-3 ml-4" > 
                               <Link to='/'>
-                                <img src={Heart} alt="All Cures Logo"/>
+                                <img src={'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/static/media/heart.30b5f0b3.png'} alt="All Cures Logo"/>>
                                 <span>All Cures</span>
                               </Link>
                            </div>
@@ -853,9 +853,9 @@ class Home extends Component {
 
                            {this.state.images.length>0?(
                          
-                          <img src={`https://all-cures.com:444${this.state.images[this.state.currentIndex]}`} alt="doct"  style={{maxHeight:"400px",width:"405px"}}/>)
+                       
+                          <img src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp${this.state.images[this.state.currentIndex]}`} alt="doct"  style={{maxHeight:"400px",width:"405px"}}/>)
                           :  <img src={Doct} alt="doctor"  style={{maxHeight:"400px",width:"397px"}}/> 
-                          
                           }
 
 
