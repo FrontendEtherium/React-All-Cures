@@ -42,11 +42,12 @@ export default function Carousel1(props){
 
         return(
             <div className="tab-content category " id="choose-category" style={{maxWidth:"1140px", width:"100%", zIndex: 0}}>
-                  <OwlCarousel className="owl-theme owl-loading" items={6} loop margin={150}  {...options}>
+                       <OwlCarousel className="owl-theme owl-loading" items={6} loop margin={150}  {...options}>
                   <div className="item bg-pink">
                         <Link to={ `/searchcategory/disease/1` }>
                            <div className="item-img">
-                              <img src={Arthritis} alt="slider-img"/>
+                              {/* <img src={Arthritis} alt="slider-img"/> */}
+                              <img src="https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/static/media/arthritis.9355bd39.png" alt="slider-img"/>
                            </div>
                            <div className="slider-heading">
                               <p><strong>Arthritis</strong></p>
@@ -56,7 +57,8 @@ export default function Carousel1(props){
                         <div className="item bg-org">
                         <Link to={ `/searchcategory/disease/74` }>
                            <div className="item-img">
-                              <img src={Slider2} alt="slider-img"/>
+                              {/* <img src={Slider2} alt="slider-img"/> */}
+                              <img src="https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/static/media/slider-2.c34db0a8.png" alt="slider-img"/>
                            </div>
                            <div className="slider-heading">
                               <p><strong>Diabetes</strong></p>
@@ -66,7 +68,8 @@ export default function Carousel1(props){
                         <div className="item bg-l-org">
                         <Link to={ `/searchcategory/disease/50` }>
                            <div className="item-img">
-                              <img src={BloodPressure} alt="slider-img"/>
+                              {/* <img src={BloodPressure} alt="slider-img"/> */}
+                              <img src="https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/static/media/bloodpressure.78047994.png" alt="slider-img"/>
                            </div>
                            <div className="slider-heading">
                               <p><strong>Hypertension</strong></p>
@@ -76,7 +79,8 @@ export default function Carousel1(props){
                         <div className="item bg-voilet">
                         <Link to={ `/searchcategory/disease/164` }>
                            <div className="item-img">
-                              <img src={Slider7} alt="slider-img" />
+                              {/* <img src={Slider7} alt="slider-img" /> */}
+                              <img src="https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/static/media/insomnia.8242b02c.png" alt="slider-img"/>
                            </div>
                            <div className="slider-heading">
                               <p><strong>Insomnia</strong><br/></p>
@@ -87,7 +91,8 @@ export default function Carousel1(props){
                         <div className="item bg-blue">
                         <Link to={ `/searchcategory/disease/87` }>
                            <div className="item-img">
-                              <img src={Thyroid} alt="slider-img"/>
+                              {/* <img src={Thyroid} alt="slider-img"/> */}
+                              <img src="https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/static/media/thyroid.df65340d.png" alt="slider-img"/>
                            </div>
                            <div className="slider-heading">
                               <p><strong>Thyroid</strong></p>
@@ -97,7 +102,8 @@ export default function Carousel1(props){
                         <div className="item bg-green">
                         <Link to={ `/searchcategory/disease/160` }>
                            <div className="item-img">
-                              <img src={Psoriasis} alt="slider-img"/>
+                              {/* <img src={Psoriasis} alt="slider-img"/> */}
+                              <img src="https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/static/media/psoriasis.f9555496.png" alt="slider-img"/>
                            </div>
                            <div className="slider-heading">
                               <p><strong>Psoriasis</strong></p>
@@ -107,7 +113,8 @@ export default function Carousel1(props){
                         <div className="item bg-l-org">
                         <Link to={ `/searchcategory/disease/155` }>
                            <div className="item-img">
-                              <img src={Slider5} alt="slider-img"/>
+                              {/* <img src={Slider5} alt="slider-img"/> */}
+                              <img src="https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/static/media/slider-5.4ed80503.png" alt="slider-img"/>
                            </div>
                            <div className="slider-heading">
                               <p><strong>Skin</strong><br/>Care</p>
