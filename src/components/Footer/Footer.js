@@ -244,7 +244,7 @@ class Footer extends Component {
         <div className="col-md-4">
         <div className="textSize logo">
                      <a href="/#">
-                        <img src={Heart} alt="All Cures Logo"  style={{width:"40px"}}/><span>All Cures</span>
+                      <img src={'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/static/media/heart.30b5f0b3.png'} alt="All Cures Logo"  style={{width:"40px"}}/><span>All Cures</span>
                     </a>
                   </div>
          </div> 
