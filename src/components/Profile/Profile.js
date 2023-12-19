@@ -160,7 +160,7 @@ postLead = (id) => {
 
   for (let i = 0; i < json.length; i++) {
       if (json[i].rowno == this.state.items.rowno && json[i].img_Loc !=null) {
-          matchedImageLoc = `https://all-cures.com:444${json[i].img_Loc}`;
+         matchedImageLoc = `https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp${json[i].img_Loc}`;
           break; // Break the loop once a match is found
       }
 
