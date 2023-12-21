@@ -421,7 +421,7 @@ class Home extends Component {
                         <div className="header" style={{width:"100%"}}>
                            <div className=" logo mt-3 ml-4" > 
                               <Link to='/'>
-                                <img src={'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/static/media/heart.30b5f0b3.png'} alt="All Cures Logo"/>>
+                                <img src={'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/static/media/heart.30b5f0b3.png'} alt="All Cures Logo"/>
                                 <span>All Cures</span>
                               </Link>
                            </div>
