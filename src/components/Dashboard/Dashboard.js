@@ -51,6 +51,20 @@ import UpdateCompany from './Campaign/UpdateCompany';
 import UpdateCampaign from './Campaign/UpdateCampaign';
 import UpdateAdvs from './Campaign/UpdateAdvs';
 import CreateWebStories from './CreateWebStories';
+import MasterTables from './DoctorItems/MasterTables';
+import CreateServiceList from './DoctorItems/CreateContract';
+import DoctorAvailibility from './DoctorItems/DoctorAvailibility';
+import AllContract from './DoctorItems/AllContract';
+import UpdateContract from './DoctorItems/UpdateContract';
+import AllServicesList from './DoctorItems/AllServicesList';
+import UpdateAllServices from './DoctorItems/UpdateAllServices';
+import AllServicesPaymentList from './DoctorItems/AllServicesPaymentList';
+import UpdatePayment from './DoctorItems/UpdatePayment';
+import FailureReasonList from './DoctorItems/FailureReasonList';
+import UpdateFailureReason from './DoctorItems/UpdateFailureReason';
+import DoctorAvailibilityList from './DoctorItems/DoctorAvailibilityList';
+import UpdateDoctorAvail from './DoctorItems/UpdateDoctorAvail';
+
 
 
 
@@ -507,6 +521,89 @@ function RenderComponent(props){
     )
   
   }
+
+else if(props.search.split('=')[0] === '?mastertable'){
+    return(
+      <MasterTables search={props.search}/>
+    )
+  
+  }
+  else if(props.search.split('=')[0] === '?createcontract'){
+    return(
+      <CreateServiceList search={props.search}/>
+    )
+  
+  }
+
+  else if(props.search.split('=')[0] === '?allcontract'){
+    return(
+      <AllContract search={props.search}/>
+    )
+  
+  }
+  else if(props.search.split('=')[0] === '?updatecontract'){
+    return(
+      <UpdateContract search={props.search}/>
+    )
+  
+  }
+
+  else if(props.search.split('=')[0] === '?doctoravailibility'){
+    return(
+      <DoctorAvailibility  search={props.search}/>
+    )
+  
+  } 
+  else if(props.search.split('=')[0] === '?doctoravailibilitylist'){
+    return(
+      <DoctorAvailibilityList  search={props.search}/>
+    )
+  
+  } 
+
+  else if(props.search.split('=')[0] === '?updateAvailibilityList'){
+    return(
+      <UpdateDoctorAvail  search={props.search}/>
+    )
+  
+  } 
+  else if(props.search.split('=')[0] === '?allserviceslist'){
+    return(
+      <AllServicesList search={props.search}/>
+    )
+  
+  } 
+  else if(props.search.split('=')[0] === '?updateallserviceslist'){
+    return(
+      <UpdateAllServices search={props.search}/>
+    )
+  
+  } 
+  else if(props.search.split('=')[0] === '?allservicespaymentlist'){
+    return(
+      <AllServicesPaymentList search={props.search}/>
+    )
+  
+  } 
+  else if(props.search.split('=')[0] === '?updateallservicespaymentlist'){
+    return(
+      <UpdatePayment search={props.search}/>
+    )
+  
+  } 
+
+  else if(props.search.split('=')[0] === '?failurereasonlist'){
+    return(
+      <FailureReasonList search={props.search}/>
+    )
+  
+  } 
+  else if(props.search.split('=')[0] === '?updatefailurereasonlist'){
+    return(
+      <UpdateFailureReason search={props.search}/>
+    )
+  
+  } 
   else if(props.search.split('=')[0] === '?upload-img'){
     return(
       <ImageUpload search = {props.search}/>
