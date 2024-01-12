@@ -82,6 +82,7 @@ const DoctorAvailibilityList = () => {
                             <div className="row mx-1 my-2">
                             <Link to={`/dashboard?updateAvailibilityList=${i.docId}`} className="col-md-3 btn mr-2" style={{backgroundColor: '#9289be', color: '#fff'}}>Edit</Link>
                            
+                                       { i.status===1?
                                       <button onClick={() => {
                                         const confirmBox = window.confirm(
                                             "Are you sure?"
@@ -89,8 +90,10 @@ const DoctorAvailibilityList = () => {
                                         if (confirmBox === true) {
                                             AvailDelete(i.docId)
                                         }
-                                    }} className="col-md-4 btn btn-dark">Delete</button>
+                                    }} className="col-md-4 btn btn-dark">De-activate</button>
+                                    :<button className="col-md-4 btn btn-dark" disabled>De-activated</button>
 
+                                }
                             
                             </div>
                         </div>
