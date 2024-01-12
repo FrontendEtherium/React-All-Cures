@@ -55,19 +55,24 @@ const AllServicesList = () => {
                             <div className="card-title h4"><span className="font-weight-bold">Service Id: </span>{i.serviceId}</div>
                             <div className="pb-2"><span className="font-weight-bold">Service Name:</span> {i.serviceName}</div>
                                 <div className="pb-2"><span className="font-weight-bold">Service Description:</span> {i.serviceDesc}</div>
-                               <div className="pb-2"><span className="font-weight-bold">Payment Required:</span> {i.paymentReq}</div>
-                               <div className="pb-2"><span className="font-weight-bold">Contract Required:</span> {i.contractReq}</div>
+                               <div className="pb-2"><span className="font-weight-bold">Payment Required:</span> {i.paymentReq ===1?  <span> Yes</span>
+                                : <span> No</span>}</div>
+                               <div className="pb-2"><span className="font-weight-bold">Contract Required:</span> {i.contractReq ===1?  <span> Yes</span>
+                                : <span> No</span>}</div>
                                <div className="pb-2"><span className="font-weight-bold">Created by:</span> {i.createdBy}</div>
-                               <div className="pb-2"><span className="font-weight-bold">Status:</span> {i.status}</div>
-                               <div className="pb-2"><span className="font-weight-bold">Created on:</span> {i.createdDate}</div>
+                               <div className="pb-2"><span className="font-weight-bold">Status:</span> {i.status===1?  <span> Active</span>
+                                : <span> Inactive</span>}</div>
+                               <div className="pb-2"><span className="font-weight-bold">Created on:</span> {i.createdDate.split('T')[0]}</div>
                                {/* <div className="pb-2"><span className="font-weight-bold">Created on:</span> {i.slotDuration(min)}</div> */}
-                               <div className="pb-2"><span className="font-weight-bold">Last Updated  on:</span> {i.lastUpdatedDate}</div>
+                               <div className="pb-2"><span className="font-weight-bold">Last Updated  on:</span> {i.lastUpdatedDate?i.lastUpdatedDate.split('T')[0]:""}</div>
                                <div className="pb-2"><span className="font-weight-bold">Updated By:</span> {i.updatedBy}</div>
                               
                               
                             <div className="row mx-1 my-2">
                             <Link to={`/dashboard?updateallserviceslist=${i.serviceId}`} className="col-md-3 btn mr-2" style={{backgroundColor: '#9289be', color: '#fff'}}>Edit</Link>
                            
+
+                           { i.status===1?
                                       <button onClick={() => {
                                         const confirmBox = window.confirm(
                                             "Are you sure?"
@@ -75,9 +80,9 @@ const AllServicesList = () => {
                                         if (confirmBox === true) {
                                             AvailDelete(i.serviceId)
                                         }
-                                    }} className="col-md-4 btn btn-dark">Delete</button>
-
-                            
+                                    }} className="col-md-4 btn btn-dark">De-activate</button>
+                                     :<button className="col-md-4 btn btn-dark" disabled>De-activated</button>
+                                }
                             </div>
                         </div>
                     )
