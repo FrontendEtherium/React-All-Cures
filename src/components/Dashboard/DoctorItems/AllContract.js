@@ -64,7 +64,7 @@ function GetPromo(){
                                             PromoDelete(i.contractId)
                                         }
                                     }} className="col-md-4 btn btn-dark">De-activate</button>
-                                    : <button className="col-md-4 btn btn-dark" disabled>De-activatess</button>
+                                    : <button className="col-md-4 btn btn-dark" disabled>De-activated</button>
                             }
                             
                             </div>
