@@ -286,7 +286,7 @@ axios
                 </Form.Group> */}
                  <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
               <Form.Label>Upload Image</Form.Label>
-              <Form.Control type="file" accept=".pdf, .doc, .docx" onChange={handleImageChange} />
+              <Form.Control type="file" accept=".pdf, .doc, .docx" onChange={handleImageChange} required />
             </Form.Group>
 
                 {alert ? (
