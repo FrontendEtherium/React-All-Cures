@@ -27,7 +27,7 @@ export default function UpdatePayment(props){
             setPaymentName(res.data[0].servicePaymentMasterName)
             setPaymentDesc(res.data[0].servicePaymentDesc)
             setUpdatedBy(res.data[0].updatedBy)
-            setStatus(res.data[0].status)
+            setStatus(res.data[0].status.toString())
 
            
         })
@@ -80,11 +80,22 @@ export default function UpdatePayment(props){
                             <Form.Control type="text" name="" value={updatedBy} onChange={e => setUpdatedBy(e.target.value)}
                              placeholder="Updated By" required/>
                         </Form.Group>
-                        <Form.Group className="col-md-6 float-left">
-                            <Form.Label>Status</Form.Label>
-                            <Form.Control type="text" name="" value={status} onChange={e => setStatus(e.target.value)}
-                             placeholder="Status" required/>
-                        </Form.Group>
+                        
+                              
+                        <div className="col-lg-6 form-group">
+              <label htmlFor="">Review Status</label>
+              <select
+                multiple
+                name="status"
+                placeholder="Status"
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                className="form-control"
+              >
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+              </select>
+            </div>
                         </div>
                         {
                             submitAlert?
