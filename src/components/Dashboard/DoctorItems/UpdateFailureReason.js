@@ -29,7 +29,7 @@ export default function UpdateFailureReason(props){
             setPenalty(res.data[0].penalty)
             setUpdatedBy(res.data[0].updatedBy)
     
-            setStatus(res.data[0].status)
+            setStatus(res.data[0].status.toString())
 
            
         })
@@ -83,6 +83,22 @@ export default function UpdateFailureReason(props){
                             <Form.Control type="text" name="" value={status} onChange={(e) => setStatus(e.target.value)} 
                             placeholder="Status" required/>
                         </Form.Group>
+
+                              
+                        <div className="col-lg-6 form-group">
+              <label htmlFor="">Review Status</label>
+              <select
+                multiple
+                name="status"
+                placeholder="Status"
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                className="form-control"
+              >
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+              </select>
+            </div>
 
 
                         <Form.Group className="col-md-6 float-left">
