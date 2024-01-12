@@ -53,19 +53,29 @@ const DoctorAvailibilityList = () => {
                     return(
                         <div className="card col-md-5 mt-5 mx-3 border p-3 h6">
                             <div className="card-title h4"><span className="font-weight-bold">Contract ID: </span>{i.contractID}</div>
-                            <div className="pb-2"><span className="font-weight-bold">Monday Availibility:</span> {i.monAvailability}</div>
-                                <div className="pb-2"><span className="font-weight-bold">Tuesday Availibility:</span> {i.tueAvailability}</div>
-                               <div className="pb-2"><span className="font-weight-bold">Wednesday Availibility:</span> {i.wedAvailability}</div>
-                               <div className="pb-2"><span className="font-weight-bold">Thursday Availibility:</span> {i.thuAvailability}</div>
-                               <div className="pb-2"><span className="font-weight-bold">Friday Availibility:</span> {i.friAvailability}</div>
-                               <div className="pb-2"><span className="font-weight-bold">Weekday Only:</span> {i.weekDayOnly}</div>
+                            <div className="pb-2"><span className="font-weight-bold">Monday Availibility:</span>
+                             {i.monAvailability ===1?
+                                <span> Yes</span>
+                                : <span> No</span>
+                             }</div>
+                                <div className="pb-2"><span className="font-weight-bold">Tuesday Availibility:</span> {i.tueAvailability ===1?   <span> Yes</span>
+                                : <span> No</span>}</div>
+                               <div className="pb-2"><span className="font-weight-bold">Wednesday Availibility:</span> {i.wedAvailability  ===1?   <span> Yes</span>
+                                : <span> No</span>}</div>
+                               <div className="pb-2"><span className="font-weight-bold">Thursday Availibility:</span> {i.thuAvailability  ===1?   <span> Yes</span>
+                                : <span> No</span>}</div>
+                               <div className="pb-2"><span className="font-weight-bold">Friday Availibility:</span> {i.friAvailability  ===1?   <span> Yes</span>
+                                : <span> No</span>}</div>
+                               <div className="pb-2"><span className="font-weight-bold">Weekday Only:</span> {i.weekDayOnly  ===1?   <span> Yes</span>
+                                : <span> No</span>}</div>
                                <div className="pb-2"><span className="font-weight-bold">Doctor ID:</span> {i.docId}</div>
                                {/* <div className="pb-2"><span className="font-weight-bold">Created on:</span> {i.slotDuration(min)}</div> */}
                                <div className="pb-2"><span className="font-weight-bold">From Time:</span> {i.fromTime}</div>
                                <div className="pb-2"><span className="font-weight-bold">To Time:</span> {i.toTime}</div>
                                <div className="pb-2"><span className="font-weight-bold">Created Date:</span> {i.createdDate}</div>
-                               <div className="pb-2"><span className="font-weight-bold">Last Updated Date:</span> {i.lastUpdatedDate}</div>
-                               <div className="pb-2"><span className="font-weight-bold">Status:</span> {i.status}</div>
+                               <div className="pb-2"><span className="font-weight-bold">Last Updated Date:</span> {i.lastUpdatedDate.split('T')[0]}</div>
+                               <div className="pb-2"><span className="font-weight-bold">Status:</span> {i.status  ===1?   <span> Active</span>
+                                : <span> Inactive</span>}</div>
                                <div className="pb-2"><span className="font-weight-bold">Created By:</span> {i.createdBy}</div>
                                <div className="pb-2"><span className="font-weight-bold">Updated By:</span> {i.updatedBy}</div>
                               
