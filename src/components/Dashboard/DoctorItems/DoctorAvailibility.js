@@ -75,9 +75,9 @@ function DoctorAvailibility() {
     
     .then((response) => {
       if (response.data === 1) {
-        setAlertMessage('Ads created successfully!!');
+        setAlertMessage('Availability created successfully!!');
       } else if (response.data === 0) {
-        setAlertMessage('Ads not created. Please check all fields and try again.');
+        setAlertMessage('Availability not created. Please check all fields and try again.');
       } else {
         setAlertMessage('An error occurred. Please contact the development team.');
       }
@@ -87,7 +87,7 @@ function DoctorAvailibility() {
       }, 3000); // Hide alert after 3 seconds
     })
     .catch((error) => {
-      console.error('Error creating ad:', error);
+      console.error('Error creating Availability:', error);
       setAlertMessage('An error occurred. Please contact the development team.');
       setTimeout(() => {
         setAlertMessage('');
