@@ -53,7 +53,7 @@ export default function UpdatePromo(props) {
           active: promoData.fee,
           title: promoData.currency,
           description: promoData.status,
-          review: promoData.serviceId,
+          review:  promoData.status,
           count: promoData.userId,
         //   review: promoData.ReviewStatus.toString(), 
         //   count: promoData.AdCount.toString(),
@@ -65,10 +65,11 @@ export default function UpdatePromo(props) {
         setActive(promoData.fee);
         setTitle(promoData.currency);
         setDescription(promoData.status);
-        setReview(promoData.serviceId);
+        setReview( promoData.status);
           setCount(promoData.userId);
         // setReview(promoData.ReviewStatus.toString());
         // setCount(promoData.AdCount.toString());
+      
       })
       .catch((err) => {
         return;
@@ -180,7 +181,7 @@ export default function UpdatePromo(props) {
             </Form.Group>
 
             <Form.Group className="col-md-6 float-left">
-              <Form.Label>AD Start Date</Form.Label>
+              <Form.Label>Contract Start Date</Form.Label>
               <Form.Control
                 type="Date"
                 defaultValue={startDate}
@@ -191,7 +192,7 @@ export default function UpdatePromo(props) {
             </Form.Group>
 
             <Form.Group className="col-md-6 float-left">
-              <Form.Label>AD End Date</Form.Label>
+              <Form.Label>Contract End Date</Form.Label>
               <Form.Control
                 type="Date"
                 defaultValue={endDate}
@@ -202,7 +203,7 @@ export default function UpdatePromo(props) {
             </Form.Group>
 
             <Form.Group className="col-md-6 float-left">
-              <Form.Label>Enter Disease Condition</Form.Label>
+              <Form.Label>Contact First Name</Form.Label>
               <Form.Control
                 as="select"
                 value={maxLimit}
@@ -218,7 +219,7 @@ export default function UpdatePromo(props) {
             </Form.Group>
 
             <Form.Group className="col-md-6 float-left">
-              <Form.Label>Enter Ad Type</Form.Label>
+              <Form.Label>Fee</Form.Label>
               <Form.Control
                 as="select"
                 value={active}
@@ -234,7 +235,7 @@ export default function UpdatePromo(props) {
             </Form.Group>
 
             <Form.Group className="col-md-6 float-left">
-              <Form.Label>Enter Ad Title</Form.Label>
+              <Form.Label>Currency</Form.Label>
               <Form.Control
                 type="text"
                 name=""
@@ -254,7 +255,7 @@ export default function UpdatePromo(props) {
             </Form.Group>
 
             <Form.Group className="col-md-6 float-left">
-              <Form.Label>Enter Ad Impression</Form.Label>
+              <Form.Label>User ID</Form.Label>
               <Form.Control
                 type="text"
                 name=""
@@ -263,13 +264,16 @@ export default function UpdatePromo(props) {
               />
             </Form.Group>
 
+     
+
+
             <div className="col-lg-6 form-group">
               <label htmlFor="">Review Status</label>
               <select
                 multiple
                 name="featured"
                 placeholder="Featured"
-                value={review}
+                value={review.toString()}
                 onChange={(e) => setReview(e.target.value)}
                 className="form-control"
               >
