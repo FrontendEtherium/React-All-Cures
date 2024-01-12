@@ -38,18 +38,18 @@ export default function UpdateDoctorAvail(props){
         .then(res => {
             console.log('hhhhh',res.data)
             setContractId(res.data[0].contractId)
-            setMon(res.data[0].monAvailability)
-            setTue(res.data[0].tueAvailability)
-            setWed(res.data[0].wedAvailability)
-            setThurs(res.data[0].thuAvailability)
-            setFri(res.data[0].friAvailability)
-            setStatuss(res.data[0].status)
-            setWeekDayOnly(res.data[0].weekDayOnly)
+            setMon(res.data[0].monAvailability.toString())
+            setTue(res.data[0].tueAvailability.toString())
+            setWed(res.data[0].wedAvailability.toString())
+            setThurs(res.data[0].thuAvailability.toString())
+            setFri(res.data[0].friAvailability.toString())
+            setStatuss(res.data[0].status.toString())
+            setWeekDayOnly(res.data[0].weekDayOnly.toString())
             setSlotDuration(res.data[0].slotDuration)
             setFromTime(res.data[0].fromTime)
             setToTime(res.data[0].toTime)
 
-           
+           console.log(mon,"mon")
         })
         .catch(res => {return})
     }
@@ -93,39 +93,110 @@ export default function UpdateDoctorAvail(props){
                             <Form.Control value={contractId} onChange={(e) => setContractId(e.target.value)} type="text" name=""
                             placeholder="Service Name" required/>
                         </Form.Group>
-                        <Form.Group className="col-md-6 float-left">
-                            <Form.Label>Monday Availibility</Form.Label>
-                            <Form.Control type="text" value={mon} onChange={(e) => setMon(e.target.value)} name=""
-                            placeholder="Service Description" required/>
-                        </Form.Group>
-                        <Form.Group className="col-md-6 float-left">
-                            <Form.Label>Tuesday Availibility</Form.Label>
-                            <Form.Control defaultValue={tue} onChange={(e) => setTue(e.target.value)} type="text" name=""
-                            placeholder="Payment Required" required/>
-                        </Form.Group>
-                        <Form.Group className="col-md-6 float-left">
-                            <Form.Label>Wednesday Availibility</Form.Label>
-                            <Form.Control type="text" name="" value={wed} onChange={(e) => setWed(e.target.value)} 
-                            placeholder="Contract Required" required/>
-                        </Form.Group>
+                     
 
 
-                        <Form.Group className="col-md-6 float-left">
-                            <Form.Label>Thursday Availibility</Form.Label>
-                            <Form.Control type="text" name="" value={thurs} onChange={e => setThurs(e.target.value)}
-                             placeholder="Updated By" required/>
-                        </Form.Group>
-                        <Form.Group className="col-md-6 float-left">
-                            <Form.Label>Friday Availibility</Form.Label>
-                            <Form.Control type="text" name="" value={fri} onChange={e => setFri(e.target.value)}
-                             placeholder="Updated By" required/>
-                        </Form.Group>
+<div className="col-lg-6 form-group">
+              <label htmlFor="">Monday Availability</label>
+              <select
+                multiple
+                name="monavail"
+                placeholder="Monday Availability"
+                value={mon}
+                onChange={(e) => setMon(e.target.value)}
+                className="form-control"
+              >
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+              </select>
+            </div>
+         
+         
 
-                        <Form.Group className="col-md-6 float-left">
-                            <Form.Label>WeekDay Only</Form.Label>
-                            <Form.Control type="text" name="" value={weekDayOnly} onChange={e => setWeekDayOnly(e.target.value)}
-                             placeholder="Updated By" required/>
-                        </Form.Group>
+
+
+                        <div className="col-lg-6 form-group">
+              <label htmlFor="">Tuesday Availability</label>
+              <select
+                multiple
+                name="tuesdayavail"
+                placeholder="Tuesday Availability"
+                value={tue}
+                onChange={(e) => setTue(e.target.value)}
+                className="form-control"
+              >
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+              </select>
+            </div>
+                      
+
+
+                        <div className="col-lg-6 form-group">
+              <label htmlFor="">Wednesday Availability</label>
+              <select
+                multiple
+                name="wednesdayavail"
+                placeholder="Wednesday Availability"
+                value={wed}
+                onChange={(e) => setWed(e.target.value)}
+                className="form-control"
+              >
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+              </select>
+            </div>
+                                             
+
+                        <div className="col-lg-6 form-group">
+              <label htmlFor="">Thursday Availability</label>
+              <select
+                multiple
+                name="thursdayavail"
+                placeholder="Thursday Availability"
+                value={thurs}
+                onChange={(e) => setThurs(e.target.value)}
+                className="form-control"
+              >
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+              </select>
+            </div>
+         
+
+
+                        <div className="col-lg-6 form-group">
+              <label htmlFor="">Friday Availability</label>
+              <select
+                multiple
+                name="friavail"
+                placeholder="Friday Availability"
+                value={fri}
+                onChange={(e) => setFri(e.target.value)}
+                className="form-control"
+              >
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+              </select>
+            </div>
+         
+
+
+                        
+                        <div className="col-lg-6 form-group">
+              <label htmlFor="">Week Day Only</label>
+              <select
+                multiple
+                name="weekdayonly"
+                placeholder="Week Day Only"
+                value={weekDayOnly}
+                onChange={(e) => setWeekDayOnly(e.target.value)}
+                className="form-control"
+              >
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+              </select>
+            </div>
 
                         <Form.Group className="col-md-6 float-left">
                             <Form.Label>Slot Duration(min)</Form.Label>
@@ -143,11 +214,24 @@ export default function UpdateDoctorAvail(props){
                              placeholder="Updated By" required/>
                         </Form.Group>
 
-                        <Form.Group className="col-md-6 float-left">
-                            <Form.Label>Status</Form.Label>
-                            <Form.Control type="text" name="" value={statuss} onChange={e => setStatuss(e.target.value)}
-                             placeholder="Status" required/>
-                        </Form.Group>
+                     
+
+
+                        <div className="col-lg-6 form-group">
+              <label htmlFor="">Review Status</label>
+              <select
+                multiple
+                name="status"
+                placeholder="status"
+                value={statuss}
+                onChange={(e) => setStatuss(e.target.value)}
+                className="form-control"
+              >
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+              </select>
+            </div>
+         
                         </div>
                         {
                             submitAlert?
@@ -163,150 +247,6 @@ export default function UpdateDoctorAvail(props){
     );
     
 }
-
-
-
-
-
-// <Form onSubmit={submitForm}  >
-//                             <div className="row m-4">
-                       
-                       
-         
-                      
-
-                            
-//                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
-//                             <Form.Label>Contract Id  <b>(Required)</b></Form.Label>
-//                             <Form.Control  value={contractId} onChange={(e) => setContractId(e.target.value)} type="number" name=""
-//                             placeholder="Enter Contract Id" required />
-//                         </Form.Group>
-
-//                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
-//                             <Form.Label>Doctor Id  <b>(Required)</b></Form.Label>
-//                             <Form.Control  value={docId} onChange={(e) => setDocId(e.target.value)} type="number" name=""
-//                             placeholder="Enter Contract Id" required />
-//                         </Form.Group>
-                        
-                     
-
-                              
-//                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
-//                         <label htmlFor="fri">WeekDay Only  <b>(Required)</b></label>
-//                         <select name="fri" value={weekDayOnly} onChange={(e) => setWeekDayOnly(e.target.value)} placeholder="Select Availibility" required className="form-control">
-//                     <option>Select Availibility</option>
-    
-//                     <option value='1'>Yes</option>
-//                     <option value='0'>No</option>
-//                         </select>
-//                         </Form.Group>
-                      
-
-
-//                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
-//                         <label htmlFor="mon">Monday Availibility  <b>(Required)</b></label>
-//                         <select name="mon" value={mon} onChange={(e) => setMon(e.target.value)} placeholder="Select Availibility" required className="form-control">
-//                     <option>Select Availibility</option>
-    
-//                     <option value='1'>Yes</option>
-//                     <option value='0'>No</option>
-//                         </select>
-//                         </Form.Group>
-                      
-
-
-                        
-//                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
-//                         <label htmlFor="tue">Tuesday Availibility  <b>(Required)</b></label>
-//                         <select name="tue" value={tue} onChange={(e) => setTue(e.target.value)} placeholder="Select Availibility" required className="form-control">
-//                     <option>Select Availibility</option>
-    
-//                     <option value='1'>Yes</option>
-//                     <option value='0'>No</option>
-//                         </select>
-//                         </Form.Group>
-
-                        
-//                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
-//                         <label htmlFor="wed">Wednesday Availibility  <b>(Required)</b></label>
-//                         <select name="wed" value={wed} onChange={(e) => setWed(e.target.value)} placeholder="Select Availibility" required className="form-control">
-//                     <option>Select Availibility</option>
-    
-//                     <option value='1'>Yes</option>
-//                     <option value='0'>No</option>
-//                         </select>
-//                         </Form.Group>
-
-                        
-//                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
-//                         <label htmlFor="thurs">Thursday Availibility  <b>(Required)</b></label>
-//                         <select name="thurs" value={thurs} onChange={(e) => setThurs(e.target.value)} placeholder="Select Availibility" required className="form-control">
-//                     <option>Select Availibility</option>
-    
-//                     <option value='1'>Yes</option>
-//                     <option value='0'>No</option>
-//                         </select>
-//                         </Form.Group>
-                      
-                      
-                      
-//                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
-//                         <label htmlFor="fri">Friday Availibility  <b>(Required)</b></label>
-//                         <select name="fri" value={fri} onChange={(e) => setFri(e.target.value)} placeholder="Select Availibility" required className="form-control">
-//                     <option>Select Availibility</option>
-    
-//                     <option value='1'>Yes</option>
-//                     <option value='0'>No</option>
-//                         </select>
-//                         </Form.Group>
-                      
-
-
-
-                        
-              
-                       
-
-
-//                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
-//                             <Form.Label>Enter Slot Duration  <b>(Required)</b></Form.Label>
-//                             <Form.Control  value={slotDuration} onChange={(e) => setSlotDuration(e.target.value)} type="number" name=""
-//                             placeholder="Enter Slot Duration" required />
-//                         </Form.Group>
-                        
-                     
-             
-
-//                 <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
-//                             <Form.Label>Slot Start time</Form.Label>
-//                             <Form.Control type="Time" value={fromTime} onChange={(e) => setFromTime(e.target.value)} name=""
-//                             placeholder="Slot Start Time" required/>
-//                         </Form.Group>
-                        
-//                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
-//                             <Form.Label>Slot End Time</Form.Label>
-//                             <Form.Control value={totime} onChange={(e) => setToTime(e.target.value)} type="Time" name=""
-//                             placeholder="Slot End Time" required/>
-//                         </Form.Group>
-                    
-                       
-//                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
-//                         <label htmlFor="fri">Set Status  <b>(Required)</b></label>
-//                         <select name="fri" value={statuss} onChange={(e) => setStatuss(e.target.value)} placeholder="Select Availibility" required className="form-control">
-//                     <option>Select Status</option>
-    
-//                     <option value='1'>Active</option>
-//                     <option value='0'>Inactive</option>
-//                         </select>
-//                         </Form.Group>
-                    
-                     
-//                         </div>
-//                         <div className="col-md-12 text-center">
-//                             <button type="submit" className="btn btn-dark col-md-12 mb-4">Submit</button>
-//                         </div>
-//                         </Form>
-
 
 
 
