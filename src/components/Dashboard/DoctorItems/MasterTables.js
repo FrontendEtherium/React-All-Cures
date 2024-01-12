@@ -266,7 +266,7 @@ useEffect(() => {
     <Form.Check
       inline
       label="Yes"
-      name="whatsapp"
+      name="whatsappss"
       type="radio"
      
       value="1"
@@ -276,7 +276,7 @@ useEffect(() => {
     <Form.Check
       inline
       label="No"
-      name="whatsapp"
+      name="whatsappss"
       type="radio"
      
       value="0"
@@ -292,7 +292,7 @@ useEffect(() => {
     <Form.Check
       inline
       label="Active"
-      name="whatsapp"
+      name="whatsapps"
       type="radio"
      
       value="1"
@@ -302,7 +302,7 @@ useEffect(() => {
     <Form.Check
       inline
       label="InActive"
-      name="whatsapp"
+      name="whatsapps"
       type="radio"
      
       value="0"
