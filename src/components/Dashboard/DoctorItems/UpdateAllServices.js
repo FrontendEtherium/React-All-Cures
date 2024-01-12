@@ -27,10 +27,10 @@ export default function UpdateAllServices(props){
             console.log('hhhhh',res.data)
             setServiceName(res.data[0].serviceName)
             setServiceDesc(res.data[0].serviceDesc)
-            setPaymentReq(res.data[0].paymentReq)
-            setContractReq(res.data[0].contractReq)
+            setPaymentReq(res.data[0].paymentReq.toString())
+            setContractReq(res.data[0].contractReq.toString())
             setUpdatedBy(res.data[0].updatedBy)
-            setStatus(res.data[0].status)
+            setStatus(res.data[0].status.toString())
 
            
         })
@@ -75,16 +75,39 @@ export default function UpdateAllServices(props){
                             <Form.Control type="text" value={serviceDesc} onChange={(e) => setServiceDesc(e.target.value)} name=""
                             placeholder="Service Description" required/>
                         </Form.Group>
-                        <Form.Group className="col-md-6 float-left">
-                            <Form.Label>Payment Required</Form.Label>
-                            <Form.Control defaultValue={paymentReq} onChange={(e) => setPaymentReq(e.target.value)} type="text" name=""
-                            placeholder="Payment Required" required/>
-                        </Form.Group>
-                        <Form.Group className="col-md-6 float-left">
-                            <Form.Label>Contract Required</Form.Label>
-                            <Form.Control type="text" name="" value={contractReq} onChange={(e) => setContractReq(e.target.value)} 
-                            placeholder="Contract Required" required/>
-                        </Form.Group>
+                       
+                              
+                        <div className="col-lg-6 form-group">
+              <label htmlFor="">Payment Required</label>
+              <select
+                multiple
+                name="paymentreq"
+                placeholder="Payment Required"
+                value={paymentReq}
+                onChange={(e) => setPaymentReq(e.target.value)}
+                className="form-control"
+              >
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+              </select>
+            </div>
+                      
+
+                              
+                        <div className="col-lg-6 form-group">
+              <label htmlFor="">Contract Required</label>
+              <select
+                multiple
+                name="contractreq"
+                placeholder="Contract Required"
+                value={contractReq}
+                onChange={(e) => setContractReq(e.target.value)}
+                className="form-control"
+              >
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+              </select>
+            </div>
 
 
                         <Form.Group className="col-md-6 float-left">
@@ -92,11 +115,23 @@ export default function UpdateAllServices(props){
                             <Form.Control type="text" name="" value={updatedBy} onChange={e => setUpdatedBy(e.target.value)}
                              placeholder="Updated By" required/>
                         </Form.Group>
-                        <Form.Group className="col-md-6 float-left">
-                            <Form.Label>Status</Form.Label>
-                            <Form.Control type="text" name="" value={status} onChange={e => setStatus(e.target.value)}
-                             placeholder="Status" required/>
-                        </Form.Group>
+                      
+
+                              
+                        <div className="col-lg-6 form-group">
+              <label htmlFor="">Review Status</label>
+              <select
+                multiple
+                name="status"
+                placeholder="Status"
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                className="form-control"
+              >
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+              </select>
+            </div>
                         </div>
                         {
                             submitAlert?
