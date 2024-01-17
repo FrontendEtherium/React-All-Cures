@@ -24,7 +24,7 @@ const [isDefaultImage, setIsDefaultImage] = useState(false);
        if (json[i].rowno == rowno && json[i].img_Loc !=null) {
 
          console.log('Rowno:', json[i].rowno, 'Passed Rowno:', rowno);
-             matchedImageLoc = `https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp${json[i].img_Loc}`;
+             matchedImageLoc = `https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-180,h-230,f-webp${json[i].img_Loc}`;
            console.log('matched', matchedImageLoc)
            break; // Break the loop once a match is found
        }
