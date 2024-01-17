@@ -20,7 +20,7 @@ const [isDefaultImage, setIsDefaultImage] = useState(false);
        if (json[i].rowno == rowno && json[i].img_Loc !=null) {
 
         
-           matchedImageLoc = `https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp${json[i].img_Loc}`;
+           matchedImageLoc = `https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-180,h-230,f-webp${json[i].img_Loc}`;
            
            break; // Break the loop once a match is found
        }
