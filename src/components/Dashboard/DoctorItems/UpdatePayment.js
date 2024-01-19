@@ -52,6 +52,10 @@ export default function UpdatePayment(props){
         })
         .then(res => {
             history.back()
+            setAlert(true);
+            setTimeout(() => {
+              setAlert(false);
+            }, 4000);
         })
         .catch(res => {return})
     }
