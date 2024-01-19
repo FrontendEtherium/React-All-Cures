@@ -23,6 +23,10 @@ export default function UpdatePromo(props) {
 
   const [submitAlert, setAlert] = useState(false);
   const [promoData, setPromo] = useState([]);
+  const[serviceName,setServiceName]=useState()
+  const[firstName,setFirstName]=useState()
+  const[lastName,setLastName]=useState()
+  const[image,setImage]=useState()
 
   const search = useLocation().search;
   const id = new URLSearchParams(search).get('updatecontract');
@@ -37,6 +41,9 @@ export default function UpdatePromo(props) {
     description: '',
     review: '',
     count: '',
+    serviceName:'',
+    firstName:'',
+    lastName:''
   });
 
   const fetchPromo = (e) => {
@@ -46,36 +53,50 @@ export default function UpdatePromo(props) {
         setPromo(res.data);
         const promoData = res.data[0];
         setInitialState({
-          code: promoData.contactFirstName,
+          code: promoData.serviceName,
           startDate: promoData.startDate.split('T')[0],
           endDate: promoData.endDate.split('T')[0],
-          maxLimit: promoData.contactLastName,
+          maxLimit: promoData.userName,
           active: promoData.fee,
           title: promoData.currency,
-          description: promoData.status,
-          review:  promoData.status,
+          review: promoData.status,
           count: promoData.userId,
+          serviceName:promoData.serviceName,
+          firstName:promoData.contactFirstName,
+          lastName:promoData.contactLastName,
+
         //   review: promoData.ReviewStatus.toString(), 
         //   count: promoData.AdCount.toString(),
         });
-        setCode(promoData.contactFirstName);
+        setCode(promoData.serviceName);
         setStart(promoData.startDate.split('T')[0]);
         setEnd(promoData.endDate.split('T')[0]);
-        setMax(promoData.contactLastName);
+        setMax(promoData.userName);
         setActive(promoData.fee);
         setTitle(promoData.currency);
-        setDescription(promoData.status);
-        setReview( promoData.status);
+        setReview(promoData.status.toString());
           setCount(promoData.userId);
+          setServiceName(promoData.serviceName)
+          setLastName(promoData.contactLastName);
+          setFirstName(promoData.contactFirstName);
         // setReview(promoData.ReviewStatus.toString());
         // setCount(promoData.AdCount.toString());
-      
       })
       .catch((err) => {
         return;
       });
   };
 
+
+
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+
+    console.log('Image selected:', {
+      image: file.name,
+    });
+  }
   const getHospital = () => {
     axios.get(`${backendHost}/article/all/table/registration`).then((res) => {
       setCompanyList(res.data);
@@ -111,49 +132,46 @@ export default function UpdatePromo(props) {
   const submitForm = (e) => {
     e.preventDefault();
 
-    // Create an object to store the fields that have changed
-    const updatedFields = {};
+    
+    const formData = new FormData();
 
-    // Compare each field with the initial state
-    if (code !== initialState.code) {
-      updatedFields.CampaignID = parseInt(code);
+    // Append Contract_Map data as JSON string
+    formData.append('Contract_Map', JSON.stringify({
+      ServiceID: parseInt(serviceName),
+      UserID: parseInt(maxLimit),
+      ContactFirstName: firstName,
+      ContactLastName: lastName,
+      Fee: parseInt(active),
+      Currency: title,
+      Status: parseInt(review),
+      StartDate: startDate,
+      EndDate: endDate,
+      UpdatedBy:parseInt(userId)
+    }));
+  
+    // Append the image to FormData
+    if (image) {
+      formData.append('document', image);
     }
-    if (startDate !== initialState.startDate) {
-      updatedFields.StartDate = startDate;
-    }
-    if (endDate !== initialState.endDate) {
-      updatedFields.EndDate = endDate;
-    }
-    if (maxLimit !== initialState.maxLimit) {
-      updatedFields.DiseaseCondition = parseInt(maxLimit);
-    }
-    if (active !== initialState.active) {
-      updatedFields.AdTypeID = parseInt(active);
-    }
-    if (title !== initialState.title) {
-      updatedFields.AdTitle = title;
-    }
-    if (description !== initialState.description) {
-      updatedFields.AdDescription = description;
-    }
-    if (review !== initialState.review) {
-      updatedFields.ReviewStatus = parseInt(review);
-    }
-    if (count !== initialState.count) {
-      updatedFields.AdCount = parseInt(count);
-    }
+  
+    // Send the complete FormData to the backend
+    axios
+      .post(`${backendHost}/sponsored/update/contract/${id}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((res) => {
+        history.back()
+        setAlert(true);
+        setTimeout(() => {
+          setAlert(false);
+        }, 4000);
+      })
+      .catch((error) => {
+        console.error('Error submitting data:', error);
+      });
 
-    // Check if any fields have changed before making the PUT request
-    if (Object.keys(updatedFields).length > 0) {
-      axios
-        .put(`${backendHost}/sponsored/update/ad/${id}`, updatedFields)
-        .then((res) => {
-          history.back();
-        })
-        .catch((res) => {
-          return;
-        });
-    }
   };
 
   return (
@@ -162,6 +180,29 @@ export default function UpdatePromo(props) {
         <div className="card-title h3 text-center py-2 border-bottom">Update Contract Details</div>
         <form onSubmit={submitForm}>
           <div className="row m-4">
+
+
+          <Form.Group className="col-md-6 float-left">
+              <Form.Label>Enter Contact First Name</Form.Label>
+              <Form.Control
+                type="text"
+                name=""
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="col-md-6 float-left">
+              <Form.Label>Enter Contact Last Name</Form.Label>
+              <Form.Control
+                type="text"
+                name=""
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            </Form.Group>
+
+
             <Form.Group className="col-md-6 float-left">
               <Form.Label>Enter Service Name</Form.Label>
               <Form.Control
@@ -181,7 +222,23 @@ export default function UpdatePromo(props) {
             </Form.Group>
 
             <Form.Group className="col-md-6 float-left">
-              <Form.Label>Contract Start Date</Form.Label>
+              <Form.Label>Enter User Name</Form.Label>
+              <Form.Control
+                as="select"
+                value={maxLimit}
+                onChange={(e) => setMax(e.target.value)}
+              >
+                <option value="">{maxLimit}</option>
+                {companyList.map((c) => (
+                  <option key={c[0]} value={c[0]}>
+                    {`${c[1]} ${c[2]}`}
+                  </option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+
+            <Form.Group className="col-md-6 float-left">
+              <Form.Label> Start Date</Form.Label>
               <Form.Control
                 type="Date"
                 defaultValue={startDate}
@@ -192,7 +249,7 @@ export default function UpdatePromo(props) {
             </Form.Group>
 
             <Form.Group className="col-md-6 float-left">
-              <Form.Label>Contract End Date</Form.Label>
+              <Form.Label> End Date</Form.Label>
               <Form.Control
                 type="Date"
                 defaultValue={endDate}
@@ -202,40 +259,21 @@ export default function UpdatePromo(props) {
               />
             </Form.Group>
 
-            <Form.Group className="col-md-6 float-left">
-              <Form.Label>Contact First Name</Form.Label>
-              <Form.Control
-                as="select"
-                value={maxLimit}
-                onChange={(e) => setMax(e.target.value)}
-              >
-                <option value="">{maxLimit}</option>
-                {companyList.map((c) => (
-                  <option key={c[0]} value={c[0]}>
-                    {c[1]}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
+           
 
+            
             <Form.Group className="col-md-6 float-left">
-              <Form.Label>Fee</Form.Label>
+              <Form.Label>Enter Fee</Form.Label>
               <Form.Control
-                as="select"
+                type="text"
+                name=""
                 value={active}
                 onChange={(e) => setActive(e.target.value)}
-              >
-                <option value="">{active}</option>
-                {adsList.map((c) => (
-                  <option key={c[0]} value={c[0]}>
-                    {c[1]}
-                  </option>
-                ))}
-              </Form.Control>
+              />
             </Form.Group>
 
             <Form.Group className="col-md-6 float-left">
-              <Form.Label>Currency</Form.Label>
+              <Form.Label>Enter Currency</Form.Label>
               <Form.Control
                 type="text"
                 name=""
@@ -244,28 +282,13 @@ export default function UpdatePromo(props) {
               />
             </Form.Group>
 
-            <Form.Group className="col-md-6 float-left">
-              <Form.Label>Enter Ad Description</Form.Label>
-              <Form.Control
-                type="text"
-                name=""
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </Form.Group>
+           
+            <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
+                <Form.Label>Upload Image</Form.Label>
+                <Form.Control type="file" accept=".pdf, .doc, .docx" onChange={handleImageChange} />
+              </Form.Group>
 
-            <Form.Group className="col-md-6 float-left">
-              <Form.Label>User ID</Form.Label>
-              <Form.Control
-                type="text"
-                name=""
-                value={count}
-                onChange={(e) => setCount(e.target.value)}
-              />
-            </Form.Group>
-
-     
-
+          
 
             <div className="col-lg-6 form-group">
               <label htmlFor="">Review Status</label>
@@ -273,7 +296,7 @@ export default function UpdatePromo(props) {
                 multiple
                 name="featured"
                 placeholder="Featured"
-                value={review.toString()}
+                value={review}
                 onChange={(e) => setReview(e.target.value)}
                 className="form-control"
               >
