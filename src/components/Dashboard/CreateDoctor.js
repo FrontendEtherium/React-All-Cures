@@ -7,7 +7,12 @@ import { Link } from 'react-router-dom';
 import AllPost from './Allpost';
 import { Alert, Form } from 'react-bootstrap';
 
-
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+import { userId } from '../UserId';
 
 
 
@@ -43,6 +48,36 @@ function App() {
   const [user,setUser] = useState()
   const [article,setArticle] = useState()
   const[search,setSearch] = useState()
+  const[docIdList,setDocIdList]=useState()
+  const[docId,setDocId]=useState()
+  const[addressType,setAddressType]=useState("")
+  const[add,setAdd]=useState()
+  const[addrss,setAddrss]=useState()
+  const[cityList,setCityList]=useState()
+  const [degree,setDegree]=useState()
+  const[degreeStatus,setDegreeStatus]=useState()
+
+  const[univName,setUnivName]=useState()
+  const[univCity,setUnivCity]=useState()
+  const [univState,setUnivState]=useState()
+  const[univStatus,setUnivStatus]=useState()
+  const[univCountry,setUnivCountry]=useState()
+  const[univList,setUnivList]=useState()
+  const[degreeList,setDegreeList]=useState()
+
+  const[doctorName,setDoctorName]=useState()
+  const[degreeName,setDegreeName]=useState()
+  const[year,setYear]=useState()
+  const[university,setUniversity]=useState()
+
+  const [docAddressAlert,setDocAddressAlert] = useState()
+  const [docDegreesAlert,setDocDegreesAlert] = useState()
+  const [masterAddressTypeAlert,setMasterAddressTypeAlert] = useState()
+  const [masterDocDegreesAlert,setMasterDocDegreesAlert] = useState()
+  const [masterUniversityAlert,setMasterUniversityAlert] = useState()
+
+
+
   
   const submitForm = (e) => {
     e.preventDefault();
@@ -80,16 +115,16 @@ const hospitalForm = (e) => {
     .catch(res => console.log(res))
 }
 
-const favouriteForm = (e,user_id,article_id) => {
+const favouriteForm = (e) => {
     e.preventDefault();
-    axios.post(`${backendHost}/data/create  `, {
+    axios.post(`${backendHost}/admin/create/masteraddresstype  `, {
         // "hospitalid": parseInt(hospitalId),
-        "iemi" :122,
-        "user_id": 2,
-        "search" : 'ffff'
+        "AddressType" :user,
+        "CreatedBy": parseInt(userId),
+        "UpdatedBy" : parseInt(userId)
     })
     .then(res => {
-        setHospitalAlert(true)
+        setMasterAddressTypeAlert(true)
         setTimeout(() => {
             setHospitalAlert(false)
         }, 4000);
@@ -97,6 +132,43 @@ const favouriteForm = (e,user_id,article_id) => {
     .catch(res => console.log(res))
 }
 
+const degreeForm = (e) => {
+    e.preventDefault();
+    axios.post(`${backendHost}/admin/create/masterdocdegrees `, {
+        // "hospitalid": parseInt(hospitalId),
+        "DegDesc" :degree,
+        "CreatedBy": parseInt(userId),
+        "UpdatedBy" : parseInt(userId),
+        "status":parseInt(degreeStatus)
+    })
+    .then(res => {
+        setMasterDocDegreesAlert(true)
+        setTimeout(() => {
+            setHospitalAlert(false)
+        }, 4000);
+    })
+    .catch(res => console.log(res))
+}
+const universtyForm = (e) => {
+    e.preventDefault();
+    axios.post(`${backendHost}/admin/create/masteruniversities  `, {
+        // "hospitalid": parseInt(hospitalId),
+        "UnivName" :univName,
+        "UnivCity":univCity,
+        "UnivState":univState,
+        "Status":parseInt(univStatus),
+        "UnivCountry":univCountry,
+        "CreatedBy": parseInt(userId),
+        "UpdatedBy" : parseInt(userId)
+    })
+    .then(res => {
+        setMasterUniversityAlert(true)
+        setTimeout(() => {
+            setHospitalAlert(false)
+        }, 4000);
+    })
+    .catch(res => console.log(res))
+}
 const specialtiesForm = (e) => {
     e.preventDefault();
     axios.post(`${backendHost}/admin/create/specialties  `, {
@@ -107,6 +179,25 @@ const specialtiesForm = (e) => {
         setSpecialtiesAlert(true)
         setTimeout(() => {
             setSpecialtiesAlert(false)
+        }, 4000);
+    })
+    .catch(res => console.log(res))
+}
+
+const doctorDegreeForm = (e) => {
+    e.preventDefault();
+    axios.post(`${backendHost}/admin/create/DoctorDegrees  `, {
+        // "splid": parseInt(spl),
+        "DocID": parseInt(doctorName),
+        "DegreeID":parseInt(degreeName),
+        "YearOfGrad":parseInt(year),
+        "UnivID":parseInt(university)
+
+    })
+    .then(res => {
+        setDocDegreesAlert(true)
+        setTimeout(() => {
+            setCityAlert(false)
         }, 4000);
     })
     .catch(res => console.log(res))
@@ -123,6 +214,28 @@ const cityForm = (e) => {
     })
     .then(res => {
         setCityAlert(true)
+        setTimeout(() => {
+            setCityAlert(false)
+        }, 4000);
+    })
+    .catch(res => console.log(res))
+}
+
+const docAddressForm = (e) => {
+    e.preventDefault();
+    axios.post(`${backendHost}/admin/create/DoctorAddresses`, {
+        // "citycode": parseInt(cityCode),
+        "DocID": parseInt(docId),
+        "AddressTypeID":parseInt(addressType),
+        "Country":parseInt(country),
+        "City":parseInt(cityName),
+        "State":parseInt(state),
+        "Address1":add,
+        "Address2":addrss
+
+    })
+    .then(res => {
+        setDocAddressAlert(true)
         setTimeout(() => {
             setCityAlert(false)
         }, 4000);
@@ -196,12 +309,60 @@ const getCountries = () => {
     )
 }
 
+const getCity = () => {
+    axios.get(`${backendHost}/article/all/table/city`)
+    .then(res => {
+        
+        setCityList(res.data)
+    })
+    .catch(err => 
+        console.log(err)
+    )
+}
 
+const getDocID = () => {
+    axios.get(`${backendHost}/article/all/table/Doctors_New`)
+    .then(res => {
+        
+    
+        setDocIdList(res.data)
+    })
+    .catch(err => 
+        console.log(err)
+    )
+}
+
+const getDegreeID = () => {
+    axios.get(`${backendHost}/article/all/table/masterdocdegrees`)
+    .then(res => {
+        
+    
+        setDegreeList(res.data)
+    })
+    .catch(err => 
+        console.log(err)
+    )
+}
+
+const getUnivID = () => {
+    axios.get(`${backendHost}/article/all/table/masteruniversities`)
+    .then(res => {
+        
+    
+        setUnivList(res.data)
+    })
+    .catch(err => 
+        console.log(err)
+    )
+}
 useEffect(() => {
      getState()
      getCountries()   
      getSpecialties()
- 
+     getDocID()
+     getCity()
+     getDegreeID()
+     getUnivID()
 }, []) 
   return (
       
@@ -297,31 +458,28 @@ useEffect(() => {
                         </form>
                     </div>
 
-                    {/* <div className="card my-3">
-                        <div className="card-title h3 text-center py-2 border-bottom"> Table</div>
+                    <div className="card my-3">
+                        <div className="card-title h3 text-center py-2 border-bottom"> Master Address Type Table</div>
                         <form onSubmit={favouriteForm}>
                             <div className="row m-4">
                     
                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
-                            <Form.Label>Enter user Name</Form.Label>
+                            <Form.Label>Enter Address type</Form.Label>
                             <Form.Control value={user} onChange={(e) => setUser(e.target.value)}  type="text" name=""
-                            placeholder="Enter Hospital Name..." required/>
+                            placeholder="Enter Address type..." required/>
                         </Form.Group>
 
-                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
-                            <Form.Label>Enter article Name</Form.Label>
-                            <Form.Control value={article} onChange={(e) => setArticle(e.target.value)}  type="text" name=""
-                            placeholder="Enter Hospital Name..." required/>
-                        </Form.Group>
+                        <FormLabel component="legend" className="text-dark">Status <b>(Required)</b></FormLabel>
+      <RadioGroup value={search} onChange={(e) => {setSearch(e.target.value)}}
+      style={{display: 'flex', flexDirection:'row'}}>
+        <FormControlLabel value="0" control={<Radio />} label="No" />
+        <FormControlLabel value="1" control={<Radio />} label="Yes" />
+        
+      </RadioGroup>
 
-                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
-                            <Form.Label>Enter search Name</Form.Label>
-                            <Form.Control value={search} onChange={(e) => setSearch(e.target.value)}  type="text" name=""
-                            placeholder="Enter Hospital Name..." required/>
-                        </Form.Group>
                         {
-                            hospitalAlert?
-                                <Alert variant="success" className="h6 mx-3">Hospital Create successfully!!</Alert>
+                            masterAddressTypeAlert?
+                                <Alert variant="success" className="h6 mx-3">Master Addess Type Create successfully!!</Alert>
                                 : null
                         }
                    
@@ -333,8 +491,121 @@ useEffect(() => {
                             <button type="submit" className="btn btn-dark col-md-12 mb-4">Submit</button>
                         </div>
                         </form>
-                    </div> */}
+                    </div>
 
+                    
+                    <div className="card my-3">
+                        <div className="card-title h3 text-center py-2 border-bottom"> Master Doc Degrees Table</div>
+                        <form onSubmit={degreeForm}>
+                            <div className="row m-4">
+                    
+                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                            <Form.Label>Enter Degree Description</Form.Label>
+                            <Form.Control value={degree} onChange={(e) => setDegree(e.target.value)}  type="text" name=""
+                            placeholder="Enter Degree Description..." required/>
+                        </Form.Group>
+
+                        <FormLabel component="legend" className="text-dark">Status <b>(Required)</b></FormLabel>
+      <RadioGroup value={degreeStatus} onChange={(e) => {setDegreeStatus(e.target.value)}}
+      style={{display: 'flex', flexDirection:'row'}}>
+        <FormControlLabel value="0" control={<Radio />} label="No" />
+        <FormControlLabel value="1" control={<Radio />} label="Yes" />
+        
+      </RadioGroup>
+
+                        {
+                            masterDocDegreesAlert?
+                                <Alert variant="success" className="h6 mx-3">Master Doc Degrees Create successfully!!</Alert>
+                                : null
+                        }
+                   
+                     
+                        </div>
+                     
+                      
+                        <div className="col-md-12 text-center">
+                            <button type="submit" className="btn btn-dark col-md-12 mb-4">Submit</button>
+                        </div>
+                        </form>
+                    </div>
+
+                    <div className="card my-3">
+                        <div className="card-title h3 text-center py-2 border-bottom"> Master Universitry Table</div>
+                        <form onSubmit={universtyForm}>
+                            <div className="row m-4">
+                    
+                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                            <Form.Label>Enter UnivName</Form.Label>
+                            <Form.Control value={univName} onChange={(e) => setUnivName(e.target.value)}  type="text" name=""
+                            placeholder="Enter UnivName..." required/>
+                        </Form.Group>
+                        
+
+                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                            {/* <Form.Label>Enter Country</Form.Label> */}
+
+                            <label htmlFor="">Enter City</label>
+<select name="country" value={univCity} onChange={(e) => setUnivCity(e.target.value)} placeholder=" Enter Country" required="" className="form-control">
+<option>Select City</option>
+    {cityList && cityList.map((c) => {
+        
+        return (
+            <option value={c[0]}>{c[1]}</option>
+        )
+    })}
+</select>
+                        </Form.Group>
+                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                        <label htmlFor="">Enter State</label>
+<select name="state" value={univState} onChange={(e) => setUnivState(e.target.value)}  placeholder="Enter State" required="" className="form-control">
+<option>Select State</option>
+    {stateList.map((c) => {
+        
+        return (
+            <option value={c[0]}>{c[1]}</option>
+        )
+    })}
+</select>
+                        </Form.Group>
+                   
+                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                            {/* <Form.Label>Enter Country</Form.Label> */}
+
+                            <label htmlFor="">Enter Country</label>
+<select name="country" value={univCountry} onChange={(e) => setUnivCountry(e.target.value)}  placeholder=" Enter Country" required="" className="form-control">
+<option>Select Country</option>
+    {countriesList.map((c) => {
+        
+        return (
+            <option value={c[0]}>{c[1]}</option>
+        )
+    })}
+</select>
+                        </Form.Group>
+
+                        <FormLabel component="legend" className="text-dark">Status <b>(Required)</b></FormLabel>
+      <RadioGroup value={univStatus} onChange={(e) => {setUnivStatus(e.target.value)}}
+      style={{display: 'flex', flexDirection:'row'}}>
+        <FormControlLabel value="0" control={<Radio />} label="No" />
+        <FormControlLabel value="1" control={<Radio />} label="Yes" />
+        
+      </RadioGroup>
+
+                        {
+                            hospitalAlert?
+                                <Alert variant="success" className="h6 mx-3">Master University Create successfully!!</Alert>
+                                : null
+                        }
+                   
+                     
+                        </div>
+                     
+                      
+                        <div className="col-md-12 text-center">
+                            <button type="submit" className="btn btn-dark col-md-12 mb-4">Submit</button>
+                        </div>
+                        </form>
+                    </div>
                     <div className="card my-3">
                         <div className="card-title h3 text-center py-2 border-bottom">Speciality Table</div>
                         <form onSubmit={specialtiesForm}>
@@ -347,8 +618,8 @@ useEffect(() => {
                         </Form.Group>
                     
                         {
-                            specialtiesAlert?
-                                <Alert variant="success" className="h6 mx-3">Specialties Create successfully!!</Alert>
+                            masterUniversityAlert?
+                                <Alert variant="success" className="h6 mx-3">Master Universities Created successfully!!</Alert>
                                 : null
                         }
                         
@@ -481,6 +752,208 @@ useEffect(() => {
                         </div>
                         </form>
                     </div>   
+
+
+
+
+
+
+                       
+                    <div className="card my-3">
+                        <div className="card-title h3 text-center py-2 border-bottom">Doctor Addresses</div>
+                        <form onSubmit={docAddressForm}>
+                            <div className="row m-4">
+                     
+
+
+                            <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                         
+
+                            <label htmlFor="">Enter Doctor</label>
+<select name="country" value={docId} onChange={(e) => setDocId(e.target.value)} placeholder=" Enter Doctor" required="" className="form-control">
+<option>Select Doctor</option>
+   { docIdList && docIdList.map((c) => {
+        
+        return (
+            <option value={c[0]}>{`${c[10]}  ${c[11]}  ${c[12]}`}</option>
+        )
+    })}
+</select>
+                        </Form.Group>
+                     
+                        {/* <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                            <Form.Label>Enter City Name</Form.Label>
+                            <Form.Control value={cityName} onChange={(e) => setCityName(e.target.value)}  type="text" name=""
+                            placeholder="Enter City Name..." required/>
+                        </Form.Group> */}
+
+
+                        
+                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                            {/* <Form.Label>Enter Country</Form.Label> */}
+
+                            <label htmlFor="">Enter City</label>
+<select name="country" value={cityName} onChange={(e) => setCityName(e.target.value)} placeholder=" Enter Country" required="" className="form-control">
+<option>Select City</option>
+    {cityList && cityList.map((c) => {
+        
+        return (
+            <option value={c[0]}>{c[1]}</option>
+        )
+    })}
+</select>
+                        </Form.Group>
+
+                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                            <Form.Label>Address 1</Form.Label>
+                            <Form.Control value={add} onChange={(e) => setAdd(e.target.value)}  type="text" name=""
+                            placeholder="Enter Address 1" required/>
+                        </Form.Group>
+
+                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                            <Form.Label>Address 2</Form.Label>
+                            <Form.Control value={addrss} onChange={(e) => setAddrss(e.target.value)}  type="text" name=""
+                            placeholder="Enter Address 2" required/>
+                        </Form.Group>
+
+
+
+                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                        <label htmlFor="">Address Type</label>
+<select name="addrs" value={addressType} onChange={(e) => setAddressType(e.target.value)} placeholder="Enter Address Type" required="" className="form-control">
+<option>Select Address Type</option>
+    
+        
+        
+            <option value="1">Correspondence</option>
+            <option value="2">Permanent</option>
+        
+
+</select>
+                        </Form.Group>
+                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                        <label htmlFor="">Enter State</label>
+<select name="state" value={state} onChange={(e) => setState(e.target.value)} placeholder="Enter State" required="" className="form-control">
+<option>Select State</option>
+    {stateList.map((c) => {
+        
+        return (
+            <option value={c[0]}>{c[1]}</option>
+        )
+    })}
+</select>
+                        </Form.Group>
+                   
+                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                            {/* <Form.Label>Enter Country</Form.Label> */}
+
+                            <label htmlFor="">Enter Country</label>
+<select name="country" value={country} onChange={(e) => setCountry(e.target.value)} placeholder=" Enter Country" required="" className="form-control">
+<option>Select Country</option>
+    {countriesList.map((c) => {
+        
+        return (
+            <option value={c[0]}>{c[1]}</option>
+        )
+    })}
+</select>
+                        </Form.Group>
+                     
+                        {
+                            docAddressAlert?
+                                <Alert variant="success" className="h6 mx-3">Doctor Addresses Created successfully!!</Alert>
+                                : null
+                        }
+                        </div>
+                     
+                        <div className="col-md-12 text-center">
+                            <button type="submit" className="btn btn-dark col-md-12 mb-4">Submit</button>
+                        </div>
+                        </form>
+                    </div>
+
+
+
+
+
+
+       
+                    <div className="card my-3">
+                        <div className="card-title h3 text-center py-2 border-bottom">Doctor Degrees</div>
+                        <form onSubmit={doctorDegreeForm}>
+                            <div className="row m-4">
+                     
+
+
+                            <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                         
+
+                            <label htmlFor="">Enter Doctor</label>
+<select name="country" value={doctorName} onChange={(e) => setDoctorName(e.target.value)} placeholder=" Enter Doctor" required="" className="form-control">
+<option>Select Doctor</option>
+   { docIdList && docIdList.map((c) => {
+        
+        return (
+            <option value={c[0]}>{`${c[10]}  ${c[11]}  ${c[12]}`}</option>
+        )
+    })}
+</select>
+                        </Form.Group>
+                     
+
+
+                        
+                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                            {/* <Form.Label>Enter Country</Form.Label> */}
+
+                            <label htmlFor="">Enter Degree</label>
+<select name="country" value={degreeName} onChange={(e) => setDegreeName(e.target.value)} placeholder=" Enter Degree" required="" className="form-control">
+<option>Select Degree</option>
+    {degreeList && degreeList.map((c) => {
+        
+        return (
+            <option value={c[0]}>{c[1]}</option>
+        )
+    })}
+</select>
+                        </Form.Group>
+
+                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                            <Form.Label>Year Of Graduation</Form.Label>
+                            <Form.Control value={year} onChange={(e) => setYear(e.target.value)}  type="text" name=""
+                            placeholder="Enter Year Of Graduation" required/>
+                        </Form.Group>
+
+      
+                               <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                            {/* <Form.Label>Enter Country</Form.Label> */}
+
+                            <label htmlFor="">Enter Universitry</label>
+<select name="country" value={university} onChange={(e) => setUniversity(e.target.value)} placeholder=" Enter Degree" required="" className="form-control">
+<option>Select University</option>
+    {univList && univList.map((c) => {
+        
+        return (
+            <option value={c[0]}>{c[1]}</option>
+        )
+    })}
+</select>
+                        </Form.Group>
+                 
+                     
+                        {
+                            docDegreesAlert?
+                                <Alert variant="success" className="h6 mx-3">Doc Degress Create successfully!!</Alert>
+                                : null
+                        }
+                        </div>
+                     
+                        <div className="col-md-12 text-center">
+                            <button type="submit" className="btn btn-dark col-md-12 mb-4">Submit</button>
+                        </div>
+                        </form>
+                    </div>
+
                 </div>
             </div>
    
