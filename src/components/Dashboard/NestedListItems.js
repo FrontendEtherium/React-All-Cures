@@ -25,13 +25,15 @@ import ListIcon from '@material-ui/icons/List';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import HomeIcon from '@material-ui/icons/Home';
+import { userId} from './../UserId';
+
 export default function NestedListItems() {
   const [open, setOpen] = React.useState(false);
   const [openn, setOpenn] = React.useState(false);
   const [opennn, setOpennn] = React.useState(false);
   const [opennnn, setOpennnn] = React.useState(false);
   const [opennnnn, setOpennnnn] = React.useState(false);
-    const [opened, setOpened] = React.useState(false);
+  const [opened, setOpened] = React.useState(false);
 
   const [openx, setOpenx] = React.useState(false);
   const handleClick4 = () => {
@@ -145,7 +147,7 @@ setOpenn(!openn);
 
 
 
-
+   { ( userId==37  || userId==50 || userId==51) && (
 
       <ListItem button onClick={handleClick} style={{backgroundColor:'lightblue'}}>
       <ListItemIcon>
@@ -154,6 +156,9 @@ setOpenn(!openn);
         <ListItemText primary="ABOUT ARTICLE" />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
+
+      )}
+        
       <Collapse in={open} timeout="auto" >
         <List component="divw" disablePadding>
           <ListItem button>
@@ -287,6 +292,7 @@ setOpenn(!openn);
       </Collapse>
 
 
+               { ( userId==37 || userId==50 || userId==51) && (
       <ListItem button onClick={handleClick3} style={{backgroundColor:'lightblue'}}>
       <ListItemIcon>
               <LocalHospitalIcon />
@@ -294,6 +300,8 @@ setOpenn(!openn);
         <ListItemText primary="DOCTORS" />
         {opennnn ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
+          )}
+                 
       <Collapse in={opennnn} timeout="auto" >
         <List component="divw" disablePadding>
         <ListItem button>
@@ -400,7 +408,7 @@ setOpenn(!openn);
         </List>
       </Collapse>
 
-              
+
       <ListItem button onClick={handleClick6} style={{backgroundColor:'lightblue'}}>
         <ListItemIcon>
         <BarChartIcon />
@@ -410,7 +418,6 @@ setOpenn(!openn);
       </ListItem>
 
 
-              
       <Collapse in={opened} timeout="auto" >
         <List component="div" disablePadding>
 
@@ -503,11 +510,33 @@ setOpenn(!openn);
 
           
          
+          <ListItem button>
+            <ListItemIcon>
+              <BarChartIcon />
+            </ListItemIcon>
+            {/* <ListItemText primary="Reports" /> */}
+            <Link to="/dashboard?createservicespaymentmethod">
+              <ListItemText primary="Payment Method" />
+            </Link>
+          </ListItem>
+
+
+           
+          <ListItem button>
+            <ListItemIcon>
+              <BarChartIcon />
+            </ListItemIcon>
+            {/* <ListItemText primary="Reports" /> */}
+            <Link to="/dashboard?servicespaymentmethodlist">
+              <ListItemText primary="Payment Method List" />
+            </Link>
+          </ListItem>
 
         </List>
       </Collapse>
 
-               <ListItem button style={{backgroundColor:'lightblue'}}>
+
+                <ListItem button style={{backgroundColor:'lightblue'}}>
         <ListItemIcon>
           <DashboardIcon />
         </ListItemIcon>
@@ -515,7 +544,7 @@ setOpenn(!openn);
           <ListItemText primary="Create Webstories" />
         </Link>
       </ListItem>
-
+      
     </List>
   );
 }
