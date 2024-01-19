@@ -64,6 +64,10 @@ import FailureReasonList from './DoctorItems/FailureReasonList';
 import UpdateFailureReason from './DoctorItems/UpdateFailureReason';
 import DoctorAvailibilityList from './DoctorItems/DoctorAvailibilityList';
 import UpdateDoctorAvail from './DoctorItems/UpdateDoctorAvail';
+import CreateServicePaymentMethod from './DoctorItems/CreateServicePaymentMethod';
+import ServicePaymentMethodList from './DoctorItems/ServicePaymentMethodList';
+import UpdateServicePayment from './DoctorItems/UpdateServicePayment';
+
 
 
 
@@ -457,7 +461,7 @@ function RenderComponent(props){
   // 
   } 
 
- else if(props.search.split('=')[0] === '?createwebstories'){
+    else if(props.search.split('=')[0] === '?createwebstories'){
     return(
       <CreateWebStories search={props.search}/>
     )
@@ -522,7 +526,7 @@ function RenderComponent(props){
   
   }
 
-else if(props.search.split('=')[0] === '?mastertable'){
+  else if(props.search.split('=')[0] === '?mastertable'){
     return(
       <MasterTables search={props.search}/>
     )
@@ -604,6 +608,28 @@ else if(props.search.split('=')[0] === '?mastertable'){
     )
   
   } 
+
+  else if(props.search.split('=')[0] === '?createservicespaymentmethod'){
+    return(
+      <CreateServicePaymentMethod search={props.search}/>
+    )
+  
+  } 
+
+  else if(props.search.split('=')[0] === '?servicespaymentmethodlist'){
+    return(
+      <ServicePaymentMethodList search={props.search}/>
+    )
+  
+  } 
+  else if(props.search.split('=')[0] === '?updateservicepaymentmethod'){
+    return(
+      <UpdateServicePayment search={props.search}/>
+    )
+  
+  } 
+
+  
   else if(props.search.split('=')[0] === '?upload-img'){
     return(
       <ImageUpload search = {props.search}/>
