@@ -5,7 +5,7 @@ import { backendHost } from '../../../api-config';
 import { userId } from '../../UserId';
 
 function Feedback() {
-  const [name, setName] = useState('');
+  const [name, setName] = useState("Select FullName");
   const [first, setFirst] = useState('');
   const [email, setEmail] = useState('');
   const [number, setNumber] = useState('');
@@ -196,6 +196,7 @@ axios
                     onChange={(e) => setEmail(e.target.value)}
                     type="text"
                     placeholder="Enter Contact First Name..."
+                    disabled={name !== "Select FullName"}
                   />
                 </Form.Group>
 
@@ -206,6 +207,7 @@ axios
                     onChange={(e) => setNumber(e.target.value)}
                     type="text"
                     placeholder="Enter Contact Last Name..."
+                    disabled={name !== "Select FullName"}
                   />
                 </Form.Group>
 
@@ -291,7 +293,7 @@ axios
 
                 {alert ? (
                   <Alert variant="success" className="h6 mx-3">
-                    Thanks For the contract!!
+                    Thanks For the contract. Created Successfully!
                   </Alert>
                 ) : null}
               </div>
