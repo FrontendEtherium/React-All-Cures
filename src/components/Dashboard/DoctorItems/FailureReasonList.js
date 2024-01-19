@@ -56,12 +56,12 @@ const  FailureReasonList = () => {
                             <div className="pb-2"><span className="font-weight-bold">Reason:</span> {i.reasons}</div>
                                 <div className="pb-2"><span className="font-weight-bold">Refund:</span>Rs {i.refund}</div>
                                 <div className="pb-2"><span className="font-weight-bold">Penalty:</span>Rs {i.penalty}</div>
-                               <div className="pb-2"><span className="font-weight-bold">Created by:</span> {i.createdBy}</div>
+                               <div className="pb-2"><span className="font-weight-bold">Created by:</span> {i.created_Name}</div>
                                
                                <div className="pb-2"><span className="font-weight-bold">Created on:</span> {i.createdDate.split('T')[0]}</div>
                                {/* <div className="pb-2"><span className="font-weight-bold">Created on:</span> {i.slotDuration(min)}</div> */}
                                <div className="pb-2"><span className="font-weight-bold">Last Updated  Date:</span> {i.lastUpdatedDate.split('T')[0]}</div>
-                               <div className="pb-2"><span className="font-weight-bold">Updated By:</span> {i.updatedBy}</div>
+                               <div className="pb-2"><span className="font-weight-bold">Updated By:</span> {i.updated_Name}</div>
                                <div className="pb-2"><span className="font-weight-bold">Status:</span> {i.status ===1?
                                 <span> Active</span>
                                 : <span> Inactive</span>}</div>
