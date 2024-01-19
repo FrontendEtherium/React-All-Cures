@@ -71,13 +71,17 @@ export default function UpdateDoctorAvail(props){
             "FriAvailability": fri,
             "WeekDayOnly": weekDayOnly,
             "SlotDuration(min)": slotDuration,
-            "FromTime": fromTime,
+            "FromTime": fromTime,  
             "ToTime": toTime,
             "Status": statuss,
             "UpdatedBy": userId
         })
         .then(res => {
-            history.back()
+          history.back()
+          setAlert(true);
+          setTimeout(() => {
+            setAlert(false);
+          }, 4000);
         })
         .catch(res => {return})
     }
