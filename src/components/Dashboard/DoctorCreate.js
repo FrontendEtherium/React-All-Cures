@@ -38,30 +38,47 @@ function App() {
   const[hospitalList,setHospitalList] = useState([])
   const [alert,setAlert] = useState()
   const[website,setWebsite] = useState()
-
-
-
+  const[awards,setAwards] = useState()
+  const[phone,setPhone] = useState('')
+  const[rating,setRating] = useState()
+  const[email,setEmail] = useState()
+  const[verified,setVerified] = useState()
+  const[waitingTime,setWaitingTime] = useState()
+  const[about,setAbout] = useState()
+  const[docActive,setDocActive] = useState()
+  const[featuredDoc,setFeaturedDoc] = useState()
+  const[image,setImage] = useState()
+  const[regDate,setRegDate] = useState()
+  const[regId,setRegId] = useState()
+  const[regNo,setRegNo] = useState()
+  const[medTypeId,setMedTypeId] = useState()
+  const[other,setOther] = useState()
+const[medicinelist,setMedicineList] = useState()
   
 
   const submitForm = (e) => {
     e.preventDefault();
-    axios.post(`${backendHost}/admin/create/doctors  `, {
+    axios.post(`${backendHost}/admin/create/Doctors_New`,{
         "prefix":'Dr.',
         "docname_first": first,
         "docname_middle": middle,
         "docname_last": last,
         "gender":parseInt(gender),
-        "edu_training":edu,
         "insurance_accept":1,
         "hospital_affliated":parseInt(hospital),
         "primary_spl":parseInt(disease),
-        "city":parseInt(city),
-        "state":parseInt(state),
-        "country_code":parseInt(country),
-        "location":location,
-        "pincode":parseInt(pincode),
-        "website_url":website
-    
+        "website_url":website,
+        "awards":awards,
+        "telephone_nos":phone,
+         "email":email,
+         "verified":parseInt(verified),
+         "about":about,
+         "docactive":parseInt(docActive),
+         "featured_doctor_date":featuredDoc,
+         "Natl_Reg_Date":regDate,
+         "RegWithStateBoardID":parseInt(regId),
+         "NatlRegNo":regNo,
+         "MedicineTypeID":parseInt(medTypeId)
     })
     .then(res => {
         setAlert(true)
@@ -125,6 +142,26 @@ const getHospital = () => {
         console.log(err)
     )
 }
+
+const getMedicine = () => {
+    axios.get(`${backendHost}/article/all/table/medicinetype`)
+    .then(res => {
+        
+        setMedicineList(res.data)
+    })
+    .catch(err => 
+        console.log(err)
+    )
+}
+
+const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+
+    console.log('Image selected:', {
+      image: file.name,
+    });
+  }
  
 
 useEffect(() => {
@@ -135,6 +172,7 @@ useEffect(() => {
    getState()
    getDisease()
    getHospital()
+   getMedicine()
  
 }, []) 
 
@@ -170,23 +208,43 @@ useEffect(() => {
                             <Form.Control value={last} onChange={(e) => setLast(e.target.value)}  type="text" name=""
                             placeholder="Enter Doctor Last Name..." />
                         </Form.Group>
-                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
-                           
-                            <FormLabel component="legend" className="text-dark">Gender <b>(Required)</b></FormLabel>
-      <RadioGroup value={gender.toString()} onChange={(e) => {setGender(e.target.value)}}
-      style={{display: 'flex', flexDirection:'row'}}>
-        <FormControlLabel value="1" control={<Radio />} label="Female" />
-        <FormControlLabel value="2" control={<Radio />} label="Male" />
-        <FormControlLabel value="3" control={<Radio />} label="Other" />
-      </RadioGroup>
-      
+                       
 
-                        </Form.Group>
+
+
+                     
+
                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
-                            <Form.Label>Enter Edu Training  <b>(Required)</b> </Form.Label>
-                            <Form.Control value={edu} onChange={(e) => setEdu(e.target.value)}  type="text" name=""
-                            placeholder="Enter Edu Training..." required/>
+                            <Form.Label>Awards <b> (Required)</b></Form.Label>
+                            <Form.Control value={awards} onChange={(e) => setAwards(e.target.value)}  type="text" name=""
+                            placeholder="Enter Doctor Awards..."  />
                         </Form.Group>
+                        
+                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                            <Form.Label>Contact Number <b> (Required)</b></Form.Label>
+                            <Form.Control value={phone} onChange={(e) => setPhone(e.target.value)}  type="text" name=""
+                            placeholder="Enter Contact Number..."  />
+                        </Form.Group>
+
+
+                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                            <Form.Label>Email <b> (Required)</b></Form.Label>
+                            <Form.Control value={email} onChange={(e) => setEmail(e.target.value)}  type="email" name=""
+                            placeholder="Enter Doctor Email Address..."  />
+                        </Form.Group>
+                        
+                       
+                        
+
+                        {/* <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                            <Form.Label>Waiting Time<b> (Required)</b></Form.Label>
+                            <Form.Control value={waitingTime} onChange={(e) => setWaitingTime(e.target.value)}  type="text" name=""
+                            placeholder="Waiting Time"  />
+                        </Form.Group> */}
+                        
+
+                    
+                       
                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
                             <Form.Label>Enter Insurance Accept Value <b>(Already Selected)</b><b>1</b></Form.Label>
                             <Form.Control value={1}  type="text" name=""
@@ -216,59 +274,111 @@ useEffect(() => {
     })}
 </select>
                         </Form.Group>
-                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
-                        <label htmlFor="">Enter City <b>(Required)</b></label>
-<select name="city" value={city} onChange={(e) => setCity(e.target.value)} placeholder=" Enter City" required="" className="form-control">
-<option>Select City</option>
-    {cityList.map((c) => {
-        
-        return (
-            <option value={c[0]}>{c[1]}</option>
-        )
-    })}
-</select>
-                        </Form.Group>
-                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
-                        <label htmlFor="">Enter State <b>(Required)</b></label>
-<select name="state" value={state} onChange={(e) => setState(e.target.value)} placeholder="Enter State" required="" className="form-control">
-<option>Select State</option>
-    {stateList.map((c) => {
-        
-        return (
-            <option value={c[0]}>{c[1]}</option>
-        )
-    })}
-</select>
-                        </Form.Group>
-                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
-                            {/* <Form.Label>Enter Country</Form.Label> */}
 
-                            <label htmlFor="">Enter Country <b>(Required)</b></label>
-<select name="country" value={country} onChange={(e) => setCountry(e.target.value)} placeholder=" Enter Country" required="" className="form-control">
-<option>Select Country</option>
-    {countriesList.map((c) => {
-        
-        return (
-            <option value={c[0]}>{c[1]}</option>
-        )
-    })}
-</select>
+
+                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                            <Form.Label>Enter Other Speciality <b>(Required)</b> </Form.Label>
+                            <Form.Control value={other} onChange={(e) => setOther(e.target.value)}  type="text" name=""
+                            placeholder="Other Specialities" required/>
                         </Form.Group>
+                      
                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
                             <Form.Label>Enter Doctor Website URL <b>(Optional)</b></Form.Label>
                             <Form.Control value={website} onChange={(e) => setWebsite(e.target.value)}  type="text" name=""
                             placeholder="Enter Doctor URL..." />
                         </Form.Group>
+
+
                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                            <Form.Label>Featured Doctor Date <b>(required)</b></Form.Label>
+                            <Form.Control value={featuredDoc} onChange={(e) => setFeaturedDoc(e.target.value)}  type="date" name=""
+                            placeholder="Enter Date." />
+                        </Form.Group>
+
+
+
+                        
+                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                            <Form.Label>Registeration Date<b>(required)</b></Form.Label>
+                            <Form.Control value={regDate} onChange={(e) => setRegDate(e.target.value)}  type="date" name=""
+                            placeholder="Enter Date." />
+                        </Form.Group>
+
+                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                            <Form.Label>Registeration ID<b>(required)</b></Form.Label>
+                            <Form.Control value={regId} onChange={(e) => setRegId(e.target.value)}  type="text" name=""
+                            placeholder="Enter Registeration ID." />
+                        </Form.Group>
+
+                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                            <Form.Label>Registeration No.<b>(required)</b></Form.Label>
+                            <Form.Control value={regNo} onChange={(e) => setRegNo(e.target.value)}  type="text" name=""
+                            placeholder="Enter Registeration No." />
+                        </Form.Group>
+
+                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                            <Form.Label>Medicine Type ID<b>(required)</b></Form.Label>
+                         
+                            <select name="hospital" value={medTypeId} onChange={(e) => setMedTypeId(e.target.value)} placeholder=" Select Medicine Type" required="" className="form-control">
+<option>Select Medicine Type Id</option>
+    { medicinelist &&medicinelist.map((c) => {
+        
+        return (
+            <option value={c[0]}>{c[1]}</option>
+        )
+    })}
+</select>
+                        </Form.Group>
+
+
+
+
+
+                        <Form.Group className="col-md-6 float-left" controlId="exampleForm.ControlTextarea1">
+        <Form.Label>About Doctor</Form.Label>
+        <Form.Control  value={about} onChange={(e) => setAbout(e.target.value)} as="textarea"  />
+      </Form.Group>
+
+                               
+      <FormLabel component="legend" className="text-dark ">Gender <b>(Required)</b></FormLabel>
+      <RadioGroup value={gender.toString()} onChange={(e) => {setGender(e.target.value)}}
+      style={{display: 'flex', flexDirection:'row'}}>
+        <FormControlLabel value="1" control={<Radio />} label="Female" />
+        <FormControlLabel value="2" control={<Radio />} label="Male" />
+        <FormControlLabel value="3" control={<Radio />} label="Other" />
+      </RadioGroup>
+      
+
+      <FormLabel component="legend" className="text-dark ">Is Verified <b>(Required)</b></FormLabel>
+      <RadioGroup value={verified} onChange={(e) => {setVerified(e.target.value)}}
+      style={{display: 'flex', flexDirection:'row'}}>
+        <FormControlLabel value="0" control={<Radio />} label="No" />
+        <FormControlLabel value="1" control={<Radio />} label="Yes" />
+        
+      </RadioGroup>
+
+      <FormLabel component="legend" className="text-dark">Is Doctor Active <b>(Required)</b></FormLabel>
+      <RadioGroup value={docActive} onChange={(e) => {setDocActive(e.target.value)}}
+      style={{display: 'flex', flexDirection:'row'}}>
+        <FormControlLabel value="0" control={<Radio />} label="No" />
+        <FormControlLabel value="1" control={<Radio />} label="Yes" />
+        
+      </RadioGroup>
+
+
+
+
+
+                        {/* <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
                             <Form.Label>Enter Location <b>(Required)</b></Form.Label>
                             <Form.Control value={location} onChange={(e) => setLocation(e.target.value)}  type="text" name=""
                             placeholder="Enter Location..." required/>
-                        </Form.Group>
-                        <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
+                        </Form.Group> */}
+                        {/* <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
                             <Form.Label>Enter Pincode <b>(Required)</b></Form.Label>
                             <Form.Control value={pincode} onChange={(e) => setPincode(e.target.value)}  type="text" name=""
                             placeholder="Enter Pincode..." required/>
-                        </Form.Group>
+                        </Form.Group> */}
 
                      
                         {
