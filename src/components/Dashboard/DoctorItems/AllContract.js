@@ -36,14 +36,22 @@ function GetPromo(){
                 promoData.map(i => {
                     return(
                         <div className="card col-md-5 mt-5 mx-3 border p-3 h6">
-                            <div className="card-title h4"><span className="font-weight-bold">ContactFirstName: </span>{i.contactFirstName}</div>
+                            <div className="card-title h4"><span className="font-weight-bold">Contract ID: </span>{i.contractId}</div>
                             {/* <div className="card-body"> */}
-                            <div className="pb-2"><span className="font-weight-bold">ContactLastName:</span> {i.contactLastName}</div>
+                              
+                              { i.userName &&
+                            <div className="pb-2"><span className="font-weight-bold">User Name:</span> {i.userName}</div>}
+                             
+                             { i.contactFirstName &&
+                            <div className="pb-2"><span className="font-weight-bold">Contact Name:</span> {`${i.contactFirstName} ${i.contactLastName}`}</div>}
+                            
+                            <div className="pb-2"><span className="font-weight-bold">Service Name:</span> {i.serviceName}</div>
 
                                 <div className="pb-2"><span className="font-weight-bold">StartDate:</span> {i.startDate.split('T')[0]}</div>
                                 <div className="pb-2"><span className="font-weight-bold">End Date:</span> {i.endDate.split('T')[0]}</div>
                                 <div className="pb-2"><span className="font-weight-bold">Fee:</span> {i.fee}</div>
                                 <div className="pb-2"><span className="font-weight-bold">Currency:</span> {i.currency}</div>
+                                <div className="pb-2"><span className="font-weight-bold">Created By:</span> {i.created_Name}</div>
                                 <div><span className="font-weight-bold">Status:</span> 
                                 {
                                     i.status === 1?
