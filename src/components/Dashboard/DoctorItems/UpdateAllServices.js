@@ -54,7 +54,11 @@ export default function UpdateAllServices(props){
             "Status": status
         })
         .then(res => {
-            history.back()
+          history.back()
+          setAlert(true);
+          setTimeout(() => {
+            setAlert(false);
+          }, 4000);
         })
         .catch(res => {return})
     }
