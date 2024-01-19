@@ -53,6 +53,10 @@ export default function UpdateFailureReason(props){
         })
         .then(res => {
             history.back()
+            setAlert(true);
+            setTimeout(() => {
+              setAlert(false);
+            }, 4000);
         })
         .catch(res => {return})
     }
