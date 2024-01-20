@@ -163,8 +163,8 @@ axios
               
                 <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
                         <label htmlFor="">Enter Service Name</label>
-<select name="state" value={first} onChange={(e) => setFirst(e.target.value)} placeholder="Enter State" required="" className="form-control">
-<option>Select State</option>
+<select name="state" value={first} onChange={(e) => setFirst(e.target.value)} placeholder="Enter Service  Name" required="" className="form-control">
+<option>Select Service</option>
     {serviceList.map((c) => {
         
         return (
