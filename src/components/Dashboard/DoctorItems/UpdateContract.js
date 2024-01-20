@@ -53,10 +53,10 @@ export default function UpdatePromo(props) {
         setPromo(res.data);
         const promoData = res.data[0];
         setInitialState({
-          code: promoData.serviceName,
+          code: promoData.serviceId,
           startDate: promoData.startDate.split('T')[0],
           endDate: promoData.endDate.split('T')[0],
-          maxLimit: promoData.userName,
+          maxLimit: promoData.userId,
           active: promoData.fee,
           title: promoData.currency,
           review: promoData.status,
@@ -68,10 +68,10 @@ export default function UpdatePromo(props) {
         //   review: promoData.ReviewStatus.toString(), 
         //   count: promoData.AdCount.toString(),
         });
-        setCode(promoData.serviceName);
+        setCode(promoData.serviceId);
         setStart(promoData.startDate.split('T')[0]);
         setEnd(promoData.endDate.split('T')[0]);
-        setMax(promoData.userName);
+        setMax(promoData.userId);
         setActive(promoData.fee);
         setTitle(promoData.currency);
         setReview(promoData.status.toString());
@@ -88,6 +88,8 @@ export default function UpdatePromo(props) {
   };
 
 
+  console.log('code',code)
+  console.log('max',maxLimit)
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
@@ -137,7 +139,7 @@ export default function UpdatePromo(props) {
 
     // Append Contract_Map data as JSON string
     formData.append('Contract_Map', JSON.stringify({
-      ServiceID: parseInt(serviceName),
+      ServiceID: parseInt(code),
       UserID: parseInt(maxLimit),
       ContactFirstName: firstName,
       ContactLastName: lastName,
