@@ -49,7 +49,7 @@ function App() {
         "ServiceDesc": middle,
         "PaymentReq": parseInt(last, 10), 
         "ContractReq": parseInt(type, 10),
-        "CreatedBy": 1,
+        "CreatedBy": parseInt(userId),
         "Status": parseInt(status, 10),
     })
     .then(res => {
