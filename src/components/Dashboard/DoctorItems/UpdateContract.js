@@ -116,6 +116,7 @@ export default function UpdatePromo(props) {
 
   const getCampaign = () => {
     axios.get(`${backendHost}/article/all/table/SponsoredServicesMaster`).then((res) => {
+      console.log('spon',res.data)
       setCampaignList(res.data);
     }).catch((err) => {
       console.log(err);
@@ -128,6 +129,8 @@ export default function UpdatePromo(props) {
     getHospital();
     getAds();
     getCampaign();
+
+  
     // eslint-disable-next-line
   }, []);
 
@@ -217,7 +220,7 @@ export default function UpdatePromo(props) {
                 <option value="">{code}</option>
                 {campaignList.map((c) => (
                   <option key={c[0]} value={c[0]}>
-                    {c[2]}
+                    {c[1]}
                   </option>
                 ))}
               </Form.Control>
