@@ -24,6 +24,7 @@ function DoctorAvailibility() {
   const [createdBy, setCreatedBy] = useState();
   const [doctorList, setDoctorList] = useState([]);
   const [serviceId, setServiceId] = useState();
+  const [doctorNewList, setDoctorNewList] = useState([]);
 
   const submitForm = async (event) => {
     event.preventDefault();
@@ -105,12 +106,7 @@ function DoctorAvailibility() {
 
   useEffect(() => {
     const fetchServiceList = (e) => {
-      // axios.get(`${backendHost}/SearchActionController?cmd=getResults&FeaturedDoctors `)
-      // .then(res => {
-
-      //     console.log('hello',res.data.map.DoctorDetails.myArrayList)
-      //     setDoctorList(res.data.map.DoctorDetails.myArrayList)
-      // })
+     
       axios
         .get(`${backendHost}/sponsored/get/services/list/doc`)
         .then((res) => {
@@ -123,12 +119,29 @@ function DoctorAvailibility() {
         });
     };
 
+    const fetchNewList = (e) => {
+     
+      axios
+        .get(`${backendHost}/sponsored/get/services/list/doctor`)
+        .then((res) => {
+          console.log("hello", res.data);
+          setDoctorNewList(res.data);
+        })
+
+        .catch((res) => {
+          return;
+        });
+    };
+
     fetchServiceList();
+    fetchNewList();
   }, []);
 
-  const filteredDoctors = doctorList.filter(
+ 
+  const filteredDoctors = doctorNewList.filter(
     (doctor) => doctor.ServiceID == serviceId
   );
+
   console.log("Service ID:", serviceId);
   console.log("Filtered Doctors:", filteredDoctors);
 
@@ -138,7 +151,7 @@ function DoctorAvailibility() {
         <div className="card my-3">
           <div className="card-title h3 text-center py-2 border-bottom">
             {" "}
-            <b> (Doctor Availibility)</b>
+            <b> (Create Doctor Availability)</b>
           </div>
           <Form onSubmit={submitForm}>
             <div className="row m-4">
