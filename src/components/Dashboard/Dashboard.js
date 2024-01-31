@@ -212,14 +212,13 @@ export default function Dashboard(props) {
       .then((json) => {
         setItems(json);
         setIsLoaded(true);        
-        <RenderComponent
-            pathname={props.location.pathname}
+        <RenderComponent 
             search={props.location.search} 
             container={classes.container} 
             fixedHeightPaper={fixedHeightPaper} 
             ajaxIsLoaded={isLoaded}
             ajaxItems={items}
-            isOnline={isOnline}
+            handleCountClick = {handleCountClick}
           />
       });
       // eslint-disable-next-line
