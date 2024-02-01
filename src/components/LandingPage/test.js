@@ -57,8 +57,21 @@ const Test = (props) => {
     e.preventDefault();
     setSignUpClicked(1);
     if(validEmail && upperCase && lowerCase && match){
-      axios.defaults.withCredentials = true      
-      axios.post(`${backendHost}/registration/add/new?firstname=${firstName}&lastname=${lastName}&email=${email}&psw=${password.firstPassword}&psw-repeat=${password.secondPassword}&rempwd=on&doc_patient=${userType}&acceptTnc=${terms}&number=${number}`,
+      axios.defaults.withCredentials = true  
+      
+      const params = {
+        firstname: firstName,
+        lastname: lastName,
+        email: email,
+        psw: password.firstPassword,
+        'psw-repeat': password.secondPassword,
+        // rempwd: rempwd,
+        rempwd: '1',
+        doc_patient: userType,
+        acceptTnc: '1',
+        number: number
+      };
+      axios.post(`${backendHost}/registration/add/new`,params,
       {headers: {'Access-Control-Allow-Credentials': true}}
     ).then(response => {
       if(response.data === 'Email Address already Exists in the System'){
