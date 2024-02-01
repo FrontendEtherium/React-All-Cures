@@ -73,6 +73,7 @@ class Profile extends Component {
       selectedTime: null,
       callFrame:null,
       videoLink:null,
+      availStatus:null,
     };
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
@@ -334,7 +335,9 @@ class Profile extends Component {
       // .then(res => JSON.parse(res))
       .then((res) => res.json())
       .then((json) => {
-        // document.title = `${json.firstName} ${json.lastName}`;
+
+        console.log('firstname',json.firstName)
+        document.title = `${json.firstName} ${json.lastName}`;
 
         this.setState({
           isLoaded: true,
@@ -342,6 +345,22 @@ class Profile extends Component {
           docid: json.docId,
         });
       });
+  };
+
+
+  fetchAvailStatus = (id) => {
+    fetch(`${backendHost}/video/get/${id}/availability`)
+      // .then(res => JSON.parse(res))
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({
+          
+          availStatus: json,
+          
+        });
+        console.log('availStatus',this.state.availStatus)
+      });
+      
   };
   showRating = (val) => {
     if (document.getElementById("doctor-avg-rating")) {
@@ -388,6 +407,7 @@ class Profile extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
     this.fetchDoctorData(this.props.match.params.id.split("-")[0]);
+    this.fetchAvailStatus(this.props.match.params.id.split("-")[0]);
     this.getComments(this.props.match.params.id.split("-")[0]);
     this.getRating(this.props.match.params.id.split("-")[0]);
     this.getRate(this.props.match.params.id.split("-")[0]);
@@ -410,12 +430,12 @@ class Profile extends Component {
       const id = this.props.match.params.id.split("-")[0];
 
       // Fetch the first name and last name based on the ID
-      fetch(`${backendHost}/DoctorsActionController?rowno=${id}&cmd=getProfile`)
+      fetch(`${backendHost}/DoctorsActionController?DocID=${id}&cmd=getProfile`)
         .then((res) => res.json())
         .then((json) => {
           // Use the first name and last name directly from the API response
-          const firstName = json.docname_first;
-          const lastName = json.docname_last;
+          const firstName = json.firstName;
+          const lastName = json.lastName;
 
           canonicalLink.href = `${window.location.origin}/profile/${id}-${firstName}-${lastName}`;
           document.head.appendChild(canonicalLink);
@@ -498,14 +518,16 @@ class Profile extends Component {
 
 
 
-        if (!this.state.callFrame) {
+        if (!this.state.callFrame && json != "Error") {
           // Initialize the video chat
           const newCallFrame =  DailyIframe.createFrame({
            
         // Check if callFrame already exists
          showLeaveButton: true,
           });
-    
+
+
+             
           // newCallFrame.join({ url: 'https://uat.daily.co/qLxOzn6ZKVyqkQ6YByzL' });
           newCallFrame.join({ url:json });
     
@@ -519,6 +541,7 @@ class Profile extends Component {
           
     
           this.setState({ callFrame: newCallFrame });
+          
         }
       });
 
@@ -574,15 +597,15 @@ class Profile extends Component {
               items.docname_last
             }
             description={items.about}
-            image={`${imagePath}/cures_articleimages/doctors/${items.rowno}.png`}
+            image={`${imagePath}/cures_articleimages/doctors/${items.DocID}.png`}
             keywords={
-              items.docname_first +
+              items.firstName +
               " " +
-              items.docname_last +
+              items.lastName +
               " , " +
               items.hospital_affliated +
               " , " +
-              items.primary_spl
+              items.Primary_Spl
             }
           ></HelmetMetaData>
           <Header history={this.props.history} />
@@ -627,6 +650,8 @@ class Profile extends Component {
                             <i class="fas fa-user-md fa-6x"></i>
                           )}
                         </div>
+
+                        {   this.state.availStatus==1 &&
                         <div
                           style={{
                             marginTop: "-44px",
@@ -736,6 +761,7 @@ class Profile extends Component {
                             </div>
                           </div>
                         </div>
+    }
                         {this.props.match.params.id.split("-")[0] === userId ||
                         userAccess == 9 ? (
                           <>
