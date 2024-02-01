@@ -212,16 +212,16 @@ export default function Dashboard(props) {
       .then((json) => {
         setItems(json);
         setIsLoaded(true);        
-        <RenderComponent 
+        <RenderComponent
+            pathname={props.location.pathname}
             search={props.location.search} 
             container={classes.container} 
             fixedHeightPaper={fixedHeightPaper} 
             ajaxIsLoaded={isLoaded}
             ajaxItems={items}
-            handleCountClick = {handleCountClick}
+            isOnline={isOnline}
           />
       });
-     
     }, []);
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
