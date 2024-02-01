@@ -212,15 +212,15 @@ export default function Dashboard(props) {
       .then((json) => {
         setItems(json);
         setIsLoaded(true);        
-        <RenderComponent
-            pathname={props.location.pathname}
-            search={props.location.search} 
-            container={classes.container} 
-            fixedHeightPaper={fixedHeightPaper} 
-            ajaxIsLoaded={isLoaded}
-            ajaxItems={items}
-            isOnline={isOnline}
-          />
+        // <RenderComponent
+        //     pathname={props.location.pathname}
+        //     search={props.location.search} 
+        //     container={classes.container} 
+        //     fixedHeightPaper={fixedHeightPaper} 
+        //     ajaxIsLoaded={isLoaded}
+        //     ajaxItems={items}
+        //     isOnline={isOnline}
+        //   />
       });
     }, []);
 
