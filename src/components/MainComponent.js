@@ -74,6 +74,7 @@ import Y from './Header/Health A To Z/Y'
 import Z from './Header/Health A To Z/Z'
 import AppRedirect from "./LandingPage/AppRedirect";
 import Webstories from "./WebStories/Webstories";
+import DoctorLink from "./Profile/DoctorLink.js";
 
 
 
@@ -147,6 +148,7 @@ const Routes = (props) => {
      <Route exact path="/appRedirect" component={AppRedirect} />
     
        <Route exact path="/webStories" component={Webstories} />
+     <Route path="/notification/:linkid" component={DoctorLink}/>
 
 
 
