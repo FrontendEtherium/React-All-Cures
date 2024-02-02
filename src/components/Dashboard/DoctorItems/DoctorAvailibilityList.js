@@ -72,7 +72,7 @@ const DoctorAvailibilityList = () => {
                                {/* <div className="pb-2"><span className="font-weight-bold">Created on:</span> {i.slotDuration(min)}</div> */}
                                <div className="pb-2"><span className="font-weight-bold">From Time:</span> {i.fromTime}</div>
                                <div className="pb-2"><span className="font-weight-bold">To Time:</span> {i.toTime}</div>
-                               <div className="pb-2"><span className="font-weight-bold">Created Date:</span> {i.createdDate}</div>
+                               <div className="pb-2"><span className="font-weight-bold">Created Date:</span> {i.createdDate.split('T')[0]}</div>
                                <div className="pb-2"><span className="font-weight-bold">Slot Duration (min):</span> {i.slotDuration}</div>
                                <div className="pb-2"><span className="font-weight-bold">Last Updated Date:</span> {i.lastUpdatedDate &&i.lastUpdatedDate.split('T')[0]}</div>
                                <div className="pb-2"><span className="font-weight-bold">Status:</span> {i.status  ===1?   <span> Active</span>
