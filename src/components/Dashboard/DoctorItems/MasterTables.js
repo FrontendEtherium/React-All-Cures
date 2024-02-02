@@ -352,7 +352,7 @@ useEffect(() => {
 
                         {
                             hospitalAlert?
-                                <Alert variant="success" className="h6 mx-3">Paymnet Gateway Create successfully!!</Alert>
+                                <Alert variant="success" className="h6 mx-3">Payment Gateway Created successfully!!</Alert>
                                 : null
                         }
                    
@@ -381,14 +381,14 @@ useEffect(() => {
 
                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
                             <Form.Label>Enter Refund (IF ANY)</Form.Label>
-                            <Form.Control value={spl} onChange={(e) => setSpl(e.target.value)}  type="text" name=""
-                            placeholder="Enter Refund (IF ANY)..." />
+                            <Form.Control value={spl} onChange={(e) => setSpl(e.target.value)}  type="number" name=""
+                            placeholder="Enter Refund (IF ANY)..." required />
                         </Form.Group>
 
                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
                             <Form.Label>Enter Penalty (IF ANY)</Form.Label>
-                            <Form.Control value={emaill} onChange={(e) => setEmail(e.target.value)}  type="text" name=""
-                            placeholder="Enter Penalty (IF ANY)..." />
+                            <Form.Control value={emaill} onChange={(e) => setEmail(e.target.value)}  type="number" name=""
+                            placeholder="Enter Penalty (IF ANY)..." required />
                         </Form.Group>
                     
                         {
