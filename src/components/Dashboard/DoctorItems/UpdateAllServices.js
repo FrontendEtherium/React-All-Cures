@@ -113,13 +113,13 @@ export default function UpdateAllServices(props){
               </select>
             </div>
 
-
+{/* 
                         <Form.Group className="col-md-6 float-left">
                             <Form.Label>Updated By</Form.Label>
                             <Form.Control type="text" name="" value={updatedBy} onChange={e => setUpdatedBy(e.target.value)}
                              placeholder="Updated By" required/>
                         </Form.Group>
-                      
+                       */}
 
                               
                         <div className="col-lg-6 form-group">
