@@ -137,11 +137,15 @@ function DoctorAvailibility() {
     fetchNewList();
   }, []);
 
- 
+  const test=[{"ServiceName":"Chat Service","UserID":102,"DocName":"Divya Sharma","ServiceID":1},{"ServiceName":"Audio Service","UserID":103,"DocName":"Vineeta Neeraj kumar ","ServiceID":2},{"ServiceName":"Chat Service","UserID":111,"DocName":"divy SHARMA","ServiceID":1}]
+
   const filteredDoctors = doctorNewList.filter(
     (doctor) => doctor.ServiceID == serviceId
   );
 
+  // const filteredDoctors = test.filter(
+  //   (doctor) => doctor.ServiceID == serviceId
+  // );
   console.log("Service ID:", serviceId);
   console.log("Filtered Doctors:", filteredDoctors);
 
@@ -151,7 +155,7 @@ function DoctorAvailibility() {
         <div className="card my-3">
           <div className="card-title h3 text-center py-2 border-bottom">
             {" "}
-            <b> (Create Doctor Availability)</b>
+            <b> (Create Doctor Availibility)</b>
           </div>
           <Form onSubmit={submitForm}>
             <div className="row m-4">
@@ -320,7 +324,7 @@ function DoctorAvailibility() {
 
               <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
                 <Form.Label>
-                  Enter Slot Duration <b>(Required)</b>
+                  Enter Slot Duration (in minutes) <b>(Required)</b>
                 </Form.Label>
                 <Form.Control
                   value={slotDuration}
