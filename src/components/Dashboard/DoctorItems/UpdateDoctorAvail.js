@@ -63,7 +63,7 @@ export default function UpdateDoctorAvail(props){
     const submitForm = (e) => {
         e.preventDefault();
         axios.put(`${backendHost}/video/update/schedule/${id}`, {
-            "ContractID": contractId,
+            
             "MonAvailability": mon,
             "TueAvailability": tue,
             "WedAvailability": wed,
@@ -93,7 +93,7 @@ export default function UpdateDoctorAvail(props){
                     <form onSubmit={submitForm}>
                         <div className="row m-4">
                         <Form.Group className="col-md-6 float-left">
-                            <Form.Label>Contract Id</Form.Label>
+                            <Form.Label>Contract ID</Form.Label>
                             <Form.Control value={contractId} onChange={(e) => setContractId(e.target.value)} type="text" name=""
                             placeholder="Service Name" required/>
                         </Form.Group>
