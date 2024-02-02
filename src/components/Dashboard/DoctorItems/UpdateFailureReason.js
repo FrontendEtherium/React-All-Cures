@@ -74,19 +74,15 @@ export default function UpdateFailureReason(props){
                         </Form.Group>
                         <Form.Group className="col-md-6 float-left">
                             <Form.Label>Refund</Form.Label>
-                            <Form.Control type="text" value={refund} onChange={(e) => setRefund(e.target.value)} name=""
+                            <Form.Control type="number" value={refund} onChange={(e) => setRefund(e.target.value)} name=""
                             placeholder="Refund" required/>
                         </Form.Group>
                         <Form.Group className="col-md-6 float-left">
                             <Form.Label>Penalty</Form.Label>
-                            <Form.Control defaultValue={penalty} onChange={(e) => setPenalty(e.target.value)} type="text" name=""
+                            <Form.Control defaultValue={penalty} onChange={(e) => setPenalty(e.target.value)} type="number" name=""
                             placeholder="Penalty" required/>
                         </Form.Group>
-                        <Form.Group className="col-md-6 float-left">
-                            <Form.Label>Status</Form.Label>
-                            <Form.Control type="text" name="" value={status} onChange={(e) => setStatus(e.target.value)} 
-                            placeholder="Status" required/>
-                        </Form.Group>
+                       
 
                               
                         <div className="col-lg-6 form-group">
@@ -104,12 +100,12 @@ export default function UpdateFailureReason(props){
               </select>
             </div>
 
-
+{/* 
                         <Form.Group className="col-md-6 float-left">
                             <Form.Label>Updated By</Form.Label>
                             <Form.Control type="text" name="" value={updatedBy} onChange={e => setUpdatedBy(e.target.value)}
                              placeholder="Updated By" required/>
-                        </Form.Group>
+                        </Form.Group> */}
                        
                         </div>
                         {
