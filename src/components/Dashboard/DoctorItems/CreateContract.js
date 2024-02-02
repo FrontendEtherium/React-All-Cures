@@ -248,7 +248,7 @@ axios
                   <Form.Control
                     value={fee}
                     onChange={(e) => setFee(e.target.value)}
-                    type="text"
+                    type="number"
                     placeholder="Enter Fees..."
                   />
                 </Form.Group>
