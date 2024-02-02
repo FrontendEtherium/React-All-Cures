@@ -216,6 +216,7 @@ export default function UpdatePromo(props) {
                 onChange={(e) => setCode(e.target.value)}
                 type="text"
                 placeholder="Campaign here..."
+                
               >
                 <option value="">{code}</option>
                 {campaignList.map((c) => (
@@ -250,6 +251,7 @@ export default function UpdatePromo(props) {
                 onChange={(e) => setStart(e.target.value)}
                 name=""
                 placeholder="Start Date here..."
+              
               />
             </Form.Group>
 
@@ -261,6 +263,7 @@ export default function UpdatePromo(props) {
                 onChange={(e) => setEnd(e.target.value)}
                 name=""
                 placeholder="End Date here..."
+                
               />
             </Form.Group>
 
@@ -270,10 +273,11 @@ export default function UpdatePromo(props) {
             <Form.Group className="col-md-6 float-left">
               <Form.Label>Enter Fee</Form.Label>
               <Form.Control
-                type="text"
+                type="number"
                 name=""
                 value={active}
                 onChange={(e) => setActive(e.target.value)}
+              
               />
             </Form.Group>
 
@@ -284,13 +288,14 @@ export default function UpdatePromo(props) {
                 name=""
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
+                
               />
             </Form.Group>
 
            
             <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
                 <Form.Label>Upload Image</Form.Label>
-                <Form.Control type="file" accept=".pdf, .doc, .docx" onChange={handleImageChange} />
+                <Form.Control type="file" accept=".pdf, .doc, .docx" onChange={handleImageChange}  />
               </Form.Group>
 
           
@@ -300,7 +305,7 @@ export default function UpdatePromo(props) {
               <select
                 multiple
                 name="featured"
-                placeholder="Featured"
+                placeholder="Review"
                 value={review}
                 onChange={(e) => setReview(e.target.value)}
                 className="form-control"
