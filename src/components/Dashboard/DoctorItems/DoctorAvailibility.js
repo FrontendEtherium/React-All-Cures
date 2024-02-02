@@ -203,7 +203,7 @@ function DoctorAvailibility() {
                   <option>Select Doctor</option>
                   {filteredDoctors &&
                    filteredDoctors.map((c) => {
-                      return <option value={c.UserID}>{c.DocName}</option>;
+                       return <option value={c.DocID}>{c.DocName}</option>;
                     })}
                 </select>
               </Form.Group>
