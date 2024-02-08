@@ -342,7 +342,7 @@ class Profile extends Component {
         this.setState({
           isLoaded: true,
           items: json,
-          docid: json.docId,
+          docid: json.docID,
         });
       });
   };
@@ -597,7 +597,7 @@ class Profile extends Component {
               items.docname_last
             }
             description={items.about}
-            image={`${imagePath}/cures_articleimages/doctors/${items.DocID}.png`}
+            image={`${imagePath}/cures_articleimages/doctors/${items.docID}.png`}
             keywords={
               items.firstName +
               " " +
