@@ -1415,7 +1415,7 @@ h4 {
 }
 .profile-card-img img {
   height: 180px;
-  max-width: 100%;
+  width: 100%;
   object-fit: cover;
 }
 .viewPhoto a {
