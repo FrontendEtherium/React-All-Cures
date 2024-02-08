@@ -227,7 +227,35 @@ class Profile extends Component {
       });
   };
 
- 
+  // getImg = () => {
+  //   fetch(`${backendHost}/data/doctor/image`)
+  //     .then((res) => res.json())
+  //     .then((json) => {
+  //       let matchedImageLoc = ""; // Default image location
+
+  //       for (let i = 0; i < json.length; i++) {
+  //         if (
+  //           json[i].rowno == this.state.items.rowno &&
+  //           json[i].img_Loc != null
+  //         ) {
+  //           matchedImageLoc = `https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp${json[i].img_Loc}`;
+  //           break; // Break the loop once a match is found
+  //         } else if (
+  //           json[i].rowno == this.state.items.rowno &&
+  //           json[i].img_Loc == null
+  //         ) {
+  //           // matchedImageLoc = this.onError();
+  //           this.setState({
+  //             isDefaultImage: true,
+  //           });
+  //         }
+  //       }
+
+  //       this.setState({
+  //         doctImage: matchedImageLoc,
+  //       });
+  //     });
+  // };
 
   getComments = (id) => {
     axios
@@ -384,7 +412,7 @@ class Profile extends Component {
     this.getRating(this.props.match.params.id.split("-")[0]);
     this.getRate(this.props.match.params.id.split("-")[0]);
     this.allPosts();
-    
+    // this.getImg();
 
     const canonicalLink = document.createElement("link");
     canonicalLink.rel = "canonical";
