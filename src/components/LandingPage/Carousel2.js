@@ -81,7 +81,7 @@ export default class Carousel2 extends Component {
          {items.map((i) => (
           <DoctorsCard
             // key = {i.map.rowno.toString()}
-            rowno = {i.map.docid}
+            rowno = {i.map.docID}
             firstName= {i.map.docname_first}
             lastName= {i.map.docname_last}
             primary_spl = {i.map.primary_spl}
