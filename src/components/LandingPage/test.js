@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import { Modal } from 'react-bootstrap';
+import { Alert } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import Cookies from 'js-cookie'
 import {Select, MenuItem , InputLabel, FormControl, Checkbox, FormGroup, FormControlLabel} from '@material-ui/core';
 import { usePasswordValidation } from '../hooks/usePasswordValidation';
 import { backendHost } from '../../api-config';
+
 
 import './test.css'
 import ErrorBoundary from '../ErrorBoundary';
@@ -35,6 +37,7 @@ const Test = (props) => {
     const [validEmail, setValidEmail] = useState()
      const [hasError, sethasError] = useState(false)
      const [loginSuccess, setLoginSuccess] = useState(true)
+     const[alert,setAlert]=useState('')
   
     const [
       validLength,
@@ -69,7 +72,8 @@ const Test = (props) => {
         rempwd: '1',
         doc_patient: userType,
         acceptTnc: '1',
-        number: number
+        number: number,
+        Age:null,
       };
       axios.post(`${backendHost}/registration/add/new`,params,
       {headers: {'Access-Control-Allow-Credentials': true}}
@@ -81,13 +85,22 @@ const Test = (props) => {
         }, 5000);
         document.getElementById('signup-msg').innerText = 'Email already exists!'
       }
-      else if(response.data.registration_id){
-        // setSuccess(true);
-        Cookies.set('uName', response.data.first_name, {expires: 365})
-        setTimeout(() => {
-          window.location.reload()
-        }, 500);
+      // else if(response.data.registration_id){
+      //   // setSuccess(true);
+      //   Cookies.set('uName', response.data.first_name, {expires: 365})
+      //   setTimeout(() => {
+      //     window.location.reload()
+      //   }, 500);
+      // }
+
+      if(response.data.registration_id){
+        // setExists(true);
+       setAlert('Registered Successfully!!!')
       }
+
+      setTimeout(() => {
+        setAlert('');
+      }, 5000); // Hide alert after 3 seconds
     })
       .catch(err => {
         setTimeout(() => {
@@ -338,6 +351,16 @@ const Test = (props) => {
             Sign Up
           </button>
         </div>
+
+
+        {alert && (
+<Alert variant="success" className="h6 mx-3">
+{alert}
+</Alert>
+)}
+
+
+
       </div>
     </div>
   </div>
