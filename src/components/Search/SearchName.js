@@ -30,7 +30,7 @@ class SearchName extends Component {
 
   fetchDoctors(name) {
     document.title = `All Cures | Search | ${name}`
-      fetch(`${backendHost}/SearchActionController?cmd=getResults&city=&doctors=${name}&Latitude=32.7266&Longitude=74.8570`)
+      fetch(`${backendHost}/SearchActionController?cmd=getResults&city=&doctors=${name}`)
       .then(res => res.json())
       .then(json => {
         this.setState({
@@ -136,7 +136,7 @@ class SearchName extends Component {
                       </div>
                         {items.map((i) => (
                           <ProfileTab
-                            rowno = {i.map.rowno}
+                            rowno = {i.map.docID}
                             firstName = {i.map.docname_first}
                             middleName={i.map.docname_middle}
                             lastName = {i.map.docname_last}
@@ -152,6 +152,7 @@ class SearchName extends Component {
                             reload = {this.state.reload}
                             setModalShow = {this.setModalShow}
                             key = {i.map.doctorid}
+                            img={i.map.img_Loc}
                           />
                         ))}
                         <Test
