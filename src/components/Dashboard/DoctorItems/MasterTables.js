@@ -41,6 +41,7 @@ function App() {
   const [user,setUser] = useState()
   const [article,setArticle] = useState()
   const[search,setSearch] = useState()
+  const [availReq, setAvailReq] = useState();
   
   const submitForm = (e) => {
     e.preventDefault();
@@ -51,6 +52,7 @@ function App() {
         "ContractReq": parseInt(type, 10),
         "CreatedBy": parseInt(userId),
         "Status": parseInt(status, 10),
+        "AvailabilityReq":parseInt(availReq)
     })
     .then(res => {
         setAlert(true)
@@ -234,8 +236,35 @@ useEffect(() => {
         required />
                              
                         </Form.Group>
+
+
                         <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
-  <Form.Label>Payment Require ?</Form.Label>
+  <Form.Label>Availability Required </Form.Label>
+  <div>
+    <Form.Check
+      inline
+      label="Yes"
+      name="whatsap"
+      type="radio"
+     
+      value="1"
+      onChange={(e) => setAvailReq(e.target.value)}
+      style={{ marginRight: "20px" }}
+    />
+    <Form.Check
+      inline
+      label="No"
+      name="whatsap"
+      type="radio"
+     
+      value="0"
+      onChange={(e) => setAvailReq(e.target.value)}
+      style={{ marginLeft: "20px" }}
+    />
+  </div>
+</Form.Group>
+                        <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
+  <Form.Label>Payment Required</Form.Label>
   <div>
     <Form.Check
       inline
@@ -261,7 +290,7 @@ useEffect(() => {
 </Form.Group>
                    
 <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
-  <Form.Label>Contract Require ?</Form.Label>
+  <Form.Label>Contract Required</Form.Label>
   <div>
     <Form.Check
       inline
@@ -287,7 +316,7 @@ useEffect(() => {
 </Form.Group>
 
 <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
-  <Form.Label>Status ?</Form.Label>
+  <Form.Label>Status </Form.Label>
   <div>
     <Form.Check
       inline
