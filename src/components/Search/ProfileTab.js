@@ -1,8 +1,7 @@
-import React from 'react';
 import { Link } from 'react-router-dom'
 import { imagePath } from '../../image-path';
 
-const ProfileTab = ({ firstName, lastName,middleName, rowno, name, pSpl, hospital, state, country, eduTraining }) => {
+const ProfileTab = ({ firstName, lastName,middleName, rowno, name, pSpl, hospital, state, country, eduTraining ,img}) => {
 
   const onError = (e) => {
     if(e.target.parentElement){
@@ -18,8 +17,14 @@ const ProfileTab = ({ firstName, lastName,middleName, rowno, name, pSpl, hospita
           <div className="tab-content-detail clearfix mr-20">
             <div className="dr-detail">
               <div className="tab-content-img">
-                  <img src={`${imagePath}/cures_articleimages/doctors/${rowno}.png?d=${parseInt(Math.random()* 1000)}`} 
-      onError={(e) => onError(e)}/>
+                  {/* <img src={`${imagePath}/cures_articleimages/doctors/${rowno}.png?d=${parseInt(Math.random()* 1000)}`} 
+      onError={(e) => onError(e)}/> */}
+
+      
+{img?
+  <img src={`https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-180,h-230,f-webp${img}`} alt="doc" />:
+  <i class="fas fa-user-md fa-10x"></i>
+  }
                   </div>
               <div className="col-md-12 col-sm-12">
                 <div className="detail-l">
@@ -27,15 +32,15 @@ const ProfileTab = ({ firstName, lastName,middleName, rowno, name, pSpl, hospita
                     <p>{ratingVal}</p>
                   </div> */}
                   <div className="name">
-                   <h3>Dr. {firstName} {middleName} {lastName}</h3>
+                 <h3>Dr. {firstName} {middleName} {lastName}</h3>
                   <h5>{pSpl}</h5>           {/* Primary Specialization */}
                   <h5>{hospital} {state} {country}</h5>
                   {/* <h5>{eduTraining.substr(0, 90)}</h5> */}
-                       <h5>About Dr. {firstName} {middleName} {lastName}</h5>
+                   <h5>About Dr. {firstName} {lastName}</h5>
                     <p></p>
                   </div>
                   <div className="btn-group"> 
-                  <Link to={ `/profile/${rowno}-${firstName}-${lastName}` } className="btn-bg profile-btn color-white" id="profile">
+                  <Link to={ `/doctor/${rowno}-${firstName}-${lastName}` } className="btn-bg profile-btn color-white" id="profile">
                          Visit Profile
                         </Link>
                     {/* {
