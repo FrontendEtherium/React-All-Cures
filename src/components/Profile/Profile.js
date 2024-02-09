@@ -592,9 +592,9 @@ class Profile extends Component {
             title={
               items.prefix +
               " " +
-              items.docname_first +
+              items.firstName +
               " " +
-              items.docname_last
+              items.lastName
             }
             description={items.about}
             image={`${imagePath}/cures_articleimages/doctors/${items.docID}.png`}
