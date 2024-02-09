@@ -181,7 +181,7 @@ class Search extends Component {
                       </div>
                         {items.map((i) => ( 
                           <ProfileTab
-                            rowno = {i.map.rowno}
+                            rowno = {i.map.docID}
                             docid= {i.map.doctorid}
                             firstName = {i.map.docname_first}
                             lastName = {i.map.docname_last}
@@ -197,6 +197,7 @@ class Search extends Component {
                             key = {i.map.doctorid}
                             eduTraining={i.map.edu_training}
                             ratingVal={this.state.ratingvalue}
+                            img={i.map.img_Loc}
                           />
                         ))}
                         <Test
