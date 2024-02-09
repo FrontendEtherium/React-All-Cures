@@ -81,7 +81,7 @@ function DoctorAvailibility() {
           setAlertMessage("Availability created successfully!!");
         } else if (response.data === 0) {
           setAlertMessage(
-            "Availability not created. Please check all fields and try again."
+            "Availability not created. Please contact the development team."
           );
         } else {
           setAlertMessage(
