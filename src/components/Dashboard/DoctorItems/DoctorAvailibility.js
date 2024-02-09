@@ -155,7 +155,7 @@ function DoctorAvailibility() {
         <div className="card my-3">
           <div className="card-title h3 text-center py-2 border-bottom">
             {" "}
-            <b> (Create Doctor Availibility)</b>
+            <b> (Create Doctor Availability)</b>
           </div>
           <Form onSubmit={submitForm}>
             <div className="row m-4">
@@ -203,7 +203,7 @@ function DoctorAvailibility() {
                   <option>Select Doctor</option>
                   {filteredDoctors &&
                    filteredDoctors.map((c) => {
-                       return <option value={c.DocID}>{c.DocName}</option>;
+                      return <option value={c.DocID}>{c.DocName}</option>;
                     })}
                 </select>
               </Form.Group>
@@ -216,11 +216,11 @@ function DoctorAvailibility() {
                   name="fri"
                   value={weekDayOnly}
                   onChange={(e) => setWeekDayOnly(e.target.value)}
-                  placeholder="Select Availibility"
+                  placeholder="Select Availability"
                   required
                   className="form-control"
                 >
-                  <option>Select Availibility</option>
+                  <option>Select Availability</option>
 
                   <option value="1">Yes</option>
                   <option value="0">No</option>
@@ -229,17 +229,17 @@ function DoctorAvailibility() {
 
               <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
                 <label htmlFor="mon">
-                  Monday Availibility <b>(Required)</b>
+                  Monday Availability <b>(Required)</b>
                 </label>
                 <select
                   name="mon"
                   value={mon}
                   onChange={(e) => setMon(e.target.value)}
-                  placeholder="Select Availibility"
+                  placeholder="Select Availability"
                   required
                   className="form-control"
                 >
-                  <option>Select Availibility</option>
+                  <option>Select Availability</option>
 
                   <option value="1">Yes</option>
                   <option value="0">No</option>
@@ -248,17 +248,17 @@ function DoctorAvailibility() {
 
               <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
                 <label htmlFor="tue">
-                  Tuesday Availibility <b>(Required)</b>
+                  Tuesday Availability <b>(Required)</b>
                 </label>
                 <select
                   name="tue"
                   value={tue}
                   onChange={(e) => setTue(e.target.value)}
-                  placeholder="Select Availibility"
+                  placeholder="Select Availability"
                   required
                   className="form-control"
                 >
-                  <option>Select Availibility</option>
+                  <option>Select Availability</option>
 
                   <option value="1">Yes</option>
                   <option value="0">No</option>
@@ -267,17 +267,17 @@ function DoctorAvailibility() {
 
               <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
                 <label htmlFor="wed">
-                  Wednesday Availibility <b>(Required)</b>
+                  Wednesday Availability <b>(Required)</b>
                 </label>
                 <select
                   name="wed"
                   value={wed}
                   onChange={(e) => setWed(e.target.value)}
-                  placeholder="Select Availibility"
+                  placeholder="Select Availability"
                   required
                   className="form-control"
                 >
-                  <option>Select Availibility</option>
+                  <option>Select Availability</option>
 
                   <option value="1">Yes</option>
                   <option value="0">No</option>
@@ -286,17 +286,17 @@ function DoctorAvailibility() {
 
               <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
                 <label htmlFor="thurs">
-                  Thursday Availibility <b>(Required)</b>
+                  Thursday Availability <b>(Required)</b>
                 </label>
                 <select
                   name="thurs"
                   value={thurs}
                   onChange={(e) => setThurs(e.target.value)}
-                  placeholder="Select Availibility"
+                  placeholder="Select Availability"
                   required
                   className="form-control"
                 >
-                  <option>Select Availibility</option>
+                  <option>Select Availability</option>
 
                   <option value="1">Yes</option>
                   <option value="0">No</option>
@@ -305,17 +305,17 @@ function DoctorAvailibility() {
 
               <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
                 <label htmlFor="fri">
-                  Friday Availibility <b>(Required)</b>
+                  Friday Availability <b>(Required)</b>
                 </label>
                 <select
                   name="fri"
                   value={fri}
                   onChange={(e) => setFri(e.target.value)}
-                  placeholder="Select Availibility"
+                  placeholder="Select Availability"
                   required
                   className="form-control"
                 >
-                  <option>Select Availibility</option>
+                  <option>Select Availability</option>
 
                   <option value="1">Yes</option>
                   <option value="0">No</option>
@@ -368,7 +368,7 @@ function DoctorAvailibility() {
                   name="fri"
                   value={statuss}
                   onChange={(e) => setStatuss(e.target.value)}
-                  placeholder="Select Availibility"
+                  placeholder="Select Availability"
                   required
                   className="form-control"
                 >
