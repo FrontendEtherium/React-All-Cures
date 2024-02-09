@@ -62,6 +62,8 @@ const AllServicesList = () => {
                                <div className="pb-2"><span className="font-weight-bold">Created by:</span> {i.created_Name}</div>
                                <div className="pb-2"><span className="font-weight-bold">Status:</span> {i.status===1?  <span> Active</span>
                                 : <span> Inactive</span>}</div>
+                                 <div className="pb-2"><span className="font-weight-bold">Availability Required :</span> {i.availabilityReq===1?  <span> Yes</span>
+                                : <span> No</span>}</div>
                                <div className="pb-2"><span className="font-weight-bold">Created on:</span> {i.createdDate.split('T')[0]}</div>
                                {/* <div className="pb-2"><span className="font-weight-bold">Created on:</span> {i.slotDuration(min)}</div> */}
                                <div className="pb-2"><span className="font-weight-bold">Last Updated  on:</span> {i.lastUpdatedDate?i.lastUpdatedDate.split('T')[0]:""}</div>
