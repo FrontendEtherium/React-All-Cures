@@ -4,7 +4,9 @@ import CenterWell from '../Disease/CenterWell';
 import Date from '../Date'
 import { imagePath } from '../../image-path';
 
-const AllPost = ({id, title, content, rowno, f_title,  country, type, published_date, over_allrating, imgLocation, authorName}) => {
+const AllPost = ({id, title, content, docID, f_title,  country, type, published_date, over_allrating, imgLocation, authorName}) => {
+
+    console.log('docid',docID)
     function IsJsonValid(str) {
         try {
             JSON.parse(str);
@@ -89,7 +91,7 @@ const AllPost = ({id, title, content, rowno, f_title,  country, type, published_
                         <div className="text-left mt-2 text-muted" id="publish-date">
                         {
                                     authorName !== "All Cures Team"?
-                                    <Link to={`/profile/${rowno}`}>{authorName}</Link> 
+                                    <Link to={`/doctor/${docID}`}>{authorName}</Link> 
                                     : authorName
                                 }{" "} 
                                 ▪️ {<Date dateString={published_date} />}</div>
