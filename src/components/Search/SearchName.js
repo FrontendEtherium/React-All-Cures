@@ -136,7 +136,7 @@ class SearchName extends Component {
                       </div>
                         {items.map((i) => (
                           <ProfileTab
-                            rowno = {i.map.docID}
+                            docID = {i.map.docID}
                             firstName = {i.map.docname_first}
                             middleName={i.map.docname_middle}
                             lastName = {i.map.docname_last}
