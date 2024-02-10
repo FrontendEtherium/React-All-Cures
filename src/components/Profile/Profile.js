@@ -235,13 +235,13 @@ class Profile extends Component {
 
   //       for (let i = 0; i < json.length; i++) {
   //         if (
-  //           json[i].rowno == this.state.items.rowno &&
+  //           json[i].docID == this.state.items.docID &&
   //           json[i].img_Loc != null
   //         ) {
-  //           matchedImageLoc = `https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp${json[i].img_Loc}`;
+  //           matchedImageLoc = `https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp${json[i].img_Loc}`;
   //           break; // Break the loop once a match is found
   //         } else if (
-  //           json[i].rowno == this.state.items.rowno &&
+  //           json[i].docID == this.state.items.docID &&
   //           json[i].img_Loc == null
   //         ) {
   //           // matchedImageLoc = this.onError();
@@ -336,7 +336,7 @@ class Profile extends Component {
       .then((res) => res.json())
       .then((json) => {
 
-        console.log('firstname',json.firstName)
+        console.log('firstname', 'id',id,json.firstName)
         document.title = `${json.firstName} ${json.lastName}`;
 
         this.setState({
