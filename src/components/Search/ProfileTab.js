@@ -1,8 +1,7 @@
-import React, { Component } from 'react' ;
 import { Link } from 'react-router-dom'
 import { imagePath } from '../../image-path';
 
-const ProfileTab = ({ firstName, lastName,middleName, rowno, name, pSpl, hospital, state, country, eduTraining ,img}) => {
+const ProfileTab = ({ firstName, lastName,middleName, docID, name, pSpl, hospital, state, country, eduTraining ,img}) => {
 
   const onError = (e) => {
     if(e.target.parentElement){
@@ -18,7 +17,7 @@ const ProfileTab = ({ firstName, lastName,middleName, rowno, name, pSpl, hospita
           <div className="tab-content-detail clearfix mr-20">
             <div className="dr-detail">
               <div className="tab-content-img">
-                  {/* <img src={`${imagePath}/cures_articleimages/doctors/${rowno}.png?d=${parseInt(Math.random()* 1000)}`} 
+                  {/* <img src={`${imagePath}/cures_articleimages/doctors/${docID}.png?d=${parseInt(Math.random()* 1000)}`} 
       onError={(e) => onError(e)}/> */}
 
       
@@ -41,12 +40,12 @@ const ProfileTab = ({ firstName, lastName,middleName, rowno, name, pSpl, hospita
                     <p></p>
                   </div>
                   <div className="btn-group"> 
-                  <Link to={ `/doctor/${rowno}-${firstName}-${lastName}` } className="btn-bg profile-btn color-white" id="profile">
+                  <Link to={ `/doctor/${docID}-${firstName}-${lastName}` } className="btn-bg profile-btn color-white" id="profile">
                          Visit Profile
                         </Link>
                     {/* {
                       acPerm ? 
-                        <Link to={ `/profile/${rowno}` } className="btn-bg profile-btn color-white" id="profile">
+                        <Link to={ `/profile/${docID}` } className="btn-bg profile-btn color-white" id="profile">
                          Visit Profile
                         </Link>
                       : <button id="profile"
