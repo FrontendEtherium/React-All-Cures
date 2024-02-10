@@ -11,6 +11,7 @@ export default function UpdateAllServices(props){
     const [serviceName, setServiceName] = useState('')
     const [serviceDesc, setServiceDesc] = useState()
     const [paymentReq, setPaymentReq] = useState()
+    const [availReq, setAvailReq] = useState()
     const [contractReq, setContractReq] = useState()
     const [updatedBy, setUpdatedBy] = useState()
     const [status, setStatus] = useState()
@@ -28,6 +29,7 @@ export default function UpdateAllServices(props){
             setServiceName(res.data[0].serviceName)
             setServiceDesc(res.data[0].serviceDesc)
             setPaymentReq(res.data[0].paymentReq.toString())
+            setAvailReq(res.data[0].availReq.toString())
             setContractReq(res.data[0].contractReq.toString())
             setUpdatedBy(res.data[0].updatedBy)
             setStatus(res.data[0].status.toString())
@@ -51,7 +53,8 @@ export default function UpdateAllServices(props){
             "PaymentReq": paymentReq,
             "ContractReq": contractReq,
             "UpdatedBy": userId,
-            "Status": status
+            "Status": status,
+            "AvailabilityReq":availReq,
         })
         .then(res => {
           history.back()
@@ -89,6 +92,23 @@ export default function UpdateAllServices(props){
                 placeholder="Payment Required"
                 value={paymentReq}
                 onChange={(e) => setPaymentReq(e.target.value)}
+                className="form-control"
+              >
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+              </select>
+            </div>
+
+
+                              
+            <div className="col-lg-6 form-group">
+              <label htmlFor="">Availability Required</label>
+              <select
+                multiple
+                name="availreq"
+                placeholder="Availability Required"
+                value={paymentReq}
+                onChange={(e) => setAvailReq(e.target.value)}
                 className="form-control"
               >
                 <option value="1">Yes</option>
