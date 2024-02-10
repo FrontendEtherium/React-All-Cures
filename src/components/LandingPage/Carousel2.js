@@ -39,7 +39,7 @@ export default class Carousel2 extends Component {
       super(props);
       this.state = {
         items: [],
-        rowno:[],
+        docID:[],
         ratingValue: [],
         isLoaded: false,
         imageExists: false,
@@ -80,8 +80,8 @@ export default class Carousel2 extends Component {
          <OwlCarousel {...options} nav="true" id="specialists" items={40} margin={20}>
          {items.map((i) => (
           <DoctorsCard
-            // key = {i.map.rowno.toString()}
-            rowno = {i.map.docID}
+            // key = {i.map.docID.toString()}
+            docID = {i.map.docID}
             firstName= {i.map.docname_first}
             lastName= {i.map.docname_last}
             primary_spl = {i.map.primary_spl}
