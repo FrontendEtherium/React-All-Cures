@@ -25,7 +25,7 @@ export default class Categorypage extends Component{
           articleFilter: 'recent'
         };
       }
-   allPosts(loadMore) {                        // For all available blogs "/blogs"
+        allPosts(loadMore) {                        // For all available blogs "/blogs"
 
         const headers = new Headers({
           'Authorization': 'Bearer local@7KpRq3XvF9' 
@@ -74,30 +74,31 @@ export default class Categorypage extends Component{
         }
         
       }
-        categoryPosts(disease_condition_id) {
+        categoryPosts(disease_condition_id){                     // For specific blogs like "/blogs/diabetes"
+
+
         const headers = new Headers({
           'Authorization': 'Bearer local@7KpRq3XvF9' 
         });
-      
-        fetch(`${backendHost}/isearch/diseases/${disease_condition_id}`, {
-          method: 'GET',
-          headers: headers
-        })
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return res.json();
-        })
-        .then((json) => {
-          this.setState({
-            isLoaded: true,
-            items: json,
-          });
-        })
-        .catch(err => {
-          console.error(err);
-        });
+        
+          fetch(`${backendHost}/isearch/diseases/${disease_condition_id}`,{
+            method: 'GET',
+            headers: headers
+          })
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return res.json();
+          })
+          .then((json) => {
+            this.setState({
+              isLoaded: true,
+              items: json,
+            });
+          })
+          .catch(err => {return})
+        // }
       }
       componentDidMount() {
         // if(this.props.match.params.type === undefined){
@@ -155,7 +156,7 @@ export default class Categorypage extends Component{
                 items.map((i)  =>(
                   
                     <AllPost
-                    rowno = {i.rowno}
+                    docID = {i.docID}
                     id = {i.article_id}
                     title = {i.title}
                     f_title = {i.friendly_name}
