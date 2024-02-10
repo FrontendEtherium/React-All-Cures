@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { backendHost } from '../../api-config';
 import DummyDoc from "../../assets/healthcare/img/images/defaultDoc1.png";
 
-const DoctorsCard = ({rowno, firstName, lastName, primary_spl, hospital_affliated, state, country_code,img}) => {
+const DoctorsCard = ({docID, firstName, lastName, primary_spl, hospital_affliated, state, country_code,img}) => {
    
 const[doctImage,setDoctImage]=useState([])
 const [isDefaultImage, setIsDefaultImage] = useState(false);
@@ -20,15 +20,15 @@ console.log('docimg',img)
 //    let matchedImageLoc = DummyDoc; 
 
 //    for (let i = 0; i < json.length; i++) {
-//        if (json[i].rowno == rowno && json[i].img_Loc !=null) {
+//        if (json[i].docID == docID && json[i].img_Loc !=null) {
 
         
-//            matchedImageLoc = `https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp${json[i].img_Loc}`;
+//            matchedImageLoc = `https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp${json[i].img_Loc}`;
            
 //            break; // Break the loop once a match is found
 //        }
 
-//        else if(json[i].rowno == rowno && json[i].img_Loc ==null){
+//        else if(json[i].docID == docID && json[i].img_Loc ==null){
 
 //          matchedImageLoc = DummyDoc;
 //          setIsDefaultImage(true)
@@ -46,7 +46,7 @@ console.log('docimg',img)
     return(
         <>
 
-        <div className="item" key={rowno}>
+        <div className="item" key={docID}>
     <div  className={`${isDefaultImage ? 'item-imgsBack' : 'item-img'}`} style={{backGroundColor:" #c6dffe"}}>
 
 {/* {doctImage.length>0?
@@ -67,7 +67,7 @@ console.log('docimg',img)
           <p>{primary_spl}</p>
           <h5 className="text-center">{hospital_affliated} {state} {country_code}</h5>
        </div>
-       <Link to={ `/doctor/${rowno}-${firstName}-${lastName}` } className="appointmentBtn allBtn" id="visitDoc">Visit Profile</Link>
+       <Link to={ `/doctor/${docID}-${firstName}-${lastName}` } className="appointmentBtn allBtn" id="visitDoc">Visit Profile</Link>
     </div>
  </div>
         </>
