@@ -104,8 +104,7 @@ export default class Blogpage extends Component{
         .catch(err => {return})
       }
 
-      
-      handleScroll = () => {
+       handleScroll = () => {
         const { articleFilter } = this.state;
       
         // Check if the selected tab is 'recent' or 'earliest'
@@ -307,7 +306,7 @@ export default class Blogpage extends Component{
                     {items.map((i) => (
                       i.pubstatus_id === 3 ?            // Selects articles with publish status = 3 (Published)
                         <AllPost
-                            rowno = {i.rowno}
+                            docID = {i.docID}
                             id = {i.article_id}
                             title = {i.title}
                             f_title = {i.friendly_name}
@@ -333,7 +332,7 @@ export default class Blogpage extends Component{
                     </div>
                 </div>
                 {
-                  LoadMore && (this.state.articleFilter == 'recent'|| this.state.articleFilter == 'earliest')?
+                  LoadMore  && (this.state.articleFilter == 'recent'|| this.state.articleFilter == 'earliest')?
                     <div className="loader my-4">
                       <img src={Heart} alt="All Cures Logo" id="heart"/>
                     </div>
@@ -343,7 +342,7 @@ export default class Blogpage extends Component{
                   this.state.noMoreArticles  && (this.state.articleFilter == 'recent'|| this.state.articleFilter == 'earliest')?
                     <div className='container h4 text-center mb-5 pb-2'>
                       You have reached end of page. Thanks!
-                     
+                      
                     </div>
                     : null
                 } 
