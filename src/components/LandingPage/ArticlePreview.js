@@ -345,7 +345,7 @@ const ArticlePreview = (props) => {
                     if(i.content){
                         content = IsJsonValid(decodeURIComponent(i.content))
                     }
-                      if(imgLocation && imgLocation.includes('cures_articleimages')){
+                    if(imgLocation && imgLocation.includes('cures_articleimages')){
                         imageLoc = `https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/`+imgLocation.replace('json', 'png').split('/webapps/')[1]
                     } else {
                         imageLoc = ' https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/cures_articleimages//299/default.png'
@@ -365,7 +365,7 @@ const ArticlePreview = (props) => {
                             <h6 className='pb-2 text-muted'>
                             {
                                     i.authors_name !== "All Cures Team"?
-                                    <Link to={`/profile/${i.rowno}`}>{i.authors_name}</Link> 
+                                    <Link to={`/doctor/${i.docID}`}>{i.authors_name}</Link> 
                                     : i.authors_name
                                 }{" "}▪️ {<Date dateString={i.published_date} />}</h6>
                             <h5 className="card-title text-capitalize"><Link to={`/cure/${i.article_id}-${title}`}>{i.title.toLowerCase()}</Link></h5>
