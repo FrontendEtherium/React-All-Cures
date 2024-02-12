@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { backendHost } from '../../api-config';
 import DummyDoc from "../../assets/healthcare/img/images/defaultDoc1.png";
 
-const DoctorsCard = ({docID, firstName, lastName, primary_spl, hospital_affliated, state, country_code,img}) => {
+const DoctorsCard = ({docID, firstName, lastName, primarySpl, hospitalAffliated, state, country,img}) => {
    
 const[doctImage,setDoctImage]=useState([])
 const [isDefaultImage, setIsDefaultImage] = useState(false);
@@ -64,8 +64,8 @@ console.log('docimg',img)
     <div className="sider-contain">
        <div className="slider-heading">
           <h2>Dr. {firstName} {lastName}</h2>
-          <p>{primary_spl}</p>
-          <h5 className="text-center">{hospital_affliated} {state} {country_code}</h5>
+          <p>{primarySpl}</p>
+          <h5 className="text-center">{hospitalAffliated} {state} {country}</h5>
        </div>
        <Link to={ `/doctor/${docID}-${firstName}-${lastName}` } className="appointmentBtn allBtn" id="visitDoc">Visit Profile</Link>
     </div>
