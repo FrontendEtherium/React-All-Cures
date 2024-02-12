@@ -948,7 +948,7 @@ class Profile extends Component {
                     <br />
                     <div className="abt-eduction ">
                       <div className="h4 font-weight-bold">Education</div>
-                      {items.eduTraining}
+                      {items.degDesc}
                     </div>
                     <div className="mt-5">
                       <div className="h4 font-weight-bold">Accomplishments</div>
@@ -961,7 +961,7 @@ class Profile extends Component {
                     <div className="about-specialties">
                       <div className="h4 font-weight-bold">Specialties</div>
                       <ul>
-                        <li>{items.primarySpecialization}</li>
+                        <li>{items.primarySpl}</li>
                       </ul>
                       <ul>
                         <li>{items.otherSpecializations}</li>
