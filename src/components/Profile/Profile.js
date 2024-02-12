@@ -603,9 +603,9 @@ class Profile extends Component {
               " " +
               items.lastName +
               " , " +
-              items.hospital_affliated +
+              items.hospitalAffiliated +
               " , " +
-              items.Primary_Spl
+              items.primarySpl
             }
           ></HelmetMetaData>
           <Header history={this.props.history} />
@@ -641,10 +641,10 @@ class Profile extends Component {
                             Ayurveda, Homeopathy, Chinese Medicine, Persian,
                             Unani
                           </h2>
-                          {items.imageLocation? (
+                          {items.imgLoc? (
                             <img
                               alt={items.firstName}
-                              src={`https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-180,h-230,f-webp${items.imageLocation}`}
+                              src={`https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-180,h-230,f-webp${items.imgLoc}`}
                             />
                           ) : (
                             <i class="fas fa-user-md fa-6x"></i>
@@ -829,12 +829,12 @@ class Profile extends Component {
                             <div className="h5 text-capitalize">
                               <i class="fas fa-award pr-1"></i>
                               {/* {items.Primary_Spl.toLowerCase()} */}
-                              {items.Primary_Spl}
+                              {items.primarySpl}
                             </div>
                             <div className="h5 ">{items.experience}</div>
                             <div className="h5 text-capitalize">
                               <i class="fas fa-hospital pr-1"></i>
-                              {items.Hospital_Affiliated} {items.Country}
+                              {items.hospitalAffiliated} {items.country}
                             </div>
 
                             <div></div>
@@ -974,15 +974,15 @@ class Profile extends Component {
                       <div className="h4 font-weight-bold">Miscellaneous</div>
                       <div className="h6 font-weight-bold">
                         City:
-                        <span> {items.City}</span>
+                        <span> {items.city}</span>
                       </div>
                       <div className="h6 font-weight-bold">
                         State:
-                        <span> {items.State}</span>
+                        <span> {items.state}</span>
                       </div>
                       <div className="h6 font-weight-bold">
                         Country:
-                        <span> {items.Country}</span>
+                        <span> {items.country}</span>
                       </div>
                       <div className="h6 font-weight-bold">
                         Gender:
