@@ -137,15 +137,15 @@ class SearchName extends Component {
                         {items.map((i) => (
                           <ProfileTab
                             docID = {i.map.docID}
-                            firstName = {i.map.docname_first}
-                            middleName={i.map.docname_middle}
-                            lastName = {i.map.docname_last}
+                            firstName = {i.map.firstName}
+                            middleName={i.map.middleName}
+                            lastName = {i.map.lastName}
                             docid= {i.map.doctorid}
                             name = {i.map.name}
-                            pSpl = {i.map.primary_spl}
-                            hospital = {i.map.hospital_affliated}
+                            pSpl = {i.map.primarySpl}
+                            hospital = {i.map.hospitalAffliated}
                             state = {i.map.state}
-                            country = {i.map.country_code}
+                            country = {i.map.country}
                             eduTraining={i.map.edu_training}
                             acPerm = {Cookies.get('acPerm')}
                             url = {this.props.url}
