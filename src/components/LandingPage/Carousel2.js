@@ -82,13 +82,13 @@ export default class Carousel2 extends Component {
           <DoctorsCard
             // key = {i.map.docID.toString()}
             docID = {i.map.docID}
-            firstName= {i.map.docname_first}
-            lastName= {i.map.docname_last}
-            primary_spl = {i.map.primary_spl}
-            hospital_affliated = {i.map.hospital_affliated}
+            firstName= {i.map.firstName}
+            lastName= {i.map.lastName}
+            primarySpl = {i.map.primarySpl}
+            hospitalAffliated = {i.map.hospitalAffliated}
             state = {i.map.state}
-            country_code = {i.map.country_code}
-            img={i.map.img_Loc}
+            country = {i.map.country}
+            img={i.map.imgLoc}
           />
          ))}
                         
