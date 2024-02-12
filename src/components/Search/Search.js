@@ -183,13 +183,13 @@ class Search extends Component {
                           <ProfileTab
                             docID = {i.map.docID}
                             docid= {i.map.doctorid}
-                            firstName = {i.map.docname_first}
-                            lastName = {i.map.docname_last}
+                            firstName = {i.map.firstName}
+                            lastName = {i.map.lastName}
                             name = {i.map.name}
-                            pSpl = {i.map.primary_spl}
-                            hospital = {i.map.hospital_affliated}
+                            pSpl = {i.map.primarySpl}
+                            hospital = {i.map.hospitalAffliated}
                             state = {i.map.state}
-                            country = {i.map.country_code}
+                            country = {i.map.country}
                             acPerm = {this.state.acPerm}
                             url = {this.props.url}
                             reload = {this.state.reload}
@@ -197,7 +197,7 @@ class Search extends Component {
                             key = {i.map.doctorid}
                             eduTraining={i.map.edu_training}
                             ratingVal={this.state.ratingvalue}
-                            img={i.map.img_Loc}
+                            img={i.map.imgLoc}
                           />
                         ))}
                         <Test
