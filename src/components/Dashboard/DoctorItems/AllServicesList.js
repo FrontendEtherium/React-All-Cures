@@ -1,173 +1,121 @@
-import React, {useState, useEffect} from 'react';
-import { Alert, Form } from 'react-bootstrap';
-import axios from 'axios';
-import {useLocation} from "react-router-dom";
-import history from '../../history';
-import { userId } from '../../UserId'
+import React,{useState,useEffect} from 'react'
+import {Link} from 'react-router-dom'
 import { backendHost } from '../../../api-config';
 
+import axios from 'axios';
 
-export default function UpdateAllServices(props){
-    const [serviceName, setServiceName] = useState('')
-    const [serviceDesc, setServiceDesc] = useState()
-    const [paymentReq, setPaymentReq] = useState()
-    const [availReq, setAvailReq] = useState()
-    const [contractReq, setContractReq] = useState()
-    const [updatedBy, setUpdatedBy] = useState()
-    const [status, setStatus] = useState()
-    const [submitAlert, setAlert] = useState(false)
+const AllServicesList = () => {
+
+    const [allServicesList, setAllServicesList] = useState([])
     
+    const fetchList = (e) => {
 
     
-    const search = useLocation().search;  
-    const id = new URLSearchParams(search).get('updateallserviceslist');
+          axios.get(`${backendHost}/sponsored/get/all/services `)
+          .then(res => {
+              setAllServicesList(res.data)
+              console.log(res.data)
+          })
+    
+        
+          .catch(res => {return})
+    
+        
+      }
 
-    const fetchPromo = (e) => {
-        axios.get(`${backendHost}/sponsored/get/service/${id}`)
+      useEffect(() => {
+        document.title = "All Cures | Dashboard | VideoChat"
+        fetchList();
+        
+    }, [])
+    const AvailDelete = (ServiceId) => {
+        console.log('delete')
+        axios.delete(`${backendHost}/sponsored/delete/service/${ServiceId}`)
         .then(res => {
-            console.log('hhhhh',res.data)
-            setServiceName(res.data[0].serviceName)
-            setServiceDesc(res.data[0].serviceDesc)
-            setPaymentReq(res.data[0].paymentReq.toString())
-            setAvailReq(res.data[0].availReq.toString())
-            setContractReq(res.data[0].contractReq.toString())
-            setUpdatedBy(res.data[0].updatedBy)
-            setStatus(res.data[0].status.toString())
-
            
         })
-        .catch(res => {return})
-    }
-
-    useEffect(() => {
-        document.title = "All Cures | Dashboard | Update Promo"
-        fetchPromo();
-        // eslint-disable-next-line
-    }, [])
-
-    const submitForm = (e) => {
-        e.preventDefault();
-        axios.put(`${backendHost}/sponsored/update/service/${id}`, {
-            "ServiceName": serviceName,
-            "ServiceDesc": serviceDesc,
-            "PaymentReq": paymentReq,
-            "ContractReq": contractReq,
-            "UpdatedBy": userId,
-            "Status": status,
-            "AvailabilityReq":availReq,
+        .catch(err => {
+            return;
         })
-        .then(res => {
-          history.back()
-          setAlert(true);
-          setTimeout(() => {
-            setAlert(false);
-          }, 4000);
-        })
-        .catch(res => {return})
     }
-
-    return(
-            <div className="container">
-                <div className="card my-3">
-                    <div className="card-title h3 text-center py-2 border-bottom">Update Service Details</div>
-                    <form onSubmit={submitForm}>
-                        <div className="row m-4">
-                        <Form.Group className="col-md-6 float-left">
-                            <Form.Label>Service Name</Form.Label>
-                            <Form.Control value={serviceName} onChange={(e) => setServiceName(e.target.value)} type="text" name=""
-                            placeholder="Service Name" required/>
-                        </Form.Group>
-                        <Form.Group className="col-md-6 float-left">
-                            <Form.Label>Service Description</Form.Label>
-                            <Form.Control type="text" value={serviceDesc} onChange={(e) => setServiceDesc(e.target.value)} name=""
-                            placeholder="Service Description" required/>
-                        </Form.Group>
-                       
-                              
-                        <div className="col-lg-6 form-group">
-              <label htmlFor="">Payment Required</label>
-              <select
-                multiple
-                name="paymentreq"
-                placeholder="Payment Required"
-                value={paymentReq}
-                onChange={(e) => setPaymentReq(e.target.value)}
-                className="form-control"
-              >
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-              </select>
-            </div>
-
-
-                              
-            <div className="col-lg-6 form-group">
-              <label htmlFor="">Availability Required</label>
-              <select
-                multiple
-                name="availreq"
-                placeholder="Availability Required"
-                value={paymentReq}
-                onChange={(e) => setAvailReq(e.target.value)}
-                className="form-control"
-              >
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-              </select>
-            </div>
-                      
-
-                              
-                        <div className="col-lg-6 form-group">
-              <label htmlFor="">Contract Required</label>
-              <select
-                multiple
-                name="contractreq"
-                placeholder="Contract Required"
-                value={contractReq}
-                onChange={(e) => setContractReq(e.target.value)}
-                className="form-control"
-              >
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-              </select>
-            </div>
-
-{/* 
-                        <Form.Group className="col-md-6 float-left">
-                            <Form.Label>Updated By</Form.Label>
-                            <Form.Control type="text" name="" value={updatedBy} onChange={e => setUpdatedBy(e.target.value)}
-                             placeholder="Updated By" required/>
-                        </Form.Group>
-                       */}
-
-                              
-                        <div className="col-lg-6 form-group">
-              <label htmlFor="">Review Status</label>
-              <select
-                multiple
-                name="status"
-                placeholder="Status"
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
-                className="form-control"
-              >
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-              </select>
-            </div>
-                        </div>
-                        {
-                            submitAlert?
-                                <Alert variant="success" className="h6 mx-3">Updated Successfully!!</Alert>
-                                : null
-                        }
-                        <div className="col-md-12 text-center">
-                            <button type="submit" className="btn btn-dark col-md-12 mb-4">Submit</button>
-                        </div>
-                        </form>
-                    </div>
-                </div>
-    );
     
+  return (
+    <div>
+
+
+
+<div className="container mb-4">
+                <div className="row">
+            {
+                allServicesList?
+                allServicesList
+                .map(i => {
+                    return(
+                        <div className="card col-md-5 mt-5 mx-3 border p-3 h6">
+                            <div className="card-title h4"><span className="font-weight-bold">Service Id: </span>{i.serviceId}</div>
+                            <div className="pb-2"><span className="font-weight-bold">Service Name:</span> {i.serviceName}</div>
+                                <div className="pb-2"><span className="font-weight-bold">Service Description:</span> {i.serviceDesc}</div>
+                               <div className="pb-2"><span className="font-weight-bold">Payment Required:</span> {i.paymentReq ===1?  <span> Yes</span>
+                                : <span> No</span>}</div>
+                               <div className="pb-2"><span className="font-weight-bold">Contract Required:</span> {i.contractReq ===1?  <span> Yes</span>
+                                : <span> No</span>}</div>
+                               <div className="pb-2"><span className="font-weight-bold">Created by:</span> {i.created_Name}</div>
+                               <div className="pb-2"><span className="font-weight-bold">Status:</span> {i.status===1?  <span> Active</span>
+                                : <span> Inactive</span>}</div>
+                                 <div className="pb-2"><span className="font-weight-bold">Availability Required :</span> {i.availabilityReq===1?  <span> Yes</span>
+                                : <span> No</span>}</div>
+                               <div className="pb-2"><span className="font-weight-bold">Created on:</span> {i.createdDate.split('T')[0]}</div>
+                               {/* <div className="pb-2"><span className="font-weight-bold">Created on:</span> {i.slotDuration(min)}</div> */}
+                               <div className="pb-2"><span className="font-weight-bold">Last Updated  on:</span> {i.lastUpdatedDate?i.lastUpdatedDate.split('T')[0]:""}</div>
+                               <div className="pb-2"><span className="font-weight-bold">Updated By:</span> {i.updated_Name}</div>
+                              
+                              
+                            <div className="row mx-1 my-2">
+                            <Link to={`/dashboard?updateallserviceslist=${i.serviceId}`} className="col-md-3 btn mr-2" style={{backgroundColor: '#9289be', color: '#fff'}}>Edit</Link>
+                           
+
+                           { i.status===1?
+                                      <button onClick={() => {
+                                        const confirmBox = window.confirm(
+                                            "Are you sure?"
+                                        )
+                                        if (confirmBox === true) {
+                                            AvailDelete(i.serviceId)
+                                        }
+                                    }} className="col-md-4 btn btn-dark">De-activate</button>
+                                     :<button className="col-md-4 btn btn-dark" disabled>De-activated</button>
+                                }
+                            </div>
+                        </div>
+                    )
+                })
+                : null
+            }
+
+
+
+
+
+
+                                      
+
+
+
+
+
+
+
+
+
+
+
+                     
+                                         
+
+            </div>
+            </div>
+    </div>
+  )
 }
+
+export default AllServicesList
