@@ -336,8 +336,8 @@ class Profile extends Component {
       .then((res) => res.json())
       .then((json) => {
 
-        console.log('firstname', 'id',id,json.firstName)
-        document.title = `${json.firstName} ${json.lastName}`;
+        // console.log('firstname', 'id',id,json.firstName)
+        // document.title = `${json.firstName} ${json.lastName}`;
 
         this.setState({
           isLoaded: true,
