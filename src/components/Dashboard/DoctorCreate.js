@@ -18,9 +18,9 @@ import FormLabel from '@material-ui/core/FormLabel';
 
 function App() {
   const[prefix,setPrefix] = useState()  
-  const[first,setFirst] = useState()
-  const[middle,setMiddle] = useState()
-  const[last,setLast] = useState()
+  const[first,setFirst] = useState('')
+  const[middle,setMiddle] = useState('')
+  const[last,setLast] = useState('')
   const[gender,setGender] = useState('')
   const[edu,setEdu] = useState('')
   const[insurance,setInsurance] = useState('')
@@ -37,8 +37,8 @@ function App() {
   const[hospital,setHospital] = useState('')
   const[hospitalList,setHospitalList] = useState([])
   const [alert,setAlert] = useState()
-  const[website,setWebsite] = useState()
-  const[awards,setAwards] = useState()
+  const[website,setWebsite] = useState('')
+  const[awards,setAwards] = useState('')
   const[phone,setPhone] = useState('')
   const[rating,setRating] = useState()
   const[email,setEmail] = useState()
@@ -162,6 +162,7 @@ const handleImageChange = async (e) => {
       image: file.name,
     });
   }
+  
  
 
 useEffect(() => {
@@ -222,7 +223,7 @@ useEffect(() => {
                         
                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
                             <Form.Label>Contact Number <b> (Required)</b></Form.Label>
-                            <Form.Control value={phone} onChange={(e) => setPhone(e.target.value)}  type="text" name=""
+                            <Form.Control value={phone} onChange={(e) => setPhone(e.target.value)}  type="number" name=""
                             placeholder="Enter Contact Number..."  />
                         </Form.Group>
 
@@ -306,7 +307,7 @@ useEffect(() => {
 
                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
                             <Form.Label>Registeration ID<b>(required)</b></Form.Label>
-                            <Form.Control value={regId} onChange={(e) => setRegId(e.target.value)}  type="text" name=""
+                            <Form.Control value={regId} onChange={(e) => setRegId(e.target.value)}  type="number" name=""
                             placeholder="Enter Registeration ID." />
                         </Form.Group>
 
