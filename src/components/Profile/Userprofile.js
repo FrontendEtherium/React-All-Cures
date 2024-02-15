@@ -78,7 +78,7 @@ export default function Userprofile(props) {
 
   useEffect(() => {
     getProfile();
-    fetchDoctorData();
+    // fetchDoctorData();
     // eslint-disable-next-line
   }, []);
 
@@ -187,18 +187,41 @@ export default function Userprofile(props) {
                         <div className="profile-info-name" id="DocDetails">
                           <div className="h4 font-weight-bold">
                             <div>
+
+                              { items==null ?
                               <div className="h4 text-capitalize">
                                 Name: {firstName} {lastName}
-                              </div>
+                              </div> :
+
+<div className="h4 text-capitalize">
+Name: {items.firstName} {items.lastName}
+</div>
+
+
+  }
+
+  {items==null?
+
                               <div className="h5">
                                 <span className="">Email:</span> {email}
-                              </div>
-                              {
+                              </div>:
+
+<div className="h5">
+<span className="">Email:</span> {items.email}
+</div>
+
+
+  }
+                              {/* { items==null?
                                 <div className="h5">
                                   <span className="">Mobile:</span> {mobile}
-                                </div>
-                              }
-                              {/* <div className="h5"><span className=''>Registration Type:</span> {regType}</div> */}
+                                </div>:
+
+<div className="h5">
+<span className="">Mobile:</span> {items.telephoneNos}
+</div>
+                              } */}
+                        
 
                               <div className="d-flex">
                               <div>
