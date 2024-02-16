@@ -29,7 +29,7 @@ export default function UpdateAllServices(props){
             setServiceName(res.data[0].serviceName)
             setServiceDesc(res.data[0].serviceDesc)
             setPaymentReq(res.data[0].paymentReq.toString())
-            setAvailReq(res.data[0].availReq.toString())
+            setAvailReq(res.data[0].availabilityReq.toString())
             setContractReq(res.data[0].contractReq.toString())
             setUpdatedBy(res.data[0].updatedBy)
             setStatus(res.data[0].status.toString())
@@ -107,7 +107,7 @@ export default function UpdateAllServices(props){
                 multiple
                 name="availreq"
                 placeholder="Availability Required"
-                value={paymentReq}
+                value={availReq}
                 onChange={(e) => setAvailReq(e.target.value)}
                 className="form-control"
               >
