@@ -1212,7 +1212,7 @@ componentDidMount() {
               {/* Author */}
               {
                 items.authors_name?
-                  <div className='h5 text-left ml-3 mb-2'><span>Author: </span> {items.authored_by.includes(7)? items.authors_name: <Link to={`/profile/${items.reg_doc_pat_id}`}> {items.authors_name}</Link>}</div>
+                  <div className='h5 text-left ml-3 mb-2'><span>Author: </span> {items.authored_by.includes(7)? items.authors_name: <Link to={`/doctor/${items.reg_doc_pat_id}`}> {items.authors_name}</Link>}</div>
                   : null
               }
                   <div className='h6 text-muted text-left ml-3 mb-4'><span>Published on: </span>  
