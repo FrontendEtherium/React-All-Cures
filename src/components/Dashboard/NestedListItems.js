@@ -33,6 +33,7 @@ export default function NestedListItems() {
   const [opennn, setOpennn] = React.useState(false);
   const [opennnn, setOpennnn] = React.useState(false);
   const [opennnnn, setOpennnnn] = React.useState(false);
+  const [opened, setOpened] = React.useState(false);
 
   const [openx, setOpenx] = React.useState(false);
   const handleClick4 = () => {
@@ -53,6 +54,9 @@ setOpenn(!openn);
   };
   const handleClick5 = () => {
     setOpennnnn(!opennnnn);
+  };
+  const handleClick6 = () => {
+    setOpened(!opened);
   };
 
 
@@ -403,6 +407,134 @@ setOpenn(!openn);
 
         </List>
       </Collapse>
+
+
+      <ListItem button onClick={handleClick6} style={{backgroundColor:'lightblue'}}>
+        <ListItemIcon>
+        <BarChartIcon />
+        </ListItemIcon>
+        <ListItemText primary="VIDEOCHAT" />
+        {opened ? <ExpandLess /> : <ExpandMore />}
+      </ListItem>
+
+
+      <Collapse in={opened} timeout="auto" >
+        <List component="div" disablePadding>
+
+
+
+        <ListItem button>
+      <ListItemIcon>
+        <InfoIcon />
+      </ListItemIcon>
+      {/* <ListItemText primary="Customers"  /> */}
+    <Link to="/dashboard?mastertable">
+    <ListItemText primary=" Create Master Table" />
+           </Link>
+    </ListItem>
+ 
+
+    <ListItem button>
+      <ListItemIcon>
+        <InfoIcon />
+      </ListItemIcon>
+      {/* <ListItemText primary="Customers"  /> */}
+    <Link to="/dashboard?createcontract">
+    <ListItemText primary="Create Contract" />
+           </Link>
+    </ListItem>
+
+
+    <ListItem button>
+      <ListItemIcon>
+        <InfoIcon />
+      </ListItemIcon>
+      {/* <ListItemText primary="Customers"  /> */}
+    <Link to="/dashboard?allcontract">
+    <ListItemText primary="All Contract" />
+           </Link>
+    </ListItem>
+
+          <ListItem button>
+            <ListItemIcon>
+              <BarChartIcon />
+            </ListItemIcon>
+            {/* <ListItemText primary="Reports" /> */}
+            <Link to="/dashboard?doctoravailibility">
+              <ListItemText primary=" Create Doctor Availibilty" />
+            </Link>
+          </ListItem>
+
+          <ListItem button>
+            <ListItemIcon>
+              <BarChartIcon />
+            </ListItemIcon>
+            {/* <ListItemText primary="Reports" /> */}
+            <Link to="/dashboard?doctoravailibilitylist">
+              <ListItemText primary="Doctor Availibilty List" />
+            </Link>
+          </ListItem>
+
+          <ListItem button>
+            <ListItemIcon>
+              <BarChartIcon />
+            </ListItemIcon>
+            {/* <ListItemText primary="Reports" /> */}
+            <Link to="/dashboard?allserviceslist">
+              <ListItemText primary=" Sponsored Services" />
+            </Link>
+          </ListItem>
+
+         
+
+          <ListItem button>
+            <ListItemIcon>
+              <BarChartIcon />
+            </ListItemIcon>
+            {/* <ListItemText primary="Reports" /> */}
+            <Link to="/dashboard?allservicespaymentlist">
+              <ListItemText primary="Payment List" />
+            </Link>
+          </ListItem>
+
+
+          <ListItem button>
+            <ListItemIcon>
+              <BarChartIcon />
+            </ListItemIcon>
+            {/* <ListItemText primary="Reports" /> */}
+            <Link to="/dashboard?failurereasonlist">
+              <ListItemText primary="Failure List" />
+            </Link>
+          </ListItem>
+
+          
+         
+          <ListItem button>
+            <ListItemIcon>
+              <BarChartIcon />
+            </ListItemIcon>
+            {/* <ListItemText primary="Reports" /> */}
+            <Link to="/dashboard?createservicespaymentmethod">
+              <ListItemText primary="Payment Method" />
+            </Link>
+          </ListItem>
+
+
+           
+          <ListItem button>
+            <ListItemIcon>
+              <BarChartIcon />
+            </ListItemIcon>
+            {/* <ListItemText primary="Reports" /> */}
+            <Link to="/dashboard?servicespaymentmethodlist">
+              <ListItemText primary="Payment Method List" />
+            </Link>
+          </ListItem>
+
+        </List>
+      </Collapse>
+
 
                 <ListItem button style={{backgroundColor:'lightblue'}}>
         <ListItemIcon>
