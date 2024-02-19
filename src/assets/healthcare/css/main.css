@@ -822,8 +822,12 @@ position: absolute;
 }
 
 .item-imgs{
-  width:167px !important;
+  /* width:167px !important;
   height:170px;
+   */
+
+   width:292px !important;
+  height:297px;
   
 }
 
@@ -1414,7 +1418,7 @@ h4 {
 }
 .profile-card-img img {
   height: 180px;
-  max-width: 100%;
+  width: 100%;
   object-fit: cover;
 }
 .viewPhoto a {
@@ -2838,7 +2842,8 @@ img#heartend {
 
 .image-edit-icon {
   position: absolute;
-  bottom: 0;
+  /* bottom: 0; */
+  bottom: 132px;
   right: -1.5rem;
 }
 .notchedOutline {
