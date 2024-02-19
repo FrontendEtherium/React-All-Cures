@@ -749,11 +749,16 @@ diseasePosts(dcName) {
 
 
 componentDidMount() {
- const isMobileView = window.innerWidth <= 768
+  // window.scrollTo(0, 0);
+
+
+  const isMobileView = window.innerWidth <= 768
     window.scrollTo({
       top: isMobileView ? 650 : 200, // Adjust the values as needed
       behavior: 'smooth',
     });
+
+
   this.fetchBlog();
   this.handleShow();
   this.getDisease();
@@ -848,7 +853,7 @@ componentDidMount() {
     var artContent = items.content;
     var a = JSON.parse(decodeURIComponent(artContent))
     var b = a.blocks
-
+console.log('img',b)
 
        
 
@@ -881,7 +886,7 @@ componentDidMount() {
         </HelmetMetaData>
         <div className="ad-spac">
         <button className="btn" data-toggle="modal"data-target=".bd-example-modal-lg">
-         <img src={'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-900,f-webp/static/media/97x90%20Plain.395a48b7.jpg'} alt="advertisment"/>
+          <img src={'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-900,f-webp/static/media/97x90%20Plain.395a48b7.jpg'} alt="advertisment"/>
      
             </button>
         </div>
@@ -918,7 +923,9 @@ componentDidMount() {
                                />
                                </div>:
                               <button className="btn pl-4 mt-2 " id="left-menu-ad" data-toggle="modal"data-target=".bd-example-modal-lg">
-                                    <img className="pl-4" src={'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-180,f-webp/static/media/Persian.954aca12.jpg'} alt="adhhh"
+                                 {/* <img className="pl-4" src={PersianAd} alt="adhhh"
+                                 /> */}
+                                  <img className="pl-4" src={'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-180,f-webp/static/media/Persian.954aca12.jpg'} alt="adhhh"
                                  />
                                  </button>
                                  :null
@@ -1205,7 +1212,32 @@ componentDidMount() {
 
             {/* Center Well article main content */}
               <div id="article-main-content">
-               
+                {/* {b.map((i, idx) => (
+
+
+                  <CenterWell
+                    key={idx}
+                    pageTitle = {items.title}
+                    level = {i.data.level}
+                    content = {i.data.content}
+                    type = {i.type}
+                    text = {i.data.text}
+                    title = {i.data.title}
+                    message = {i.data.message}
+                    source = {i.data.source}
+                    embed = {i.data.embed}
+                    caption = {i.data.caption}
+                    alignment = {i.data.alignment}
+                    // imageUrl = {i.data.file? i.data.file.url: null}
+                    imageUrl={i.data.file ? `https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/${i.data.file.url.replace(/^.*[\\/]/, '')}` : null}
+                    link = {i.data.link}
+                    url = {i.data.url}
+                    item = {i.data.items}
+                    props = {this.props}
+                  />
+                ))} */}
+
+
 {b.map((i, idx) => {
   const fileUrl = i.data.file ? i.data.file.url : null;
   const imageUrl = fileUrl
@@ -1243,7 +1275,7 @@ componentDidMount() {
               {/* Author */}
               {
                 items.authors_name?
-                  <div className='h5 text-left ml-3 mb-2'><span>Author: </span> {items.authored_by.includes(7)? items.authors_name: <Link to={`/profile/${items.reg_doc_pat_id}`}> {items.authors_name}</Link>}</div>
+                  <div className='h5 text-left ml-3 mb-2'><span>Author: </span> {items.authored_by.includes(7)? items.authors_name: <Link to={`/doctor/${items.reg_doc_pat_id}`}> {items.authors_name}</Link>}</div>
                   : null
               }
                   <div className='h6 text-muted text-left ml-3 mb-4'><span>Published on: </span>  
@@ -1535,7 +1567,7 @@ componentDidMount() {
 
                            {this.state.images.length>0 ?(
                          
-                          <img src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp${this.state.images[this.state.currentIndex]}`} alt="doct"  style={{maxHeight:"400px",width:"405px"}}/>)
+                         <img src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp${this.state.images[this.state.currentIndex]}`} alt="doct"  style={{maxHeight:"400px",width:"405px"}}/>)
                          :  <img src={Doct} alt="doctor"  style={{maxHeight:"400px",width:"397px"}}/> 
                          
                          }
