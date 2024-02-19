@@ -407,9 +407,9 @@ useEffect(() => {
                             placeholder="Enter Author Type..." required/>
                         </Form.Group>
                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
-                            <Form.Label>Enter Doctor Row No  <b> (Required)</b></Form.Label>
+                            <Form.Label>Enter Doctor ID  <b> (Required)</b></Form.Label>
                             <Form.Control value={id} onChange={(e) => setId(e.target.value)}  type="text" name=""
-                            placeholder="Enter Doctor Row No..." required/>
+                            placeholder="Enter Doctor ID..." required/>
                         </Form.Group>
                         {
                             alert?
