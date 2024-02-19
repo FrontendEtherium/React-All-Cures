@@ -164,7 +164,7 @@ const universtyForm = (e) => {
     .then(res => {
         setMasterUniversityAlert(true)
         setTimeout(() => {
-            setHospitalAlert(false)
+            setMasterUniversityAlert(false)
         }, 4000);
     })
     .catch(res => console.log(res))
@@ -197,7 +197,7 @@ const doctorDegreeForm = (e) => {
     .then(res => {
         setDocDegreesAlert(true)
         setTimeout(() => {
-            setCityAlert(false)
+            setDocDegreesAlert(false)
         }, 4000);
     })
     .catch(res => console.log(res))
@@ -237,7 +237,7 @@ const docAddressForm = (e) => {
     .then(res => {
         setDocAddressAlert(true)
         setTimeout(() => {
-            setCityAlert(false)
+            setDocAddressAlert(false)
         }, 4000);
     })
     .catch(res => console.log(res))
@@ -592,8 +592,8 @@ useEffect(() => {
       </RadioGroup>
 
                         {
-                            hospitalAlert?
-                                <Alert variant="success" className="h6 mx-3">Master University Create successfully!!</Alert>
+                            masterUniversityAlert?
+                                <Alert variant="success" className="h6 mx-3">Master University Created successfully!!</Alert>
                                 : null
                         }
                    
@@ -606,6 +606,10 @@ useEffect(() => {
                         </div>
                         </form>
                     </div>
+
+
+
+
                     <div className="card my-3">
                         <div className="card-title h3 text-center py-2 border-bottom">Speciality Table</div>
                         <form onSubmit={specialtiesForm}>
@@ -618,8 +622,8 @@ useEffect(() => {
                         </Form.Group>
                     
                         {
-                            masterUniversityAlert?
-                                <Alert variant="success" className="h6 mx-3">Master Universities Created successfully!!</Alert>
+                            specialtiesAlert?
+                                <Alert variant="success" className="h6 mx-3">Speciality Created successfully!!</Alert>
                                 : null
                         }
                         
