@@ -669,6 +669,8 @@ class Profile extends Component {
                             <Avatar sx={{ bgcolor: green[500] }}>
                               <VideoCallOutlined />
                             </Avatar>
+
+                           
                           </button>
 
                           <div
@@ -1057,13 +1059,13 @@ class Profile extends Component {
                     />
                   </div>
 
-                  {/* {
+                  {
                   
-                    userId && items.subscription === 1 && userAccess != 1 ? (
+                    userId && items.chatService == 1 && userAccess != 1 ? (
                       <>
-                        {this.state.doctImage.length > 0 ? (
+                        {items.imgLoc ? (
                           <Chat
-                            imageURL={this.state.doctImage}
+                            imageURL={items.imgLoc}
                             items={items}
                             docid={this.state.docid}
                           />
@@ -1071,12 +1073,12 @@ class Profile extends Component {
                           <Chat
                             dummy={<i class="fas fa-user-sm "></i>}
                             items={items}
-                            docid={this.state.docid}
+                            docid={items.docID}
                           />
                         )}
                       </>
                     ) : null
-                  } */}
+                  }
 
                   <div className="comment-box">
                     {userId ? (
