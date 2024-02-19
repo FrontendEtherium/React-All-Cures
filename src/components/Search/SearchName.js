@@ -30,8 +30,9 @@ class SearchName extends Component {
 
   fetchDoctors(name) {
     document.title = `All Cures | Search | ${name}`
-      fetch(`${backendHost}/SearchActionController?cmd=getResults&city=&doctors=${name}&Latitude=32.7266&Longitude=74.8570`)
-      .then(res => res.json())
+      fetch(`${backendHost}/SearchActionController?cmd=getResults&city=&doctors=${name}`)
+
+    .then(res => res.json())
       .then(json => {
         this.setState({
           isLoaded: true,
@@ -136,22 +137,23 @@ class SearchName extends Component {
                       </div>
                         {items.map((i) => (
                           <ProfileTab
-                            rowno = {i.map.rowno}
-                            firstName = {i.map.docname_first}
-                            middleName={i.map.docname_middle}
-                            lastName = {i.map.docname_last}
+                            docID = {i.map.docID}
+                            firstName = {i.map.firstName}
+                            middleName={i.map.middleName}
+                            lastName = {i.map.lastName}
                             docid= {i.map.doctorid}
                             name = {i.map.name}
-                            pSpl = {i.map.primary_spl}
-                            hospital = {i.map.hospital_affliated}
+                            pSpl = {i.map.primarySpl}
+                            hospital = {i.map.hospitalAffliated}
                             state = {i.map.state}
-                            country = {i.map.country_code}
+                            country = {i.map.country}
                             eduTraining={i.map.edu_training}
                             acPerm = {Cookies.get('acPerm')}
                             url = {this.props.url}
                             reload = {this.state.reload}
                             setModalShow = {this.setModalShow}
                             key = {i.map.doctorid}
+                            img={i.map.img_Loc}
                           />
                         ))}
                         <Test
