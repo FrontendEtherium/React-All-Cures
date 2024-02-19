@@ -148,7 +148,9 @@ const Routes = (props) => {
      <Route exact path="/appRedirect" component={AppRedirect} />
      <Route exact path="/webStories" component={Webstories} />
      <Route exact path="/jammuevent" component={RedirectQr} />
-    <Route path="/notification/:linkid" component={DoctorLink}/>
+     <Route path="/notification/:linkid" component={DoctorLink}/>
+
+    
 
 
 
@@ -225,7 +227,7 @@ const Routes = (props) => {
       <Route auth={Auth.auth} exact path="/cure/:id" component={Disease}/>
       
       {/* Doctor profile page */}
-      <Route auth={Auth.auth} exact path="/profile/:id" component={Profile} />
+      <Route auth={Auth.auth} exact path="/doctor/:id" component={Profile} />
       <Route exact path="/profile/:id/edit" component={LoginInfo} />
    <Route exact path="/privacy" component={privacy}/>
       {/* Doctor invitation page and ask for UPNR number */}
