@@ -26,7 +26,7 @@ const Side = (props) => {
               setisLoaded(true)
               setItems(json)
 
-            
+            console.log("itemese",json)
             
           })
           .catch(err => {return
@@ -75,7 +75,7 @@ const Side = (props) => {
                     items.map((i, index) => (
                       i.article_id!=id?
                         <AllPost
-                            rowno = {i.rowno}
+                            docID = {i.docID}
                             key = {i.article_id.toString()}
                             id = {i.article_id}
                             title = {i.title}
