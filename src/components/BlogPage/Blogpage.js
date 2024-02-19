@@ -306,7 +306,7 @@ export default class Blogpage extends Component{
                     {items.map((i) => (
                       i.pubstatus_id === 3 ?            // Selects articles with publish status = 3 (Published)
                         <AllPost
-                            rowno = {i.rowno}
+                            docID = {i.docID}
                             id = {i.article_id}
                             title = {i.title}
                             f_title = {i.friendly_name}
