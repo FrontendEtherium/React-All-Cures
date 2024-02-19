@@ -779,7 +779,7 @@ useEffect(() => {
    { docIdList && docIdList.map((c) => {
         
         return (
-            <option value={c[0]}>{`${c[10]}  ${c[11]}  ${c[12]}`}</option>
+            <option value={c[0]}>{`${c[10]}  ${c[11]!= null ?c[11]:''}  ${c[12]}`}</option>
         )
     })}
 </select>
