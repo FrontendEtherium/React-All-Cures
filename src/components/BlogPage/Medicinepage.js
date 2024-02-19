@@ -157,7 +157,7 @@ export default class Medicinepage extends Component{
                 items.map((i)  =>(
                   
                     <AllPost
-                    rowno = {i.rowno}
+                    docID = {i.docID}
                     id = {i.article_id}
                     title = {i.title}
                     f_title = {i.friendly_name}
