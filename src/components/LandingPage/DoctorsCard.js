@@ -65,7 +65,7 @@ console.log('docimg',img)
        <div className="slider-heading">
           <h2>Dr. {firstName} {lastName}</h2>
           <p>{primarySpl}</p>
-          <h5 className="text-center">{hospitalAffliated} {state} {country}</h5>
+          <h5 className="text-center">{hospitalAffliated} {state} </h5>
        </div>
        <Link to={ `/doctor/${docID}-${firstName}-${lastName}` } className="appointmentBtn allBtn" id="visitDoc">Visit Profile</Link>
     </div>
