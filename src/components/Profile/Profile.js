@@ -1,42 +1,54 @@
-
 import React, { Component } from "react";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import Rating from "../StarRating";
 import Doct from "../../assets/img/doct.png";
-import '../../assets/healthcare/css/main.css';
-import '../../assets/healthcare/css/responsive.css';
-import '../../assets/healthcare/css/animate.css';
-import '../../assets/healthcare/icomoon/style.css';
-import { Container, Button } from "react-bootstrap"
-import axios from 'axios';
+import "../../assets/healthcare/css/main.css";
+import "../../assets/healthcare/css/responsive.css";
+import "../../assets/healthcare/css/animate.css";
+import "../../assets/healthcare/icomoon/style.css";
+import { Container, Button } from "react-bootstrap";
+import axios from "axios";
 import EditProfile from "./EditProfile";
-import { backendHost } from '../../api-config';
-import Comment from '../Comment'
-import '../../assets/healthcare/css/mobile.css'
+import { backendHost } from "../../api-config";
+import Comment from "../Comment";
+import "../../assets/healthcare/css/mobile.css";
 // import ArticleComment from '../ArticleComment';
 import { userId } from "../UserId";
 import { userAccess } from "../UserAccess";
 import AllPost from "../BlogPage/Allpost";
-import Heart from"../../assets/img/heart.png";
+import Heart from "../../assets/img/heart.png";
 import { Modal } from "react-bootstrap";
 
-import HelmetMetaData from '../HelmetMetaData'
+import HelmetMetaData from "../HelmetMetaData";
 import { imagePath } from "../../image-path";
-import Chat from "./Chat"
+import Chat from "./Chat";
+import VideoCallOutlined from "@mui/icons-material/VideoCallOutlined";
+import { green, pink } from "@mui/material/colors";
+import Avatar from "@mui/material/Avatar";
+// import dayjs from "dayjs";
+
+import DailyIframe from '@daily-co/daily-js';
+// import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+// import {
+//   LocalizationProvider,
+//   DatePicker,
+//   TimePicker,
+// } from "@mui/x-date-pickers";
 
 
 class Profile extends Component {
   constructor(props) {
     super(props);
-    const params = props.match.params
-    this.editToggle = this.editToggle.bind(this)
-    this.fetchDoctorData = this.fetchDoctorData.bind(this)
+    const params = props.match.params;
+    this.editToggle = this.editToggle.bind(this);
+    this.fetchDoctorData = this.fetchDoctorData.bind(this);
     this.state = {
       items: [],
       articleItems: [],
       comment: [],
-      ratingValue: '',
+      ratingValue: "",
       rating: [],
       firstName: [],
       lastName: [],
@@ -47,21 +59,72 @@ class Profile extends Component {
       modalShow: false,
       show: false,
       imageExists: false,
-      selectedFile: '',
+      selectedFile: "",
       isFilePicked: false,
       imageUploadLoading: false,
       showAlert: false,
-      alertMsg: '',
-      show:false,
+      alertMsg: "",
+      show: false,
       docid: null,
-      initial:4,
-      doctImage:[],
-      isDefaultImage:false,
+      initial: 4,
+      doctImage: [],
+      isDefaultImage: false,
+      selectedDate: null,
+      selectedTime: null,
+      callFrame:null,
+      videoLink:null,
+      availStatus:null,
     };
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
-    
   }
+
+
+
+  
+
+  //  newTheme = (theme) => createTheme({
+  //   ...theme,
+  //   components: {
+  //     MuiPickersDay: {
+  //       styleOverrides: {
+  //         root: {
+  //           color: '#1565c0',
+  //           borderRadius: 2,
+  //           borderWidth: 1,
+  //           borderColor: '#2196f3',
+  //           border: '1px solid',
+  //           backgroundColor: '#bbdefb',
+  //         }
+  //       }
+  //     }
+  //   }
+  // })
+
+  // Define a function to determine whether a date should be disabled
+   shouldDisableDate = (date) => {
+    // Your logic to determine if the date should be disabled
+    // For example, let's say you want to disable dates in the past
+    const currentDate = new Date();
+    return date < currentDate;
+  };
+
+   // Define a function to determine the custom color for each date
+   getCustomColor = (date) => {
+    // Your logic to determine the custom color for the date
+    // For example, let's say you want to color dates in the future differently
+    const currentDate = new Date();
+    return date > currentDate ? 'green' : 'red';
+  };
+
+  handleDateChange = (newDate) => {
+    this.setState({ selectedDate: newDate });
+  };
+
+  handleTimeChange = (newTime) => {
+    this.setState({ selectedTime: newTime });
+  };
+
   showModal = () => {
     this.setState({ show: true });
   };
@@ -70,135 +133,148 @@ class Profile extends Component {
     this.setState({ show: false });
   };
 
-  // Image Upload 
-	changeHandler = (event) => {
-    if(event.target.files[0].size > 1048576){
-      this.Alert('Image should be less than 1MB!')
-      return
+  // Image Upload
+  changeHandler = (event) => {
+    if (event.target.files[0].size > 1048576) {
+      this.Alert("Image should be less than 1MB!");
+      return;
     }
-    this.setState({
-      selectedFile: event.target.files[0],
-    }, (event) => this.handleImageSubmission(event))
-	}
+    this.setState(
+      {
+        selectedFile: event.target.files[0],
+      },
+      (event) => this.handleImageSubmission(event)
+    );
+  };
 
   handleImageSubmission = (e) => {
     // e.preventDefault()
-    this.setState({imageUploadLoading: true})
+    this.setState({ imageUploadLoading: true });
     const formData = new FormData();
-    formData.append('File', this.state.selectedFile);
-    fetch(`${backendHost}/dashboard/imageupload/doctor/${this.props.match.params.id.split('-')[0]}`,
+    formData.append("File", this.state.selectedFile);
+    fetch(
+      `${backendHost}/dashboard/imageupload/doctor/${
+        this.props.match.params.id.split("-")[0]
+      }`,
       {
-        method: 'POST',
+        method: "POST",
         body: formData,
       }
     )
-    .then((response) => response.json())
-    .then((result) => {
-      setTimeout(() => {
-        this.setState({
-          isFilePicked: true,
-          imageUploadLoading: false
-        })
-      }, 5000);
-      
-      this.Alert('Image uploaded successfully.')
-    })
-    .catch((error) => {
-        return
-    });
-    }
+      .then((response) => response.json())
+      .then((result) => {
+        setTimeout(() => {
+          this.setState({
+            isFilePicked: true,
+            imageUploadLoading: false,
+          });
+        }, 5000);
+
+        this.Alert("Image uploaded successfully.");
+      })
+      .catch((error) => {
+        return;
+      });
+  };
   Alert = (msg) => {
-    console.log(msg)
+    console.log(msg);
     this.setState({
-       showAlert:true,
-       alertMsg: msg
-    })
+      showAlert: true,
+      alertMsg: msg,
+    });
     setTimeout(() => {
-       this.setState({
-         showAlert: false
-       })
+      this.setState({
+        showAlert: false,
+      });
     }, 5000);
-}
-postLead = (id) => {
-  
-  this.showModal()
-    axios.post(`${backendHost}/leads/count/${this.props.match.params.id.split('-')[0]}`)
-    
-    
-    .then(res => {
-     
-      console.log('id', res.data);
-    })
-    .catch(err => err); 
-}
+  };
+  postLead = (id) => {
+    this.showModal();
+    axios
+      .post(
+        `${backendHost}/leads/count/${this.props.match.params.id.split("-")[0]}`
+      )
+
+      .then((res) => {
+        console.log("id", res.data);
+      })
+      .catch((err) => err);
+  };
   // DOCTOR'S WRITTEN CURES
 
-  allPosts=() =>{                        // For all available blogs "/blogs"
-    fetch(`${backendHost}/article/authallkv/reg_type/1/reg_doc_pat_id/${this.props.match.params.id.split('-')[0]}?offset=0&limit=${this.state.initial}`)
+  allPosts = () => {
+    // For all available blogs "/blogs"
+    fetch(
+      `${backendHost}/article/authallkv/reg_type/1/reg_doc_pat_id/${
+        this.props.match.params.id.split("-")[0]
+      }?offset=0&limit=${this.state.initial}`
+    )
       .then((res) => res.json())
       .then((json) => {
-        var temp = []
-        json.forEach(i => {
+        var temp = [];
+        json.forEach((i) => {
           if (i.pubstatus_id === 3) {
-            temp.push(i)
+            temp.push(i);
           }
         });
-        this.setState(prevState => ({
+        this.setState((prevState) => ({
           articleItems: temp,
-          initial: prevState.initial + 4
+          initial: prevState.initial + 4,
         }));
       })
-      .catch(err =>
-        {return}
-      )
-  }
+      .catch((err) => {
+        return;
+      });
+  };
 
-	 getImg=() =>{                       
-    fetch(`${backendHost}/data/doctor/image`)
-      .then((res) => res.json())
-      .then((json) => {
-  let matchedImageLoc = ''; // Default image location
+  // getImg = () => {
+  //   fetch(`${backendHost}/data/doctor/image`)
+  //     .then((res) => res.json())
+  //     .then((json) => {
+  //       let matchedImageLoc = ""; // Default image location
 
-  for (let i = 0; i < json.length; i++) {
-      if (json[i].rowno == this.state.items.rowno && json[i].img_Loc !=null) {
-         matchedImageLoc = `https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp${json[i].img_Loc}`;
-          break; // Break the loop once a match is found
-      }
+  //       for (let i = 0; i < json.length; i++) {
+  //         if (
+  //           json[i].docID == this.state.items.docID &&
+  //           json[i].img_Loc != null
+  //         ) {
+  //           matchedImageLoc = `https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp${json[i].img_Loc}`;
+  //           break; // Break the loop once a match is found
+  //         } else if (
+  //           json[i].docID == this.state.items.docID &&
+  //           json[i].img_Loc == null
+  //         ) {
+  //           // matchedImageLoc = this.onError();
+  //           this.setState({
+  //             isDefaultImage: true,
+  //           });
+  //         }
+  //       }
 
-      else if(json[i].rowno == this.state.items.rowno && json[i].img_Loc ==null){
-
-        // matchedImageLoc = this.onError();
-        this.setState({
-          isDefaultImage:true
-        })
-       }
-  }
-
-  this.setState({
-    doctImage:matchedImageLoc
-  })
- 
-    
-})
-  }
+  //       this.setState({
+  //         doctImage: matchedImageLoc,
+  //       });
+  //     });
+  // };
 
   getComments = (id) => {
-    axios.get(`${backendHost}/rating/target/${id}/targettype/1`)
-      .then(res => {
-        var temp = []
-        res.data.forEach(i => {
+    axios
+      .get(`${backendHost}/rating/target/${id}/targettype/1`)
+      .then((res) => {
+        var temp = [];
+        res.data.forEach((i) => {
           if (i.reviewed === 1 && i.comments !== "null") {
-            temp.push(i)
+            temp.push(i);
           }
-        })
+        });
         this.setState({
-          comment: temp
-        })
+          comment: temp,
+        });
       })
-      .catch(err => {return})
-  }
-
-
+      .catch((err) => {
+        return;
+      });
+  };
 
   showComments = (item, i) => {
     return (
@@ -209,77 +285,104 @@ postLead = (id) => {
               <h5 className="h6"> {item.comments}</h5>
               <div className="card-info">
                 <h6 className="card-subtitle mb-2 text-muted">
-                  <b>By :  </b>  {item.first_name} {item.last_name}
+                  <b>By : </b> {item.first_name} {item.last_name}
                 </h6>
               </div>
             </div>
           </div>
         </div>
       </>
-    )
-  }
+    );
+  };
 
   getRating = (docId) => {
-    axios.get(`${backendHost}/rating/target/${docId}/targettype/1/avg`)
-      .then(res => {
-        this.setState({
-          ratingValue: res.data
-        }, () => {
-          setTimeout(() => {
-            this.showRating(this.state.ratingValue)
-          }, 1000);
-        })
+    axios
+      .get(`${backendHost}/rating/target/${docId}/targettype/1/avg`)
+      .then((res) => {
+        this.setState(
+          {
+            ratingValue: res.data,
+          },
+          () => {
+            setTimeout(() => {
+              this.showRating(this.state.ratingValue);
+            }, 1000);
+          }
+        );
       })
-      .catch(err => {return})
-  }
+      .catch((err) => {
+        return;
+      });
+  };
 
-  
   getRate = (docId) => {
-    axios.get(`${backendHost}/rating/target/${docId}/targettype/1?userid=${userId}`)
-      .then(res => {
+    axios
+      .get(
+        `${backendHost}/rating/target/${docId}/targettype/1?userid=${userId}`
+      )
+      .then((res) => {
         this.setState({
-          rating: res.data[0].ratingVal
-        })
+          rating: res.data[0].ratingVal,
+        });
       })
-      .catch(err => {return})
-  }
-
+      .catch((err) => {
+        return;
+      });
+  };
 
   fetchDoctorData = (id) => {
-    fetch(`${backendHost}/DoctorsActionController?rowno=${id}&cmd=getProfile`)
+    fetch(`${backendHost}/DoctorsActionController?DocID=${id}&cmd=getProfile`)
       // .then(res => JSON.parse(res))
       .then((res) => res.json())
       .then((json) => {
-        document.title = `${json.docname_first} ${json.docname_last}`
+
+        // console.log('firstname', 'id',id,json.firstName)
+        // document.title = `${json.firstName} ${json.lastName}`;
 
         this.setState({
           isLoaded: true,
           items: json,
-          docid: json.docid,
-        })
+          docid: json.docID,
+        });
       });
+  };
 
-  }
+
+  fetchAvailStatus = (id) => {
+    fetch(`${backendHost}/video/get/${id}/availability`)
+      // .then(res => JSON.parse(res))
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({
+          
+          availStatus: json,
+          
+        });
+        console.log('availStatus',this.state.availStatus)
+      });
+      
+  };
   showRating = (val) => {
-    if (document.getElementById('doctor-avg-rating')) {
+    if (document.getElementById("doctor-avg-rating")) {
       for (let i = 0; i < val; i++) {
-        document.getElementById('doctor-avg-rating').children[i].classList.add('checked')
+        document
+          .getElementById("doctor-avg-rating")
+          .children[i].classList.add("checked");
       }
     }
-  }
-
+  };
 
   editToggle = () => {
     if (this.state.edit === false) {
       this.setState({
-        edit: true
-      })
+        edit: true,
+      });
     } else {
       this.setState({
-        edit: false
-      })
+        edit: false,
+      });
     }
-  }
+  };
 
   // componentDidMount() {
   //   window.scrollTo(0, 0);
@@ -288,154 +391,223 @@ postLead = (id) => {
   //   this.getRating(this.props.match.params.id.split('-')[0])
   //   this.getRate(this.props.match.params.id.split('-')[0])
   //   this.allPosts()
-	  
-	 //   const canonicalLink = document.createElement('link');
+
+  //   const canonicalLink = document.createElement('link');
   //   canonicalLink.rel = 'canonical';
   //   canonicalLink.href = window.location.href;
   //   document.head.appendChild(canonicalLink);
 
   //   console.log('Canonical link:', canonicalLink);
 
-
   //   return () => {
   //     document.head.removeChild(canonicalLink);
   //   };
   // }
 
- componentDidMount() {
+  componentDidMount() {
     window.scrollTo(0, 0);
-    this.fetchDoctorData(this.props.match.params.id.split('-')[0]);
-    this.getComments(this.props.match.params.id.split('-')[0]);
-    this.getRating(this.props.match.params.id.split('-')[0]);
-    this.getRate(this.props.match.params.id.split('-')[0]);
+    this.fetchDoctorData(this.props.match.params.id.split("-")[0]);
+    this.fetchAvailStatus(this.props.match.params.id.split("-")[0]);
+    this.getComments(this.props.match.params.id.split("-")[0]);
+    this.getRating(this.props.match.params.id.split("-")[0]);
+    this.getRate(this.props.match.params.id.split("-")[0]);
     this.allPosts();
-    this.getImg();
-  
-    const canonicalLink = document.createElement('link');
-    canonicalLink.rel = 'canonical';
-  
+    // this.getImg();
+
+    const canonicalLink = document.createElement("link");
+    canonicalLink.rel = "canonical";
+
     const currentURL = window.location.href;
     // Remove "www" from the URL if it's present
-    const canonicalURL = currentURL.replace(/(https?:\/\/)?www\./, '$1');
-  
+    const canonicalURL = currentURL.replace(/(https?:\/\/)?www\./, "$1");
+
     if (canonicalURL.match(/\/profile\/\d+-[a-zA-Z0-9-]+/)) {
       canonicalLink.href = canonicalURL;
       // Log the constructed canonical link to the console
-      console.log('Canonical Link:', canonicalLink.outerHTML);
-    } else if (canonicalURL.match(/\/profile\/\d+/)) { // If URL contains only ID
-      const id = this.props.match.params.id.split('-')[0];
-  
+      console.log("Canonical Link:", canonicalLink.outerHTML);
+    } else if (canonicalURL.match(/\/profile\/\d+/)) {
+      // If URL contains only ID
+      const id = this.props.match.params.id.split("-")[0];
+
       // Fetch the first name and last name based on the ID
-      fetch(`${backendHost}/DoctorsActionController?rowno=${id}&cmd=getProfile`)
+      fetch(`${backendHost}/DoctorsActionController?DocID=${id}&cmd=getProfile`)
         .then((res) => res.json())
         .then((json) => {
           // Use the first name and last name directly from the API response
-          const firstName = json.docname_first;
-          const lastName = json.docname_last;
-  
+          const firstName = json.firstName;
+          const lastName = json.lastName;
+
           canonicalLink.href = `${window.location.origin}/profile/${id}-${firstName}-${lastName}`;
           document.head.appendChild(canonicalLink);
-  
+
           // Log the constructed canonical link to the console
-          console.log('Canonical Link:', canonicalLink.outerHTML);
+          console.log("Canonical Link:", canonicalLink.outerHTML);
         })
         .catch((err) => {
           // Handle the error or use a default name
           canonicalLink.href = canonicalURL;
           document.head.appendChild(canonicalLink);
-  
+
           // Log the constructed canonical link to the console
-          console.log('Canonical Link:', canonicalLink.outerHTML);
+          console.log("Canonical Link:", canonicalLink.outerHTML);
         });
     } else {
       canonicalLink.href = canonicalURL;
       // Log the constructed canonical link to the console
-      console.log('Canonical Link:', canonicalLink.outerHTML);
+      console.log("Canonical Link:", canonicalLink.outerHTML);
     }
   }
 
   setModalShow = (action) => {
     this.setState({
-      modalShow: action
-    })
-  }
+      modalShow: action,
+    });
+  };
   handleClose = () => {
     this.setState({
-      show: false
-    })
-  }
+      show: false,
+    });
+  };
 
   handleShow = () => {
     this.setState({
-      show: true
-    })
-  }
+      show: true,
+    });
+  };
 
   checkIfImageExits = (imageUrl) => {
-    fetch(imageUrl, { method: 'HEAD' })
-      .then(res => {
+    fetch(imageUrl, { method: "HEAD" })
+      .then((res) => {
         if (res.ok) {
           this.setState({
-            imageExists: true
-          })
+            imageExists: true,
+          });
         } else {
           this.setState({
-            imageExists: false
-          })
+            imageExists: false,
+          });
         }
-      }).catch(err => {return});
-  }
+      })
+      .catch((err) => {
+        return;
+      });
+  };
 
   onError = (e) => {
+    e.target.parentElement.innerHTML = `<i class="fas fa-user-md fa-6x"></i>`;
+  };
 
-    e.target.parentElement.innerHTML = `<i class="fas fa-user-md fa-6x"></i>`
+  initVideoChat = () => {
+
+
+    // console.log('idcreated',docid)
+    const id = this.props.match.params.id.split("-")[0];
+    console.log('idcreated',id)
+
+
+    fetch(`${backendHost}/video/create/room/${id}`)
+      // .then(res => JSON.parse(res))
+      .then((res) => res.json())
+      .then((json) => {
+        
+
+        // this.setState({
+        //  videoLink:json,
+        
+        // });
+
+
+
+        if (!this.state.callFrame && json != "Error") {
+          // Initialize the video chat
+          const newCallFrame =  DailyIframe.createFrame({
+           
+        // Check if callFrame already exists
+         showLeaveButton: true,
+          });
+
+
+             
+          // newCallFrame.join({ url: 'https://uat.daily.co/qLxOzn6ZKVyqkQ6YByzL' });
+          newCallFrame.join({ url:json });
+    
+          // Attach a listener for the 'left-meeting' event
+          newCallFrame.on('left-meeting', () => {
+            // When leaving the meeting, destroy the frame
+            newCallFrame.destroy();
+            this.setState({ callFrame: null });
+          });
+    
+          
+    
+          this.setState({ callFrame: newCallFrame });
+          
+        }
+      });
+
+
+
+
+  
   }
 
-
   render() {
+    const { selectedDate, selectedTime } = this.state;
     var { isLoaded, items } = this.state;
     if (!isLoaded) {
-
       return (
         <>
           <Header history={this.props.history} />
           <div className="loader my-4">
-              {/* <i className="fa fa-spinner fa-spin fa-6x" /> */}
-              <img src={Heart} alt="All Cures Logo" id="heart"/>
-
-            </div>
+            {/* <i className="fa fa-spinner fa-spin fa-6x" /> */}
+            <img src={Heart} alt="All Cures Logo" id="heart" />
+          </div>
           <Footer />
         </>
       );
-
     } else if (isLoaded && items == null) {
       return (
         <>
           <Header history={this.props.history} />
           <Container className="mt-5 my-5">
-            <h3 className="m-auto text-center"><span className="icon-loupe "></span></h3>
+            <h3 className="m-auto text-center">
+              <span className="icon-loupe "></span>
+            </h3>
             <h3 className="text-center">Doctor not found</h3>
           </Container>
           <Footer />
         </>
-      )
+      );
     } else if (isLoaded) {
-      const { isFilePicked, showAlert, alertMsg } = this.state
+      const { isFilePicked, showAlert, alertMsg } = this.state;
       return (
         <div>
-          {
-                showAlert &&
-                    <div className="alert alert-success pop-up border-bottom">
-                        <div className="h5 mb-0 text-center">{alertMsg}</div>
-                        <div className="timer"></div>
-                    </div>
+          {showAlert && (
+            <div className="alert alert-success pop-up border-bottom">
+              <div className="h5 mb-0 text-center">{alertMsg}</div>
+              <div className="timer"></div>
+            </div>
+          )}
+          <HelmetMetaData
+            title={
+              items.prefix +
+              " " +
+              items.firstName +
+              " " +
+              items.lastName
             }
-            <HelmetMetaData 
-              title={items.prefix + ' ' + items.docname_first + ' ' +items.docname_last} 
-              description={items.about} 
-              image={`${imagePath}/cures_articleimages/doctors/${items.rowno}.png`}
-              keywords = {items.docname_first +' '+ items.docname_last+' , '+ items.hospital_affliated+ ' , '+items.primary_spl}>
-        </HelmetMetaData>
+            description={items.about}
+            image={`${imagePath}/cures_articleimages/doctors/${items.docID}.png`}
+            keywords={
+              items.firstName +
+              " " +
+              items.lastName +
+              " , " +
+              items.hospitalAffiliated +
+              " , " +
+              items.primarySpl
+            }
+          ></HelmetMetaData>
           <Header history={this.props.history} />
 
           <section className="Profileleft">
@@ -445,7 +617,10 @@ postLead = (id) => {
                   <div className="profile-card clearfix">
                     <div className="col-md-3">
                       <div className="profileImageBlok">
-                        <div className="profile-card-img text-center" id="profile-card-img">
+                        <div
+                          className="profile-card-img text-center"
+                          id="profile-card-img"
+                        >
                           {/* {
                             imageUploadLoading?
                               <div className="loader">
@@ -453,31 +628,159 @@ postLead = (id) => {
                               </div>
                             : null
                           } */}
-                          <h1 style={{display:'none'}}>All Cures is a product developed, managed and owned by 
-                        Etherium Technologies. Our mission is to make it simple and convenient for users to get information on Cures from anywhere in the world. 
-                        Our belief is that your wellness is your well-being. 
-                        We are passionate about giving our users the unique 
-                        experience that is both fulfilling and wholesome.</h1>
-                        <h2  style={{display:'none'}}>Ayurveda, Homeopathy, Chinese Medicine, Persian, Unani</h2>
-                           {this.state.doctImage.length>0 ?
-
-                              <img alt={items.docname_first} src={this.state.doctImage}/>
-                              : <i class="fas fa-user-md fa-6x"></i>}
-                          
+                          <h1 style={{ display: "none" }}>
+                            All Cures is a product developed, managed and owned
+                            by Etherium Technologies. Our mission is to make it
+                            simple and convenient for users to get information
+                            on Cures from anywhere in the world. Our belief is
+                            that your wellness is your well-being. We are
+                            passionate about giving our users the unique
+                            experience that is both fulfilling and wholesome.
+                          </h1>
+                          <h2 style={{ display: "none" }}>
+                            Ayurveda, Homeopathy, Chinese Medicine, Persian,
+                            Unani
+                          </h2>
+                          {items.imgLoc? (
+                            <img
+                              alt={items.firstName}
+                              src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-180,h-230,f-webp${items.imgLoc}`}
+                            />
+                          ) : (
+                            <i class="fas fa-user-md fa-6x"></i>
+                          )}
                         </div>
-                          {
-                            this.props.match.params.id.split('-')[0] === userId || userAccess == 9?
-                            <>
-                              <label for="fileInput" className="image-edit-icon"> 
-                                <i className="fas fa-edit fa-2x"></i>
-                              </label>
-                              <input id="fileInput" type="file" name="file" onChange={this.changeHandler} required/>
-                            </>
-                            : null
-                          }
-                        
 
-                          {/* {isFilePicked ? (
+                        {   this.state.availStatus==1 &&
+                        <div
+                          style={{
+                            marginTop: "-44px",
+                            marginLeft: "102px",
+                            position: "absolute",
+                          }}
+                        >
+                          <button
+                            type="button"
+                            class="btn btn-primary bg-transparent border-0"
+                            // data-toggle="modal"
+                            // data-target="#exampleModal"
+                            onClick={this. initVideoChat}
+                          >
+                            <Avatar sx={{ bgcolor: green[500] }}>
+                              <VideoCallOutlined />
+                            </Avatar>
+
+                           
+                          </button>
+
+                          <div
+                            class="modal fade"
+                            id="exampleModal"
+                            tabindex="-1"
+                            role="dialog"
+                            aria-labelledby="exampleModalLabel"
+                            aria-hidden="true"
+                          >
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5
+                                    class="modal-title p-3 font-weight-bold "
+                                    id="exampleModalLabel"
+                                  >
+                                    Schedule your Appointment
+                                  </h5>
+                                  <button
+                                    type="button"
+                                    class="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                  >
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                {/* <div
+                                  class="modal-body"
+                                  style={{ minHeight: "500px" }}
+                                >
+                                  <div className="d-flex">
+                                   
+                                  </div>
+
+                                  <LocalizationProvider
+                                    dateAdapter={AdapterDayjs}
+                                  >
+                                    <DemoContainer
+                                      components={["DatePicker", "TimePicker"]}
+                                    >
+
+                                    
+                                      <DatePicker
+                                        label="Select Date"
+                                        value={selectedDate}
+                                        onChange={this.handleDateChange}
+                                        shouldDisableDate={this.state.shouldDisableDate}
+
+                                        renderDay={(date, _value, dayInCurrentMonth, dayComponent) => {
+                                          const customColor = this.getCustomColor(date);
+                                          return React.cloneElement(dayComponent, {
+                                            style: { color: customColor },
+                                          });
+                                        }}
+
+                                       
+                                      />
+                                      
+
+                                      <TimePicker
+                                        label="Select Time"
+                                        value={selectedTime}
+                                        onChange={this.handleTimeChange}
+                                        minutesStep={15}
+                                      />
+                                    </DemoContainer>
+                                  </LocalizationProvider>
+
+                                  <div>
+                                    {selectedDate && (
+                                      <p>
+                                        Selected Date:{" "}
+                                        {dayjs(selectedDate).format(
+                                          "YYYY-MM-DD"
+                                        )}
+                                      </p>
+                                    )}
+
+                                    {selectedTime && (
+                                      <p>
+                                        Selected Time:{" "}
+                                        {dayjs(selectedTime).format("HH:mm")}
+                                      </p>
+                                    )}
+                                  </div>
+                                </div> */}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+    }
+                        {this.props.match.params.id.split("-")[0] === userId ||
+                        userAccess == 9 ? (
+                          <>
+                            <label for="fileInput" className="image-edit-icon">
+                              <i className="fas fa-edit fa-2x"></i>
+                            </label>
+                            <input
+                              id="fileInput"
+                              type="file"
+                              name="file"
+                              onChange={this.changeHandler}
+                              required
+                            />
+                          </>
+                        ) : null}
+
+                        {/* {isFilePicked ? (
 
                               <div>
                                 
@@ -509,67 +812,63 @@ postLead = (id) => {
                         <div className="profile-infoL-card">
                           <div className="profile-info-name" id="DocDetails">
                             <div className="h4 font-weight-bold">
-                              {items.prefix}. {items.docname_first} {items.docname_middle}{" "}
-                              {items.docname_last}{" "}
-                               {/* Show average rating */}
-                            {
-                              this.state.ratingValue ?
-                                <div className=" mt-2 mb-4" id="doctor-avg-rating">
+                              {items.prefix}. {items.firstName}{" "}
+                              {items.middleName} {items.lastName}{" "}
+                              {/* Show average rating */}
+                              {this.state.ratingValue ? (
+                                <div
+                                  className=" mt-2 mb-4"
+                                  id="doctor-avg-rating"
+                                >
                                   <span class="fa fa-star opacity-7"></span>
                                   <span class="fa fa-star opacity-7"></span>
                                   <span class="fa fa-star opacity-7"></span>
                                   <span class="fa fa-star opacity-7"></span>
                                   <span class="fa fa-star opacity-7"></span>
                                 </div>
-                                : null
-                            }
+                              ) : null}
                             </div>
-                            <div className="h5 text-capitalize"><i class="fas fa-award pr-1"></i>{items.primary_spl.toLowerCase()}</div>
+                            <div className="h5 text-capitalize">
+                              <i class="fas fa-award pr-1"></i>
+                              {/* {items.Primary_Spl.toLowerCase()} */}
+                              {items.primarySpl}
+                            </div>
                             <div className="h5 ">{items.experience}</div>
                             <div className="h5 text-capitalize">
-                            <i class="fas fa-hospital pr-1"></i>
-                               {items.hospital_affliated}{" "}
-                              {items.country_code}
-                              
-                            </div>
-                           
-                            <div>
-
-
-
+                              <i class="fas fa-hospital pr-1"></i>
+                              {items.hospitalAffiliated} {items.country}
                             </div>
 
-
+                            <div></div>
                           </div>
-
                         </div>
                         <div className="rating-reviews">
                           <div className="profile-info-rating">
                             <h2>
-                              <form
-
-                                className="rating"
-                              >
-                              </form>
+                              <form className="rating"></form>
                             </h2>
                           </div>
-                          <div className="reviews" >
+                          <div className="reviews">
+                            {userAccess === "9" ||
+                            parseInt(userId) ===
+                              parseInt(
+                                this.props.match.params.id.split("-")[0]
+                              ) ? (
+                              <Button
+                                variant="dark"
+                                onClick={() => this.setModalShow(true)}
+                              >
+                                Edit Profile
+                              </Button>
+                            ) : null}
 
-                            {
-                              userAccess === '9' || parseInt(userId) === parseInt(this.props.match.params.id.split('-')[0]) ?
-                                <Button variant="dark" onClick={() => this.setModalShow(true)}>
-                                  Edit Profile
-                                </Button>
-                                : null
-                            }
-                            
                             <EditProfile
                               show={this.state.modalShow}
                               onHide={() => this.setModalShow(false)}
                               items={items}
                               fetchDoctor={this.fetchDoctorData}
-                              id={this.props.match.params.id.split('-')[0]} />
-
+                              id={this.props.match.params.id.split("-")[0]}
+                            />
                           </div>
                         </div>
                       </div>
@@ -578,243 +877,295 @@ postLead = (id) => {
 
                   <div className="aboutDr">
                     <div className="h4 font-weight-bold">
-                       About {items.prefix}. {items.docname_first} {items.docname_middle}{" "}
-                      {items.docname_last}
-
+                      About {items.prefix}. {items.firstName}{" "}
+                      {items.middleName} {items.lastName}
                     </div>
 
                     <div id="about-contain">
                       <p className="text one">
                         {" "}
-                        {items.about.includes('•')? items.about.split('•').map((i, idx) => <li className={`list-${idx}`}>{i}</li>): items.about}{" "}
+                        {items.about.includes("•")
+                          ? items.about
+                              .split("•")
+                              .map((i, idx) => (
+                                <li className={`list-${idx}`}>{i}</li>
+                              ))
+                          : items.about}{" "}
                         {/* {this.props.match.params.id.split('-')[0] == 874?<li>More about him at <a href="https://planetayurveda.com" target="_blank" rel="noreferrer">www.planetayurveda.com</a>.</li>: null} */}
-                      
-                        {this.props.match.params.id.split('-')[0] == 872?<><br/>More about him at <a href="https://ayurvedguru.com" target="_blank" rel="noreferrer">www.ayurvedguru.com</a>.</>: null}
-                        {this.props.match.params.id.split('-')[0] == 878?<><br/>More about him at <a href="http://www.ayushmanbhavayurveda.com/" target="_blank" rel="noreferrer">www.ayushmanbhavayurveda.com</a>.</>: null}
+                        {this.props.match.params.id.split("-")[0] == 872 ? (
+                          <>
+                            <br />
+                            More about him at{" "}
+                            <a
+                              href="https://ayurvedguru.com"
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              www.ayurvedguru.com
+                            </a>
+                            .
+                          </>
+                        ) : null}
+                        {this.props.match.params.id.split("-")[0] == 878 ? (
+                          <>
+                            <br />
+                            More about him at{" "}
+                            <a
+                              href="http://www.ayushmanbhavayurveda.com/"
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              www.ayushmanbhavayurveda.com
+                            </a>
+                            .
+                          </>
+                        ) : null}
                         {/* {this.props.match.params.id.split('-')[0] == 878?<><br/>More about him at <a href="https://www.ayurvedanashik.com" target="_blank" rel="noreferrer">www.ayurvedanashik.com</a>.</>: null} */}
-                        {this.props.match.params.id.split('-')[0] == 884?<><br/>More about him at <a href="http://expertayurveda.com/" target="_blank" rel="noreferrer">http://expertayurveda.com/</a>.</>: null}
-
+                        {this.props.match.params.id.split("-")[0] == 884 ? (
+                          <>
+                            <br />
+                            More about him at{" "}
+                            <a
+                              href="http://expertayurveda.com/"
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              http://expertayurveda.com/
+                            </a>
+                            .
+                          </>
+                        ) : null}
                       </p>
-                      <a href={`${items.website_url}`} target="_blank" rel="noreferrer" className="h6">{items.website_url}</a>
-
-                    </div> 
+                      <a
+                        href={`${items.websiteUrl}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="h6"
+                      >
+                        {items.websiteUrl}
+                      </a>
+                    </div>
                     <div></div>
 
                     <br />
                     <div className="abt-eduction ">
                       <div className="h4 font-weight-bold">Education</div>
-                      {items.edu_training}
+                      {items.degDesc}
                     </div>
                     <div className="mt-5">
                       <div className="h4 font-weight-bold">Accomplishments</div>
-                      {items.awards.split('•').map((i, idx) => <li className={`list-${idx}`}>{i}</li>)}
+                      {items.awards.split("•").map((i, idx) => (
+                        <li className={`list-${idx}`}>{i}</li>
+                      ))}
                     </div>
 
                     <br />
                     <div className="about-specialties">
                       <div className="h4 font-weight-bold">Specialties</div>
                       <ul>
-                        <li>{items.primary_spl}</li>
-
+                        <li>{items.primarySpl}</li>
                       </ul>
                       <ul>
-                        <li>{items.other_spls}</li>
-
+                        <li>{items.otherSpecializations}</li>
                       </ul>
                     </div>
                     <br />
 
                     {/* </div> */}
                     <div className="abt-eduction ">
-                      <div className="h4 font-weight-bold">Miscellaneous
+                      <div className="h4 font-weight-bold">Miscellaneous</div>
+                      <div className="h6 font-weight-bold">
+                        City:
+                        <span> {items.city}</span>
                       </div>
-                      <div className="h6 font-weight-bold">City:            
-                        <span> {items.cityname}</span>
+                      <div className="h6 font-weight-bold">
+                        State:
+                        <span> {items.state}</span>
                       </div>
-                      <div className="h6 font-weight-bold">State:          
-                         <span> {items.statename}</span>
+                      <div className="h6 font-weight-bold">
+                        Country:
+                        <span> {items.country}</span>
                       </div>
-                      <div className="h6 font-weight-bold">Country:          
-                         <span> {items.country_code}</span>
-                       
-                      </div>
-                      <div className="h6 font-weight-bold">Gender: 
-                        {
-                          items.gender === 2 ?
-                            <span> Male </span>
-                            : <span> Female</span>
-                        }
+                      <div className="h6 font-weight-bold">
+                        Gender:
+                        {items.gender === 2 ? (
+                          <span> Male </span>
+                        ) : (
+                          <span> Female</span>
+                        )}
                       </div>
 
-                      {
-                      items.subscription ===1
-                       ?
+                      {/* {items.subscription === 1 ? (
                         <>
-                               
-        <Button className="ml-3 mt-4 btn-article-search" id="textComment"  onClick={this.postLead}>
-       Contact Doctor
-      </Button>
+                          <Button
+                            className="ml-3 mt-4 btn-article-search"
+                            id="textComment"
+                            onClick={this.postLead}
+                          >
+                            Contact Doctor
+                          </Button>
 
-      
+                          <Modal
+                            show={this.state.show}
+                            onHide={this.hideModal}
+                            className="rounded mt-5"
+                          >
+                            <Modal.Header
+                              className="bg-review py-3"
+                              closeButton
+                            >
+                              <Modal.Title className="pl-4">
+                                {items.prefix}. {items.docname_first}{" "}
+                                {items.docname_middle} {items.docname_last}{" "}
+                                contact info...
+                              </Modal.Title>
+                            </Modal.Header>
 
-      <Modal show={this.state.show} onHide={this.hideModal} className="rounded mt-5" >
-        <Modal.Header className="bg-review py-3" closeButton>
-          <Modal.Title className="pl-4">{items.prefix}. {items.docname_first} {items.docname_middle}{" "}
-                      {items.docname_last} contact info...</Modal.Title>
-        </Modal.Header>
-        
-        <Modal.Body className="rounded">
-        <div  className="pl-4">
-        
-        </div>
-        
-        <div className="pl-4">
+                            <Modal.Body className="rounded">
+                              <div className="pl-4"></div>
 
-        
-            </div>
-        </Modal.Body>
-        <Modal.Footer>
-       
-        </Modal.Footer>
-      </Modal>
-           
+                              <div className="pl-4"></div>
+                            </Modal.Body>
+                            <Modal.Footer></Modal.Footer>
+                          </Modal>
                         </>
-                        : null
-                    }
-         
-        
-
-                   
-                     
-
+                      ) : null} */}
                     </div>
-
                   </div>
-                  
-                  
-               
-                
 
-                  
+                  {userAccess ? (
+                    <>
+                      {this.state.rating.length === 0 ? (
+                        <span className="h5 mt-3">
+                          {" "}
+                          You feedback is valuable to us, Please rate here...{" "}
+                        </span>
+                      ) : (
+                        <p className="h5 mt-3">
+                          Your Earlier Rated {this.state.rating}{" "}
+                          <span className="icon-star-1"></span>
+                          <br />
+                          Rate Again,
+                        </p>
+                      )}
+                    </>
+                  ) : (
+                    <div className="h5 mt-3">Rate here</div>
+                  )}
+                  <div id="">
+                    <Rating
+                      docid={this.props.match.params.id.split("-")[0]}
+                      ratingVal={this.state.rating}
+                    />
+                  </div>
+
                   {
-
-userAccess?
-  <>    
-    {
-          this.state.rating.length === 0 ?
-            <span className='h5 mt-3'> You feedback is valuable to us, Please rate here... </span>
-            : <p className='h5 mt-3'>Your Earlier Rated {this.state.rating } <span className="icon-star-1"></span><br/>Rate Again,</p>
-            
-        }          
-  </>
-: <div className='h5 mt-3'>Rate here</div>
-}
-        <div id="">
-          <Rating docid={this.props.match.params.id.split('-')[0]} ratingVal={this.state.rating} />
-        </div>
-  
-
-                {
-                  // userId && items.subscription === 1 ?
-                  userId && items.subscription === 1 && userAccess != 1 ?
-                  <>
-
-                   {this.state.doctImage.length>0 ?
-
-                         <Chat  imageURL={this.state.doctImage} items={items} docid={this.state.docid} /> 
-                           : 
-                           <Chat  dummy={<i class="fas fa-user-sm "></i>} items={items} docid={this.state.docid} />
-                    
-                        }
-
-                  </>
-                  :null
-                }
-
                   
+                    userId && items.chatService == 1 && userAccess != 1 ? (
+                      <>
+                        {items.imgLoc ? (
+                          <Chat
+                            imageURL={items.imgLoc}
+                            items={items}
+                            docid={this.state.docid}
+                          />
+                        ) : (
+                          <Chat
+                            dummy={<i class="fas fa-user-sm "></i>}
+                            items={items}
+                            docid={items.docID}
+                          />
+                        )}
+                      </>
+                    ) : null
+                  }
+
                   <div className="comment-box">
-
-                    {
-                      userId ?
-                        <>
-                          <Comment refreshComments={this.getComments} docid={this.props.match.params.id.split('-')[0]} />
-                        </>
-                        : null
-                    }
-
+                    {userId ? (
+                      <>
+                        <Comment
+                          refreshComments={this.getComments}
+                          docid={this.props.match.params.id.split("-")[0]}
+                        />
+                      </>
+                    ) : null}
                   </div>
 
                   {/* SHOW ALL COMMENTS */}
                   <div className="main-hero">
-                    {!this.state.showMore ?
-                      this.state.comment.slice(0, 3).map((item, i) => (
-                        this.showComments(item, i)
-                      )) :
-                      this.state.comment.map((item, i) => (
-                        this.showComments(item, i)
-                      ))
-                    }
+                    {!this.state.showMore
+                      ? this.state.comment
+                          .slice(0, 3)
+                          .map((item, i) => this.showComments(item, i))
+                      : this.state.comment.map((item, i) =>
+                          this.showComments(item, i)
+                        )}
                   </div>
-                  {
-                    this.state.comment ?
-                      this.state.comment.length > 3 &&
-                      <button id="show-hide-comments" className="white-button-shadow btn w-100"
-                        onClick={() => {
-                          this.state.showMore ?
-                            this.setState({
-                              showMore: false
-                            }) :
-                            this.setState({
-                              showMore: true
-                            })
-                        }}>
-                        {
-                          !this.state.showMore ?
-                            'Show more'
-                            : 'Hide'
-                        }
-                      </button>
-                      : null
-                  }
+                  {this.state.comment
+                    ? this.state.comment.length > 3 && (
+                        <button
+                          id="show-hide-comments"
+                          className="white-button-shadow btn w-100"
+                          onClick={() => {
+                            this.state.showMore
+                              ? this.setState({
+                                  showMore: false,
+                                })
+                              : this.setState({
+                                  showMore: true,
+                                });
+                          }}
+                        >
+                          {!this.state.showMore ? "Show more" : "Hide"}
+                        </button>
+                      )
+                    : null}
                 </div>
                 <div className="col-md-4">
-                  <div className="profile-card doctors-article d-flex flex-column hideScroll" style={{overflowY:" auto",maxHeight:"960px"}}>
+                  <div
+                    className="profile-card doctors-article d-flex flex-column hideScroll"
+                    style={{ overflowY: " auto", maxHeight: "960px" }}
+                  >
                     <div className="h5 font-weight-bold mb-3">
                       {/* No cures By Dr. {items.docname_first} {items.docname_middle} {items.docname_last} yet */}
-                      <div className="text-center">Explore Cures</div></div>
-                    {this.state.articleItems ?
-                      this.state.articleItems.map((i, index) =>  (
-                        <AllPost
-                          id={i.article_id}
-                          title={i.title}
-                          f_title={i.friendly_name}
-                          w_title={i.window_title}
-                          type={i.type}
-                          content={decodeURIComponent(i.content ?
-                            i.content.includes('%22%7D%7D%5D%7D') ?
+                      <div className="text-center">Explore Cures</div>
+                    </div>
+                    {this.state.articleItems
+                      ? this.state.articleItems.map((i, index) => (
+                          <AllPost
+                            id={i.article_id}
+                            title={i.title}
+                            f_title={i.friendly_name}
+                            w_title={i.window_title}
+                            type={i.type}
+                            content={decodeURIComponent(
                               i.content
-                              : i.content.replace('%7D', '%22%7D%7D%5D%7D')
-                            : null)}
-                          // type = {i.type}
-                          published_date={i.published_date}
-                          over_allrating={i.over_allrating}
-                          // country = {i.country_id}
-                          imgLocation={i.content_location}
-                        // history = {props.history}
-                        />
-                      ))
-                      : null
-                    }
+                                ? i.content.includes("%22%7D%7D%5D%7D")
+                                  ? i.content
+                                  : i.content.replace("%7D", "%22%7D%7D%5D%7D")
+                                : null
+                            )}
+                            // type = {i.type}
+                            published_date={i.published_date}
+                            over_allrating={i.over_allrating}
+                            // country = {i.country_id}
+                            imgLocation={i.content_location}
+                            // history = {props.history}
+                          />
+                        ))
+                      : null}
 
-                        {this.state.articleItems.length>0 &&(
-                       
-                       <div className="d-grid mt-3 mb-5 text-center">
-      
-                     <button onClick={this.allPosts} type="button" className="btn btn-danger">
-                              Load More 
-                                 </button>
-                             </div>
-    )}
+                    {this.state.articleItems.length > 0 && (
+                      <div className="d-grid mt-3 mb-5 text-center">
+                        <button
+                          onClick={this.allPosts}
+                          type="button"
+                          className="btn btn-danger"
+                        >
+                          Load More
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -853,39 +1204,55 @@ userAccess?
               </div>
             </div>
           </section>
-          <div>
-
-
-          </div>
-          <div className="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+          <div></div>
+          <div
+            className="modal fade bd-example-modal-lg"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="myLargeModalLabel"
+            aria-hidden="true"
+          >
             <div className="modal-dialog modal-lg">
               <div className="modal-content">
                 <div className="modal-header">
-
-                  <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                  <button
+                    type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <section className="appStore" >
+                <section className="appStore">
                   <div className="container">
                     <div className="row">
-                      <div className="appStoreBg clearfix" style={{ display: "flex", width: "100%", flexWrap: 'wrap' }}>
+                      <div
+                        className="appStoreBg clearfix"
+                        style={{
+                          display: "flex",
+                          width: "100%",
+                          flexWrap: "wrap",
+                        }}
+                      >
                         <div className="col-md-6 col-sm-6 col-sx-12">
                           <div className="innerapp">
                             <div className="doc-img">
                               <img src={Doct} alt="doct" />
                             </div>
                             <div className="btn-Gropu">
-                              <a href="/#" className="appBTN">App Store</a>
-                              <a href="/#" className="appBTN">App Store</a>
+                              <a href="/#" className="appBTN">
+                                App Store
+                              </a>
+                              <a href="/#" className="appBTN">
+                                App Store
+                              </a>
                             </div>
                           </div>
                         </div>
-
                       </div>
                     </div>
                   </div>
-
                 </section>
               </div>
             </div>
@@ -893,15 +1260,8 @@ userAccess?
           <Footer />
         </div>
       );
-
     }
-
   }
 }
 
 export default Profile;
-
-
-
-
-
