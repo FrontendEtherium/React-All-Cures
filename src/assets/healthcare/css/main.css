@@ -808,7 +808,6 @@ position: absolute;
   vertical-align: middle;
   object-fit: cover;
 }
-
 #specialists .item-imgsBack , #featured .item-imgsBack,
 #doctor .item-imgsBack {
   background: no-repeat center center;
@@ -823,11 +822,16 @@ position: absolute;
 }
 
 .item-imgs{
-  
-  width:292px !important;
+  /* width:167px !important;
+  height:170px;
+   */
+
+   width:292px !important;
   height:297px;
   
 }
+
+
 @media only screen and (min-width: 220px) and (max-width: 760px) {
 
   #specialists .item-imgsBack , #featured .item-imgsBack,
@@ -1210,7 +1214,6 @@ button.appBtn:hover {
   }
 }
 
-
 @media only screen and (max-width: 767px) {
   .textSize{
     font-size:18px;
@@ -1222,7 +1225,7 @@ button.appBtn:hover {
 }
 .copyRight p {
   padding-top: 16px;
-  font-size: 18px;
+   font-size: 18px;
 /*   margin-right: -110px; */
 }
 .footer-bootm .logo {
@@ -2839,7 +2842,8 @@ img#heartend {
 
 .image-edit-icon {
   position: absolute;
-  bottom: 0;
+  /* bottom: 0; */
+  bottom: 132px;
   right: -1.5rem;
 }
 .notchedOutline {
@@ -2955,6 +2959,7 @@ box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
  display: table;
 }
 }
+
 .hideScroll::-webkit-scrollbar {
     width: 0.1rem; /* You can adjust the width */
   }
