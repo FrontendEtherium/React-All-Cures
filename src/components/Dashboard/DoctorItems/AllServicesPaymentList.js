@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import { backendHost } from '../../../api-config';
+import {userAccess} from'../../UserAccess';
 
 import axios from 'axios';
 
@@ -64,6 +65,8 @@ const AllServicesPaymentList = () => {
                                <div className="pb-2"><span className="font-weight-bold">Last Updated  on:</span> {i.lastUpdatedDate?i.lastUpdatedDate.split('T')[0]:""}</div>
                                <div className="pb-2"><span className="font-weight-bold">Updated By:</span> {i.updated_Name}</div>
                               
+
+                               {userAccess !=8 &&
                               
                             <div className="row mx-1 my-2">
                             <Link to={`/dashboard?updateallservicespaymentlist=${i.servicePaymentMasterID}`} className="col-md-3 btn mr-2" style={{backgroundColor: '#9289be', color: '#fff'}}>Edit</Link>
@@ -82,6 +85,8 @@ const AllServicesPaymentList = () => {
 
                                 }
                             </div>
+                }
+
                         </div>
                     )
                 })
