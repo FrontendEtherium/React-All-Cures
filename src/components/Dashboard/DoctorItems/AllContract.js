@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom'
 import { backendHost } from '../../../api-config';
+import {userAccess} from'../../UserAccess';
 
 import axios from 'axios';
 function GetPromo(){
@@ -60,6 +61,8 @@ function GetPromo(){
                                 }
                                 </div>
                             {/* </div> */}
+
+                        {userAccess !=8 &&
                             <div className="row mx-1 my-2">
                             <Link to={`/dashboard?updatecontract=${i.contractId}`} className="col-md-3 btn mr-2" style={{backgroundColor: '#9289be', color: '#fff'}}>Edit</Link>
                             {
@@ -76,6 +79,8 @@ function GetPromo(){
                             }
                             
                             </div>
+
+                        }
                         </div>
                     )
                 })
