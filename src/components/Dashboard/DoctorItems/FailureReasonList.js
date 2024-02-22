@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import { backendHost } from '../../../api-config';
+import {userAccess} from'../../UserAccess';
 
 import axios from 'axios';
 
@@ -67,6 +68,8 @@ const  FailureReasonList = () => {
                                 : <span> Inactive</span>}</div>
                               
                               
+
+                              {userAccess !=8 &&
                             <div className="row mx-1 my-2">
                             <Link to={`/dashboard?updatefailurereasonlist=${i.failureID}`} className="col-md-3 btn mr-2" style={{backgroundColor: '#9289be', color: '#fff'}}>Edit</Link>
                            
@@ -87,6 +90,8 @@ const  FailureReasonList = () => {
 
                             
                             </div>
+
+                            }
                         </div>
                     )
                 })
