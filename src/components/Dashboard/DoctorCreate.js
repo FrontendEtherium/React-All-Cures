@@ -50,7 +50,7 @@ function App() {
   const[featuredDoc,setFeaturedDoc] = useState()
   const[image,setImage] = useState()
   const[regDate,setRegDate] = useState()
-  const[regId,setRegId] = useState()
+  const[regId,setRegId] = useState(0)
   const[regNo,setRegNo] = useState()
   const[medTypeId,setMedTypeId] = useState()
   const[other,setOther] = useState()
