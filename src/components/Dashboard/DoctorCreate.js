@@ -80,7 +80,7 @@ const[medicinelist,setMedicineList] = useState()
          "RegWithStateBoardID":parseInt(regId),
          "NatlRegNo":regNo,
          "MedicineTypeID":parseInt(medTypeId),
-         "CreatedBy":userId,
+         "CreatedBy":parseInt(userId),
          
     })
     .then(res => {
