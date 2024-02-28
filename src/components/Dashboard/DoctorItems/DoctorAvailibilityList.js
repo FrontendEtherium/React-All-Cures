@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import { backendHost } from '../../../api-config';
+import {userAccess} from'../../UserAccess';
 
 import axios from 'axios';
 
@@ -79,7 +80,10 @@ const DoctorAvailibilityList = () => {
                                 : <span> Inactive</span>}</div>
                                <div className="pb-2"><span className="font-weight-bold">Created By:</span> {i.created_Name}</div>
                                <div className="pb-2"><span className="font-weight-bold">Updated By:</span> {i.updated_Name}</div>
-                              
+
+
+                               {userAccess !=8 &&
+                                                               
                             <div className="row mx-1 my-2">
                             <Link to={`/dashboard?updateAvailibilityList=${i.docId}`} className="col-md-3 btn mr-2" style={{backgroundColor: '#9289be', color: '#fff'}}>Edit</Link>
                            
@@ -101,6 +105,8 @@ const DoctorAvailibilityList = () => {
 
                             
                             </div>
+
+                            }
                         </div>
                     )
                 })
