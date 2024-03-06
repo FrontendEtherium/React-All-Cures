@@ -1,0 +1,49 @@
+# Change YOUR_TOKEN to your prerender token
+# Change https://service.prerender.io/ (at the end of the last RewriteRule)
+# to http://localhost:3000/ when testing with a local prerender server
+<IfModule mod_brotli.c>
+    AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml text/css text/javascript application/javascript application/x-javascript application/json application/xml
+</IfModule>
+
+Options +FollowSymLinks
+RewriteEngine On
+
+# Redirect from non-www to www
+RewriteCond %{HTTP_HOST} ^all-cures.com [NC]
+RewriteRule ^(.*)$ https://www.all-cures.com/$1 [L,R=301]
+
+#RewriteEngine On
+#RewriteCond %{HTTPS} !=on
+#RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+#RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+
+#RewriteCond %{HTTPS} !on
+#RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+<IfModule mod_headers.c>
+    RequestHeader set X-Prerender-Token "r6ZD98roW0gkv6W7iv4F"
+    RequestHeader set X-Prerender-Version "prerender-apache@2.0.0"
+ # Add Content Security Policy (CSP) header
+    Header set Content-Security-Policy "upgrade-insecure-requests"
+# Add HSTS header
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+</IfModule>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    <IfModule mod_proxy_http.c>
+        RewriteCond %{HTTP_USER_AGENT} googlebot|bingbot|yandex|baiduspider|facebookexternalhit|twitterbot|rogerbot|linkedinbot|embedly|quora\ link\ preview|showyoubot|outbrain|pinterest\/0\.|pinterestbot|slackbot|vkShare|W3C_Validator|whatsapp [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} !Mozilla/5.0\ \(Windows\ NT\ 6\.1;\ WOW64;\ rv:40\.0\)\ Gecko/20100101\ Firefox/40.1 [NC]
+        RewriteCond %{QUERY_STRING} _escaped_fragment_
+        RewriteCond %{REQUEST_URI} ^(?!.*?(\.js|\.css|\.xml|\.less|\.png|\.jpg|\.jpeg|\.gif|\.pdf|\.doc|\.txt|\.ico|\.rss|\.zip|\.mp3|\.rar|\.exe|\.wmv|\.doc|\.avi|\.ppt|\.mpg|\.mpeg|\.tif|\.wav|\.mov|\.psd|\.ai|\.xls|\.mp4|\.m4a|\.swf|\.dat|\.dmg|\.iso|\.flv|\.m4v|\.torrent|\.ttf|\.woff|\.svg))
+
+        RewriteRule ^(index\.html|index\.php)?(.*) https://service.prerender.io/%{REQUEST_SCHEME}://%{HTTP_HOST}/$2 [P,END]
+    </IfModule>
+</IfModule>
+
+RewriteEngine On
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+RewriteRule ^ - [L]
+RewriteRule ^ /index.html [L]
+
