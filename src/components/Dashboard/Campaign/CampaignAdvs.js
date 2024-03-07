@@ -92,7 +92,7 @@ const AllAdds = () => {
             value={searchType}
             onChange={(e) => setSearchType(e.target.value)}
           >
-            <option value="name">Search by Campaign Name</option>
+            <option value="name"> Search by Campaign Name</option>
             <option value="date">Search by Create Date</option>
             <option value="startDate">Search by Start Date</option>
             <option value="endDate">Search by End Date</option>
