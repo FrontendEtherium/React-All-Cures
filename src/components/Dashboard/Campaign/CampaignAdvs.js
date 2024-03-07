@@ -39,7 +39,7 @@ const AllAdds = () => {
          }
       
           axios
-            .post(`${backendHost}/sponsored/search/campaignsads`, searchCriteria)
+            .post(`${backendHost}/sponsored/search/campaignsads`,searchCriteria)
             .then((res) => {
                 setAllAdds(res.data);
             })
