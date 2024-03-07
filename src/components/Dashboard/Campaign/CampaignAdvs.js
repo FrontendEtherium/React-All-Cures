@@ -81,7 +81,7 @@ const AllAdds = () => {
 
             placeholder={`Search By ${searchType === 'name' ? 'Campaign Name' : searchType === 'date' ? 'Create Date' : searchType === 'startDate' ? 'Start Date' : searchType === 'endDate' ? 'End Date' : searchType === 'type' ? 'Ad Type Name' : searchType === 'slot' ? 'Slot Name' : ''}`}
 
-            className="form-control "
+            className="form-control"
             required
           />
         </div>
