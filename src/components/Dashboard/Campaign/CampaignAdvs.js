@@ -88,7 +88,7 @@ const AllAdds = () => {
 
         <div className="col-md-3 mt-2">
           <select
-            className="form-control "
+            className="form-control"
             value={searchType}
             onChange={(e) => setSearchType(e.target.value)}
           >
