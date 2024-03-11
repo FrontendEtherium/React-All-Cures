@@ -8,6 +8,7 @@ import "../../assets/healthcare/css/responsive.css";
 import "../../assets/healthcare/css/animate.css";
 import "../../assets/healthcare/icomoon/style.css";
 import { Container, Button } from "react-bootstrap";
+import { makeStyles } from '@material-ui/core/styles';
 import axios from "axios";
 import EditProfile from "./EditProfile";
 import { backendHost } from "../../api-config";
@@ -18,7 +19,7 @@ import { userId } from "../UserId";
 import { userAccess } from "../UserAccess";
 import AllPost from "../BlogPage/Allpost";
 import Heart from "../../assets/img/heart.png";
-import { Modal } from "react-bootstrap";
+import { Modal,Alert } from "react-bootstrap";
 
 import HelmetMetaData from "../HelmetMetaData";
 import { imagePath } from "../../image-path";
@@ -26,16 +27,58 @@ import Chat from "./Chat";
 import VideoCallOutlined from "@mui/icons-material/VideoCallOutlined";
 import { green, pink } from "@mui/material/colors";
 import Avatar from "@mui/material/Avatar";
-// import dayjs from "dayjs";
+// import Calendar from 'react-calendar';
+import dayjs from "dayjs";
+
+import { subDays, isBefore, addDays } from 'date-fns';
 
 import DailyIframe from '@daily-co/daily-js';
-// import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-// import {
-//   LocalizationProvider,
-//   DatePicker,
-//   TimePicker,
-// } from "@mui/x-date-pickers";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import {
+  LocalizationProvider,
+  StaticDatePicker,
+  TimePicker,
+} from "@mui/x-date-pickers";
+
+
+import { PickersDay } from "@mui/x-date-pickers/PickersDay";
+import { styled } from "@mui/material/styles";
+import moment from 'moment'
+
+
+
+const HighlightedDay = styled(PickersDay)(({ theme }) => ({
+  "&.Mui-selected": {
+    backgroundColor: theme.palette.error.light,
+    color: theme.palette.primary.contrastText,
+  },
+}));
+
+
+class ServerDay extends Component {
+  render() {
+    const { highlightedDays = [], day, outsideCurrentMonth, ...other } =
+      this.props;
+
+    const isSelected =
+      !this.props.outsideCurrentMonth &&
+      highlightedDays.includes(day.format("YYYY-MM-DD"));
+
+    return (
+      <HighlightedDay
+        {...other}
+        outsideCurrentMonth={outsideCurrentMonth}
+        day={day}
+        selected={isSelected}
+      />
+    );
+  }
+}
+
+
+
+
 
 
 class Profile extends Component {
@@ -74,52 +117,107 @@ class Profile extends Component {
       callFrame:null,
       videoLink:null,
       availStatus:null,
+      // value: new Date(),
+      // date: new Date()
+
+      value: dayjs(),
+      // highlightedDays: [ "2024-03-06", "2024-03-15",'2024-03-11','2024-03-18','2024-04-03'],
+      highlightedDays:[],
+      unavailableDates:[],
+      // unavailableDates:[ "2024-03-07", "2024-03-16",'2024-03-12','2024-03-19'],
+      // timeSlots:['10:00:00 AM','10:45:00 AM','11:30:00 AM','12:15:00 PM','13:00:00 PM','13:45:00 PM','14:30:00 PM','15:15:00 PM','16:00:00 PM','16:45:00 PM','17:30:00 PM'],
+      timeSlots:[],
+      unbookedSlots:[],
+      selectedTimeSlot:'',
+      selectedDate: "", // Initialize selectedDate state   
+      alert:false,
+      alertBooking:false,
+
     };
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
   }
 
 
+   disableDate = (date) => {
+    const currentDate = new Date();
+    const isPastDate = date< currentDate;
+    const isBooked = this.state.highlightedDays.includes(date.format("YYYY-MM-DD"));
+    const isUnavail = this.state.unavailableDates.includes(date.format("YYYY-MM-DD"));
+    return  isBooked || isUnavail;
+  };
 
+  // highlightedDays are completely booked dates
+  // unavailabledates are when doctor is not avail for whole day
+
+
+
+  // renderDay = (date, selectedDate, dayInCurrentMonth) => {
+  //   const isBooked = this.state.bookedDates.includes(date.toISOString().split('T')[0]); // Check if date is in bookedDates array
+  //   return (
+  //     <div
+  //       style={{
+  //         backgroundColor: isBooked ? 'red' : 'inherit',
+  //         color: isBooked ? 'white' : 'inherit',
+  //         borderRadius: '50%', // Optional: adds a circular background for the booked dates
+  //         pointerEvents: isBooked ? 'none' : 'auto', // Disable pointer events for booked dates
+  //       }}
+  //     >
+  //       {date.getDate()}
+  //     </div>
+  //   );
+  // };
+
+
+
+  handleDatesChange = (newValue) => {
+    this.setState({
+      value: newValue,
+      selectedDate: newValue.format("YYYY-MM-DD"), // Update selectedDate state
+    });
+
+
+    fetch(`${backendHost}/appointments/get/Slots/${this.props.match.params.id.split("-")[0]}`)
   
+    .then((res) => res.json())
+      .then((json) => {
 
-  //  newTheme = (theme) => createTheme({
-  //   ...theme,
-  //   components: {
-  //     MuiPickersDay: {
-  //       styleOverrides: {
-  //         root: {
-  //           color: '#1565c0',
-  //           borderRadius: 2,
-  //           borderWidth: 1,
-  //           borderColor: '#2196f3',
-  //           border: '1px solid',
-  //           backgroundColor: '#bbdefb',
-  //         }
-  //       }
-  //     }
-  //   }
-  // })
+      console.log('response',json)
+       // Extract the totalDates from the JSON response
+       const totalDates = json.totalDates;
 
-  // Define a function to determine whether a date should be disabled
-   shouldDisableDate = (date) => {
-    // Your logic to determine if the date should be disabled
-    // For example, let's say you want to disable dates in the past
-    const currentDate = new Date();
-    return date < currentDate;
+       // Extract the first date from totalDates object
+       const firstDate = Object.keys(totalDates)[0];
+       
+       // Extract the timeslots for the first date
+       const timeslots = totalDates[firstDate];
+
+       console.log('Allslots',timeslots)
+       console.log(json.unbookedSlots,'unbooked')
+       console.log('selected state',this.state.selectedDate)
+ 
+       
+
+       const unbookedSlots = json.unbookedSlots[this.state.selectedDate] || [];
+
+       // Check if unbookedSlots array is empty
+       if (unbookedSlots.length === 0) {
+         console.log('No unbooked slots available for the selected date',this.state.selectedDate);
+       }
+ 
+       // Set the state of unbookedSlots using the extracted unbooked slots
+       this.setState({
+         unbookedSlots: unbookedSlots,
+       });
+      
+      });
   };
 
-   // Define a function to determine the custom color for each date
-   getCustomColor = (date) => {
-    // Your logic to determine the custom color for the date
-    // For example, let's say you want to color dates in the future differently
-    const currentDate = new Date();
-    return date > currentDate ? 'green' : 'red';
-  };
 
-  handleDateChange = (newDate) => {
-    this.setState({ selectedDate: newDate });
-  };
+
+  // handleDateChange = (newDate) => {
+  //   this.setState({ selectedDate: newDate });
+  // };
 
   handleTimeChange = (newTime) => {
     this.setState({ selectedTime: newTime });
@@ -146,6 +244,38 @@ class Profile extends Component {
       (event) => this.handleImageSubmission(event)
     );
   };
+
+
+  bookAppn=(e)=>{
+    e.preventDefault();
+
+    console.log('clicked bboking')
+    // const time = moment(this.state.selectedTime, 'HH:mm').toDate();
+    console.log('time', dayjs(this.state.selectedTime).format("HH:mm"))
+
+// Format the time to the desired format, e.g., "1:15 PM"
+// const formattedTime = moment(time).format('h:mm A');
+
+
+    axios.post(`${backendHost}/appointments/create`,{
+     
+      "docID": this.state.docid,
+      // "userID": parseInt(userId),
+      "userID": 84,
+      "appointmentDate": this.state.selectedDate,
+      "startTime":this.state.selectedTimeSlot,
+      "paymentStatus": 0,
+      
+       
+  })
+  .then((res)=>{
+  this.setState({ alertBooking: true });
+  setTimeout(() => {
+    this.setState({ alertBooking: false });
+  }, 4000)
+  // .catch(res => console.log(res))
+})
+  }
 
   handleImageSubmission = (e) => {
     // e.preventDefault()
@@ -202,6 +332,40 @@ class Profile extends Component {
   };
   // DOCTOR'S WRITTEN CURES
 
+
+//   onChange(value) {
+//     this.setState({ value });
+//   }
+
+  // handleDateChange(date) {
+  //   this.setState({ date });
+  // }
+
+
+
+//   tileDisabled = ({ date, view }) => {
+//     const today = new Date();
+//     const thirtyDaysFromNow = new Date();
+//     thirtyDaysFromNow.setDate(today.getDate() + 30);
+//     return date < today || date > thirtyDaysFromNow;
+//   };
+
+//   // Function to customize tile content
+//   tileContent = ({ date, view }) => {
+//     // Example: Mark dates 5 days from now as blue and 10 days from now as red
+//     const fiveDaysFromNow = new Date();
+//     fiveDaysFromNow.setDate(fiveDaysFromNow.getDate() + 5);
+//     const tenDaysFromNow = new Date();
+//     tenDaysFromNow.setDate(tenDaysFromNow.getDate() + 10);
+
+//     if (date.toDateString() === fiveDaysFromNow.toDateString()) {
+//       return <div className="blue-dot"></div>;
+//     } else if (date.toDateString() === tenDaysFromNow.toDateString()) {
+//       return <div className="red-dot"></div>;
+//     }
+//     return null;
+//   };
+
   allPosts = () => {
     // For all available blogs "/blogs"
     fetch(
@@ -227,35 +391,7 @@ class Profile extends Component {
       });
   };
 
-  // getImg = () => {
-  //   fetch(`${backendHost}/data/doctor/image`)
-  //     .then((res) => res.json())
-  //     .then((json) => {
-  //       let matchedImageLoc = ""; // Default image location
-
-  //       for (let i = 0; i < json.length; i++) {
-  //         if (
-  //           json[i].docID == this.state.items.docID &&
-  //           json[i].img_Loc != null
-  //         ) {
-  //           matchedImageLoc = `https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp${json[i].img_Loc}`;
-  //           break; // Break the loop once a match is found
-  //         } else if (
-  //           json[i].docID == this.state.items.docID &&
-  //           json[i].img_Loc == null
-  //         ) {
-  //           // matchedImageLoc = this.onError();
-  //           this.setState({
-  //             isDefaultImage: true,
-  //           });
-  //         }
-  //       }
-
-  //       this.setState({
-  //         doctImage: matchedImageLoc,
-  //       });
-  //     });
-  // };
+  
 
   getComments = (id) => {
     axios
@@ -362,6 +498,95 @@ class Profile extends Component {
       });
       
   };
+
+
+
+  fetchAppointmentDetails = (id) => {
+    fetch(`${backendHost}/appointments/get/Slots/${id}`)
+  
+    .then((res) => res.json())
+      .then((json) => {
+
+      console.log('response',json)
+       // Extract the totalDates from the JSON response
+      //  const totalDates = json.totalDates;
+
+       // Extract the first date from totalDates object
+       const firstDate = Object.keys(json.totalDates)[0];
+       
+       // Extract the timeslots for the first date
+       const timeslots = json.totalDates[firstDate];
+
+       console.log('Allslots',timeslots)
+       console.log(json.unbookedSlots,'unbooked')
+       console.log('selected state',this.state.selectedDate)
+
+       const highlightedDate = json.completelyBookedDates;
+       console.log(highlightedDate,'highlighteddates')
+ 
+       // Set the state of timeslots using the extracted timeslots
+       this.setState({
+         timeSlots: timeslots,
+         highlightedDays:highlightedDate
+       });
+
+
+//
+
+const totalDates = Object.keys(json.totalDates);
+
+
+const generateDateRange = (startDate, endDate) => {
+  const dates = [];
+  let currentDate = new Date(startDate);
+  while (currentDate <= endDate) {
+      dates.push(currentDate.toISOString().slice(0, 10));
+      currentDate = new Date(currentDate.getTime() + (24 * 60 * 60 * 1000));
+  }
+  return dates;
+};
+
+           
+
+           // Generate all possible dates for the next 30 days
+           const currentDate = new Date();
+           const next30Days = new Date(currentDate.getTime() + (30 * 24 * 60 * 60 * 1000));
+           const allPossibleDates = generateDateRange(currentDate, next30Days);
+
+           // Find the missing dates
+           const missingDates = allPossibleDates.filter(date => !totalDates.includes(date));
+
+            console.log('missing dates',missingDates)
+   
+            this.setState({
+              unavailableDates: missingDates
+            })
+             
+
+
+
+
+
+
+       const unbookedSlots = json.unbookedSlots[this.state.selectedDate] || [];
+
+       // Check if unbookedSlots array is empty
+       if (unbookedSlots.length === 0) {
+         console.log('No unbooked slots available for the selected date',this.state.selectedDate);
+       }
+ 
+       // Set the state of unbookedSlots using the extracted unbooked slots
+       this.setState({
+         unbookedSlots: unbookedSlots,
+       });
+      
+      });
+      
+  };
+
+
+
+
   showRating = (val) => {
     if (document.getElementById("doctor-avg-rating")) {
       for (let i = 0; i < val; i++) {
@@ -383,6 +608,69 @@ class Profile extends Component {
       });
     }
   };
+
+
+
+
+  // calendarStyle = {
+  //   backgroundColor: 'white',
+  //   color: 'black',
+  //   fontSize: '16px',
+  //   border: '1px solid black',
+  //   borderRadius: '1px',
+  //   width: '600px', // Example width
+  //   height: '500px', // Example height
+  // };
+
+
+
+  //  tileContent = ({ date }) => {
+  //   // Get today's date
+  //   const today = new Date();
+  
+  //   // Get the date 30 days from today
+  //   const next30Days = new Date();
+  //   next30Days.setDate(today.getDate() + 30);
+  
+  //   // Check if the date is within the range of today to the next 30 days
+  //   const isWithinRange = date >= today && date <= next30Days;
+  
+  //   // Check if the date is odd or even
+  //   const isEvenDate = date.getDate() % 2 === 0;
+  
+  //   // Define styles for the date based on whether it's within the range and odd/even
+  //   const tileStyle = {
+  //     backgroundColor: isWithinRange ? (isEvenDate ? 'lightblue' : 'red') : 'lightgray',
+  //     color: isWithinRange ? 'black' : 'gray', // Adjust text color as needed
+  //     borderRadius: '50%', // Optional: make dates circular
+  //     width: '30px', // Optional: adjust width of each date
+  //     height: '30px', // Optional: adjust height of each date
+  //     display: 'flex',
+  //     justifyContent: 'center',
+  //     alignItems: 'center',
+  //   };
+  
+  //   return (
+  //     <div style={tileStyle}>
+  //       {date.getDate()} {/* Render the date */}
+  //     </div>
+  //   );
+  // };
+
+
+
+
+//    isWithinNext30Days = (date) => {
+//     const today = new Date();
+//     const next30Days = addDays(today, 30);
+//     return isBefore(date, next30Days) && !isBefore(date, today);
+// };
+
+// // Function to check if a date is in the past
+//  isPastDate = (date) => {
+//     const today = new Date();
+//     return isBefore(date, today);
+// };
 
   // componentDidMount() {
   //   window.scrollTo(0, 0);
@@ -408,6 +696,7 @@ class Profile extends Component {
     window.scrollTo(0, 0);
     this.fetchDoctorData(this.props.match.params.id.split("-")[0]);
     this.fetchAvailStatus(this.props.match.params.id.split("-")[0]);
+    this.fetchAppointmentDetails(this.props.match.params.id.split("-")[0]); 
     this.getComments(this.props.match.params.id.split("-")[0]);
     this.getRating(this.props.match.params.id.split("-")[0]);
     this.getRate(this.props.match.params.id.split("-")[0]);
@@ -474,6 +763,17 @@ class Profile extends Component {
       show: true,
     });
   };
+
+  handleTimeSlot =(time)=>{
+console.log('handle')
+    console.log('time',time)
+    this.setState(
+      { selectedTimeSlot: time },
+      () => {
+        console.log("selectedslot", this.state.selectedTimeSlot);
+      }
+    );
+  }
 
   checkIfImageExits = (imageUrl) => {
     fetch(imageUrl, { method: "HEAD" })
@@ -552,6 +852,10 @@ class Profile extends Component {
   }
 
   render() {
+
+    const { value, highlightedDays } = this.state;
+    const today = dayjs();
+
     const { selectedDate, selectedTime } = this.state;
     var { isLoaded, items } = this.state;
     if (!isLoaded) {
@@ -644,7 +948,7 @@ class Profile extends Component {
                           {items.imgLoc? (
                             <img
                               alt={items.firstName}
-                              src={`https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-180,h-230,f-webp${items.imgLoc}`}
+                              src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-180,h-230,f-webp${items.imgLoc}`}
                             />
                           ) : (
                             <i class="fas fa-user-md fa-6x"></i>
@@ -673,95 +977,6 @@ class Profile extends Component {
                            
                           </button>
 
-                          <div
-                            class="modal fade"
-                            id="exampleModal"
-                            tabindex="-1"
-                            role="dialog"
-                            aria-labelledby="exampleModalLabel"
-                            aria-hidden="true"
-                          >
-                            <div class="modal-dialog" role="document">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5
-                                    class="modal-title p-3 font-weight-bold "
-                                    id="exampleModalLabel"
-                                  >
-                                    Schedule your Appointment
-                                  </h5>
-                                  <button
-                                    type="button"
-                                    class="close"
-                                    data-dismiss="modal"
-                                    aria-label="Close"
-                                  >
-                                    <span aria-hidden="true">&times;</span>
-                                  </button>
-                                </div>
-                                {/* <div
-                                  class="modal-body"
-                                  style={{ minHeight: "500px" }}
-                                >
-                                  <div className="d-flex">
-                                   
-                                  </div>
-
-                                  <LocalizationProvider
-                                    dateAdapter={AdapterDayjs}
-                                  >
-                                    <DemoContainer
-                                      components={["DatePicker", "TimePicker"]}
-                                    >
-
-                                    
-                                      <DatePicker
-                                        label="Select Date"
-                                        value={selectedDate}
-                                        onChange={this.handleDateChange}
-                                        shouldDisableDate={this.state.shouldDisableDate}
-
-                                        renderDay={(date, _value, dayInCurrentMonth, dayComponent) => {
-                                          const customColor = this.getCustomColor(date);
-                                          return React.cloneElement(dayComponent, {
-                                            style: { color: customColor },
-                                          });
-                                        }}
-
-                                       
-                                      />
-                                      
-
-                                      <TimePicker
-                                        label="Select Time"
-                                        value={selectedTime}
-                                        onChange={this.handleTimeChange}
-                                        minutesStep={15}
-                                      />
-                                    </DemoContainer>
-                                  </LocalizationProvider>
-
-                                  <div>
-                                    {selectedDate && (
-                                      <p>
-                                        Selected Date:{" "}
-                                        {dayjs(selectedDate).format(
-                                          "YYYY-MM-DD"
-                                        )}
-                                      </p>
-                                    )}
-
-                                    {selectedTime && (
-                                      <p>
-                                        Selected Time:{" "}
-                                        {dayjs(selectedTime).format("HH:mm")}
-                                      </p>
-                                    )}
-                                  </div>
-                                </div> */}
-                              </div>
-                            </div>
-                          </div>
                         </div>
     }
                         {this.props.match.params.id.split("-")[0] === userId ||
@@ -812,7 +1027,7 @@ class Profile extends Component {
                         <div className="profile-infoL-card">
                           <div className="profile-info-name" id="DocDetails">
                             <div className="h4 font-weight-bold">
-                              {items.prefix}. {items.firstName}{" "}
+                              {items.prefix} {items.firstName}{" "}
                               {items.middleName} {items.lastName}{" "}
                               {/* Show average rating */}
                               {this.state.ratingValue ? (
@@ -861,6 +1076,221 @@ class Profile extends Component {
                                 Edit Profile
                               </Button>
                             ) : null}
+
+
+
+                               <button
+                            type="button"
+                            class="btn btn-primary bg-dark border-0 ml-2"
+                            data-toggle="modal"
+                            data-target="#exampleModal"
+                          >
+                           Schedule Your Appointment
+                          </button>
+                          
+                          <div
+                            class="modal fade"
+                            id="exampleModal"
+                            tabindex="-1"
+                            role="dialog"
+                            aria-labelledby="exampleModalLabel"
+                            aria-hidden="true"
+                          >
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content" style={{minWidth:"600px"}}>
+                                <div class="modal-header">
+                                  <h5
+                                    class="modal-title p-3 font-weight-bold "
+                                    id="exampleModalLabel"
+                                  >
+                                    Schedule your Appointment
+                                  </h5>
+                                  <button
+                                    type="button"
+                                    class="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                  >
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div
+                                  class="modal-body"
+                                  style={{ minHeight: "500px" }}
+                                >
+                                  {/* <div className="d-flex">
+                                   
+                                  </div> */}
+
+
+                                  {/* <Calendar onChange={this.onChange} value={this.state.value} /> */}
+                                    
+{/* 
+                                    <div style={this.calendarStyle}>
+                                  <Calendar 
+                                   onChange={this.state.date} 
+                                   value={this.state.value}
+                                   tileContent={this.tileContent}
+                                 className="calButton"
+                                    />
+
+                                    </div>
+
+                                  <p className='text-center'>
+          <span className='bold'>Selected Date:</span>{' '}
+          {this.state.date.toDateString()}
+        </p> */}
+
+
+        <div className="row">
+
+          <div className="col">
+
+                                  <LocalizationProvider
+                                    dateAdapter={AdapterDayjs}
+                                  >
+                                    <DemoContainer
+                                      components={["DatePicker", "TimePicker"]}
+                                    >
+
+                                    
+{/* <StaticDatePicker
+    label="Select Date"
+    value={selectedDate}
+    onChange={this.handleDateChange}
+    sx={{
+        '.MuiPickersDay-root': {
+            borderRadius: 6,
+            borderWidth: 1,
+            borderColor: '#2196f3',
+            border: '1px solid',
+            backgroundColor: '#bbdefb',
+            '&:nth-child(even)': {
+                backgroundColor: '#FFC0CB', // Example color for even days
+            },
+            '&:nth-child(odd)': {
+                backgroundColor: '#87CEEB', // Example color for odd days
+            },
+        },
+    }}
+/> */}
+
+
+
+         
+
+            <StaticDatePicker
+            defaultValue={today}
+            minDate={today}
+            maxDate={today.add(1, "month")}
+            slots={{
+              day: ServerDay,
+            }}
+            slotProps={{
+              day: {
+                highlightedDays,
+              },
+            }}
+        
+
+            onChange={this.handleDatesChange} // Add onChange to update selectedDate
+            showToolbar={false} 
+            shouldDisableDate={this.disableDate}
+            // renderDay={this.renderDay}
+          />
+          
+           
+
+
+                                      
+
+                                      {/* <TimePicker
+                                        label="Select Time"
+                                        value={selectedTime}
+                                        onChange={this.handleTimeChange}
+                                        minutesStep={15}
+                                      /> */}
+
+
+                                    
+                                    </DemoContainer>
+                                  </LocalizationProvider>
+                                  </div>
+                                      <div className="col p-5">
+
+
+                                      {this.state.selectedDate && 
+                                      <>
+
+                                        <p> Select Time Slot</p>
+                                        
+
+                                      {
+                                        this.state.timeSlots && this.state.timeSlots.map((time,index)=>{
+
+                                          const isUnbooked = this.state.unbookedSlots.includes(time);
+
+                                          return(
+                                            <div className="row pt-2">
+                                              <div col-md-6 className=""> 
+                                              <div style={{minWidth:"100px"}}>                                          
+                                              <Button variant={isUnbooked ? "outline-primary" : "outline-danger"}  disabled={!isUnbooked}  className="w-100 d-block"  onClick={() => this.handleTimeSlot(time)}>{time}</Button>
+                                              {/* onClick={()=>this.handleTimeSlot(time)} */}
+                                              </div>
+
+                                               </div>
+                                             </div>
+                                          )
+                                        })
+                                      }
+                                      </>
+
+                                    }
+           
+
+                                      </div>
+
+                                  </div>
+
+                                  <div>
+                                    {this.state.selectedDate&& (
+                                      <p style={{fontSize:"20px"}}>
+                                        Selected Date:{" "}
+                                        {dayjs(this.state.selectedDate).format(
+                                          "YYYY-MM-DD"
+                                        )}
+                                      </p>
+                                    )}
+
+                                  {this.state.selectedTimeSlot && (
+                                      <p className="fw-bold">
+                                        Selected Time:{this.state.selectedTimeSlot}
+                                        {/* {dayjs(selectedTime).format("HH:mm")} */}
+                                      </p>
+                                  )}
+                                  </div>
+
+
+                                  <Button
+                                variant="dark"
+                                onClick={this.bookAppn}
+                                className="p-2 m-2"
+                              >
+                                Book Appointment
+                              </Button>
+
+
+                              
+                              {
+                            this.state.alertBooking?
+                                <Alert variant="success" className="h6 mx-3">Booked successfully!!</Alert>
+                                : null
+                        }
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
 
                             <EditProfile
                               show={this.state.modalShow}
