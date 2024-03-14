@@ -2968,3 +2968,20 @@ box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
     background-color:transparent;
     
   }
+
+@media only screen and (min-width: 320px) and (max-width: 575px) 
+  {
+
+    .css-4pax7l-MuiPickersLayout-root .MuiPickersLayout-toolbar {
+      grid-column: 1 !important;
+    }
+    .css-16b5y55-MuiPickersLayout-contentWrapper {
+      grid-column: 1 !important;
+    }
+
+    button.close.appn{
+      left:350px;
+    }
+  }
+
+  
