@@ -269,12 +269,13 @@ class Profile extends Component {
        
   })
   .then((res)=>{
-  if (res === 1) {
+ if (res.data == 1) {
       this.setState({ alertBooking: true });
       setTimeout(() => {
         this.setState({ alertBooking: false });
-      }, 4000);
+      }, 5000);
     }
+   
   // .catch(res => console.log(res))
 })
   }
