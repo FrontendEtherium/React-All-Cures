@@ -265,16 +265,16 @@ class Profile extends Component {
       "appointmentDate": this.state.selectedDate,
       "startTime":this.state.selectedTimeSlot,
       "paymentStatus": 0,
-
-      
       
        
   })
   .then((res)=>{
-  this.setState({ alertBooking: true });
-  setTimeout(() => {
-    this.setState({ alertBooking: false });
-  }, 4000)
+  if (res === 1) {
+      this.setState({ alertBooking: true });
+      setTimeout(() => {
+        this.setState({ alertBooking: false });
+      }, 4000);
+    }
   // .catch(res => console.log(res))
 })
   }
@@ -950,7 +950,7 @@ console.log('handle')
                           {items.imgLoc? (
                             <img
                               alt={items.firstName}
-                              src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-180,h-230,f-webp${items.imgLoc}`}
+                              src={`https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-180,h-230,f-webp${items.imgLoc}`}
                             />
                           ) : (
                             <i class="fas fa-user-md fa-6x"></i>
@@ -1080,15 +1080,17 @@ console.log('handle')
                             ) : null}
 
 
-
+                           {   this.state.availStatus==1 &&
                                <button
                             type="button"
                             class="btn btn-primary bg-dark border-0 ml-2"
                             data-toggle="modal"
                             data-target="#exampleModal"
                           >
-                           Schedule Your Appointment
+                           Video Consultation
                           </button>
+
+                                         }
                           
                           <div
                             class="modal fade"
@@ -1109,7 +1111,7 @@ console.log('handle')
                                   </h5>
                                   <button
                                     type="button"
-                                    class="close"
+                                    class="close appn"
                                     data-dismiss="modal"
                                     aria-label="Close"
                                   >
@@ -1146,7 +1148,7 @@ console.log('handle')
 
         <div className="row">
 
-          <div className="col">
+          <div className=" col-md-8">
 
                                   <LocalizationProvider
                                     dateAdapter={AdapterDayjs}
@@ -1218,7 +1220,7 @@ console.log('handle')
                                     </DemoContainer>
                                   </LocalizationProvider>
                                   </div>
-                                      <div className="col p-5">
+                                      <div className="col-sm-12 col-md-4 p-5">
 
 
                                       {this.state.selectedDate && 
@@ -1231,12 +1233,37 @@ console.log('handle')
                                         this.state.timeSlots && this.state.timeSlots.map((time,index)=>{
 
                                           const isUnbooked = this.state.unbookedSlots.includes(time);
+                                          const isSelected = this.state.selectedTimeSlot === time;
+
+
+                                          // Parse the time slot to get hours and minutes
+    const [hours, minutes] = time.split(':');
+
+    // Get the current date and time
+    const currentDate = new Date();
+    const currentDateString = currentDate.toDateString();
+    const currentTime = currentDate.getHours() * 60 + currentDate.getMinutes(); // Current time in minutes
+
+    // Get the selected date
+    const selectedDate = new Date(this.state.selectedDate);
+    const selectedDateString = selectedDate.toDateString();
+
+    // Check if the selected date is today
+    const isToday = currentDateString === selectedDateString;
+
+    // Calculate the time slot in minutes
+    const timeSlotTime = parseInt(hours) * 60 + parseInt(minutes);
+
+    // Check if the time slot is for today and in the past
+    const isPast = isToday && timeSlotTime < currentTime;
 
                                           return(
                                             <div className="row pt-2">
                                               <div col-md-6 className=""> 
                                               <div style={{minWidth:"100px"}}>                                          
-                                              <Button variant={isUnbooked ? "outline-primary" : "outline-danger"}  disabled={!isUnbooked}  className="w-100 d-block"  onClick={() => this.handleTimeSlot(time)}>{time}</Button>
+                                              <Button
+                                               variant={isSelected ? "primary" : (isUnbooked ? "outline-primary" : "outline-danger")}
+                                                 disabled={!isUnbooked || isPast}  className="w-100 d-block"  onClick={() => this.handleTimeSlot(time)}>{time}</Button>
                                               {/* onClick={()=>this.handleTimeSlot(time)} */}
                                               </div>
 
@@ -1256,8 +1283,8 @@ console.log('handle')
 
                                   <div>
                                     {this.state.selectedDate&& (
-                                      <p style={{fontSize:"20px"}}>
-                                        Selected Date:{" "}
+                                      <p  className="ml-4 my-2" style={{fontSize:"18px"}}>
+                                        Date:{" "}
                                         {dayjs(this.state.selectedDate).format(
                                           "YYYY-MM-DD"
                                         )}
@@ -1265,21 +1292,25 @@ console.log('handle')
                                     )}
 
                                   {this.state.selectedTimeSlot && (
-                                      <p className="fw-bold">
-                                        Selected Time:{this.state.selectedTimeSlot}
+                                      <p   className="ml-4 my-2" style={{fontSize:"18px"}}>
+                                      Time:{this.state.selectedTimeSlot}
                                         {/* {dayjs(selectedTime).format("HH:mm")} */}
                                       </p>
                                   )}
                                   </div>
 
+                                   
+                                  {this.state.selectedTimeSlot &&
 
                                   <Button
                                 variant="dark"
                                 onClick={this.bookAppn}
-                                className="p-2 m-2"
+                                className="p-2 m-4"
                               >
                                 Book Appointment
                               </Button>
+
+                                  }
 
 
                               
