@@ -807,6 +807,7 @@ position: absolute;
   height: 264px;
   vertical-align: middle;
   object-fit: cover;
+  /* object-fit: fill; */
 }
 #specialists .item-imgsBack , #featured .item-imgsBack,
 #doctor .item-imgsBack {
@@ -1825,6 +1826,18 @@ button {
   padding: 12px 45px;
   letter-spacing: 1px;
   transition: transform 80ms ease-in;
+}
+
+
+.calButton button{
+  border-radius: 0 !important;
+  color: white;
+  background-color: white;
+  font-weight: bold;
+  padding: 0 !important;
+  letter-spacing: 1px;
+  transition: transform 80ms ease-in;
+
 }
 button:active {
   transform: scale(0.95);
@@ -2969,7 +2982,17 @@ box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
     
   }
 
-@media only screen and (min-width: 320px) and (max-width: 575px) 
+  .custom-datepicker .booked {
+    background-color: red;
+    color: white;
+  }
+
+
+
+
+
+
+  @media only screen and (min-width: 320px) and (max-width: 575px) 
   {
 
     .css-4pax7l-MuiPickersLayout-root .MuiPickersLayout-toolbar {
@@ -2983,5 +3006,7 @@ box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
       left:350px;
     }
   }
+
+  
 
   
