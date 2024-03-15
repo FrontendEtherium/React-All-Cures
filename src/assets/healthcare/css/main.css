@@ -1,11 +1,11 @@
 @charset "utf-8";
 @import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Dosis&family=Raleway&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=PT+Sans&display=swap");
-* {
   padding: 0;
   margin: 0;
   text-align: left;
+@import url("https://fonts.googleapis.com/css2?family=Dosis&family=Raleway&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans&display=swap");
+* {
   font-family: "Raleway", sans-serif;
 }
 body {
@@ -2992,7 +2992,8 @@ box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
 
 
 
- @media only screen and (min-width: 320px) and (max-width: 575px) 
+
+  @media only screen and (min-width: 320px) and (max-width: 575px) 
   {
 
     .css-4pax7l-MuiPickersLayout-root .MuiPickersLayout-toolbar {
@@ -3010,12 +3011,12 @@ box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
 
 
     .css-1ho05b .MuiPickersLayout-toolbar {
-      grid-area: 1 / 2 / auto / 4;
+      grid-area: 3 !important;
       grid-column: 1;
       grid-row: 1;
   }
 
-
+/* 
   .css-lz05jy {
     grid-area: 2 / 2;
     display: flex;
@@ -3029,11 +3030,14 @@ box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
-}
+} */
 
 
   }
 
+  
+
+  
 
   
 
