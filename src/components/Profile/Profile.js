@@ -261,7 +261,7 @@ class Profile extends Component {
      
       "docID": this.state.docid,
       // "userID": parseInt(userId),
-      "userID": 84,
+       "userID": parseInt(userId),
       "appointmentDate": this.state.selectedDate,
       "startTime":this.state.selectedTimeSlot,
       "paymentStatus": 0,
