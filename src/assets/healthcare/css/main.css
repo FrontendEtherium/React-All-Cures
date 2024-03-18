@@ -3004,14 +3004,15 @@ box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
     }
 
     button.close.appn{
-      left:350px;
+      /* left:350px; */
+      left:260px;
     }
 
 
 
 
     .css-1ho05b .MuiPickersLayout-toolbar {
-      grid-area: 3 !important;
+      /* grid-area: 3 !important; */
       grid-column: 1;
       grid-row: 1;
   }
@@ -3034,10 +3035,6 @@ box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
 
 
   }
-
-  
-
-  
 
   
 
