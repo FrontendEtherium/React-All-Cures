@@ -2968,3 +2968,56 @@ box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
     background-color:transparent;
     
   }
+
+
+
+  @media only screen and (min-width: 320px) and (max-width: 575px) 
+  {
+
+    .css-4pax7l-MuiPickersLayout-root .MuiPickersLayout-toolbar {
+      grid-column: 1 !important;
+    }
+    .css-16b5y55-MuiPickersLayout-contentWrapper {
+      grid-column: 1 !important;
+    }
+
+    button.close.appn{
+      /* left:350px; */
+      left:320px;
+      /* left:150px; */
+      /* left:80px; */
+    }
+
+
+    .css-1tpoa8p {
+      flex-direction: row !important;
+  }
+
+     /* .css-1ho05b .MuiPickersLayout-toolbar {
+       grid-area: 3 !important; 
+       grid-column: 1;
+      grid-row: 1; 
+  }  */
+
+/* 
+  .css-lz05jy {
+    grid-area: 2 / 2;
+    display: flex;
+    flex-direction: column;
+    grid-column: 1;
+    grid-row: 2;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+} */
+
+
+  }
+
+  
+
+  
