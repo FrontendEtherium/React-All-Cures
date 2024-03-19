@@ -132,6 +132,9 @@ class Profile extends Component {
       selectedDate: "", // Initialize selectedDate state   
       alert:false,
       alertBooking:false,
+      bookingLoading:false,
+      userAvailStatus:'',
+    
 
     };
     this.showModal = this.showModal.bind(this);
@@ -261,23 +264,33 @@ class Profile extends Component {
      
       "docID": this.state.docid,
       // "userID": parseInt(userId),
-       "userID": parseInt(userId),
+      "userID": parseInt(userId),
       "appointmentDate": this.state.selectedDate,
       "startTime":this.state.selectedTimeSlot,
       "paymentStatus": 0,
       
        
   })
+  .then(  this.setState({ bookingLoading: true })
+  )
   .then((res)=>{
+
  if (res.data == 1) {
-      this.setState({ alertBooking: true });
+      this.setState({
+        bookingLoading: false ,
+         alertBooking: true,
+       });
       setTimeout(() => {
-        this.setState({ alertBooking: false });
+        this.setState({ 
+          alertBooking: false
+         });
       }, 5000);
     }
    
-  // .catch(res => console.log(res))
+ 
 })
+.catch(res => this.setState({ bookingLoading: true })
+)
   }
 
   handleImageSubmission = (e) => {
@@ -503,6 +516,58 @@ class Profile extends Component {
   };
 
 
+  fetchUserAvailStatus = (id) => {
+    fetch(`${backendHost}/appointments/get/${id}/${userId}`)
+   
+      // .then(res => JSON.parse(res))
+      .then((res) => res.json())
+      .then((json) => {
+
+        console.log('useravailstatus',id,userId)
+       
+        console.log('useravailStatus',json)
+
+        const currentDate = new Date();
+        const currentTime = currentDate.getHours() + ':' + currentDate.getMinutes();
+
+        console.log('dateuseravailStatus', currentDate.toISOString().split('T')[0])
+        console.log('timeuseravailStatus', currentTime)
+        console.log('dateuseravailStatus', json.appointmentDate)
+        console.log('startTimeuseravailStatus', json.startTime)
+        console.log('endTimeuseravailStatus', json.endTime)
+        json.forEach(appointment => {
+          console.log('Start Time:', appointment.startTime);
+          console.log('End Time:', appointment.endTime);
+          console.log('Date:', appointment.appointmentDate);
+        });
+      
+        
+
+  
+        // Check each appointment for current time and date
+        let availability = 0;
+        json.forEach(appointment => {
+          if (appointment.appointmentDate === currentDate.toISOString().split('T')[0]) {
+            // Check if current time is within the time range of the appointment
+            if (currentTime >= appointment.startTime && currentTime <= appointment.endTime) {
+              availability = 1;
+              // If a match is found, you can break the loop since you have already found the availability
+              return;
+            }
+          }
+        });
+        // Set availability state based on the check
+        this.setState({
+          userAvailStatus: availability
+        });
+
+        console.log('userrrravail',  this.state.userAvailStatus)
+      })
+    
+      
+  };
+
+
 
   fetchAppointmentDetails = (id) => {
     fetch(`${backendHost}/appointments/get/Slots/${id}`)
@@ -699,6 +764,7 @@ const generateDateRange = (startDate, endDate) => {
     window.scrollTo(0, 0);
     this.fetchDoctorData(this.props.match.params.id.split("-")[0]);
     this.fetchAvailStatus(this.props.match.params.id.split("-")[0]);
+    this.fetchUserAvailStatus(this.props.match.params.id.split("-")[0]);
     this.fetchAppointmentDetails(this.props.match.params.id.split("-")[0]); 
     this.getComments(this.props.match.params.id.split("-")[0]);
     this.getRating(this.props.match.params.id.split("-")[0]);
@@ -958,7 +1024,7 @@ console.log('handle')
                           )}
                         </div>
 
-                        {   this.state.availStatus==1 &&
+                        {   this.state.userAvailStatus==1 &&
                         <div
                           style={{
                             marginTop: "-44px",
@@ -1081,7 +1147,7 @@ console.log('handle')
                             ) : null}
 
 
-                           {   this.state.availStatus==1 &&
+                           {   this.state.items.videoService==1 &&
                                <button
                             type="button"
                             class="btn btn-primary bg-dark border-0 ml-2"
@@ -1314,10 +1380,17 @@ console.log('handle')
                                   }
 
 
-                              
+                                
+                               {
+                            this.state.bookingLoading?
+                                <Alert variant="danger" className="h6 mx-3">Please wait while we book your Appointment!!</Alert>
+                                : null
+                                }
+
+
                               {
                             this.state.alertBooking?
-                                <Alert variant="success" className="h6 mx-3">Booked successfully!!</Alert>
+                                <Alert variant="success" className="h6 mx-3">Booked successfully!! Check your Email.</Alert>
                                 : null
                         }
                                 </div>
