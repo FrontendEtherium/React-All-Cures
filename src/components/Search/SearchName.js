@@ -153,7 +153,7 @@ class SearchName extends Component {
                             reload = {this.state.reload}
                             setModalShow = {this.setModalShow}
                             key = {i.map.doctorid}
-                            img={i.map.img_Loc}
+                            img={i.map.imgLoc}
                           />
                         ))}
                         <Test
