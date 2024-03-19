@@ -190,7 +190,7 @@ import { userAccess } from "../UserAccess";
          <div className="profilePage">
             <div className="">
                <section className="pageHeader zIndex-2" >
-                  <div className="webAlign">
+                  <div className="webAlign" >
                      <div className="row d-flex">
                         <div className="header" style={{width:"100%"}}>
                            <div className=" logo mt-3"> 
