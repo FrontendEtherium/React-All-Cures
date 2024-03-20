@@ -1415,7 +1415,7 @@ console.log('handle')
 
                   <div className="aboutDr">
                     <div className="h4 font-weight-bold">
-                      About {items.prefix}. {items.firstName}{" "}
+                      About {items.prefix} {items.firstName}{" "}
                       {items.middleName} {items.lastName}
                     </div>
 
