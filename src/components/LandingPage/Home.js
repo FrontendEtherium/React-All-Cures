@@ -681,7 +681,7 @@ class Home extends Component {
       <div className="container">
             <div className="row">
                <div className="comman-heading">
-                  <div className="h4">Featured Cures</div>
+                  <div className="h4">Featured Cure</div>
                </div>
             </div>
             <div className="row">
