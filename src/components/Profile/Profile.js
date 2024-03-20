@@ -1147,7 +1147,8 @@ console.log('handle')
                             ) : null}
 
 
-                           {   this.state.items.videoService==1 &&
+                           {  userId &&
+                              this.state.items.videoService==1 &&
                                <button
                             type="button"
                             class="btn btn-primary bg-dark border-0 ml-2"
