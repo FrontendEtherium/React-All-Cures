@@ -249,49 +249,144 @@ class Profile extends Component {
   };
 
 
-  bookAppn=(e)=>{
-    e.preventDefault();
+//   bookAppn=(e)=>{
+//     e.preventDefault();
 
-    console.log('clicked bboking')
-    // const time = moment(this.state.selectedTime, 'HH:mm').toDate();
-    console.log('time', dayjs(this.state.selectedTime).format("HH:mm"))
+//     console.log('clicked bboking')
+//     // const time = moment(this.state.selectedTime, 'HH:mm').toDate();
+//     console.log('time', dayjs(this.state.selectedTime).format("HH:mm"))
 
-// Format the time to the desired format, e.g., "1:15 PM"
-// const formattedTime = moment(time).format('h:mm A');
+// // Format the time to the desired format, e.g., "1:15 PM"
+// // const formattedTime = moment(time).format('h:mm A');
 
 
-    axios.post(`${backendHost}/appointments/create`,{
+//     axios.post(`${backendHost}/appointments/create`,{
      
+//       "docID": this.state.docid,
+//       // "userID": parseInt(userId),
+//       "userID": parseInt(userId),
+//       "appointmentDate": this.state.selectedDate,
+//       "startTime":this.state.selectedTimeSlot,
+//       "paymentStatus": 0,
+//       "amount":"1.00",
+//       "currency":"INR",
+     
+       
+//   })
+//   // .then(  this.setState({ bookingLoading: true })
+//   // )
+//   .then((res)=>{
+
+
+//     const enc=res.data
+//     console.log('enc',enc)
+   
+//     fetch("https://test.ccavenue.com/transaction.do?command=initiateTransaction", {
+//       method: 'POST',
+     
+//       body: JSON.stringify({ 
+//         encRequest:'enc',
+//         accessCode: "AVKI05LC59AW25IKWA"
+//       })
+//     })
+//     .then(response => {
+//       if (!response.ok) {
+//         throw new Error('Network response was not ok');
+//       }
+//       return response.json();
+//     })
+//     .then(data => {
+//       // Handle successful response data
+//       console.log("Response:", data);
+//     })
+//     .catch(error => {
+//       // Handle fetch error
+//       console.error("Fetch Error:", error);
+//     });
+ 
+// })
+// .catch(res => this.setState({ bookingLoading: true })
+// )
+//   }
+
+
+payment = (e) => {
+  e.preventDefault();
+
+  const formData = new FormData();
+  formData.append('encRequest', '0EE39E5A05CF73D2E10DA350D26555225B1A2B3113AD55BD461E6DB9D990B9CCDFDFD279E48A969E23210C030732FA980303819412A0263EBD6A2F104A67D3AFB0B7410AFA9C801DC36836ABB29A9169FE22EDAFD56649AF082E05D066F349E6C5AF85D763331CFE4CFBCBBE1FD6504EFCEE6AAE0E49C5243A06153463703BBB7327E5ECD799327B0FE6B8AB7F7806A66D62367F5C282BAA6F9A1CAD99CFABBDF86FB65C0A426CA1FA6205FB13AAE97BCFC913670E480B6FD8ABB123D82F669EFBEC14C9757B517D60A8CED051F0E6B86FFC8DB94C9C733795F312991FF01F87');
+  formData.append('access_code', 'AVKI05LC59AW25IKWA');
+  // formData.append('merchant_id', '3119096');
+
+  axios.post("https://test.ccavenue.com/transaction.do?command=initiateTransaction", 
+    formData,
+    {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    }
+  ).then(response => {
+    console.log(response.data);
+  }).catch(error => {
+    console.error(error);
+  });
+}
+
+bookAppn = (e) => {
+  e.preventDefault();
+
+  console.log('clicked booking');
+  console.log('time', dayjs(this.state.selectedTime).format("HH:mm"));
+
+  axios.post(`${backendHost}/appointments/create`, {
       "docID": this.state.docid,
-      // "userID": parseInt(userId),
       "userID": parseInt(userId),
       "appointmentDate": this.state.selectedDate,
-      "startTime":this.state.selectedTimeSlot,
+      "startTime": this.state.selectedTimeSlot,
       "paymentStatus": 0,
-      
-       
+      "amount": "1.00",
+      "currency": "INR",
   })
-  .then(  this.setState({ bookingLoading: true })
-  )
-  .then((res)=>{
+  .then((res) => {
+      let enc = res.data;
+      console.log('enc', enc);
 
- if (res.data == 1) {
-      this.setState({
-        bookingLoading: false ,
-         alertBooking: true,
-       });
-      setTimeout(() => {
-        this.setState({ 
-          alertBooking: false
-         });
-      }, 5000);
-    }
-   
- 
-})
-.catch(res => this.setState({ bookingLoading: true })
-)
-  }
+      // If enc is a string, parse it to an object
+      if (typeof enc === 'string') {
+          try {
+              enc = JSON.parse(enc);
+          } catch (error) {
+              console.error('Error parsing enc:', error);
+          }
+      }
+
+      // Sending the modified payload
+      // return fetch("https://test.ccavenue.com/transaction.do?command=initiateTransaction", {
+      //     method: 'POST',
+      //     headers: {
+      //         'Content-Type': 'application/json'
+      //     },
+      //     body: JSON({
+      //         encRequest: enc,
+      //         accessCode: "AVKI05LC59AW25IKWA"
+      //     })
+      // });
+  })
+  .then(response => {
+      if (!response.ok) {
+          throw new Error('Network response was not ok');
+      }
+      return response.json();
+  })
+  .then(data => {
+      console.log("Response:", data);
+      // Handle successful response data
+  })
+  .catch(error => {
+      console.error("Fetch Error:", error);
+      // Handle fetch error
+  });
+}
 
   handleImageSubmission = (e) => {
     // e.preventDefault()
@@ -1017,14 +1112,14 @@ console.log('handle')
                           {items.imgLoc? (
                             <img
                               alt={items.firstName}
-                              src={`https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-180,h-230,f-webp${items.imgLoc}`}
+                              src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-180,h-230,f-webp${items.imgLoc}`}
                             />
                           ) : (
                             <i class="fas fa-user-md fa-6x"></i>
                           )}
                         </div>
 
-                        {   this.state.userAvailStatus==1 &&
+                        {/* {   this.state.userAvailStatus==1 &&
                         <div
                           style={{
                             marginTop: "-44px",
@@ -1047,7 +1142,7 @@ console.log('handle')
                           </button>
 
                         </div>
-    }
+    } */}
                         {this.props.match.params.id.split("-")[0] === userId ||
                         userAccess == 9 ? (
                           <>
@@ -1147,8 +1242,8 @@ console.log('handle')
                             ) : null}
 
 
-                           {  userId &&
-                              this.state.items.videoService==1 &&
+                           {    userId &&
+                           this.state.items.videoService==1 &&
                                <button
                             type="button"
                             class="btn btn-primary bg-dark border-0 ml-2"
@@ -1378,8 +1473,16 @@ console.log('handle')
                                 Book Appointment
                               </Button>
 
-                                  }
+                              
 
+                                  }
+                                                     <Button
+                                variant="dark"
+                                onClick={this.payment}
+                                className="p-2 m-4"
+                              >
+                                Pay Now
+                              </Button>
 
                                 
                                {
@@ -1415,7 +1518,7 @@ console.log('handle')
 
                   <div className="aboutDr">
                     <div className="h4 font-weight-bold">
-                      About {items.prefix}. {items.firstName}{" "}
+                      About {items.prefix} {items.firstName}{" "}
                       {items.middleName} {items.lastName}
                     </div>
 
