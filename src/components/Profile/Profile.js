@@ -313,23 +313,32 @@ class Profile extends Component {
 payment = (e) => {
   e.preventDefault();
 
-  const formData = new FormData();
-  formData.append('encRequest', '0EE39E5A05CF73D2E10DA350D26555225B1A2B3113AD55BD461E6DB9D990B9CCDFDFD279E48A969E23210C030732FA980303819412A0263EBD6A2F104A67D3AFB0B7410AFA9C801DC36836ABB29A9169FE22EDAFD56649AF082E05D066F349E6C5AF85D763331CFE4CFBCBBE1FD6504EFCEE6AAE0E49C5243A06153463703BBB7327E5ECD799327B0FE6B8AB7F7806A66D62367F5C282BAA6F9A1CAD99CFABBDF86FB65C0A426CA1FA6205FB13AAE97BCFC913670E480B6FD8ABB123D82F669EFBEC14C9757B517D60A8CED051F0E6B86FFC8DB94C9C733795F312991FF01F87');
-  formData.append('access_code', 'AVKI05LC59AW25IKWA');
-  // formData.append('merchant_id', '3119096');
+  // Create a hidden form element
+  const form = document.createElement('form');
+  form.setAttribute('method', 'post');
+  form.setAttribute('action', 'https://test.ccavenue.com/transaction.do?command=initiateTransaction');
+  form.style.display = 'none'; // Hide the form
 
-  axios.post("https://test.ccavenue.com/transaction.do?command=initiateTransaction", 
-    formData,
-    {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    }
-  ).then(response => {
-    console.log(response.data);
-  }).catch(error => {
-    console.error(error);
-  });
+  // Create and append hidden input fields for encRequest and accessCode
+  const encRequestInput = document.createElement('input');
+  encRequestInput.setAttribute('type', 'hidden');
+  encRequestInput.setAttribute('name', 'encRequest');
+  encRequestInput.setAttribute('value', '0EE39E5A05CF73D2E10DA350D26555225B1A2B3113AD55BD461E6DB9D990B9CCDFDFD279E48A969E23210C030732FA980303819412A0263EBD6A2F104A67D3AFB0B7410AFA9C801DC36836ABB29A9169FE22EDAFD56649AF082E05D066F349E6C5AF85D763331CFE4CFBCBBE1FD6504EFCEE6AAE0E49C5243A06153463703BBB7327E5ECD799327B0FE6B8AB7F7806A66D62367F5C282BAA6F9A1CAD99CFABBDF86FB65C0A426CA1FA6205FB13AAE97BCFC913670E480B6FD8ABB123D82F669EFBEC14C9757B517D60A8CED051F0E6B86FFC8DB94C9C733795F312991FF01F87');
+  
+  const accessCodeInput = document.createElement('input');
+  accessCodeInput.setAttribute('type', 'hidden');
+  accessCodeInput.setAttribute('name', 'accessCode');
+  accessCodeInput.setAttribute('value', 'AVKI05LC59AW25IKWA');
+
+  // Append input fields to the form
+  form.appendChild(encRequestInput);
+  form.appendChild(accessCodeInput);
+
+  // Append the form to the document body
+  document.body.appendChild(form);
+
+  // Submit the form
+  form.submit();
 }
 
 bookAppn = (e) => {
