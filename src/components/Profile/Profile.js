@@ -361,13 +361,13 @@ bookAppn = (e) => {
       console.log('enc', enc);
 
       // If enc is a string, parse it to an object
-      if (typeof enc === 'string') {
-          try {
-              enc = JSON.parse(enc);
-          } catch (error) {
-              console.error('Error parsing enc:', error);
-          }
-      }
+      // if (typeof enc === 'string') {
+      //     try {
+      //         enc = JSON.parse(enc);
+      //     } catch (error) {
+      //         console.error('Error parsing enc:', error);
+      //     }
+      // }
 
       // Sending the modified payload
       // return fetch("https://test.ccavenue.com/transaction.do?command=initiateTransaction", {
@@ -380,6 +380,33 @@ bookAppn = (e) => {
       //         accessCode: "AVKI05LC59AW25IKWA"
       //     })
       // });
+
+
+      const form = document.createElement('form');
+      form.setAttribute('method', 'post');
+      form.setAttribute('action', 'https://test.ccavenue.com/transaction.do?command=initiateTransaction');
+      form.style.display = 'none'; // Hide the form
+    
+      // Create and append hidden input fields for encRequest and accessCode
+      const encRequestInput = document.createElement('input');
+      encRequestInput.setAttribute('type', 'hidden');
+      encRequestInput.setAttribute('name', 'encRequest');
+      encRequestInput.setAttribute('value', enc);
+      
+      const accessCodeInput = document.createElement('input');
+      accessCodeInput.setAttribute('type', 'hidden');
+      accessCodeInput.setAttribute('name', 'access_code');
+      accessCodeInput.setAttribute('value', 'AVNH05LB56CF25HNFC');
+    
+      // Append input fields to the form
+      form.appendChild(encRequestInput);
+      form.appendChild(accessCodeInput);
+    
+      // Append the form to the document body
+      document.body.appendChild(form);
+    
+      // Submit the form
+      form.submit();
   })
   .then(response => {
       if (!response.ok) {
@@ -1485,13 +1512,13 @@ console.log('handle')
                               
 
                                   }
-                                                     <Button
+                                                     {/* <Button
                                 variant="dark"
                                 onClick={this.payment}
                                 className="p-2 m-4"
                               >
                                 Pay Now
-                              </Button>
+                              </Button> */}
 
                                 
                                {
