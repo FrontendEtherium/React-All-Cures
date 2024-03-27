@@ -1627,7 +1627,7 @@ console.log('handle')
 
                     <br />
                     <div className="abt-eduction ">
-                      <div className="h4 font-weight-bold">Education</div>
+                      <div className="h4 font-weight-bold">Education:</div>
                       {items.degDesc}
                     </div>
                     <div className="mt-5">
