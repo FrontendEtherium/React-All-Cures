@@ -1651,7 +1651,7 @@ console.log('handle')
 
                     {/* </div> */}
                     <div className="abt-eduction ">
-                      <div className="h4 font-weight-bold">Miscellaneous</div>
+                      <div className="h4 font-weight-bold">Miscellaneous:</div>
                       <div className="h6 font-weight-bold">
                         City:
                         <span> {items.city}</span>
