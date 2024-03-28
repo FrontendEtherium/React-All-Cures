@@ -310,36 +310,36 @@ class Profile extends Component {
 //   }
 
 
-payment = (e) => {
-  e.preventDefault();
+// payment = (e) => {
+//   e.preventDefault();
 
-  // Create a hidden form element
-  const form = document.createElement('form');
-  form.setAttribute('method', 'post');
-  form.setAttribute('action', 'https://test.ccavenue.com/transaction.do?command=initiateTransaction');
-  form.style.display = 'none'; // Hide the form
+//   // Create a hidden form element
+//   const form = document.createElement('form');
+//   form.setAttribute('method', 'post');
+//   form.setAttribute('action', 'https://test.ccavenue.com/transaction.do?command=initiateTransaction');
+//   form.style.display = 'none'; // Hide the form
 
-  // Create and append hidden input fields for encRequest and accessCode
-  const encRequestInput = document.createElement('input');
-  encRequestInput.setAttribute('type', 'hidden');
-  encRequestInput.setAttribute('name', 'encRequest');
-  encRequestInput.setAttribute('value', '9923507A9100B3502A10278D5A73DB7DC0FD65087325AD1DC97D18CA378846B6BA9906804FD410FBC280C13C2144DF93E5D7E76E3A4A9FAF1A5C1E7BCDC2CECC7BC65287C7C1A529849F2C6ED62CD7A5E1651DE519A147D76245E9BF480A0BEAF9497671DC5B7AE43A0123EFC27A87F81A124EEEEDB68F46047D5F0A8A011ACC479F534A566E490DEC170B11A7D234084B135CAC3E54E4792472DD8F1ACD0D50A53DA0FD54609BBDF97B69A6509B78BBF334F7642703326511AEBA5EE8117CF9EA7FF2726FE279CB4838F4619E8D93F9EDD747C6F7CE8D33DA0A40F104C87C58');
+//   // Create and append hidden input fields for encRequest and accessCode
+//   const encRequestInput = document.createElement('input');
+//   encRequestInput.setAttribute('type', 'hidden');
+//   encRequestInput.setAttribute('name', 'encRequest');
+//   encRequestInput.setAttribute('value', '9923507A9100B3502A10278D5A73DB7DC0FD65087325AD1DC97D18CA378846B6BA9906804FD410FBC280C13C2144DF93E5D7E76E3A4A9FAF1A5C1E7BCDC2CECC7BC65287C7C1A529849F2C6ED62CD7A5E1651DE519A147D76245E9BF480A0BEAF9497671DC5B7AE43A0123EFC27A87F81A124EEEEDB68F46047D5F0A8A011ACC479F534A566E490DEC170B11A7D234084B135CAC3E54E4792472DD8F1ACD0D50A53DA0FD54609BBDF97B69A6509B78BBF334F7642703326511AEBA5EE8117CF9EA7FF2726FE279CB4838F4619E8D93F9EDD747C6F7CE8D33DA0A40F104C87C58');
   
-  const accessCodeInput = document.createElement('input');
-  accessCodeInput.setAttribute('type', 'hidden');
-  accessCodeInput.setAttribute('name', 'access_code');
-  accessCodeInput.setAttribute('value', 'AVNH05LB56CF25HNFC');
+//   const accessCodeInput = document.createElement('input');
+//   accessCodeInput.setAttribute('type', 'hidden');
+//   accessCodeInput.setAttribute('name', 'access_code');
+//   accessCodeInput.setAttribute('value', 'AVNH05LB56CF25HNFC');
 
-  // Append input fields to the form
-  form.appendChild(encRequestInput);
-  form.appendChild(accessCodeInput);
+//   // Append input fields to the form
+//   form.appendChild(encRequestInput);
+//   form.appendChild(accessCodeInput);
 
-  // Append the form to the document body
-  document.body.appendChild(form);
+//   // Append the form to the document body
+//   document.body.appendChild(form);
 
-  // Submit the form
-  form.submit();
-}
+//   // Submit the form
+//   form.submit();
+// }
 
 bookAppn = (e) => {
   e.preventDefault();
@@ -357,8 +357,14 @@ bookAppn = (e) => {
       "currency": "INR",
   })
   .then((res) => {
-      let enc = res.data;
-      console.log('enc', enc);
+      let enc = res.data
+      console.log('resppp', enc);
+      const response=  JSON.stringify(enc)
+
+     const responseObject = JSON.parse(response);
+    console.log('res',responseObject.encRequest)
+
+      localStorage.setItem('apiResponse', JSON.stringify(res.data));
 
       // If enc is a string, parse it to an object
       // if (typeof enc === 'string') {
@@ -391,7 +397,7 @@ bookAppn = (e) => {
       const encRequestInput = document.createElement('input');
       encRequestInput.setAttribute('type', 'hidden');
       encRequestInput.setAttribute('name', 'encRequest');
-      encRequestInput.setAttribute('value', enc);
+      encRequestInput.setAttribute('value', responseObject.encRequest);
       
       const accessCodeInput = document.createElement('input');
       accessCodeInput.setAttribute('type', 'hidden');
@@ -1651,7 +1657,7 @@ console.log('handle')
 
                     {/* </div> */}
                     <div className="abt-eduction ">
-                      <div className="h4 font-weight-bold">Miscellaneous:</div>
+                      <div className="h4 font-weight-bold">Miscellaneous</div>
                       <div className="h6 font-weight-bold">
                         City:
                         <span> {items.city}</span>
