@@ -384,7 +384,7 @@ bookAppn = (e) => {
 
       const form = document.createElement('form');
       form.setAttribute('method', 'post');
-      form.setAttribute('action', 'https://test.ccavenue.com/transaction.do?command=initiateTransaction');
+      form.setAttribute('action', 'https://secure.ccavenue.com/transaction.do?command=initiateTransaction');
       form.style.display = 'none'; // Hide the form
     
       // Create and append hidden input fields for encRequest and accessCode
@@ -1624,10 +1624,10 @@ console.log('handle')
                       </a>
                     </div>
                     <div></div>
-
+ 
                     <br />
                     <div className="abt-eduction ">
-                      <div className="h4 font-weight-bold">Education:</div>
+                      <div className="h4 font-weight-bold">Education</div>
                       {items.degDesc}
                     </div>
                     <div className="mt-5">
