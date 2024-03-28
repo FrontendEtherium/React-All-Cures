@@ -76,7 +76,6 @@ import AppRedirect from "./LandingPage/AppRedirect";
 import Webstories from "./WebStories/Webstories";
 import RedirectQr from "./RedirectQr.js";
 import DoctorLink from "./Profile/DoctorLink.js";
-import ProfileTesting from "./Profile/ProfileTesting.js";
 import ResponsePage from "./Profile/ResponsePage.js";
 
 
