@@ -357,10 +357,12 @@ bookAppn = (e) => {
       "currency": "INR",
   })
   .then((res) => {
-      let enc = res.data;
-      console.log('enc', enc);
-      const responseObject = JSON.parse(enc);
-      console.log('res',responseObject.encRequest)
+      let enc = res.data
+      console.log('resppp', enc);
+      const response=  JSON.stringify(enc)
+
+     const responseObject = JSON.parse(response);
+    console.log('res',responseObject.encRequest)
 
       localStorage.setItem('apiResponse', JSON.stringify(res.data));
 
