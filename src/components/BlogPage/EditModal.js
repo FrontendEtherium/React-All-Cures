@@ -16,6 +16,7 @@ import { userAccess } from '../UserAccess'
 import { Modal } from "react-bootstrap";
 import Heart from"../../assets/img/heart.png";
 import { imagePath } from '../../image-path';
+import  axiosInstance  from '../../axiosInstance';
 
 
 const EditModal = (props) => {
@@ -77,8 +78,9 @@ const EditModal = (props) => {
     }
 
     const getPosts = () =>{
-        axios.defaults.withCredentials = true      
-        axios.get(`${backendHost}/article/${editId.id}`, {headers: {'Access-Control-Allow-Credentials': true}})
+        axios.defaults.withCredentials = true  
+    
+        axiosInstance.get(`/article/${editId.id}`, {headers: {'Access-Control-Allow-Credentials': true}})
         .then(res => {
             setEditedBy(res.data.edited_by)
             setAuthor(JSON.parse(res.data.authored_by))
@@ -112,7 +114,7 @@ const EditModal = (props) => {
         e.preventDefault()
         setafterSubmitLoad(true)
         if(parseInt(articleStatus) === 3){
-            axios.post(`${backendHost}/article/${editId.id}`, {
+            axiosInstance.post(`/article/${editId.id}`, {
                 "title":title,
                 "friendly_name": articleDisplay,
                 // "subheading": "1",,                
@@ -154,7 +156,7 @@ const EditModal = (props) => {
                 Alert('Some error occured. Try again later')
             })
         } else {
-            axios.post(`${backendHost}/article/${editId.id}`, {
+            axiosInstance.post(`/article/${editId.id}`, {
                 "title":title,
                 "friendly_name": articleDisplay,
                 // "subheading": "1",
@@ -219,6 +221,7 @@ const EditModal = (props) => {
   
     const getLanguages = () => {
         axios.get(`${backendHost}/article/all/table/languages`)
+
         .then(res => {
             setLanList(res.data)
         })

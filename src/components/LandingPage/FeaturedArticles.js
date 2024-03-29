@@ -8,7 +8,9 @@ import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import "@fortawesome/free-solid-svg-icons";
-import "@fortawesome/fontawesome-svg-core"
+import "@fortawesome/fontawesome-svg-core";
+import headers from '../../api-fetch';
+
 
 const options = {
    margin: 30,
@@ -58,9 +60,9 @@ const ArticlePreview = (props) => {
 
    
     function allPosts() {
-        const headers = new Headers({
-          'Authorization': 'Bearer local@7KpRq3XvF9' 
-        });
+        // const headers = new Headers({
+        //   'Authorization': 'Bearer local@7KpRq3XvF9' 
+        // });
       
         fetch(`${backendHost}/article/allkvfeatured`, {
           method: 'GET',

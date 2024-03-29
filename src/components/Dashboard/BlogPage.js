@@ -6,6 +6,7 @@ import { Container } from "react-bootstrap";
 import AllPost from './Allpost';
 import { backendHost } from '../../api-config';
 
+import headers from '../../api-fetch';
 
 
 export default class Blogpage extends Component{
@@ -18,7 +19,11 @@ export default class Blogpage extends Component{
       }
     
       componentDidMount() {
-        fetch(`${backendHost}/article/all`)
+        fetch(`${backendHost}/article/all`,{
+          method: 'GET',
+          headers: headers 
+
+        })
           .then((res) => res.json())
           .then((json) => {
             this.setState({
