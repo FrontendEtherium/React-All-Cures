@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Alert } from 'react-bootstrap';
 import { backendHost } from '../../api-config';
+import axiosInstance from '../../axiosInstance';
 
 
 
@@ -14,7 +15,7 @@ const AllPost = ({ id, title, w_title, dis,pubstatus_id }) => {
     const [deleteAlert, setAlert] = useState(false)
     
     const singlePostDelete = (id) => {
-        axios.delete(`${backendHost}/article/${id}`)
+        axiosInstance.delete(`/article/${id}`)
         .then(res => {
             singlePostDelete()
             setAlert(true)
