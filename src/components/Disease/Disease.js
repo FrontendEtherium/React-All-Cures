@@ -39,6 +39,7 @@ import { userAccess } from '../UserAccess';
 import Date from '../Date'
 import { imagePath } from '../../image-path'
 import { faKeybase } from '@fortawesome/free-brands-svg-icons';
+import headers from '../../api-fetch';
 
 
 
@@ -161,7 +162,11 @@ fetchBlog = async() => {
   if(/^[0-9]+$/.test (id)){           // Test if URL contains article_id or TITLE
 
     Promise.all([
-      fetch(`${backendHost}/article/${id}`) // if URL contains article_id
+      fetch(`${backendHost}/article/${id}`,{
+        method: 'GET',
+        headers: headers
+
+      }) // if URL contains article_id
         .then((res) => res.json()),
       // fetch(`${backendHost}/sponsored/parent_disease_id/${this.props.match.params.id.split('-')[0]}`)
       //   .then((res) => res.json()),
@@ -213,7 +218,10 @@ fetchBlog = async() => {
 
    
     Promise.all([
-      fetch(`${backendHost}/article/title/${id}`) // if URL contains article_id
+      fetch(`${backendHost}/article/title/${id}`,{
+        method: 'GET',
+        headers: headers
+      }) // if URL contains article_id
         .then((res) => res.json()),
       // fetch(`${backendHost}/sponsored/parent_disease_id/${this.props.match.params.id.split('-')[0]}`)
       //   .then((res) => res.json()),
@@ -775,7 +783,10 @@ componentDidMount() {
   if (canonicalURL.match(/\/cure\/\d+/)) {
     const id = this.props.match.params.id.split('-')[0];
 
-    fetch(`${backendHost}/article/${id}`)
+    fetch(`${backendHost}/article/${id}`,{
+      method: 'GET',
+      headers: headers
+    })
       .then((res) => res.json())
       .then((json) => {
         const title = json.title;
@@ -853,7 +864,7 @@ componentDidMount() {
     var artContent = items.content;
     var a = JSON.parse(decodeURIComponent(artContent))
     var b = a.blocks
-
+console.log('img',b)
 
        
 
@@ -1244,7 +1255,8 @@ componentDidMount() {
     ? `https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-1000,f-webp/cures_articleimages/${fileUrl.replace(/^.*[\\/]/, '')}`
     : null;
 
- 
+  console.log('Original URL:', fileUrl);
+  console.log('Modified URL:', imageUrl);
 
   return (
     <CenterWell
