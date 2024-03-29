@@ -77,9 +77,6 @@ import Webstories from "./WebStories/Webstories";
 import DoctorLink from "./Profile/DoctorLink.js";
 
 
-
-
-
 function Main(props) {
   const history = useHistory()
 

@@ -1,8 +1,8 @@
 @charset "utf-8";
 @import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
-  padding: 0;
+  /* padding: 0;
   margin: 0;
-  text-align: left;
+  text-align: left; */
 @import url("https://fonts.googleapis.com/css2?family=Dosis&family=Raleway&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=PT+Sans&display=swap");
 * {
@@ -856,56 +856,6 @@ position: absolute;
   }
 
 }
-<<<<<<< HEAD
-#specialists .item-imgsBack , #featured .item-imgsBack,
-#doctor .item-imgsBack {
-  background: no-repeat center center;
-  background-color: #c6dffe;
-/*   width: 275px; */
-  height: 264px;
-  vertical-align: middle;
-  object-fit: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.item-imgs{
-  /* width:167px !important;
-  height:170px;
-   */
-
-   width:292px !important;
-  height:297px;
-  
-}
-
-
-@media only screen and (min-width: 220px) and (max-width: 760px) {
-
-  #specialists .item-imgsBack , #featured .item-imgsBack,
-  #doctor .item-imgsBack {
-    background: no-repeat center center;
-    background-color: #c6dffe;
-    /* width: 236px; */
-    height: 264px;
-    vertical-align: middle;
-    object-fit: none;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  }
-  
-  .item-imgs{
-    width:167px !important;
-    height:170px;
-    /* padding-right: 6px; */
-    
-  }
-
-}
-=======
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
 
 @media only screen and (min-width: 768px) and (max-width: 912px) {
 
@@ -3034,10 +2984,6 @@ box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
     
   }
 
-<<<<<<< HEAD
-
-
-=======
   .custom-datepicker .booked {
     background-color: red;
     color: white;
@@ -3050,7 +2996,6 @@ box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
 
 
  
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
   @media only screen and (min-width: 320px) and (max-width: 575px) 
   {
 
@@ -3063,14 +3008,8 @@ box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
 
     button.close.appn{
       /* left:350px; */
-<<<<<<< HEAD
-      left:320px;
-      /* left:150px; */
-      /* left:80px; */
-=======
       left:80px;
       
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
     }
 
 

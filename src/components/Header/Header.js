@@ -190,20 +190,12 @@ import { userAccess } from "../UserAccess";
          <div className="profilePage">
             <div className="">
                <section className="pageHeader zIndex-2" >
-<<<<<<< HEAD
-                 <div  className="webAlign" >
-=======
                   <div className="webAlign" >
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
                      <div className="row d-flex">
                         <div className="header" style={{width:"100%"}}>
                            <div className=" logo mt-3"> 
                               <Link to='/'>
-<<<<<<< HEAD
-                                <img src={'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/static/media/heart.30b5f0b3.png'} alt="All Cures Logo"/>
-=======
                                 <img src={'https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/heart.30b5f0b3cbbf79450c5a.png'} alt="All Cures Logo"/>
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
                                 <span>All Cures</span>
                               </Link>
                            </div>
@@ -263,11 +255,7 @@ import { userAccess } from "../UserAccess";
       <a class="nav-link" href="/AboutUs">About Us</a>
     </li>
             <li className="nav-item">
-<<<<<<< HEAD
-         <a className="nav-link" href="/webstories">Webstories</a>
-=======
          <a className="nav-link" href="webstories">Webstories</a>
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
        </li>
   </ul>
   </div>

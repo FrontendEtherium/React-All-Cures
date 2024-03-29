@@ -130,39 +130,6 @@ function App() {
                                   }
                                           }}
                                               />
-<<<<<<< HEAD
-            {isError && <p className="text-danger">Please enter a valid 10-digit phone number.</p>}
-                            
-
-                            
-                            
-                            
-                        </Form.Group>
-                          
-                    
-                        {
-                            alert?
-                                <Alert variant="success" className="h6 mx-3">Company Create successfully!!</Alert>
-                                : null
-                        }
-                     
-                        </div>
-                        <div className="col-md-12 text-center">
-                            <button type="submit" className="btn btn-dark col-md-12 mb-4">Submit</button>
-                        </div>
-                        </form>
-                    </div>
-
-               
-                </div>
-            </div>
-   
-   
-       
-       
-        
-
-=======
             {isError && <p className="text-danger">Please enter a valid 10-digit phone number.</p>}
               </Form.Group>
 
@@ -181,7 +148,6 @@ function App() {
         </div>
       </div>
     </div>
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
   );
 }
 

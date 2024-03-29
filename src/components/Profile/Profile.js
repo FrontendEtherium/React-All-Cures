@@ -634,7 +634,6 @@ bookAppn = (e) => {
           items: json,
           docid: json.docID,
         });
-<<<<<<< HEAD
       });
   };
 
@@ -651,24 +650,6 @@ bookAppn = (e) => {
         });
         console.log('availStatus',this.state.availStatus)
       });
-=======
-      });
-  };
-
-
-  fetchAvailStatus = (id) => {
-    fetch(`${backendHost}/video/get/${id}/availability`)
-      // .then(res => JSON.parse(res))
-      .then((res) => res.json())
-      .then((json) => {
-        this.setState({
-          
-          availStatus: json,
-          
-        });
-        console.log('availStatus',this.state.availStatus)
-      });
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
       
   };
 
@@ -757,15 +738,9 @@ bookAppn = (e) => {
 
 
 //
-<<<<<<< HEAD
 
 const totalDates = Object.keys(json.totalDates);
 
-=======
-
-const totalDates = Object.keys(json.totalDates);
-
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
 
 const generateDateRange = (startDate, endDate) => {
   const dates = [];
@@ -1131,7 +1106,6 @@ console.log('handle')
               items.firstName +
               " " +
               items.lastName
-<<<<<<< HEAD
             }
             description={items.about}
             image={`${imagePath}/cures_articleimages/doctors/${items.docID}.png`}
@@ -1144,20 +1118,6 @@ console.log('handle')
               " , " +
               items.primarySpl
             }
-=======
-            }
-            description={items.about}
-            image={`${imagePath}/cures_articleimages/doctors/${items.docID}.png`}
-            keywords={
-              items.firstName +
-              " " +
-              items.lastName +
-              " , " +
-              items.hospitalAffiliated +
-              " , " +
-              items.primarySpl
-            }
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
           ></HelmetMetaData>
           <Header history={this.props.history} />
 

@@ -1,10 +1,6 @@
 @media only screen and (max-width: 768px) {
     .webs{
-<<<<<<< HEAD
-        flex-direction:column;
-=======
          flex-direction:column;
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
         justify-content: center;
     }
   }
@@ -13,14 +9,8 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     -webkit-line-clamp: 2;
-<<<<<<< HEAD
-    /* max-height: 3.6em; */
-  }
-
-=======
    
   }
 
 
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
   

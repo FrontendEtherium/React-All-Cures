@@ -1,10 +1,6 @@
 import React,{useEffect,useState} from "react";
 import Header from "../Header/Header";
 import { Link } from "react-router-dom/cjs/react-router-dom";
-<<<<<<< HEAD
-// import Floater from "../../assets/img/floater.png"
-=======
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
 import axios from 'axios';
 import { backendHost } from '../../api-config';
 import'./WebStories.css'
@@ -88,11 +84,7 @@ useEffect(()=>{
 
 
 
-<<<<<<< HEAD
-    {/* <div className="card shadow-sm  mr-3 mb-3" style={{maxWidth:"300px",minHeight:"480px"}}> 
-=======
     {/* <div className="card shadow-sm  mr-3 mb-3" style={{maxWidth:"300px"}}> 
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
       <a href="https://stories.all-cures.com/curing-low-blood-sugar" className="text-decoration-none">
         <div className="card-body">
           <img src={Floater} alt="img" style={{ width: "100%", maxHeight: "250px" }} />
@@ -108,11 +100,7 @@ useEffect(()=>{
   {data.length>0 ?(
                   <OwlCarousel className="owl-theme owl-loading" items={6} loop margin={150}  {...options}>
     
-<<<<<<< HEAD
- {data &&
-=======
   {data &&
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
   [...data].reverse().map((item) => (
     <div
       className="card shadow-sm  mr-3 mb-3 "
@@ -121,11 +109,7 @@ useEffect(()=>{
       <a href={item.link} className="text-decoration-none">
         <div className="card-body">
           <img
-<<<<<<< HEAD
-            src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp${item.image}`}
-=======
             src={`https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp${item.image}`}
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
             alt="img"
             style={{ width: "100%", maxHeight: "300px" }}
           />
@@ -136,20 +120,12 @@ useEffect(()=>{
         </div>
       </a>
     </div>
-<<<<<<< HEAD
-  ))}
-=======
   ))} 
 
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
 
 
 
 
-<<<<<<< HEAD
-  
-=======
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
 
 </OwlCarousel>
   ):"Loading"}
@@ -160,11 +136,7 @@ useEffect(()=>{
 
   
     </div>
-<<<<<<< HEAD
-    <Footer/>
-=======
      <Footer/>
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
     </>
   );
 };

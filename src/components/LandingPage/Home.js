@@ -42,10 +42,6 @@ import TrendingArticles from './TrendingArticles';
 import FeaturedArticles from './FeaturedArticles';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
-<<<<<<< HEAD
-=======
-
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
 env.REACT_APP = 'http://117.241.171.115:8080/cures';
 
 class Home extends Component {
@@ -109,10 +105,6 @@ class Home extends Component {
     }
 
      this.loadFloater();
-<<<<<<< HEAD
-    
-=======
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
    const loadUsers = async () => {
       
       await axios.get(`${backendHost}/city/all`)
@@ -719,11 +711,7 @@ class Home extends Component {
 {
                            
                            this.state.ads?
-<<<<<<< HEAD
-                           this.state.ads!=="https://all-cures.com:444All Ads are Served"?
-=======
                            this.state.ads!=="https://uat.all-cures.com:444All Ads are Served"?
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
                            <div className="container d-flex justify-content-center">
                            <img className=" mb-5 ml-1" id="left-menu-ad" src={this.state.ads} alt="ad"
                             onClick={() => this.handleClick(this.state.adId)}
@@ -850,11 +838,7 @@ class Home extends Component {
     <div className="modal-content">
     <div className="modal-header">
         
-<<<<<<< HEAD
-        <button type="button" onClick={this.handleModalClose} className="close" data-dismiss="modal" aria-label="Close">
-=======
         <button type="button"  onClick={this.handleModalClose}className="close" data-dismiss="modal" aria-label="Close">
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -866,20 +850,12 @@ class Home extends Component {
                      <div className="innerapp">
                         <div className="doc-img ">
 
-<<<<<<< HEAD
-                           {this.state.images.length>0?(
-                         
-                       
-                          <img src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp${this.state.images[this.state.currentIndex]}`} alt="doct"  style={{maxHeight:"400px",width:"405px"}}/>)
-                          :  <img src={Doct} alt="doctor"  style={{maxHeight:"400px",width:"397px"}}/> 
-=======
                            {this.state.images?(
                          
                             <img src={`https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp${this.state.images[this.state.currentIndex]}`} alt="doct"  style={{maxHeight:"400px",width:"405px"}}/>)
                           :  <img src={Doct} alt="doctor"  style={{maxHeight:"400px",width:"397px"}}/> 
                           
                           
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
                           }
 
 
@@ -946,8 +922,6 @@ function ToggleButton(props) {
              </Dropdown.Item>
 
 
-<<<<<<< HEAD
-=======
 {/* web stories */}
 
             
@@ -956,7 +930,6 @@ function ToggleButton(props) {
 
 
 
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
              <Dropdown.Item >
                <Link to="/editSubscribe" className="text-dark btn">
                   Edit Subscription</Link>

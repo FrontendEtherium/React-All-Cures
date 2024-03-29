@@ -289,8 +289,6 @@ class Footer extends Component {
                            </a>
                         </li>
                       
-<<<<<<< HEAD
-=======
                      </ul>
                   </div>
                </div> */}
@@ -354,7 +352,6 @@ class Footer extends Component {
                            </a>
                         </li>
                       
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
                      </ul>
                   </div>
          </div> 
@@ -366,18 +363,12 @@ class Footer extends Component {
                    <span></span>
                 </a>
                 </div>
-<<<<<<< HEAD
-          
-           
-               <div className='row'></div>
-=======
               
 
 
 
                
                {/* <div className='row'></div> */}
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
             </div>
          </div>
       </div>
