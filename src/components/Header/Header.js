@@ -225,7 +225,7 @@ import { userAccess } from "../UserAccess";
       </div>
     </li>
     <li class="nav-item dropdown ">
-      <a class="nav-link dropdown-toggle" href="#" id="trendingCuresDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Trending Cures</a>
+      <a class="nav-link dropdown-toggle" href="#" id="trendingCuresDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Trending Cure</a>
       <div class="dropdown-menu" aria-labelledby="trendingCuresDropdown">
         <a class="dropdown-item" href="/searchmedicine/medicinetype/1">Ayurveda</a>
         <a class="dropdown-item" href="/searchmedicine/medicinetype/4">Chinese Medicine</a>
