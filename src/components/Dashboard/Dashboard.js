@@ -222,7 +222,6 @@ export default function Dashboard(props) {
         //     isOnline={isOnline}
         //   />
       });
-      // eslint-disable-next-line
     }, []);
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);

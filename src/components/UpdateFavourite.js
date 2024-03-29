@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import DataTable from 'react-data-table-component';
 import axios from 'axios';
@@ -37,8 +36,7 @@ const favouriteForm = (e) => {
 
                                         {
                                             alert?
-                                                
-                                               <Alert variant="success" className="h6 mx-3 success" id="success-fav">Removed From Your Favourite List successfully!!</Alert>
+                                                <Alert variant="success" className="h6 mx-3 success" id="success-fav">Removed From Your Favourite List successfully!!</Alert>
                                                 : null
                                         }
                                 
@@ -47,7 +45,7 @@ const favouriteForm = (e) => {
                                     
                                     
                                         <div className="">
-                                            <button type="submit" className="ml-3 mt-4 btn-article-search favourite" ><i className='fas fa-heart fa-1x'></i> Remove From Favourite</button>
+                                            <button type="submit" className=" mt-4 btn-article-search favourite" ><i className='fas fa-heart fa-1x'></i> Remove From Favourite</button>
                                             
                                           
                                            
@@ -58,4 +56,4 @@ const favouriteForm = (e) => {
   );
 }
 
-export default Favourites;
+export default Favourites;

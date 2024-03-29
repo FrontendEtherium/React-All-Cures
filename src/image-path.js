@@ -1,1 +1,1 @@
-export const imagePath = 'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/'
+export const imagePath = 'https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/'

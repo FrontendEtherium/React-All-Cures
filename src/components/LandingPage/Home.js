@@ -42,6 +42,10 @@ import TrendingArticles from './TrendingArticles';
 import FeaturedArticles from './FeaturedArticles';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
 env.REACT_APP = 'http://117.241.171.115:8080/cures';
 
 class Home extends Component {
@@ -105,7 +109,10 @@ class Home extends Component {
     }
 
      this.loadFloater();
+<<<<<<< HEAD
     
+=======
+>>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
    const loadUsers = async () => {
       
       await axios.get(`${backendHost}/city/all`)
@@ -179,17 +186,16 @@ class Home extends Component {
    console.log("1232121 testing");
    };
   
-    floaterInterval = null;
+   floaterInterval = null;
    floaterShow=()=>{
-      this.floaterInterval =   setInterval(this.rotateImages, 3000);
+      this.floaterInterval =  setInterval(this.rotateImages, 3000);
    }
   
-   handleModalClose = () => {
+  handleModalClose = () => {
       if (this.floaterInterval) {
         clearInterval(this.floaterInterval);
       }
     };
-  
    
    
    rotateImages = () => {
@@ -248,7 +254,7 @@ class Home extends Component {
 
       }
 
-    const newResponse=`https://all-cures.com:444${response.data}`
+    const newResponse=`https://uat.all-cures.com:444${response.data}`
     console.log(newResponse)
      this.setState({
       //  ads: response.data,
@@ -261,7 +267,7 @@ class Home extends Component {
      });
    }
  };
-         
+        
 
     handleClick = (ad) => {
   
@@ -416,12 +422,12 @@ class Home extends Component {
             <div className="profilePage">
             <div className="">
                <section className=" zIndex-2" >
-                  <div className="webAlign">
+                   <div   className="webAlign" >
                      <div className="row d-flex">
                         <div className="header" style={{width:"100%"}}>
                            <div className=" logo mt-3 ml-4" > 
                               <Link to='/'>
-                                <img src={'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/static/media/heart.30b5f0b3.png'} alt="All Cures Logo"/>
+                                <img src={'https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/heart.30b5f0b3.png'} alt="All Cures Logo"/>
                                 <span>All Cures</span>
                               </Link>
                            </div>
@@ -436,7 +442,7 @@ class Home extends Component {
                                   <div class="collapse navbar-collapse" id="navbarNavDropdown">
      <ul class="navbar-nav">
        <li class="nav-item">
-         <a class="nav-link" href="/">Home</a>
+         <a class="nav-link" href="/">Homes</a>
        </li>
        <li class="nav-item dropdown">
          <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
@@ -479,7 +485,7 @@ class Home extends Component {
          <a class="nav-link" href="/AboutUs">About Us</a>
        </li>
                <li className="nav-item">
-         <a className="nav-link" href="/webstories">Webstories</a>
+         <a className="nav-link" href="webstories">Webstories</a>
        </li>
      </ul>
      </div>
@@ -675,7 +681,8 @@ class Home extends Component {
         </div>
       </section> 
 
-       
+      
+    
                   
       <section className="mb-5 mt-2">
       <div className="container">
@@ -712,7 +719,11 @@ class Home extends Component {
 {
                            
                            this.state.ads?
+<<<<<<< HEAD
                            this.state.ads!=="https://all-cures.com:444All Ads are Served"?
+=======
+                           this.state.ads!=="https://uat.all-cures.com:444All Ads are Served"?
+>>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
                            <div className="container d-flex justify-content-center">
                            <img className=" mb-5 ml-1" id="left-menu-ad" src={this.state.ads} alt="ad"
                             onClick={() => this.handleClick(this.state.adId)}
@@ -839,7 +850,11 @@ class Home extends Component {
     <div className="modal-content">
     <div className="modal-header">
         
+<<<<<<< HEAD
         <button type="button" onClick={this.handleModalClose} className="close" data-dismiss="modal" aria-label="Close">
+=======
+        <button type="button"  onClick={this.handleModalClose}className="close" data-dismiss="modal" aria-label="Close">
+>>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -851,11 +866,20 @@ class Home extends Component {
                      <div className="innerapp">
                         <div className="doc-img ">
 
+<<<<<<< HEAD
                            {this.state.images.length>0?(
                          
                        
                           <img src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp${this.state.images[this.state.currentIndex]}`} alt="doct"  style={{maxHeight:"400px",width:"405px"}}/>)
                           :  <img src={Doct} alt="doctor"  style={{maxHeight:"400px",width:"397px"}}/> 
+=======
+                           {this.state.images?(
+                         
+                            <img src={`https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp${this.state.images[this.state.currentIndex]}`} alt="doct"  style={{maxHeight:"400px",width:"405px"}}/>)
+                          :  <img src={Doct} alt="doctor"  style={{maxHeight:"400px",width:"397px"}}/> 
+                          
+                          
+>>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
                           }
 
 
@@ -922,6 +946,17 @@ function ToggleButton(props) {
              </Dropdown.Item>
 
 
+<<<<<<< HEAD
+=======
+{/* web stories */}
+
+            
+
+
+
+
+
+>>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
              <Dropdown.Item >
                <Link to="/editSubscribe" className="text-dark btn">
                   Edit Subscription</Link>

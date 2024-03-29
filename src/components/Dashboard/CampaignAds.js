@@ -67,7 +67,7 @@ function App() {
       formData.append('mobile_image',appImage);
     }
   
-    console.log(formData)
+    console.log(formData.json)
     axios.post(`${backendHost}/sponsored/create/ad`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',

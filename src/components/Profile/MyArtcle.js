@@ -122,9 +122,15 @@ const ArticlePreview = (props) => {
                         content = IsJsonValid(decodeURIComponent(i.content))
                     }
                     if(imgLocation && imgLocation.includes('cures_articleimages')){
+<<<<<<< HEAD
                         imageLoc = `https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/`+imgLocation.replace('json', 'png').split('/webapps/')[1]
                     } else {
                         imageLoc = 'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/cures_articleimages//299/default.png'
+=======
+                        imageLoc = `https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/`+imgLocation.replace('json', 'png').split('/webapps/')[1]
+                    } else {
+                        imageLoc = 'https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/cures_articleimages//299/default.png'
+>>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
                     }
 
                     var title = i.title

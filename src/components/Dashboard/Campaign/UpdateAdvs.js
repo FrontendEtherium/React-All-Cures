@@ -329,6 +329,11 @@ export default function UpdatePromo(props) {
           </div>
         </form>
       </div>
+<<<<<<< HEAD
     </div>
   );
+=======
+    </div>
+  );
+>>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
 }

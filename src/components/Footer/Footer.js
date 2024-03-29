@@ -196,7 +196,7 @@ class Footer extends Component {
                </div>
                <div className="col-md-3 col-sm-3 col-sx-12">
                   <div className="footer-inner">
-                     <h1>Download the All-Cures App here:</h1>
+                     <h1>Download the All-Cures app here:</h1>
                { /*  <a href="https://www.facebook.com/All-Cures-100610265834385" target="_blank" rel="noreferrer">
                               <span>
                                  <img src={AppStore} alt="Facebook Link" height="40px" width="150px"></img>
@@ -206,8 +206,7 @@ class Footer extends Component {
                            </a>*/}
                            <a href="https://play.google.com/store/apps/details?id=com.allcures" target="_blank" rel="noreferrer">
                               <span>
-                                 
-                              <img src={GooglePlay} alt="Google Play Link" height="" width="150"
+                                 <img src={GooglePlay} alt="Google Play Link" height="" width="150"
                                  style={{width:"148px",maxHeight:"45px",marginBottom:"7px",marginRight:"5px"}}></img>
                               </span> 
                               <span className="path1"></span>
@@ -215,8 +214,7 @@ class Footer extends Component {
                            </a>
                            <a href="https://apps.apple.com/in/app/all-cures/id1659590351" target="_blank" rel="noreferrer">
                               <span>
-                                 
-                                     <img src={AppStore} alt="Apple Link" height="" width="150"
+                                 <img src={AppStore} alt="Apple Link" height="" width="150"
                                   style={{width:"150px",maxHeight:"45px",marginBottom:"7px"}}></img>
                               </span> 
                               <span className="path1"></span>
@@ -236,13 +234,10 @@ class Footer extends Component {
                Disclaimer: Content available on All Cures website is not intended to be a substitute for professional medical advice, diagnosis, or treatment. It is strongly recommended to consult your physician or other qualified medical practitioner with any questions you may have regarding a medical condition. The website should not be used as a source for treatment of any medical condition.
                </div>
                </div>
-
-
-
-<div className="row">
-
-        <div className="col-md-4">
-        <div className="textSize logo">
+             
+              <div className="row">
+               {/* <div className="col-md-4 col-sm-4  col-sx-12">
+                  <div className="logo">
                      <a href="/#">
                       <img src={'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/static/media/heart.30b5f0b3.png'} alt="All Cures Logo"  style={{width:"40px"}}/><span>All Cures</span>
                     </a>
@@ -294,6 +289,72 @@ class Footer extends Component {
                            </a>
                         </li>
                       
+<<<<<<< HEAD
+=======
+                     </ul>
+                  </div>
+               </div> */}
+
+               </div>
+
+
+
+<div className="row">
+
+        <div className="col-md-4">
+         <div className="textSize logo">
+                     <a href="/#">
+                        <img src={'https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/heart.30b5f0b3cbbf79450c5a.png'} alt="All Cures Logo"  style={{width:"40px"}}/><span>All Cures</span>
+                    </a>
+                  </div>
+         </div> 
+         <div className="col-md-4">
+         <div className="copyRight">
+                     <p>All rights reserved. Copyright <i className="far fa-copyright fa-1x"></i>2022 <a href='https://etheriumtech.com'>Etherium Technologies</a></p>
+                  </div>
+         </div>
+     
+        <div className="col-md-4">
+        <div className="socia-media-footer">
+                     <ul>
+                        <li>
+                           <a href="https://www.facebook.com/All-Cures-100610265834385" target="_blank" rel="noreferrer">
+                              <span>
+                                 <img src={Facebook} alt="Facebook Link" height="30px" width="30px"></img>
+                              </span> 
+                              <span className="path1"></span>
+                              <span className="path2"></span>
+                           </a>
+                        </li>
+                        <li>
+                           <a href="https://www.instagram.com/allcuresinfo/" target="_blank" rel="noreferrer">
+                              <span>
+                                 <img src={Instagram} alt="Instagram Link" height="30px" width="30px"></img>
+                              </span> 
+                              <span className="path1"></span>
+                              <span className="path2"></span>
+                           </a>
+                        </li>
+                        <li>
+                           <a href="https://twitter.com/allcuresinfo" target="_blank" rel="noreferrer">
+                              <span>
+                                 <img src={Twitter} alt="Twitter Link" height="30px" width="30px"></img>
+                              </span> 
+                              <span className="path1"></span>
+                              <span className="path2"></span>
+                           </a>
+                        </li>
+                        <li>
+                           <a href="https://www.linkedin.com/company/etherium-technologies/" target="_blank" rel="noreferrer">
+                              <span>
+                                 <img src={Linkedin} alt="LinkedIn Link" height="30px" width="30px"></img>
+                              </span> 
+                              <span className="path1"></span>
+                              <span className="path2"></span>
+                           </a>
+                        </li>
+                      
+>>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
                      </ul>
                   </div>
          </div> 
@@ -305,9 +366,18 @@ class Footer extends Component {
                    <span></span>
                 </a>
                 </div>
+<<<<<<< HEAD
           
            
                <div className='row'></div>
+=======
+              
+
+
+
+               
+               {/* <div className='row'></div> */}
+>>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
             </div>
          </div>
       </div>

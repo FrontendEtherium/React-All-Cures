@@ -113,7 +113,7 @@ const handleImageChange = async (e) => {
                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
                             <Form.Label>Enter Web story Description </Form.Label>
                             <Form.Control  value={description} onChange={(e) => setDescription(e.target.value)} type="text" name=""
-                            placeholder="Enter Description..."  required/>
+                            placeholder="Enter Description..." required />
                         </Form.Group>
 
 
@@ -129,7 +129,7 @@ const handleImageChange = async (e) => {
                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
                             <Form.Label>Enter ImageAltText  <b> (Optional)</b></Form.Label>
                             <Form.Control  value={alt} onChange={(e) => setAlt(e.target.value)} type="text" name=""
-                            placeholder="Enter ImageAltText..."  required/>
+                            placeholder="Enter ImageAltText..."required />
                         </Form.Group>
                        
               <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>

@@ -36,18 +36,43 @@ console.log('getid->',userId)
     axios
       .get(`${backendHost}/chat/${userId}/${props.docid}`)
       .then((res) => {
-if(res.data[0].Chat_id!=null){
-   console.log('initiate')
-        setChatId(res.data[0].Chat_id);
-        setToId(props.docid);
-        setChats(res.data);
-        startWebSocket(res.data[0].Chat_id);
-        // Create a new WebSocket connection
-}else{
-  console.log('start')
-  favouriteForm()
-}
-      
+        const chatId = res.data[0].Chat_id;
+
+        if (chatId != null) {
+          setChatId(res.data[0].Chat_id);
+          setAlert("Chat already exists");
+          setChats(res.data);
+
+          // Create a new WebSocket connection
+        const ws = new WebSocket("ws://uat.all-cures.com:8000");
+        ws.onopen = () => {
+          console.log("Connected to the Chat Server");
+          ws.send(`{"Room_No":"${res.data[0].Chat_id}"}`);
+        };
+        ws.onmessage = (event) => {
+          console.log(event);
+          const from = event.data.split(":")[0];
+          const receivedMessage = event.data.split(":").pop();
+          const newChat = {
+            Message: receivedMessage,
+            From_id: from,
+          };
+          console.log("Message", from);
+          setChats((prevMessages) => [...prevMessages, newChat]);
+        };
+  
+        ws.onclose = function (event) {
+          if (event.wasClean) {
+            console.log(
+              `[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`
+            );
+          } else {
+            console.log("[close] Connection died");
+          }
+        };
+  
+        setSocket(ws);
+        }
       })
       .catch((err) => err);
   };

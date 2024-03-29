@@ -23,7 +23,7 @@ console.log('docimg',img)
 //        if (json[i].docID == docID && json[i].img_Loc !=null) {
 
         
-//            matchedImageLoc = `https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp${json[i].img_Loc}`;
+//            matchedImageLoc = `https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp${json[i].img_Loc}`;
            
 //            break; // Break the loop once a match is found
 //        }
@@ -55,7 +55,7 @@ console.log('docimg',img)
   } */}
 
 {img?
-  <img src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-180,h-230,f-webp${img}`} className="item-imgs" alt="doc" />:
+  <img src={`https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-180,h-230,f-webp${img}`} className="item-imgs" alt="doc" />:
   <i class="fas fa-user-md fa-10x"></i>
   }
     

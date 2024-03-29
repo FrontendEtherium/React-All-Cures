@@ -25,10 +25,11 @@
 .banner {
   height: 49vh;
   position: relative;
-  background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-1000,f-webp/static/media/Banner1-Full.2bbf7fa6.jpg") center;
+  background: url("https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/Banner1-Full.2bbf7fa6.jpg") center;
   animation: carousel 30s ease-in-out infinite;
   opacity: 0.8;
 }
+
 
 .primary-btn-color {
   background-color: #00415e;
@@ -36,17 +37,17 @@
 
 @keyframes carousel {
   0% {
-    background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-1000,f-webp/static/media/Banner1-Full.2bbf7fa6.jpg")
+    background: url("https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-1000,f-webp/static/media/Banner1-Full.2bbf7fa6.jpg")
       center center no-repeat;
     background-size: cover;
   }
   25% {
-    background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-1000,f-webp/static/media/Banner2.6d179203.jpg") center
+    background: url("https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-1000,f-webp/static/media/Banner2.6d1792035b44ed4543f5.jpg") center
       center no-repeat;
     background-size: cover;
   }
   50% {
-    background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-1000,f-webp/static/media/Banner3.0558b950.jpg") center
+    background: url("https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-1000,f-webp/static/media/Banner3.0558b95054e6d24d9846.jpg") center
       center no-repeat;
     background-size: cover;
   }
@@ -78,17 +79,17 @@
 
 
 .trending-articles #yoga {
-  background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/static/media/yoga.5ee733fb.jpg")
+  background: url("https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/yoga.5ee733fb.jpg")
     center center no-repeat;
   background-size: cover;
 }
 .trending-articles #chinese {
-  background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/static/media/chinese.61fb7adb.jpg")
+  background: url("https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/chinese.61fb7adb.jpg")
     center center no-repeat;
   background-size: cover;
 }
 .trending-articles #ayurveda {
-  background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/static/media/ayurvedic.7f711065.jpg")
+  background: url("https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/ayurvedic.7f711065a91aa7a380d5.jpg")
     center center no-repeat;
   background-size: cover;
 }
@@ -99,18 +100,18 @@
 }
 
 .trending-articles #homeopathy {
-  background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/static/media/homeopathy.00e187d4.jpg")
+  background: url("https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/homeopathy.00e187d4.jpg")
     center center no-repeat;
   background-size: cover;
 }
 .trending-articles #naturopathy {
-  background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/static/media/herbal-naturopathic-medicine.1da7902d.jpg")
+  background: url("https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/herbal-naturopathic-medicine.1da7902d.jpg")
     center center no-repeat;
   background-size: cover;
 }
 
 .trending-articles #unani {
-  background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/static/media/unani.e04b046f.jpg")
+  background: url("https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/unani.e04b046f.jpg")
     center center no-repeat;
   background-size: cover;
 }
@@ -118,7 +119,7 @@
 
 
 .trending-articles #arabic {
-  background: url("https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/arabic.2d3d1b2b.jpg")
+  background: url("https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/arabic.2d3d1b2b690f2a886fc1.jpg")
     center center no-repeat;
   background-size: cover;
 }

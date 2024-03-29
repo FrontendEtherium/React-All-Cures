@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Change YOUR_TOKEN to your prerender token
 # Change https://service.prerender.io/ (at the end of the last RewriteRule)
 # to http://localhost:3000/ when testing with a local prerender server
@@ -47,3 +48,32 @@ RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
 RewriteRule ^ - [L]
 RewriteRule ^ /index.html [L]
 
+=======
+# Change YOUR_TOKEN to your prerender token
+# Change https://service.prerender.io/ (at the end of the last RewriteRule)
+# to http://localhost:3000/ when testing with a local prerender server
+
+Options +FollowSymLinks
+
+RewriteCond %{HTTPS} !on
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+RewriteEngine On
+
+# Redirect all HTTPS URLs to www
+#RewriteCond %{HTTPS} on
+#RewriteCond %{HTTP_HOST} !^www\.
+#RewriteRule ^(.*)$ https://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+<IfModule mod_headers.c>
+    RequestHeader set X-Prerender-Token "r6ZD98roW0gkv6W7iv4F"
+    RequestHeader set X-Prerender-Version "prerender-apache@2.0.0"
+</IfModule>
+
+RewriteEngine On
+RewriteBase /
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+RewriteRule ^ - [L]
+RewriteRule ^ /index.html [L]
+
+>>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f

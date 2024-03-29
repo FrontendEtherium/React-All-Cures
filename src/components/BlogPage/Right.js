@@ -19,7 +19,7 @@ const Side = (props) => {
           .catch(err => {return}
         )
       }
-       function allPosts() {      
+      function allPosts() {      
         
         console.log('token')
         // For all available blogs "/blogs"

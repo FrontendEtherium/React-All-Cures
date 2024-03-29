@@ -74,8 +74,8 @@ import Y from './Header/Health A To Z/Y'
 import Z from './Header/Health A To Z/Z'
 import AppRedirect from "./LandingPage/AppRedirect";
 import Webstories from "./WebStories/Webstories";
-import RedirectQr from "./RedirectQr.js";
 import DoctorLink from "./Profile/DoctorLink.js";
+
 
 
 
@@ -146,11 +146,9 @@ const Routes = (props) => {
        <Route exact path="/medical" component={Medical}/>
        <Route exact path="/chatlist" component={ChatList}/>
      <Route exact path="/appRedirect" component={AppRedirect} />
-     <Route exact path="/webStories" component={Webstories} />
-     <Route exact path="/jammuevent" component={RedirectQr} />
-     <Route path="/notification/:linkid" component={DoctorLink}/>
-
     
+       <Route exact path="/webStories" component={Webstories} />
+     <Route path="/notification/:linkid" component={DoctorLink}/>
 
 
 
@@ -227,7 +225,7 @@ const Routes = (props) => {
       <Route auth={Auth.auth} exact path="/cure/:id" component={Disease}/>
       
       {/* Doctor profile page */}
-      <Route auth={Auth.auth} exact path="/doctor/:id" component={Profile} />
+       <Route auth={Auth.auth} exact path="/doctor/:id" component={Profile} />
       <Route exact path="/profile/:id/edit" component={LoginInfo} />
    <Route exact path="/privacy" component={privacy}/>
       {/* Doctor invitation page and ask for UPNR number */}

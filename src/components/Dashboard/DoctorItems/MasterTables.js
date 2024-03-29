@@ -264,7 +264,7 @@ useEffect(() => {
   </div>
 </Form.Group>
                         <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
-  <Form.Label>Payment Require ?</Form.Label>
+  <Form.Label>Payment Required</Form.Label>
   <div>
     <Form.Check
       inline
@@ -290,7 +290,7 @@ useEffect(() => {
 </Form.Group>
                    
 <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
-  <Form.Label>Contract Require ?</Form.Label>
+  <Form.Label>Contract Required</Form.Label>
   <div>
     <Form.Check
       inline

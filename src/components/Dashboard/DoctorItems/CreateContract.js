@@ -135,7 +135,7 @@ axios
     getServiceList();
 
     axios
-      .get(`${backendHost}/article/all/table/registration`)
+      .get('https://uat.all-cures.com:444/cures/article/all/table/registration')
       .then((res) => {
         const userData = res.data;
 

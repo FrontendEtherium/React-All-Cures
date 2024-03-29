@@ -89,11 +89,10 @@ const EditUserProfile = (props) => {
       })
       .then((res) => {
         setafterSubmitLoad(false);
-        if (res.data == 0) {
-          Alert("Some error occured. Try again later");
-        } else {
-          
+        if (res.data != 0) {
           Alert("Updated your profile successfully.");
+        } else {
+          Alert("Some error occured. Try again later");
         }
         props.fetchDoctor(props.id);
       })

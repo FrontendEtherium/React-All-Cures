@@ -39,7 +39,7 @@ const AllAdds = () => {
          }
       
           axios
-            .post(`${backendHost}/sponsored/search/campaignsads`, searchCriteria)
+            .post(`${backendHost}/sponsored/search/campaignsads`,searchCriteria)
             .then((res) => {
                 setAllAdds(res.data);
             })
@@ -81,14 +81,14 @@ const AllAdds = () => {
 
             placeholder={`Search By ${searchType === 'name' ? 'Campaign Name' : searchType === 'date' ? 'Create Date' : searchType === 'startDate' ? 'Start Date' : searchType === 'endDate' ? 'End Date' : searchType === 'type' ? 'Ad Type Name' : searchType === 'slot' ? 'Slot Name' : ''}`}
 
-            className="form-control "
+            className="form-control"
             required
           />
         </div>
 
         <div className="col-md-3 mt-2">
           <select
-            className="form-control "
+            className="form-control"
             value={searchType}
             onChange={(e) => setSearchType(e.target.value)}
           >

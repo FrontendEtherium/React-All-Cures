@@ -50,8 +50,14 @@
   }
   .fgrow{
     flex-grow:2;
+<<<<<<< HEAD
     justify-content:center !important;
     display:flex !important;
+=======
+      justify-content:center !important;
+    display:flex !important;
+
+>>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
   }
   .logo span {
     color: #00415e;

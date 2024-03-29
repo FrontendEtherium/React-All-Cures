@@ -31,8 +31,7 @@ class SearchName extends Component {
   fetchDoctors(name) {
     document.title = `All Cures | Search | ${name}`
       fetch(`${backendHost}/SearchActionController?cmd=getResults&city=&doctors=${name}`)
-
-    .then(res => res.json())
+      .then(res => res.json())
       .then(json => {
         this.setState({
           isLoaded: true,

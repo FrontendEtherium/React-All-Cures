@@ -1,3 +1,4 @@
+import React from 'react'
 import { Link } from 'react-router-dom'
 import { imagePath } from '../../image-path';
 
@@ -22,7 +23,7 @@ const ProfileTab = ({ firstName, lastName,middleName, docID, name, pSpl, hospita
 
       
 {img?
-  <img src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-180,h-230,f-webp${img}`} alt="doc" />:
+  <img src={`https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-180,h-230,f-webp${img}`} alt="doc" />:
   <i class="fas fa-user-md fa-10x"></i>
   }
                   </div>

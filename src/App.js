@@ -30,7 +30,7 @@ const App = () => {
       We use cookies to ensure you have the best browsing experience on our website. By using our site, you acknowledge that you have read and understood our <a className="text-underline text-white" href="/">Cookie Policy</a> & <a className="text-underline text-white" href="https://etheriumtech.com/privacy.html" target="_blank" rel="noreferrer">Privacy Policy</a>.
       </div>
       </CookieConsent>
-  <AppBanner/>
+     <AppBanner/>
     </div>
   );
 }
