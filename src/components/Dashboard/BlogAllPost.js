@@ -5,6 +5,7 @@ import axios from 'axios';
 import { backendHost } from '../../api-config';
 import { Link } from 'react-router-dom';
 import AllPost from './Allpost';
+import axiosInstance from '../../axiosInstance';
 
 
 
@@ -170,35 +171,35 @@ const[type,setType] = useState();
     // e.preventDefault()
     
     if(title && article_id){
-      axios.get(`${backendHost}/article/allkvList?offset=${(page-1)*countPerPage}&limit=${countPerPage}&search=title:${title}~article_id:${article_id}&order=article_id:asc`).then(res => {
+      axiosInstance.get(`/article/allkvList?offset=${(page-1)*countPerPage}&limit=${countPerPage}&search=title:${title}~article_id:${article_id}&order=article_id:asc`).then(res => {
         setArticle(res.data);
         
       }).catch(err => {
         setArticle({});
       });
     } else if(title){
-      axios.get(`${backendHost}/article/allkvList?offset=${(page-1)*countPerPage}&limit=${countPerPage}&search=title:${title}&order=article_id:asc`).then(res => {
+      axiosInstance.get(`/article/allkvList?offset=${(page-1)*countPerPage}&limit=${countPerPage}&search=title:${title}&order=article_id:asc`).then(res => {
         setArticle(res.data);
         
       }).catch(err => {
         setArticle({});
       });
     } else if(article_id){
-      axios.get(`${backendHost}/article/allkvList?offset=${(page-1)*countPerPage}&limit=${countPerPage}&search=article_id:${article_id}&order=article_id:asc`).then(res => {
+      axiosInstance.get(`/article/allkvList?offset=${(page-1)*countPerPage}&limit=${countPerPage}&search=article_id:${article_id}&order=article_id:asc`).then(res => {
         setArticle(res.data);
         
       }).catch(err => {
         setArticle({});
       });
     } else if(sort){
-      axios.get(`${backendHost}/article/allkvList?offset=${(page-1)*countPerPage}&limit=${countPerPage}&&order=article_id:${sort}`).then(res => {
+      axiosInstance.get(`/article/allkvList?offset=${(page-1)*countPerPage}&limit=${countPerPage}&&order=article_id:${sort}`).then(res => {
         setArticle(res.data);
         
       }).catch(err => {
         setArticle({});
       });
     } else{
-      axios.get(`${backendHost}/article/allkvList?offset=${(page-1)*countPerPage}&limit=${countPerPage}&&order=article_id:desc`).then(res => {
+      axiosInstance.get(`/article/allkvList?offset=${(page-1)*countPerPage}&limit=${countPerPage}&&order=article_id:desc`).then(res => {
         setArticle(res.data);
         
       }).catch(err => {
