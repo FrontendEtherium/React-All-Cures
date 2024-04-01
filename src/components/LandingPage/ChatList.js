@@ -68,7 +68,7 @@ console.log('getid->',getId)
  console.log("doctorid",docID)
   
     axios
-      .get(`${backendHost}/chat/${userAccess != 1 ? userId : getId}/${userAccess != 1 ? getId : {docID}}`)
+      .get(`${backendHost}/chat/${userAccess != 1 ? userId : getId}/${userAccess != 1 ? getId :docID}`)
       // .get(`${backendHost}/chat/148/14485`)
       // .get(`${backendHost}/chat/3/14485`)
       .then((res) => {
