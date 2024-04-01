@@ -143,6 +143,7 @@ const Test = (props) => {
     .then(response => {
       if(response.data.registration_id){
         Cookies.set('uName', response.data.first_name, { expires: 365 })
+         localStorage.setItem('doctorid',response.data.docID );
         setTimeout(() => {
           if(props.path){
             window.location = props.path
