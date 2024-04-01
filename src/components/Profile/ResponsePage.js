@@ -7,9 +7,9 @@ import Footer from '../Footer/Footer'
 const ResponsePage = () => {
 
     const response=localStorage.getItem('apiResponse')
-    console.log('responsepage',response)
+    // console.log('responsepage',response)
     const responseObject = JSON.parse(response);
-    console.log('res',responseObject.orderID)
+    // console.log('res',responseObject.orderID)
 
     const[getResponse,setGetResponse]=useState('')
 
@@ -26,7 +26,7 @@ const ResponsePage = () => {
   return (
    <>
 <Header/>
-<div  style={{height:"100px",marginTop:"4rem"}}>
+<div  style={{marginTop:"4rem"}}>
 
   {!getResponse &&
   (
@@ -44,8 +44,30 @@ const ResponsePage = () => {
   </>
  ) }
   {getResponse&&
+  <>
+  <div className="container d-flex justify-content-center">
+
+  <div className="card shadow-sm pt-3 m-3" style={{minHeight:"500px",width:"500px"}}>
+    <div className="card-body">
+      <div>
+      <h3>Appointment Status:</h3>
+      </div>
+      <div className="mt-4">
+    <h4>
+      Your transaction has been completed successfully.
+      Please check your email for appointment details and any additional instructions.
+       We look forward to assisting you with your healthcare needs.
+       Thank you for choosing our services.
+       </h4>
+       </div>
+    </div>
+  </div>
+  </div>
+ 
   
-  <h3>Payment Status:{getResponse}</h3>
+  </>
+  
+  // <h3>Payment Status:{getResponse}</h3>
   }
 
 </div>
