@@ -9,6 +9,13 @@ import CenterWell from './CenterWell';
 import Sidebar from "./leftMenu";
 import SidebarRight from "./RightMenu";
 import Doct from "../../assets/img/doct.png";
+import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
+import ThumbDownOutlinedIcon from '@mui/icons-material/ThumbDownOutlined';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+
+
+
 
 
 import { backendHost } from '../../api-config';
@@ -104,7 +111,9 @@ class Disease extends Component {
       url:window.location.href,
       ads:'',
       isWindowLoaded: false,
-      adId:''
+      adId:'',
+       likeClicked:false,
+      dislikeClicked:false ,
     };
     this.handleShows = this.handleShows.bind(this);
    
@@ -153,6 +162,25 @@ handleShows() {
 
 showModal() {
   this.setState({ modalState: !this.state.modalState });
+}
+
+  likeButton=()=>{
+  console.log("like clicked")
+  this.setState({
+    likeClicked:true,
+    dislikeClicked:false
+  })
+  axios.post(`${backendHost}/article/like/${this.props.match.params.id.split('-')[0]}`)
+}
+
+dislikeButton=()=>{
+  console.log("dislike clicked")
+  this.setState({
+    dislikeClicked:true,
+    likeClicked:false,
+  })
+  axios.post(`${backendHost}/article/dislike/${this.props.match.params.id.split('-')[0]}`)
+
 }
 
 
@@ -1369,8 +1397,23 @@ console.log('img',b)
               
 
 
-              
-                <h5>Source :  <a href="https://all-cures.com/Editorial" style={{textTransform:"none"}}>https://all-cures.com/editorial/</a></h5>
+            
+               {/* <h5>Source :  <a href="https://all-cures.com/Editorial" style={{textTransform:"none"}}>https://all-cures.com/editorial/</a></h5> */}
+               <h5>Source: {items.window_title}</h5>
+
+<h3> 
+  <div className="d-flex mt-4">
+    <div style={{textTransform:"none"}}> Was this article helpful?</div>
+    <button  class="btn  btn-link  border-0" onClick={this.likeButton}>
+      {this.state.likeClicked && <div><ThumbUpIcon/></div>}
+  { !this.state.likeClicked &&<div><ThumbUpOutlinedIcon/></div>}
+     </button>
+     <button  class="btn btn-link  border-0" onClick={this.dislikeButton}>
+     {this.state.dislikeClicked && <div><ThumbDownIcon/></div>}
+     { !this.state.dislikeClicked &&<div><ThumbDownOutlinedIcon/></div>}
+    </button>
+  </div>
+</h3>
              
             <div id="comments-column">              
 
