@@ -86,7 +86,7 @@ console.log('getid->',userId)
     }
 
     // Set up WebSocket connection
-    const ws = new WebSocket("wss://all-cures.com:8000");
+    const ws = new WebSocket("wss://uat.all-cures.com:8000");
 
     ws.onopen = () => {
       console.log("Connected to the Chat Server->");
