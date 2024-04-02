@@ -3,7 +3,7 @@ import { Alert, Form } from 'react-bootstrap';
 import axios from 'axios';
 import { backendHost } from '../../../api-config';
 import { userId } from '../../UserId';
-
+import  axiosInstance  from '../../../axiosInstance';
 function Feedback() {
   const [name, setName] = useState("Select FullName");
   const [first, setFirst] = useState('');
@@ -123,8 +123,7 @@ axios
   
 
   const getServiceList = () => {
-    axios
-      .get(`${backendHost}/article/all/table/SponsoredServicesMaster`)
+    axiosInstance.get(`/article/all/table/SponsoredServicesMaster`)
       .then((res) => {
         setServiceList(res.data);
       })
@@ -134,8 +133,8 @@ axios
   useEffect(() => {
     getServiceList();
 
-    axios
-      .get('https://uat.all-cures.com:444/cures/article/all/table/registration')
+    axiosInstance
+      .get('/article/all/table/registration')
       .then((res) => {
         const userData = res.data;
 

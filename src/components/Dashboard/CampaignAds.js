@@ -6,7 +6,7 @@ import { backendHost } from '../../api-config';
 import { Link } from 'react-router-dom';
 import AllPost from './Allpost';
 import { Alert, Form } from 'react-bootstrap';
-
+import axiosInstance from '../../axiosInstance';
 
 
 
@@ -224,7 +224,7 @@ const getAds = () => {
 
 
 const getCampaign = () => {
-    axios.get(`${backendHost}/article/all/table/Campaign`)
+  axiosInstance.get(`/article/all/table/Campaign`)
     .then(res => {
         
         setCampaignList(res.data)

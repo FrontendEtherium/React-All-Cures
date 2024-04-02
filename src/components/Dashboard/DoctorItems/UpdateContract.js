@@ -6,7 +6,7 @@ import history from '../../history';
 import { userId } from '../../UserId';
 import { backendHost } from '../../../api-config';
 import { Description } from '@material-ui/icons';
-
+import axiosInstance from '../../../axiosInstance'
 export default function UpdatePromo(props) {
   const [code, setCode] = useState('');
   const [startDate, setStart] = useState('');
@@ -100,14 +100,14 @@ export default function UpdatePromo(props) {
     });
   }
   const getHospital = () => {
-    axios.get(`${backendHost}/article/all/table/registration`).then((res) => {
+    axiosInstance.get(`/article/all/table/registration`).then((res) => {
       setCompanyList(res.data);
     })
     
   };
 
   const getAds = () => {
-    axios.get(`${backendHost}/article/all/table/AdsTypes`).then((res) => {
+    axiosInstance.get(`/article/all/table/AdsTypes`).then((res) => {
       setAdsList(res.data);
     }).catch((err) => {
       console.log(err);
@@ -115,7 +115,7 @@ export default function UpdatePromo(props) {
   };
 
   const getCampaign = () => {
-    axios.get(`${backendHost}/article/all/table/SponsoredServicesMaster`).then((res) => {
+    axiosInstance.get(`/article/all/table/SponsoredServicesMaster`).then((res) => {
       console.log('spon',res.data)
       setCampaignList(res.data);
     }).catch((err) => {

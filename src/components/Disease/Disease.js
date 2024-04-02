@@ -40,7 +40,7 @@ import Date from '../Date'
 import { imagePath } from '../../image-path'
 import { faKeybase } from '@fortawesome/free-brands-svg-icons';
 import headers from '../../api-fetch';
-
+import axiosInstance from '../../axiosInstance';
 
 
 
@@ -637,7 +637,7 @@ handleClick = (ad) => {
   axios.put(`${backendHost}/sponsored/ads/clicks/${ad}`)
 }
  getDisease = () => {
-    axios.get(`${backendHost}/article/all/table/disease_condition`)
+  axiosInstance.get(`/article/all/table/disease_condition`)
     .then(res => {
       console.log('getdisease')
         this.setState({

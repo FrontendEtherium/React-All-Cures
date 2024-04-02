@@ -220,7 +220,7 @@ const EditModal = (props) => {
     }
   
     const getLanguages = () => {
-        axios.get(`${backendHost}/article/all/table/languages`)
+        axiosInstance.get(`/article/all/table/languages`)
 
         .then(res => {
             setLanList(res.data)
@@ -232,7 +232,7 @@ const EditModal = (props) => {
     }
 
     const getMedicine = () => {
-        axios.get(`${backendHost}/article/all/table/medicinetype`)
+        axiosInstance.get(`/article/all/table/medicinetype`)
         .then(res => {
             setMedicineList(res.data)
         })
@@ -243,7 +243,7 @@ const EditModal = (props) => {
     }
 
     const getAuthor = () => {
-        axios.get(`${backendHost}/article/all/table/author`)
+        axiosInstance.get(`/article/all/table/author`)
         .then(res => {
             setAuthList(res.data)
         })
@@ -254,7 +254,7 @@ const EditModal = (props) => {
     }
 
     const getCountries = () => {
-        axios.get(`${backendHost}/article/all/table/countries`)
+        axiosInstance.get(`/article/all/table/countries`)
         .then(res => {
             
             setCountriesList(res.data)
@@ -266,7 +266,7 @@ const EditModal = (props) => {
     }
 
     const getDisclaimer = () => {
-        axios.get(`${backendHost}/article/all/table/disclaimer`)
+        axiosInstance.get(`/article/all/table/disclaimer`)
         .then(res => {
             setDisclaimerId(res.data)
         })
@@ -275,7 +275,7 @@ const EditModal = (props) => {
         )
     }
     const getDisease = () => {
-        axios.get(`${backendHost}/article/all/table/disease_condition`)
+        axiosInstance.get(`/article/all/table/disease_condition`)
         .then(res => {
             setDiseaseList(res.data)
         })
@@ -354,7 +354,7 @@ const EditModal = (props) => {
         setafterSubmitLoad(true)
         e.preventDefault();
         axios.defaults.withCredentials = true
-        axios.post(`${backendHost}/content?cmd=createArticle`, {
+        axiosInstance.post(`/content?cmd=createArticle`, {
             headers: {'Access-Control-Allow-Credentials': true },
             "title":title,
                 "friendlyName": articleDisplay,

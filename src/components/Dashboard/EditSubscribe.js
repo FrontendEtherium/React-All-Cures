@@ -14,7 +14,7 @@ import '../../assets/healthcare/css/main.css';
 import Input from '@material-ui/core/Input';
 import { Select, MenuItem } from '@material-ui/core';
 import Userprofile from '../Profile/Userprofile';
-
+import axiosInstance from '../../axiosInstance';
 
 class LoginInfo extends Component {
     constructor(props){
@@ -130,7 +130,7 @@ class LoginInfo extends Component {
     }
 
       getDisease = () => {
-        axios.get(`${backendHost}/article/all/table/disease_condition`)
+        axiosInstance.get(`/article/all/table/disease_condition`)
         .then(res => {
             this.setState({
               diseaseList:res.data

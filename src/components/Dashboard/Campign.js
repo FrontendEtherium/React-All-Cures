@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { backendHost } from '../../api-config';
 import { Alert, Form } from 'react-bootstrap';
-
+import axiosInstance from '../../axiosInstance';
 function App() {
   const [first, setFirst] = useState();
   const [middle, setMiddle] = useState();
@@ -43,8 +43,7 @@ function App() {
   };
 
   const getCompanies = () => {
-    axios
-      .get(`${backendHost}/article/all/table/Companies`)
+    axiosInstance.get(`/article/all/table/Companies`)
       .then((res) => {
         setCompanyList(res.data);
       })

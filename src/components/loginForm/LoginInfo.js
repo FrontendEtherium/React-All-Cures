@@ -7,7 +7,7 @@ import Heart from"../../assets/img/heart.png";
 import { useHistory, Link} from 'react-router-dom'
 import axios from 'axios';
 import { backendHost } from '../../api-config';
-
+import headers from '../../api-fetch';
 function LoginInfo(props) {  
 
     const [password, setPassword] = useState({
@@ -68,7 +68,9 @@ function LoginInfo(props) {
     
     useEffect(() => {
         Promise.all([
-            fetch(`${backendHost}/article/all/table/states`).then(res => res.json()),
+            fetch(`${backendHost}/article/all/table/states`,{
+                headers: headers
+            }).then(res => res.json()),
         ]).then(([statesData]) => {
                 setStates(statesData);
             });

@@ -13,7 +13,7 @@ import axios from 'axios';
 import { backendHost } from '../../api-config';
 import Test from '../LandingPage/test'
 import Heart from"../../assets/img/heart.png";
-
+import headers from '../../api-fetch';
 
 class Search extends Component {
   constructor(props){
@@ -82,7 +82,9 @@ class Search extends Component {
 
   fetchDiseaseList(){
     Promise.all([
-      fetch(`${backendHost}/article/all/table/disease_condition`).then(res => res.json())
+      fetch(`${backendHost}/article/all/table/disease_condition`,{
+        headers: headers
+      }).then(res => res.json())
       ])
       .then(diseaseData => {
         this.setState({

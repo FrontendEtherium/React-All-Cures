@@ -13,6 +13,7 @@ import { backendHost } from '../../api-config';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import headers from '../../api-fetch';
 
 // ICONS
 import Account from '../../assets/icon/icons-AllCures/account_circle_black_48dp.svg'
@@ -67,7 +68,9 @@ import { userAccess } from "../UserAccess";
       
         componentDidMount(){
          Promise.all([
-            fetch(`${backendHost}/article/all/table/disease_condition`)
+            fetch(`${backendHost}/article/all/table/disease_condition`,{
+               headers: headers
+            })
             .then(res => res.json()),
           ]).then(([diseaseData]) => {
             this.setState({

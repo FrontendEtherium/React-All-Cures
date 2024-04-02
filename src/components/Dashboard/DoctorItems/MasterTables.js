@@ -4,7 +4,7 @@ import axios from 'axios';
 import { backendHost } from '../../../api-config';
 import { Alert, Form } from 'react-bootstrap';
 import { userId } from '../../UserId';
-
+import axiosInstance from '../../../axiosInstance';
 
 
 
@@ -120,7 +120,7 @@ const specialtiesForm = (e) => {
 
 const cityForm = (e) => {
     e.preventDefault();
-    axios.post(`${backendHost}/admin/create/city  `, {
+    axiosInstance.post(`/admin/create/city  `, {
         // "citycode": parseInt(cityCode),
         "cityname": cityName,
         "state_code":parseInt(state),
@@ -138,7 +138,7 @@ const cityForm = (e) => {
 
 const statesForm = (e) => {
     e.preventDefault();
-    axios.post(`${backendHost}/admin/create/states  `, {
+    axiosInstance.post(`/admin/create/states  `, {
         // "codeid": parseInt(state),
         "statename":stateName,
         "country_code":parseInt(country),
@@ -154,7 +154,7 @@ const statesForm = (e) => {
 
 const countriesForm = (e) => {
     e.preventDefault();
-    axios.post(`${backendHost}/admin/create/countries  `, {
+    axiosInstance.post(`/admin/create/countries  `, {
         // "countrycodeid": parseInt(country),
         "countryname":countryName,
        
@@ -171,7 +171,7 @@ const countriesForm = (e) => {
 
 
 const getState = () => {
-    axios.get(`${backendHost}/article/all/table/states`)
+    axiosInstance.get(`/article/all/table/states`)
     .then(res => {
         
         setStateList(res.data)
@@ -182,7 +182,7 @@ const getState = () => {
 }
 
 const getSpecialties = () => {
-    axios.get(`${backendHost}/article/all/table/specialties`)
+    axiosInstance.get(`/article/all/table/specialties`)
     .then(res => {
         
         setSplId(res.data)
@@ -192,7 +192,7 @@ const getSpecialties = () => {
     )
 }
 const getCountries = () => {
-    axios.get(`${backendHost}/article/all/table/countries`)
+    axiosInstance.get(`/article/all/table/countries`)
     .then(res => {
         
         setCountriesList(res.data)

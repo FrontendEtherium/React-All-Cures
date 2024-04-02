@@ -13,6 +13,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import { userId } from '../UserId';
+import  axiosInstance from '../../axiosInstance';
 
 
 
@@ -81,7 +82,7 @@ function App() {
   
   const submitForm = (e) => {
     e.preventDefault();
-    axios.post(`${backendHost}/admin/create/author  `, {
+    axiosInstance.post(`/admin/create/author  `, {
         "author_firstname": first,
         "author_middlename": middle,
         "author_lastname": last,
@@ -101,7 +102,7 @@ function App() {
 
 const hospitalForm = (e) => {
     e.preventDefault();
-    axios.post(`${backendHost}/admin/create/hospital  `, {
+    axiosInstance.post(`/admin/create/hospital  `, {
         // "hospitalid": parseInt(hospitalId),
         "hospital_affliated": hospital,
         "others": others,
@@ -117,7 +118,7 @@ const hospitalForm = (e) => {
 
 const favouriteForm = (e) => {
     e.preventDefault();
-    axios.post(`${backendHost}/admin/create/masteraddresstype  `, {
+    axiosInstance.post(`/admin/create/masteraddresstype  `, {
         // "hospitalid": parseInt(hospitalId),
         "AddressType" :user,
         "CreatedBy": parseInt(userId),
@@ -134,7 +135,7 @@ const favouriteForm = (e) => {
 
 const degreeForm = (e) => {
     e.preventDefault();
-    axios.post(`${backendHost}/admin/create/masterdocdegrees `, {
+    axiosInstance.post(`/admin/create/masterdocdegrees `, {
         // "hospitalid": parseInt(hospitalId),
         "DegDesc" :degree,
         "CreatedBy": parseInt(userId),
@@ -151,7 +152,7 @@ const degreeForm = (e) => {
 }
 const universtyForm = (e) => {
     e.preventDefault();
-    axios.post(`${backendHost}/admin/create/masteruniversities  `, {
+    axiosInstance.post(`/admin/create/masteruniversities  `, {
         // "hospitalid": parseInt(hospitalId),
         "UnivName" :univName,
         "UnivCity":univCity,
@@ -171,7 +172,7 @@ const universtyForm = (e) => {
 }
 const specialtiesForm = (e) => {
     e.preventDefault();
-    axios.post(`${backendHost}/admin/create/specialties  `, {
+    axiosInstance.post(`/admin/create/specialties  `, {
         // "splid": parseInt(spl),
         "spl_name": splName,
     })
@@ -186,7 +187,7 @@ const specialtiesForm = (e) => {
 
 const doctorDegreeForm = (e) => {
     e.preventDefault();
-    axios.post(`${backendHost}/admin/create/DoctorDegrees  `, {
+    axiosInstance.post(`/admin/create/DoctorDegrees  `, {
         // "splid": parseInt(spl),
         "DocID": parseInt(doctorName),
         "DegreeID":parseInt(degreeName),
@@ -205,7 +206,7 @@ const doctorDegreeForm = (e) => {
 
 const cityForm = (e) => {
     e.preventDefault();
-    axios.post(`${backendHost}/admin/create/city  `, {
+    axiosInstance.post(`/admin/create/city  `, {
         // "citycode": parseInt(cityCode),
         "cityname": cityName,
         "state_code":parseInt(state),
@@ -223,7 +224,7 @@ const cityForm = (e) => {
 
 const docAddressForm = (e) => {
     e.preventDefault();
-    axios.post(`${backendHost}/admin/create/DoctorAddresses`, {
+    axiosInstance.post(`/admin/create/DoctorAddresses`, {
         // "citycode": parseInt(cityCode),
         "DocID": parseInt(docId),
         "AddressTypeID":parseInt(addressType),
@@ -245,7 +246,7 @@ const docAddressForm = (e) => {
 
 const statesForm = (e) => {
     e.preventDefault();
-    axios.post(`${backendHost}/admin/create/states  `, {
+    axiosInstance.post(`/admin/create/states  `, {
         // "codeid": parseInt(state),
         "statename":stateName,
         "country_code":parseInt(country),
@@ -261,7 +262,7 @@ const statesForm = (e) => {
 
 const countriesForm = (e) => {
     e.preventDefault();
-    axios.post(`${backendHost}/admin/create/countries  `, {
+    axiosInstance.post(`/admin/create/countries  `, {
         // "countrycodeid": parseInt(country),
         "countryname":countryName,
        
@@ -278,7 +279,7 @@ const countriesForm = (e) => {
 
 
 const getState = () => {
-    axios.get(`${backendHost}/article/all/table/states`)
+    axiosInstance.get(`/article/all/table/states`)
     .then(res => {
         
         setStateList(res.data)
@@ -289,7 +290,7 @@ const getState = () => {
 }
 
 const getSpecialties = () => {
-    axios.get(`${backendHost}/article/all/table/specialties`)
+    axiosInstance.get(`/article/all/table/specialties`)
     .then(res => {
         
         setSplId(res.data)
@@ -299,7 +300,7 @@ const getSpecialties = () => {
     )
 }
 const getCountries = () => {
-    axios.get(`${backendHost}/article/all/table/countries`)
+    axiosInstance.get(`/article/all/table/countries`)
     .then(res => {
         
         setCountriesList(res.data)
@@ -310,7 +311,7 @@ const getCountries = () => {
 }
 
 const getCity = () => {
-    axios.get(`${backendHost}/article/all/table/city`)
+    axiosInstance.get(`/article/all/table/city`)
     .then(res => {
         
         setCityList(res.data)
@@ -321,7 +322,7 @@ const getCity = () => {
 }
 
 const getDocID = () => {
-    axios.get(`${backendHost}/article/all/table/Doctors_New`)
+    axiosInstance.get(`/article/all/table/Doctors_New`)
     .then(res => {
         
     
@@ -333,7 +334,7 @@ const getDocID = () => {
 }
 
 const getDegreeID = () => {
-    axios.get(`${backendHost}/article/all/table/masterdocdegrees`)
+    axiosInstance.get(`/article/all/table/masterdocdegrees`)
     .then(res => {
         
     
@@ -345,7 +346,7 @@ const getDegreeID = () => {
 }
 
 const getUnivID = () => {
-    axios.get(`${backendHost}/article/all/table/masteruniversities`)
+    axiosInstance.get(`/article/all/table/masteruniversities`)
     .then(res => {
         
     

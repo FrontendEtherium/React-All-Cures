@@ -12,7 +12,7 @@ import Input from "@material-ui/core/Input";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import { backendHost } from "../../api-config";
-
+import headers from "../../api-fetch";
 const EditProfile = (props) => {
   const [personName, setPersonName] = React.useState([]);
 
@@ -91,10 +91,14 @@ const EditProfile = (props) => {
   
   const fetchTables = () => {
     Promise.all([
-      fetch(`${backendHost}/article/all/table/specialties`).then((res) =>
+      fetch(`${backendHost}/article/all/table/specialties`,{
+        headers: headers
+      }).then((res) =>
         res.json()
       ),
-      fetch(`${backendHost}/article/all/table/hospital`).then((res) =>
+      fetch(`${backendHost}/article/all/table/hospital`,{
+        headers: headers
+      }).then((res) =>
         res.json()
       ),
       fetch(`${backendHost}/data/medicines`).then((res) => res.json()),
