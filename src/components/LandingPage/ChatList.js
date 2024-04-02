@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from 'react';
+import React, { useState, useEffect,useRef } from 'react'; 
 import axios from 'axios';
 import { backendHost } from '../../api-config'
 import Header from "../Header/Header";
@@ -35,9 +35,11 @@ export default function App(usr_id) {
   const [chatId, setChatId] = useState(null);
   const [newMessage, setNewMessage] = useState(false);
   
+  const docID= localStorage.getItem('doctorid')
 
   useEffect(() => {
-    axios.get(`${backendHost}/chat/list/${userId}`)
+    // axios.get(`${backendHost}/chat/list/${userId}`)
+    axios.get(`${backendHost}/chat/list/${docID==0?userId:docID}`)
       .then(response => {
         console.log(response.data)
         setChatList(response.data);
@@ -62,15 +64,20 @@ export default function App(usr_id) {
     
 
 console.log('getid->',getId)
+
+ console.log("doctorid",docID)
   
     axios
-      .get(`${backendHost}/chat/${userAccess != 1 ? userId : getId}/${userAccess != 1 ? getId : userId}`)
+      .get(`${backendHost}/chat/${userAccess != 1 ? userId : getId}/${userAccess != 1 ? getId :docID}`)
+      // .get(`${backendHost}/chat/148/14485`)
+      // .get(`${backendHost}/chat/3/14485`)
       .then((res) => {
         setChatId(res.data[0].Chat_id);
         setToId(getId);
         setChats(res.data);
         startWebSocket(res.data[0].Chat_id);
         // Create a new WebSocket connection
+        console.log('got chat id',(res.data[0].Chat_id))
       
       })
       .catch((err) => err);
@@ -106,10 +113,10 @@ console.log('getid->',getId)
       }
   
       // Set up WebSocket connection
-      const ws = new WebSocket("wss://all-cures.com:8000");
+      const ws = new WebSocket("wss://uat.all-cures.com:8000");
   
       ws.onopen = () => {
-        console.log("Connected to the Chat Server->",chatId);
+        console.log("Connected to the Chat Server->",getChatId);
         ws.send(`{"Room_No":"${getChatId}"}`);
       };
   
@@ -139,11 +146,11 @@ console.log('getid->',getId)
     };
   
     const handleClick = (chat) => {
-  checkChat(chat.User)
+  checkChat(chat.userID)
   
-      setSelectedChat(chat.User);
-      setFirst(chat.First_name);
-      setLast(chat.Last_name);
+      setSelectedChat(chat.userID);
+      setFirst(chat.first_name);
+      setLast(chat.last_name);
       setHeader(true);
     
       setToId(chat.User);
@@ -177,7 +184,7 @@ console.log('getid->',getId)
            <div key={users.User}  onClick={() => handleClick(users)} className={`chat-item ${selectedChat === users.User ? 'selected-chat' : ''}`} >
               <FontAwesomeIcon icon={faUserCircle} size={'3x'} />
              <div className="chat-info" style={{marginLeft:20}} >
-               <h3 >{users.First_name} {users.Last_name}</h3>
+               <h3 >{users.first_name} {users.last_name}</h3>
                <p>{users.Message}</p>
              </div>
              <div className="chat-time">{moment(users.Time).format('h:mm A')}</div>
