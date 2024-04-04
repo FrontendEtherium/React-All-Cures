@@ -33,10 +33,19 @@ function ChatButton(props) {
 
 console.log('getid->',userId)
   
-    axios
-      .get(`${backendHost}/chat/${userId}/${props.docid}`)
+  
+      axios.get(`${backendHost}/chat/${userId}/${props.docid}`)
+
       .then((res) => {
         const chatId = res.data[0].Chat_id;
+        console.log("chatid",chatId)
+
+      // Chat doesn't exist, initiate chat using favouriteForm
+      
+      if(chatId == null){
+        favouriteForm()
+      }
+
 
         if (chatId != null) {
           setChatId(res.data[0].Chat_id);
@@ -73,6 +82,8 @@ console.log('getid->',userId)
   
         setSocket(ws);
         }
+
+       
       })
       .catch((err) => err);
   };
@@ -90,6 +101,7 @@ console.log('getid->',userId)
 
     ws.onopen = () => {
       console.log("Connected to the Chat Server->");
+      console.log("get chat id",getChatId)
       ws.send(`{"Room_No":"${getChatId}"}`);
     };
 
@@ -118,9 +130,11 @@ console.log('getid->',userId)
     setSocket(ws);
   };
   const handleKeyDown = (e) => {
+    console.log("key pressed")
     if (e.key === "Enter") {
       sendMessage(e);
     }
+   
   };
 
   
@@ -149,6 +163,8 @@ console.log('getid->',userId)
 
   const sendMessage = (e) => {
     e.preventDefault();
+
+    console.log(chatId)
     if (socket && socket.readyState === WebSocket.OPEN) {
       const newChat = {
         Message: message,
@@ -164,6 +180,9 @@ console.log('getid->',userId)
       setMessage("");
     } else {
       console.log("WebSocket connection not available.");
+    
+     
+    
     }
   };
 
@@ -186,6 +205,7 @@ console.log('getid->',userId)
   checkChat()
     }
     
+  
  
  
   };
