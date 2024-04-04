@@ -134,7 +134,7 @@ axios
     getServiceList();
 
     axiosInstance
-      .get('/article/all/table/registration')
+      .get(`/article/all/table/registration`)
       .then((res) => {
         const userData = res.data;
 
