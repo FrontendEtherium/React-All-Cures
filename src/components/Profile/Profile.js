@@ -341,6 +341,7 @@ class Profile extends Component {
 //   form.submit();
 // }
 
+
 bookAppn = (e) => {
   e.preventDefault();
 
@@ -364,7 +365,11 @@ bookAppn = (e) => {
      const responseObject = JSON.parse(response);
     console.log('res',responseObject.encRequest)
 
+
+      localStorage.setItem('encKey',responseObject.encRequest)
       localStorage.setItem('apiResponse', JSON.stringify(res.data));
+
+      window.location.href="https://www.all-cures.com/paymentRedirection"
 
       // If enc is a string, parse it to an object
       // if (typeof enc === 'string') {
@@ -388,47 +393,55 @@ bookAppn = (e) => {
       // });
 
 
-      const form = document.createElement('form');
-      form.setAttribute('method', 'post');
-      form.setAttribute('action', 'https://secure.ccavenue.com/transaction.do?command=initiateTransaction');
-      form.style.display = 'none'; // Hide the form
+
+
+
+
+
+
+
+
+      // const form = document.createElement('form');
+      // form.setAttribute('method', 'post');
+      // form.setAttribute('action', 'https://test.ccavenue.com/transaction.do?command=initiateTransaction');
+      // form.style.display = 'none'; // Hide the form
     
-      // Create and append hidden input fields for encRequest and accessCode
-      const encRequestInput = document.createElement('input');
-      encRequestInput.setAttribute('type', 'hidden');
-      encRequestInput.setAttribute('name', 'encRequest');
-      encRequestInput.setAttribute('value', responseObject.encRequest);
+      // // Create and append hidden input fields for encRequest and accessCode
+      // const encRequestInput = document.createElement('input');
+      // encRequestInput.setAttribute('type', 'hidden');
+      // encRequestInput.setAttribute('name', 'encRequest');
+      // encRequestInput.setAttribute('value', responseObject.encRequest);
       
-      const accessCodeInput = document.createElement('input');
-      accessCodeInput.setAttribute('type', 'hidden');
-      accessCodeInput.setAttribute('name', 'access_code');
+      // const accessCodeInput = document.createElement('input');
+      // accessCodeInput.setAttribute('type', 'hidden');
+      // accessCodeInput.setAttribute('name', 'access_code');
       // accessCodeInput.setAttribute('value', 'AVNH05LB56CF25HNFC');
-      accessCodeInput.setAttribute('value', 'AVWN42KL59BP42NWPB');
+      // // accessCodeInput.setAttribute('value', 'AVWN42KL59BP42NWPB');
     
-      // Append input fields to the form
-      form.appendChild(encRequestInput);
-      form.appendChild(accessCodeInput);
+      // // Append input fields to the form
+      // form.appendChild(encRequestInput);
+      // form.appendChild(accessCodeInput);
     
-      // Append the form to the document body
-      document.body.appendChild(form);
+      // // Append the form to the document body
+      // document.body.appendChild(form);
     
-      // Submit the form
-      form.submit();
+      // // Submit the form
+      // form.submit();
   })
-  .then(response => {
-      if (!response.ok) {
-          throw new Error('Network response was not ok');
-      }
-      return response.json();
-  })
-  .then(data => {
-      console.log("Response:", data);
-      // Handle successful response data
-  })
-  .catch(error => {
-      console.error("Fetch Error:", error);
-      // Handle fetch error
-  });
+  // .then(response => {
+  //     if (!response.ok) {
+  //         throw new Error('Network response was not ok');
+  //     }
+  //     return response.json();
+  // })
+  // .then(data => {
+  //     console.log("Response:", data);
+  //     // Handle successful response data
+  // })
+  // .catch(error => {
+  //     console.error("Fetch Error:", error);
+  //     // Handle fetch error
+  // });
 }
 
   handleImageSubmission = (e) => {
