@@ -3,6 +3,9 @@ import {useState,useEffect} from 'react'
 import { backendHost } from "../../api-config";
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
+import Avatar from "@mui/material/Avatar";
+import { green } from '@mui/material/colors';
+import CheckIcon from '@mui/icons-material/Check';
 
 const ResponsePage = () => {
 
@@ -47,19 +50,25 @@ const ResponsePage = () => {
   <>
   <div className="container d-flex justify-content-center">
 
-  <div className="card shadow-sm pt-3 m-3" style={{minHeight:"500px",width:"500px"}}>
+  <div className="card shadow-lg pt-3 m-3" style={{minHeight:"400px",width:"500px"}}>
     <div className="card-body">
-      <div>
-      <h3>Appointment Status:</h3>
+      <div className="d-flex justify-content-center">
+      <Avatar sx={{ bgcolor: green[800], width: 80, height: 80 }}>
+      < CheckIcon  sx={{  width: 56, height: 56 }} />
+                            </Avatar>
+               
       </div>
-      <div className="mt-4">
-    <h4>
-      Your transaction has been completed successfully.
-      Please check your email for appointment details and any additional instructions.
-       We look forward to assisting you with your healthcare needs.
-       Thank you for choosing our services.
-       </h4>
-       </div>
+
+      <div className="d-flex justify-content-center" style={{color:"green"}}>
+                 <h2>Success</h2>
+                </div>
+
+                <div className="mt-4 text-center">
+        <p style={{ fontSize: "20px" }}>
+          Your transaction has been completed successfully.
+          Please check your email for appointment details.
+        </p>
+      </div>
     </div>
   </div>
   </div>
