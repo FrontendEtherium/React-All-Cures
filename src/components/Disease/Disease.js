@@ -1355,19 +1355,19 @@ console.log('img',b)
                   <>    
                     {
                           this.state.rating.length === 0 ?
-                            <span className='h6 mt-3'> You Have Not Rated Yet, Please Rate </span>
-                            : <p className='h4 mt-3'>Your Earlier Rated {this.state.rating } <span className="icon-star-1"></span><br/>Rate Again,</p>
+                            <span className='h6 mt-3 ml-3'> You Have Not Rated Yet, Please Rate </span>
+                            : <p className='h4 mt-3 ml-3'>Your Earlier Rated {this.state.rating } <span className="icon-star-1"></span><br/>Rate Again,</p>
                             
                         }          
                   </>
-                : <div className='h5 mt-3'>Rate here</div>
+                : <div className='h5 mt-3 ml-3'>Rate here</div>
               }
                       
-                      <span id="docRate">
+                      <div id="docRate" className=" ml-3 ">
 
                          
           <ArticleRating article_id={this.props.match.params.id.split('-')[0]} />
-          </span>
+          </div>
 
 
 
@@ -1375,9 +1375,9 @@ console.log('img',b)
                {/* Review Button (Rating + Comment) */}
                {
                 userAccess?
-                  <>              
+                  <div className="ml-3 mb-3">              
                     <ArticleComment refreshComments={this.comments} article_id={this.props.match.params.id.split('-')[0]}/>
-                  </>
+                  </div>
                 : null
               }
                               
@@ -1399,21 +1399,26 @@ console.log('img',b)
 
             
                {/* <h5>Source :  <a href="https://all-cures.com/Editorial" style={{textTransform:"none"}}>https://all-cures.com/editorial/</a></h5> */}
-               <h5>Source: {items.window_title}</h5>
+               <h5  className=" ml-3 ">Source: {items.window_title}</h5>
 
-<h3> 
-  <div className="d-flex mt-4">
+<h5> 
+  <div className="d-flex mt-4  ml-3 ">
     <div style={{textTransform:"none"}}> Was this article helpful?</div>
+    <div style={{marginTop:"-7px"}}>
     <button  class="btn  btn-link  border-0" onClick={this.likeButton}>
       {this.state.likeClicked && <div><ThumbUpIcon/></div>}
   { !this.state.likeClicked &&<div><ThumbUpOutlinedIcon/></div>}
      </button>
+     </div>
+     <div  style={{marginTop:"-7px"}}>
      <button  class="btn btn-link  border-0" onClick={this.dislikeButton}>
      {this.state.dislikeClicked && <div><ThumbDownIcon/></div>}
      { !this.state.dislikeClicked &&<div><ThumbDownOutlinedIcon/></div>}
     </button>
+    </div>
   </div>
-</h3>
+</h5>
+             
              
             <div id="comments-column">              
 
