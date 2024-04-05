@@ -77,6 +77,7 @@ import Webstories from "./WebStories/Webstories";
 import RedirectQr from "./RedirectQr.js";
 import DoctorLink from "./Profile/DoctorLink.js";
 import ResponsePage from "./Profile/ResponsePage.js";
+import PaymentRedirect from "./Profile/PaymentRedirect.js";
 
 
 
@@ -151,6 +152,8 @@ const Routes = (props) => {
      <Route exact path="/jammuevent" component={RedirectQr} />
      <Route path="/notification/:linkid" component={DoctorLink}/>
      <Route exact path="/paymentStatus" component={ResponsePage} />
+    <Route exact path="/paymentRedirection" component={PaymentRedirect} />
+
 
     
 
