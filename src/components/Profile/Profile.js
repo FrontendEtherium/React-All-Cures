@@ -185,7 +185,7 @@ class Profile extends Component {
     .then((res) => res.json())
       .then((json) => {
 
-      console.log('response',json)
+    
        // Extract the totalDates from the JSON response
        const totalDates = json.totalDates;
 
@@ -195,9 +195,9 @@ class Profile extends Component {
        // Extract the timeslots for the first date
        const timeslots = totalDates[firstDate];
 
-       console.log('Allslots',timeslots)
-       console.log(json.unbookedSlots,'unbooked')
-       console.log('selected state',this.state.selectedDate)
+       // console.log('Allslots',timeslots)
+       // console.log(json.unbookedSlots,'unbooked')
+       // console.log('selected state',this.state.selectedDate)
  
        
 
@@ -345,8 +345,8 @@ class Profile extends Component {
 bookAppn = (e) => {
   e.preventDefault();
 
-  console.log('clicked booking');
-  console.log('time', dayjs(this.state.selectedTime).format("HH:mm"));
+  // console.log('clicked booking');
+  // console.log('time', dayjs(this.state.selectedTime).format("HH:mm"));
 
   axios.post(`${backendHost}/appointments/create`, {
       "docID": this.state.docid,
@@ -359,11 +359,11 @@ bookAppn = (e) => {
   })
   .then((res) => {
       let enc = res.data
-      console.log('resppp', enc);
+      // console.log('resppp', enc);
       const response=  JSON.stringify(enc)
 
      const responseObject = JSON.parse(response);
-    console.log('res',responseObject.encRequest)
+    // console.log('res',responseObject.encRequest)
 
 
       localStorage.setItem('encKey',responseObject.encRequest)
