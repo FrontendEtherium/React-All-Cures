@@ -32,7 +32,7 @@ const PaymentRedirect = () => {
       accessCodeInput.setAttribute('type', 'hidden');
       accessCodeInput.setAttribute('name', 'access_code');
     //   accessCodeInput.setAttribute('value', 'AVNH05LB56CF25HNFC');
-      accessCodeInput.setAttribute('value', ' accessCode');
+      accessCodeInput.setAttribute('value', accessCode);
     
       // Append input fields to the form
       form.appendChild(encRequestInput);
