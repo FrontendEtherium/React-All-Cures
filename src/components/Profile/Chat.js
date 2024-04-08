@@ -236,8 +236,8 @@ console.log('getid->',userId)
            </div>
             <div style={{ fontSize: "16px", fontWeight: "bold" }}>
               {" "}
-              {items.prefix} {items.docname_first} {items.docname_middle}{" "}
-              {items.docname_last}
+              {items.prefix} {items.firstName} {items.middleName}{" "}
+              {items.lastName}
             </div>
               </div>
           </button>
