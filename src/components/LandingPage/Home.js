@@ -136,7 +136,9 @@ class Home extends Component {
     loaddoctor();
 
     Promise.all([
-      fetch(`${backendHost}/article/all/table/disease_condition`)
+     fetch(`${backendHost}/article/all/table/disease_condition`,{
+         headers: headers
+      })
       .then(res => res.json()),
     ]).then(([diseaseData]) => {
       this.setState({
