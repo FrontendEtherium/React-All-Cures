@@ -12,6 +12,8 @@ import Input from "@material-ui/core/Input";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import { backendHost } from "../../api-config";
+import headers from "../../api-fetch";
+
 
 const EditProfile = (props) => {
   const [personName, setPersonName] = React.useState([]);
@@ -39,7 +41,6 @@ const EditProfile = (props) => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMsg, setAlertMsg] = useState(true);
   const [medicine, setMedicine] = useState();
-import headers from "../../api-fetch";
 
   const [afterSubmitLoad, setafterSubmitLoad] = useState(false);
   const [website, setWebsite] = useState(item.websiteUrl);
