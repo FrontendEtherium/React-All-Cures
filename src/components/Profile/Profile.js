@@ -369,7 +369,12 @@ bookAppn = (e) => {
       localStorage.setItem('encKey',responseObject.encRequest)
       localStorage.setItem('apiResponse', JSON.stringify(res.data));
 
-      window.location.href="https://www.all-cures.com/paymentRedirection"
+    const redirectURL = "https://www.all-cures.com/paymentRedirection" +
+      `?encRequest=${responseObject.encRequest}` +
+      `&accessCode=AVWN42KL59BP42NWPB`; // Your accessCode here
+
+    // Redirecting to the URL
+    window.location.href = redirectURL;
 
       // If enc is a string, parse it to an object
       // if (typeof enc === 'string') {
