@@ -6,9 +6,16 @@ const PaymentRedirect = () => {
 
     useEffect(()=>{
 
-    const enc=localStorage.getItem('encKey')
-    console.log("enc",enc)
+    // const enc=localStorage.getItem('encKey')
+    // console.log("enc",enc)
+      
 
+    const params = new URLSearchParams(window.location.search);
+    const enc = params.get('encRequest');
+    const accessCode = params.get('accessCode');
+
+    // console.log(enc)
+    // console.log(accessCode)
         
       const form = document.createElement('form');
       form.setAttribute('method', 'post');
@@ -25,7 +32,7 @@ const PaymentRedirect = () => {
       accessCodeInput.setAttribute('type', 'hidden');
       accessCodeInput.setAttribute('name', 'access_code');
     //   accessCodeInput.setAttribute('value', 'AVNH05LB56CF25HNFC');
-      accessCodeInput.setAttribute('value', 'AVWN42KL59BP42NWPB');
+      accessCodeInput.setAttribute('value', ' accessCode');
     
       // Append input fields to the form
       form.appendChild(encRequestInput);
