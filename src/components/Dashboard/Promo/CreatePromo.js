@@ -59,7 +59,7 @@ function Promo(props) {
                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
                             <Form.Label>Campaign End Date</Form.Label>
                             <Form.Control value={endDate} onChange={(e) => setEnd(e.target.value)} type="Date" name=""
-                            placeholder="Start Date here..." required/>
+                            placeholder="Start Date here." required/>
                         </Form.Group>
                         <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
                             <Form.Label>Campaign's Maximum Limit</Form.Label>
