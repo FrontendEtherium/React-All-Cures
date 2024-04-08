@@ -39,6 +39,7 @@ const EditProfile = (props) => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMsg, setAlertMsg] = useState(true);
   const [medicine, setMedicine] = useState();
+import headers from "../../api-fetch";
 
   const [afterSubmitLoad, setafterSubmitLoad] = useState(false);
   const [website, setWebsite] = useState(item.websiteUrl);
@@ -91,10 +92,14 @@ const EditProfile = (props) => {
   
   const fetchTables = () => {
     Promise.all([
-      fetch(`${backendHost}/article/all/table/specialties`).then((res) =>
+       fetch(`${backendHost}/article/all/table/specialties`,{
+        headers: headers
+      }).then((res) =>
         res.json()
       ),
-      fetch(`${backendHost}/article/all/table/hospital`).then((res) =>
+       fetch(`${backendHost}/article/all/table/hospital`,{
+        headers: headers
+      }).then((res) =>
         res.json()
       ),
       fetch(`${backendHost}/data/medicines`).then((res) => res.json()),
