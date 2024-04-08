@@ -9,6 +9,7 @@ import { userId } from './UserId';
 import Heart from"../assets/img/heart.png";
 import { Button, Modal, Form } from "react-bootstrap";
 import { isValidPhoneNumber } from 'react-phone-number-input';
+import axiosInstance from '../axiosInstance'
 
 
 class Subscribe extends Component{
@@ -131,7 +132,7 @@ componentDidMount(){
         
     }
     getDisease = () => {
-        axios.get(`${backendHost}/article/all/table/disease_condition`)
+      axiosInstance.get(`/article/all/table/disease_condition`)
         .then(res => {
             this.setState({
               diseaseList:res.data
