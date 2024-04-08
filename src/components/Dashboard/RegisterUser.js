@@ -1,7 +1,8 @@
+
 import React from 'react';
 import axios from 'axios';
 import { backendHost } from '../../api-config';
-
+import axiosInstance from '../../axiosInstance';
 
 class RegisterUser extends React.Component {
   
@@ -19,7 +20,7 @@ class RegisterUser extends React.Component {
 	// ComponentDidMount is used to
 	// execute the code
 	componentDidMount() {
-       axios.get(`${backendHost}/article/all/table/registration`)
+		axiosInstance.get(`/article/all/table/registration`)
         // .then(res => res.json())
        .then(res => {
 
