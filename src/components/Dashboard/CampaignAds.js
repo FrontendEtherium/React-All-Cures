@@ -6,7 +6,7 @@ import { backendHost } from '../../api-config';
 import { Link } from 'react-router-dom';
 import AllPost from './Allpost';
 import { Alert, Form } from 'react-bootstrap';
-
+import axiosInstance from '../../axiosInstance';
 
 
 
@@ -67,7 +67,7 @@ function App() {
       formData.append('mobile_image',appImage);
     }
   
-    console.log(formData)
+    console.log(formData.json)
     axios.post(`${backendHost}/sponsored/create/ad`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -224,7 +224,7 @@ const getAds = () => {
 
 
 const getCampaign = () => {
-    axios.get(`${backendHost}/article/all/table/Campaign`)
+  axiosInstance.get(`/article/all/table/Campaign`)
     .then(res => {
         
         setCampaignList(res.data)
