@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 
 import { Form } from 'react-bootstrap';
@@ -10,7 +11,7 @@ import { backendHost } from '../../api-config';
 import '../../assets/healthcare/css/main.css';
 import Input from '@material-ui/core/Input';
 import { Select, MenuItem } from '@material-ui/core'
-
+import  axiosInstance from '../../axiosInstance';
 function LoginInfo(props) {  
 const[number,setNumber] = useState('');
     const [type,setType] = useState([])
@@ -42,7 +43,7 @@ const[number,setNumber] = useState('');
         setType(flavors);
     }
     const getDisease = () => {
-        axios.get(`${backendHost}/article/all/table/disease_condition`)
+        axiosInstance.get(`/article/all/table/disease_condition`)
         .then(res => {
             setDiseaseList(res.data)
         })
