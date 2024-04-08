@@ -1,313 +1,335 @@
+
 import React, { useState, useEffect } from 'react';
 import { Alert, Form } from 'react-bootstrap';
 import axios from 'axios';
-import { backendHost } from '../../../api-config';
+import { useLocation } from 'react-router-dom';
+import history from '../../history';
 import { userId } from '../../UserId';
+import { backendHost } from '../../../api-config';
+import { Description } from '@material-ui/icons';
+import axiosInstance from '../../../axiosInstance';
+export default function UpdatePromo(props) {
+  const [code, setCode] = useState('');
+  const [startDate, setStart] = useState('');
+  const [endDate, setEnd] = useState('');
+  const [maxLimit, setMax] = useState('');
+  const [active, setActive] = useState('');
+  const [title, setTitle] = useState('');
+  const [campaignList, setCampaignList] = useState([]);
+  const [adsList, setAdsList] = useState([]);
+  const [description, setDescription] = useState('');
+  const [review, setReview] = useState(''); // Assuming 'review' is a string
+  const [count, setCount] = useState('');
+  const [companyList, setCompanyList] = useState([]);
+  const[targetList,setTargetList] = useState([]);
 
-function Feedback() {
-  const [name, setName] = useState("Select FullName");
-  const [first, setFirst] = useState('');
-  const [email, setEmail] = useState('');
-  const [number, setNumber] = useState('');
-  const [feedback, setFeedback] = useState('');
-  const [alert, setAlert] = useState(false);
-  const [fee, setFee] = useState('');
-  const [currency, setCurrency] = useState('');
-  const [image, setImage] = useState(null);
+  const[targetName,setTargetName] = useState('')
+  const [submitAlert, setAlert] = useState(false);
+  const [promoData, setPromo] = useState([]);
 
+  const search = useLocation().search;
+  const id = new URLSearchParams(search).get('updatecampaignads');
 
-  const [startDate, setStart] = useState(new Date());
-  const [endDate, setEnd] = useState(new Date());
-  const [documentFile,setDocumentFile] = useState(null);
-  const [serviceList, setServiceList] = useState([]);
-  const [userList, setUserList] = useState([]);
-
-
-
-
-// const submitForm = (e) => {
-//   e.preventDefault();
-
-//   const formData = new FormData();
-//   formData.append('ServiceID', first);
-//   formData.append('UserID', name);
-//   formData.append('ContactFirstName', email);
-//   formData.append('ContactLastName', number);
-//   formData.append('CreatedBy', userId);
-//   formData.append('Fee', fee);
-//   formData.append('Currency', currency);
-//   formData.append('Status', feedback);
-
-//   formData.append('StartDate', startDate);
-//   formData.append('EndDate', endDate);
-
-//   if (documentFile) {
-//     formData.append('image', documentFile, documentFile.name);
-//   }
-
-//   axios
-//     .post(`${backendHost}/sponsored/add/contract`, formData, {
-//       headers: {
-//         'Content-Type': 'multipart/form-data',
-//       },
-//     })
-//     .then((res) => {
-//       setAlert(true);
-//       setTimeout(() => {
-//         setAlert(false);
-//       }, 4000);
-//     })
-//     .catch((res) => console.log(res));
-// };
-
-
-const submitForm = (e) => {
-e.preventDefault();
-
-const formData = new FormData();
-
-// Append Contract_Map data as JSON string
-formData.append('Contract_Map', JSON.stringify({
-  ServiceID: parseInt(first),
-  UserID: parseInt( name),
-  ContactFirstName: email,
-  ContactLastName: number,
-  CreatedBy: parseInt( userId),
-  Fee: fee,
-  Currency: currency,
-  Status: parseInt(feedback),
-  StartDate: startDate,
-  EndDate: endDate,
-}));
-
-// Append the image to FormData
-if (image) {
-  formData.append('document', image);
-}
-
-// Send the complete FormData to the backend
-axios
-  .post(`${backendHost}/sponsored/create/contract`, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  })
-  .then((res) => {
-    setAlert(true);
-    setTimeout(() => {
-      setAlert(false);
-    }, 4000);
-  })
-  .catch((error) => {
-    console.error('Error submitting data:', error);
+  const [initialState, setInitialState] = useState({
+    code: '',
+    startDate: '',
+    endDate: '',
+    maxLimit: '',
+    active: '',
+    title: '',
+    description: '',
+    review: '',
+    count: '',
   });
-};
 
-
-  const handleFullNameChange = (selectedFullName) => {
-    const [userId, firstName, lastName] = selectedFullName.split(' ');
-    setName(selectedFullName);
-    setFirst(first); // Keep the existing value for ServiceID
-    setEmail(firstName);
-    setNumber(lastName);
-  };
-
-  const handleImageChange = async (e) => {
-    const file = e.target.files[0];
-    setImage(file);
-
-    console.log('Image selected:', {
-      image: file.name,
-    });
-  }
-  
-
-  const getServiceList = () => {
+  const fetchPromo = (e) => {
     axios
-      .get(`${backendHost}/article/all/table/SponsoredServicesMaster`)
+      .get(`${backendHost}/sponsored/get/ads/${id}`)
       .then((res) => {
-        setServiceList(res.data);
+        setPromo(res.data);
+        const promoData = res.data[0];
+        setInitialState({
+          code: promoData.CampaignName,
+          startDate: promoData.StartDate.split('T')[0],
+          endDate: promoData.EndDate.split('T')[0],
+          maxLimit: promoData.DiseaseConditionName,
+          active: promoData.SlotName,
+          title: promoData.AdTitle,
+          description: promoData.AdDescription,
+          review: promoData.ReviewStatus.toString(), 
+          count: promoData.AdCount.toString(),
+          targetName:promoData.AdTypeName,
+        });
+        setCode(promoData.CampaignName);
+        setStart(promoData.StartDate.split('T')[0]);
+        setEnd(promoData.EndDate.split('T')[0]);
+        setMax(promoData.DiseaseConditionName);
+        setActive(promoData.SlotName);
+        setTitle(promoData.AdTitle);
+        setDescription(promoData.AdDescription);
+        setReview(promoData.ReviewStatus.toString());
+        setCount(promoData.AdCount.toString());
+        setTargetName(promoData.AdTypeName)
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        return;
+      });
   };
+
+  const getHospital = () => {
+    axios.get(`${backendHost}/sponsored/getall/parent_disease_id`).then((res) => {
+      setCompanyList(res.data);
+    }).catch((err) => {
+      console.log(err);
+    });
+  };
+
+  const getAds = () => {
+    axios.get(`${backendHost}/sponsored/list/adsslottypes`).then((res) => {
+      setAdsList(res.data);
+    }).catch((err) => {
+      console.log(err);
+    });
+  };
+
+  const getCampaign = () => {
+    axiosInstance.get(`/article/all/table/Campaign`).then((res) => {
+      setCampaignList(res.data);
+    }).catch((err) => {
+      console.log(err);
+    });
+  };
+
+  const getAdsTypes = ()=>{
+    axios.get(`${backendHost}/sponsored/list/adstypes`).then((res) => {
+      setTargetList(res.data);
+    }).catch((err) =>{
+      console.log(err);
+    });
+    };
 
   useEffect(() => {
-    getServiceList();
-
-    axios
-      .get(`${backendHost}/article/all/table/registration`)
-      .then((res) => {
-        const userData = res.data;
-
-        const userOptions = userData.map((user) => ({
-          value: `${user[0]}`,
-          label: `${user[1]} ${user[2]}`,
-        }));
-        
-
-        setUserList(userOptions);
-      })
-      .catch((err) => console.log(err));
+    document.title = "All Cures | Dashboard | Update Promo";
+    fetchPromo();
+    getHospital();
+    getAds();
+    getCampaign();
+    getAdsTypes();
+    // eslint-disable-next-line
   }, []);
 
+  const submitForm = (e) => {
+    e.preventDefault();
+
+    // Create an object to store the fields that have changed
+    const updatedFields = {};
+
+    // Compare each field with the initial state
+    if (code !== initialState.code) {
+      updatedFields.CampaignID = parseInt(code);
+    }
+    if (startDate !== initialState.startDate) {
+      updatedFields.StartDate = startDate;
+    }
+    if (endDate !== initialState.endDate) {
+      updatedFields.EndDate = endDate;
+    }
+    if (maxLimit !== initialState.maxLimit) {
+      updatedFields.DiseaseCondition = parseInt(maxLimit);
+    }
+    
+    if (active !== initialState.active) {
+      updatedFields.SlotID = parseInt(active);
+    }
+    if (title !== initialState.title) {
+      updatedFields.AdTitle = title;
+    }
+    if (description !== initialState.description) {
+      updatedFields.AdDescription = description;
+    }
+    if (review !== initialState.review) {
+      updatedFields.ReviewStatus = parseInt(review);
+    }
+    if (count !== initialState.count) {
+      updatedFields.AdCount = parseInt(count);
+    }
+
+    if(targetName !==initialState.targetName){
+            updatedFields.AdTypeId= parseInt(targetName);
+        }
+
+    // Check if any fields have changed before making the PUT request
+    if (Object.keys(updatedFields).length > 0) {
+      axios
+        .put(`${backendHost}/sponsored/update/ad/${id}`, updatedFields)
+        .then((res) => {
+          history.back();
+        })
+        .catch((res) => {
+          return;
+        });
+    }
+  };
+
   return (
-    <div>
-      <div className="promo-page">
-        <div className="container">
-          <div className="card my-3">
-            <div className="card-title h3 text-center py-2 border-bottom">
-              Create Contract Here !
-            </div>
-            <form onSubmit={submitForm}>
-              <div className="row m-4">
-              
-                <Form.Group className="col-md-6 float-left" style={{zIndex: 2}}>
-                        <label htmlFor="">Enter Service Name</label>
-<select name="state" value={first} onChange={(e) => setFirst(e.target.value)} placeholder="Enter Service  Name" required="" className="form-control">
-<option>Select Service</option>
-    {serviceList.map((c) => {
-        
-        return (
-            <option value={c[0]}>{c[1]}</option>
-        )
-    })}
-</select>
-                        </Form.Group>
-                <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
-                  <Form.Label>Enter UserID </Form.Label>
-                  <Form.Control
-                    as="select"
-                    value={name}
-                    onChange={(e) => handleFullNameChange(e.target.value)}
-                  >
-                    <option>Select FullName</option>
-                    {userList.map((user) => (
-                      <option key={user.value} value={user.value}>
-                        {user.label}
-                      </option>
-                    ))}
-                  </Form.Control>
-                </Form.Group>
-
-                <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
-                  <Form.Label>Enter Contact First Name </Form.Label>
-                  <Form.Control
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    type="text"
-                    placeholder="Enter Contact First Name..."
-                    disabled={name !== "Select FullName"}
-                  />
-                </Form.Group>
-
-                <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
-                  <Form.Label>Enter Contact Last Name </Form.Label>
-                  <Form.Control
-                    value={number}
-                    onChange={(e) => setNumber(e.target.value)}
-                    type="text"
-                    placeholder="Enter Contact Last Name..."
-                    disabled={name !== "Select FullName"}
-                  />
-                </Form.Group>
-
-                <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
-                  <Form.Label>Contract Start Date</Form.Label>
-                  <Form.Control
-                    type="Date"
-                    value={startDate}
-                    onChange={(e) => setStart(e.target.value)}
-                    placeholder="Start Date here..."
-                    required
-                  />
-                </Form.Group>
-
-                <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
-                  <Form.Label>Contract End Date</Form.Label>
-                  <Form.Control
-                    value={endDate}
-                    onChange={(e) => setEnd(e.target.value)}
-                    type="Date"
-                    placeholder="End Date here..."
-                    required
-                  />
-                </Form.Group>
-
-                <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
-                  <Form.Label>Enter Currency </Form.Label>
-                  <Form.Control
-                    value={currency}
-                    onChange={(e) => setCurrency(e.target.value)}
-                    type="text"
-                    placeholder="Enter Currency..."
-                  />
-                </Form.Group>
-
-                <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
-                  <Form.Label>Enter Fees </Form.Label>
-                  <Form.Control
-                    value={fee}
-                    onChange={(e) => setFee(e.target.value)}
-                    type="number"
-                    placeholder="Enter Fees..."
-                  />
-                </Form.Group>
-                <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
-  <Form.Label>Status?</Form.Label>
-  <div>
-    <Form.Check
-      inline
-      label="Active"
-      name="whatsapp"
-      type="radio"
-    
-      value="1"
-      onChange={(e) => setFeedback(e.target.value)}
-      style={{ marginRight: "20px" }}
-    />
-    <Form.Check
-      inline
-      label="InActive"
-      name="whatsapp"
-      type="radio"
-    
-      value="0"
-      onChange={(e) => setFeedback(e.target.value)}
-      style={{ marginLeft: "20px" }}
-    />
-  </div>
-</Form.Group>
-
-                {/* <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
-                  <Form.Label>Upload Document</Form.Label>
-                  <Form.Control
-                    type="file"
-                    onChange={(e) => setDocumentFile(e.target.files[0])}
-                    accept=".pdf, .doc, .docx"
-                  />
-                </Form.Group> */}
-                 <Form.Group className="col-md-6 float-left" style={{ zIndex: 2 }}>
-              <Form.Label>Upload Image</Form.Label>
-              <Form.Control type="file" accept=".pdf, .doc, .docx" onChange={handleImageChange} required />
+    <div className="container">
+      <div className="card my-3">
+        <div className="card-title h3 text-center py-2 border-bottom">Update Ads Details</div>
+        <form onSubmit={submitForm}>
+          <div className="row m-4">
+            <Form.Group className="col-md-6 float-left">
+              <Form.Label>Enter Campaign Name</Form.Label>
+              <Form.Control
+                as="select"
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                type="text"
+                placeholder="Campaign here..."
+              >
+                <option value="">{code}</option>
+                {campaignList.map((c) => (
+                  <option key={c[0]} value={c[0]}>
+                    {c[2]}
+                  </option>
+                ))}
+              </Form.Control>
             </Form.Group>
 
-                {alert ? (
-                  <Alert variant="success" className="h6 mx-3">
-                    Thanks For the contract. Created Successfully!
-                  </Alert>
-                ) : null}
-              </div>
-              <div className="col-md-12 text-center">
-                <button type="submit" className="btn btn-dark col-md-12 mb-4">
-                  Submit
-                </button>
-              </div>
-            </form>
+            <Form.Group className="col-md-6 float-left">
+              <Form.Label>AD Start Date</Form.Label>
+              <Form.Control
+                type="Date"
+                defaultValue={startDate}
+                onChange={(e) => setStart(e.target.value)}
+                name=""
+                placeholder="Start Date here..."
+              />
+            </Form.Group>
+
+            <Form.Group className="col-md-6 float-left">
+              <Form.Label>AD End Date</Form.Label>
+              <Form.Control
+                type="Date"
+                defaultValue={endDate}
+                onChange={(e) => setEnd(e.target.value)}
+                name=""
+                placeholder="End Date here..."
+              />
+            </Form.Group>
+
+            
+            <Form.Group className="col-md-6 float-left">
+              <Form.Label>Enter Ad Target Type</Form.Label>
+              <Form.Control
+                as="select"
+                value={targetName}
+                onChange={(e) => setTargetName(e.target.value)}
+              >
+                <option value="">{targetName}</option>
+                <option value="">Enter Ad Target Type</option>
+                {targetList.map((c) => (
+                  <option key={c[0]} value={c[0]}>
+                    {c[1]}
+                  </option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+                 
+            { (targetName=='Target'|| targetName=='2') &&
+            <Form.Group className="col-md-6 float-left">
+              <Form.Label>Enter Disease Condition</Form.Label>
+              <Form.Control
+                as="select"
+                value={maxLimit}
+                onChange={(e) => setMax(e.target.value)}
+              >
+                <option value="">{maxLimit}</option>
+                <option value="">Enter Disease Condition</option>
+                {companyList.map((c) => (
+                  <option key={c[0]} value={c[0]}>
+                    {c[1]}
+                  </option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+                            }
+
+            <Form.Group className="col-md-6 float-left">
+              <Form.Label>Enter Ad Type</Form.Label>
+              <Form.Control
+                as="select"
+                value={active}
+                onChange={(e) => setActive(e.target.value)}
+              >
+                <option value="">{active}</option>
+                {adsList.map((c) => (
+                  <option key={c[0]} value={c[0]}>
+                    {c[1]}
+                  </option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+
+            <Form.Group className="col-md-6 float-left">
+              <Form.Label>Enter Ad Title</Form.Label>
+              <Form.Control
+                type="text"
+                name=""
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="col-md-6 float-left">
+              <Form.Label>Enter Ad Description</Form.Label>
+              <Form.Control
+                type="text"
+                name=""
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="col-md-6 float-left">
+              <Form.Label>Enter Ad Impression</Form.Label>
+              <Form.Control
+                type="text"
+                name=""
+                value={count}
+                onChange={(e) => setCount(e.target.value)}
+              />
+            </Form.Group>
+
+            <div className="col-lg-6 form-group">
+              <label htmlFor="">Review Status</label>
+              <select
+                multiple
+                name="featured"
+                placeholder="Featured"
+                value={review}
+                onChange={(e) => setReview(e.target.value)}
+                className="form-control"
+              >
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+              </select>
+            </div>
           </div>
-        </div>
+         
+
+   
+          {submitAlert ? (
+            <Alert variant="success" className="h6 mx-3">
+              Updated Successfully!!
+            </Alert>
+          ) : null}
+          <div className="col-md-12 text-center">
+            <button type="submit" className="btn btn-dark col-md-12 mb-4">
+              Submit
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
 }
-
-export default Feedback;
