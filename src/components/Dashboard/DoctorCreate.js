@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect } from 'react';
 import DataTable from 'react-data-table-component';
 import axios from 'axios';
@@ -12,7 +13,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import { userId } from '../UserId';
-
+import  axiosInstance from '../../axiosInstance';
 
 
 
@@ -59,7 +60,7 @@ const[medicinelist,setMedicineList] = useState()
 
   const submitForm = (e) => {
     e.preventDefault();
-    axios.post(`${backendHost}/admin/create/Doctors_New`,{
+    axiosInstance.post(`/admin/create/Doctors_New`,{
         "prefix":'Dr.',
         "docname_first": first,
         "docname_middle": middle,
@@ -92,7 +93,7 @@ const[medicinelist,setMedicineList] = useState()
     .catch(res => console.log(res))
 }
   const getCountries = () => {
-    axios.get(`${backendHost}/article/all/table/countries`)
+    axiosInstance.get(`/article/all/table/countries`)
     .then(res => {
         
         setCountriesList(res.data)
@@ -103,7 +104,7 @@ const[medicinelist,setMedicineList] = useState()
 }
 
 const getCity = () => {
-    axios.get(`${backendHost}/article/all/table/city`)
+    axiosInstance.get(`/article/all/table/city`)
     .then(res => {
         
         setCityList(res.data)
@@ -114,7 +115,7 @@ const getCity = () => {
 }
 
 const getState = () => {
-    axios.get(`${backendHost}/article/all/table/states`)
+    axiosInstance.get(`/article/all/table/states`)
     .then(res => {
         
         setStateList(res.data)
@@ -125,7 +126,7 @@ const getState = () => {
 }
 
 const getDisease = () => {
-    axios.get(`${backendHost}/article/all/table/specialties`)
+    axiosInstance.get(`/article/all/table/specialties`)
     .then(res => {
         
         setDiseaseList(res.data)
@@ -136,7 +137,7 @@ const getDisease = () => {
 }
 
 const getHospital = () => {
-    axios.get(`${backendHost}/article/all/table/hospital`)
+    axiosInstance.get(`/article/all/table/hospital`)
     .then(res => {
         
         setHospitalList(res.data)
@@ -147,7 +148,7 @@ const getHospital = () => {
 }
 
 const getMedicine = () => {
-    axios.get(`${backendHost}/article/all/table/medicinetype`)
+    axiosInstance.get(`/article/all/table/medicinetype`)
     .then(res => {
         
         setMedicineList(res.data)
