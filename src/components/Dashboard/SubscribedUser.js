@@ -1,7 +1,8 @@
+
 import React from 'react';
 import axios from 'axios';
 import { backendHost } from '../../api-config';
-
+import axiosInstance from '../../axiosInstance';
 
 class SubscribedUser extends React.Component {
   
@@ -19,7 +20,7 @@ class SubscribedUser extends React.Component {
 	// ComponentDidMount is used to
 	// execute the code
 	componentDidMount() {
-       axios.get(`${backendHost}/article/all/table/newsletter`)
+		axiosInstance.get(`/article/all/table/newsletter`)
         // .then(res => res.json())
        .then(res => {
 
