@@ -12,6 +12,7 @@ import Input from "@material-ui/core/Input";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import { backendHost } from "../../api-config";
+import headers from "../../api-fetch";
 
 const EditUserProfile = (props) => {
   const [personName, setPersonName] = React.useState([]);
@@ -106,19 +107,31 @@ const EditUserProfile = (props) => {
 
   const fetchTables = () => {
     Promise.all([
-      fetch(`${backendHost}/article/all/table/specialties`).then((res) =>
+      fetch(`${backendHost}/article/all/table/specialties`,{
+         headers: headers
+      }).then((res) =>
         res.json()
       ),
-      fetch(`${backendHost}/article/all/table/hospital`).then((res) =>
+      fetch(`${backendHost}/article/all/table/hospital`,{
+         headers: headers
+      }).then((res) =>
         res.json()
       ),
-      fetch(`${backendHost}/data/medicines`).then((res) => res.json()),
+      fetch(`${backendHost}/data/medicines`,{
+         headers: headers
+      }).then((res) => res.json()),
      
-      fetch(`${backendHost}/article/all/table/countries`).then(res => res.json()),
+      fetch(`${backendHost}/article/all/table/countries`,{
+         headers: headers
+      }).then(res => res.json()),
 
-      fetch(`${backendHost}/article/all/table/city`).then(res => res.json()),
+      fetch(`${backendHost}/article/all/table/city`,{
+         headers: headers
+      }).then(res => res.json()),
 
-      fetch(`${backendHost}/article/all/table/states`).then(res => res.json()),
+      fetch(`${backendHost}/article/all/table/states`,{
+         headers: headers
+      }).then(res => res.json()),
     ])
       .then(([diseaseData, hospitalData, medicineData,countriesData, cityData,statesData,]) => {
         setDiseaseList(diseaseData);
@@ -133,7 +146,6 @@ const EditUserProfile = (props) => {
         return;
       });
   };
-
   useEffect(() => {
     fetchTables();
   }, []);
