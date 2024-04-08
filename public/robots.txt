@@ -1,11 +1,4 @@
-<<<<<<< HEAD
-# https://www.robotstxt.org/robotstxt.html
-User-agent: *
-Disallow:
-Sitemap: https://www.all-cures.com/sitemap_index.xml 
-=======
-
 User-agent: *
 Disallow: /
 
->>>>>>> fb6a7866c4c0e5439616594c06fa375c83ca7c7f
+
