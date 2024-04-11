@@ -130,6 +130,26 @@ const AllPost = ({id, title, content, docID, f_title,  country, type, published_
                                             <div className="chip country ml-2 color-white">Netherland</div>
                                             :   country === 13?
                                             <div className="chip country ml-2 color-white">Greece</div>
+                                             :country ===15?
+                                            <div className="chip country ml-2 color-white">Australia</div>
+                                            :country ===17?
+                                            <div className="chip country ml-2 color-white">Pakistan</div>
+                                            :country ===19?
+                                            <div className="chip country ml-2 color-white">Malaysia</div>
+                                            :country ===20?
+                                            <div className="chip country ml-2 color-white">South Korea</div>
+                                            :country ===21?
+                                            <div className="chip country ml-2 color-white">UAE</div>
+                                            :country ===22?
+                                            <div className="chip country ml-2 color-white">United States</div>
+                                            :country ===23?
+                                            <div className="chip country ml-2 color-white">Ireland</div>
+                                            :country ===24?
+                                            <div className="chip country ml-2 color-white">Vietnam</div>
+                                            :country ===25?
+                                            <div className="chip country ml-2 color-white">Sri Lanka</div>
+                                            :country ===26?
+                                            <div className="chip country ml-2 color-white">Saudi Arabia</div>
                                             : null
                                         : null
                             }
