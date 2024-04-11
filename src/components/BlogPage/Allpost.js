@@ -6,7 +6,7 @@ import { imagePath } from '../../image-path';
 
 const AllPost = ({id, title, content, docID, f_title,  country, type, published_date, over_allrating, imgLocation, authorName}) => {
 
-    console.log('docid',docID)
+    // console.log('docid',docID)
     function IsJsonValid(str) {
         try {
             JSON.parse(str);
