@@ -8,6 +8,8 @@ import { backendHost } from '../api-config';
 import { Link } from 'react-router-dom';
 import { Alert, Form } from 'react-bootstrap';
 import '../styles.css';
+import  axiosInstance  from '../axiosInstance';
+
 
 
 
@@ -23,7 +25,7 @@ function Feedback() {
     
     const submitForm = (e) => {
         e.preventDefault();
-        axios.post(`${backendHost}/admin/create/feedback  `, {
+      axiosInstance.post(`${backendHost}/admin/create/feedback  `, {
             "firstname":first,
             "lastname": name,
             "email": email,
