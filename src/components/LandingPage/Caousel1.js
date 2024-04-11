@@ -92,7 +92,7 @@ export default function Carousel1(props){
                         <Link to={ `/searchcategory/disease/87` }>
                            <div className="item-img">
                               {/* <img src={Thyroid} alt="slider-img"/> */}
-                              <img src="https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/thyroid.df65340d09d516ed8a97.png" alt="slider-img"/>
+                              <img src="https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/thyroid.df65340d.png" alt="slider-img"/>
                            </div>
                            <div className="slider-heading">
                               <p><strong>Thyroid</strong></p>
