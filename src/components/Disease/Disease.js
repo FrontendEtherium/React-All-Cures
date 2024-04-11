@@ -1283,8 +1283,8 @@ console.log('img',b)
     ? `https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-1000,f-webp/cures_articleimages/${fileUrl.replace(/^.*[\\/]/, '')}`
     : null;
 
-  console.log('Original URL:', fileUrl);
-  console.log('Modified URL:', imageUrl);
+  // console.log('Original URL:', fileUrl);
+  // console.log('Modified URL:', imageUrl);
 
   return (
     <CenterWell
