@@ -166,7 +166,7 @@ showModal() {
 }
 
   likeButton=()=>{
-  console.log("like clicked")
+  // console.log("like clicked")
   this.setState({
     likeClicked:true,
     dislikeClicked:false
@@ -175,7 +175,7 @@ showModal() {
 }
 
 dislikeButton=()=>{
-  console.log("dislike clicked")
+  // console.log("dislike clicked")
   this.setState({
     dislikeClicked:true,
     likeClicked:false,
@@ -207,7 +207,7 @@ fetchBlog = async() => {
 
 
       
-      console.log(json)
+      // console.log(json)
      
         this.setState({
           isLoaded: true,
@@ -231,7 +231,9 @@ fetchBlog = async() => {
         });
 
         
-      console.log('id', this.props.match.params.id.split('-')[0]);
+      // console.log('id', this.props.match.params.id.split('-')[0]);
+
+      
       // console.log('parent_dc_id:', json_new.parent_dc_id);
       // if (json_new.parent_dc_id !== 0) {
       //   console.log('delayed not null');
@@ -306,18 +308,18 @@ fetchBlog = async() => {
 
 
 loadFloater = async() => {
-  console.log("checkgin the api 123");
-     console.log('call floater')
+  // console.log("checkgin the api 123");
+  //    console.log('call floater')
 await  axios.get(`${backendHost}/data/newsletter/get`)
  .then(res => {
-    console.log(res.data)
-    console.log("image");
+    // console.log(res.data)
+    // console.log("image");
     this.setState ({
       images:res.data
     })
  })
  .catch(res =>  null)
-console.log("1232121 testing");
+// console.log("1232121 testing");
 };
 
 floaterInterval = null;
@@ -375,7 +377,7 @@ rotateImages = () => {
       var id = this.props.match.params.id.split('-')[0]
       await axios.post(`${backendHost}/${id}/${userId}`)
       .then(res => {
-        console.log(res.data)
+        // console.log(res.data)
          this.setState({
             afterSubmitLoad: false
          })
@@ -414,7 +416,8 @@ rotateImages = () => {
   // };
 
   fetchData = async (parent_dc_id) => {
-    console.log('DC_Cond:', parent_dc_id); // Check if parent_dc_id is passed correctly
+    // console.log('DC_Cond:', parent_dc_id);
+    // Check if parent_dc_id is passed correctly
     try {
       // Send parent_dc_id as a request parameter
       const response = await axios.get(`${backendHost}/sponsored/list/ads/url/2`, {
@@ -422,18 +425,18 @@ rotateImages = () => {
           DC_Cond: parent_dc_id,
         },
       });
-      console.log("API call successful");
+      // console.log("API call successful");
       
       // Check the response data
-      console.log("Response data:", response.data);
+      // console.log("Response data:", response.data);
 
       if(response.data!= 'All Ads are Served'){
       const id=response.data.split('/')[3]
       const ids=id.match(/\d+/)
        const adsId=ids[0]
 
-      console.log(adsId)
-         console.log(id)
+      // console.log(adsId)
+      //    console.log(id)
 
          this.setState({
            adId:adsId
@@ -443,7 +446,7 @@ rotateImages = () => {
       const newResponse = `https://all-cures.com:444${response.data}`;
   
       // Check if state is being updated correctly
-      console.log("New Response:", newResponse);
+      // console.log("New Response:", newResponse);
   
       this.setState({
 
@@ -584,7 +587,7 @@ rotateImages = () => {
     fetch(`${backendHost}/isearch/treatmentregions/${id}`)       // /isearch/treatmentregions/${this.state.diseaseCondition}
     .then((res) => res.json())
     .then((json) => {
-      console.log('regional posts')
+      // console.log('regional posts')
       this.setState({
         regionPostsLoaded: true,
         regionalPost: json,
@@ -662,13 +665,13 @@ rotateImages = () => {
 
 handleClick = (ad) => {
   
-  console.log('Image clicked!',ad);
+  // console.log('Image clicked!',ad);
   axios.put(`${backendHost}/sponsored/ads/clicks/${ad}`)
 }
  getDisease = () => {
   axiosInstance.get(`/article/all/table/disease_condition`)
     .then(res => {
-      console.log('getdisease')
+      // console.log('getdisease')
         this.setState({
           diseaseList:res.data
         })
@@ -684,14 +687,14 @@ handleClick = (ad) => {
     .then((res) => res.json())
     .then((json) => {
         
-      console.log('recieved',id)
-       console.log(json.parent_dc_id)
+      // console.log('recieved',id)
+      //  console.log(json.parent_dc_id)
      
-      console.log('parent_dc_id:', json.parent_dc_id);
+      // console.log('parent_dc_id:', json.parent_dc_id);
       
         if(json.parent_dc_id != 0){
       
-          console.log('delayd not null')
+          // console.log('delayd not null')
          
           this.fetchData(json.parent_dc_id);
           
@@ -712,7 +715,7 @@ diseasePosts(dcName) {
   return fetch(`${backendHost}/isearch/${dcName}`)
     .then((res) => res.json())
     .then((json) => {
-      console.log('disease posts')
+      // console.log('disease posts')
 
       var temp= []
       json.forEach(i => {
@@ -893,7 +896,7 @@ componentDidMount() {
     var artContent = items.content;
     var a = JSON.parse(decodeURIComponent(artContent))
     var b = a.blocks
-console.log('img',b)
+// console.log('img',b)
 
        
 
