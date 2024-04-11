@@ -185,7 +185,8 @@ class Profile extends Component {
     .then((res) => res.json())
       .then((json) => {
 
-      console.log('response',json)
+      // console.log('response',json)
+        
        // Extract the totalDates from the JSON response
        const totalDates = json.totalDates;
 
@@ -195,18 +196,19 @@ class Profile extends Component {
        // Extract the timeslots for the first date
        const timeslots = totalDates[firstDate];
 
-       console.log('Allslots',timeslots)
-       console.log(json.unbookedSlots,'unbooked')
-       console.log('selected state',this.state.selectedDate)
+       // console.log('Allslots',timeslots)
+       // console.log(json.unbookedSlots,'unbooked')
+       // console.log('selected state',this.state.selectedDate)
  
        
 
        const unbookedSlots = json.unbookedSlots[this.state.selectedDate] || [];
 
        // Check if unbookedSlots array is empty
-       if (unbookedSlots.length === 0) {
-         console.log('No unbooked slots available for the selected date',this.state.selectedDate);
-       }
+        
+       // if (unbookedSlots.length === 0) {
+       //   console.log('No unbooked slots available for the selected date',this.state.selectedDate);
+       // }
  
        // Set the state of unbookedSlots using the extracted unbooked slots
        this.setState({
@@ -362,7 +364,8 @@ bookAppn = (e) => {
       const response=  JSON.stringify(enc)
 
      const responseObject = JSON.parse(response);
-    console.log('res',responseObject.encRequest)
+    
+    // console.log('res',responseObject.encRequest)
 
       localStorage.setItem('apiResponse', JSON.stringify(res.data));
 
@@ -648,7 +651,7 @@ bookAppn = (e) => {
           availStatus: json,
           
         });
-        console.log('availStatus',this.state.availStatus)
+        // console.log('availStatus',this.state.availStatus)
       });
       
   };
@@ -661,23 +664,25 @@ bookAppn = (e) => {
       .then((res) => res.json())
       .then((json) => {
 
-        console.log('useravailstatus',id,userId)
+        // console.log('useravailstatus',id,userId)
        
-        console.log('useravailStatus',json)
+        // console.log('useravailStatus',json)
 
         const currentDate = new Date();
         const currentTime = currentDate.getHours() + ':' + currentDate.getMinutes();
 
-        console.log('dateuseravailStatus', currentDate.toISOString().split('T')[0])
-        console.log('timeuseravailStatus', currentTime)
-        console.log('dateuseravailStatus', json.appointmentDate)
-        console.log('startTimeuseravailStatus', json.startTime)
-        console.log('endTimeuseravailStatus', json.endTime)
-        json.forEach(appointment => {
-          console.log('Start Time:', appointment.startTime);
-          console.log('End Time:', appointment.endTime);
-          console.log('Date:', appointment.appointmentDate);
-        });
+        // console.log('dateuseravailStatus', currentDate.toISOString().split('T')[0])
+        // console.log('timeuseravailStatus', currentTime)
+        // console.log('dateuseravailStatus', json.appointmentDate)
+        // console.log('startTimeuseravailStatus', json.startTime)
+        // console.log('endTimeuseravailStatus', json.endTime)
+
+        
+        // json.forEach(appointment => {
+        //   console.log('Start Time:', appointment.startTime);
+        //   console.log('End Time:', appointment.endTime);
+        //   console.log('Date:', appointment.appointmentDate);
+        // });
       
         
 
@@ -699,7 +704,7 @@ bookAppn = (e) => {
           userAvailStatus: availability
         });
 
-        console.log('userrrravail',  this.state.userAvailStatus)
+        // console.log('userrrravail',  this.state.userAvailStatus)
       })
     
       
@@ -723,12 +728,12 @@ bookAppn = (e) => {
        // Extract the timeslots for the first date
        const timeslots = json.totalDates[firstDate];
 
-       console.log('Allslots',timeslots)
-       console.log(json.unbookedSlots,'unbooked')
-       console.log('selected state',this.state.selectedDate)
+       // console.log('Allslots',timeslots)
+       // console.log(json.unbookedSlots,'unbooked')
+       // console.log('selected state',this.state.selectedDate)
 
        const highlightedDate = json.completelyBookedDates;
-       console.log(highlightedDate,'highlighteddates')
+       // console.log(highlightedDate,'highlighteddates')
  
        // Set the state of timeslots using the extracted timeslots
        this.setState({
@@ -777,9 +782,9 @@ const generateDateRange = (startDate, endDate) => {
        const unbookedSlots = json.unbookedSlots[this.state.selectedDate] || [];
 
        // Check if unbookedSlots array is empty
-       if (unbookedSlots.length === 0) {
-         console.log('No unbooked slots available for the selected date',this.state.selectedDate);
-       }
+       // if (unbookedSlots.length === 0) {
+       //   console.log('No unbooked slots available for the selected date',this.state.selectedDate);
+       // }
  
        // Set the state of unbookedSlots using the extracted unbooked slots
        this.setState({
@@ -1009,7 +1014,7 @@ console.log('handle')
 
     // console.log('idcreated',docid)
     const id = this.props.match.params.id.split("-")[0];
-    console.log('idcreated',id)
+    // console.log('idcreated',id)
 
 
     fetch(`${backendHost}/video/create/room/${id}`)
