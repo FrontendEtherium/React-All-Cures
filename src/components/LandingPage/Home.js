@@ -167,17 +167,17 @@ class Home extends Component {
        
    
     loadFloater = async() => {
-      console.log("checkgin the api 123");
-         console.log('call floater')
+      // console.log("checkgin the api 123");
+      //    console.log('call floater')
     await  axios.get(`${backendHost}/data/newsletter/get`)
      .then(res => {
-        console.log(res.data)
+        // console.log(res.data)
         this.setState ({
           images:res.data
         })
      })
      .catch(res =>  null)
-   console.log("1232121 testing");
+   // console.log("1232121 testing");
    };
   
    floaterInterval = null;
