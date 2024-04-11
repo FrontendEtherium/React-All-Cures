@@ -26,7 +26,7 @@ const Side = (props) => {
               setisLoaded(true)
               setItems(json)
 
-            console.log("itemese",json)
+            // console.log("itemese",json)
             
           })
           .catch(err => {return
