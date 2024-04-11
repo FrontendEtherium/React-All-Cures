@@ -80,7 +80,7 @@ export default function Carousel1(props){
                         <Link to={ `/searchcategory/disease/164` }>
                            <div className="item-img">
                               {/* <img src={Slider7} alt="slider-img" /> */}
-                              <img src="https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/insomnia.8242b02ceb4aaa6e742f.png" alt="slider-img"/>
+                              <img src="https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/insomnia.8242b02c.png" alt="slider-img"/>
                            </div>
                            <div className="slider-heading">
                               <p><strong>Insomnia</strong><br/></p>
