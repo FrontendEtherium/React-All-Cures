@@ -11,7 +11,7 @@ const [isDefaultImage, setIsDefaultImage] = useState(false);
    
 
 
-console.log('docimg',img)
+// console.log('docimg',img)
 //    useEffect(() => {
 //    fetch(`${backendHost}/data/doctor/image`)
 //        .then((res) => res.json())
