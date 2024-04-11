@@ -993,13 +993,13 @@ const generateDateRange = (startDate, endDate) => {
   };
 
   handleTimeSlot =(time)=>{
-console.log('handle')
-    console.log('time',time)
+// console.log('handle')
+//     console.log('time',time)
     this.setState(
       { selectedTimeSlot: time },
-      () => {
-        console.log("selectedslot", this.state.selectedTimeSlot);
-      }
+      // () => {
+      //   console.log("selectedslot", this.state.selectedTimeSlot);
+      // }
     );
   }
 
