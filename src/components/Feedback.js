@@ -9,6 +9,9 @@ import { Link } from 'react-router-dom';
 import { Alert, Form } from 'react-bootstrap';
 import '../styles.css';
 import  axiosInstance  from '../axiosInstance';
+import { useHistory } from 'react-router';
+
+
 
 
 
@@ -21,6 +24,9 @@ function Feedback() {
     const[feedback,setFeedback] = useState();
     const[alert,setAlert] = useState();
     const[gender,setGender] = useState();
+
+     const history = useHistory()
+    
     
     const submitForm = (e) => {
         e.preventDefault();
@@ -44,7 +50,7 @@ function Feedback() {
  
   return (
       <div>
-                <Header/>    
+                <Header  history={history}/>    
           
           <div className="promo-page">
                 <div className="container">
