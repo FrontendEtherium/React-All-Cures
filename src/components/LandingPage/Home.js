@@ -43,7 +43,7 @@ import FeaturedArticles from './FeaturedArticles';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import headers from '../../api-fetch';
 
-env.REACT_APP = 'http://117.241.171.115:8080/cures';
+env.REACT_APP = 'http://115.246.93.94:8080/cures';
 
 class Home extends Component {
    constructor(props){
