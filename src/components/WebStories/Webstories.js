@@ -11,6 +11,8 @@ import "owl.carousel/dist/assets/owl.theme.default.css";
 import "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core"
 import Footer from "../Footer/Footer";
+import { useHistory } from 'react-router';
+
 
 
 
@@ -50,6 +52,8 @@ const options = {
 const Webstories = () => {
 
   const[data,setData]=useState([]);
+  const history = useHistory()
+
 
 
 useEffect(()=>{
@@ -71,7 +75,7 @@ useEffect(()=>{
   return (
     <>
 
-    <Header/>
+    <Header history={history}/>
     <div>
    
    
