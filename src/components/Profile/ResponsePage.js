@@ -17,6 +17,7 @@ const ResponsePage = () => {
     const[getResponse,setGetResponse]=useState('')
 
 
+   
     useEffect(()=>{
 
       fetch(`${backendHost}/payment/get/payment-udpates/${responseObject.orderID}`)
@@ -25,7 +26,25 @@ const ResponsePage = () => {
         console.log("res",json)
         setGetResponse(json)
       })
+
+      function sendMessageToApp() {
+        // const data =responseObject.orderID 
+        // window.postMessage(JSON.stringify(data));
+        const paymentStatus = getResponse
+        const paymentData =  responseObject.orderID
+        
+        // Send a message to the React Native app
+        window.postMessage(JSON.stringify({ status: paymentStatus, data: paymentData }));
+
+
+      }
+
+     
+
+      sendMessageToApp()
+
     },[])
+
   return (
    <>
 <Header/>
