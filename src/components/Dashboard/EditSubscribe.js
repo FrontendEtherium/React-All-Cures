@@ -182,7 +182,7 @@ class LoginInfo extends Component {
                         <div className="timer"></div>
                     </div>
             }</div>
-              <Header/>
+              <Header history={this.props.history}/>
              <div className="container">
                 <div className="h2 text-center " style={{marginTop:"2rem"}}>Edit Subscribe</div>
         <div className="card mb-5">
