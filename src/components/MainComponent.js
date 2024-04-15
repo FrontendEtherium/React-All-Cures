@@ -78,6 +78,8 @@ import RedirectQr from "./RedirectQr.js";
 import DoctorLink from "./Profile/DoctorLink.js";
 import ResponsePage from "./Profile/ResponsePage.js";
 import PaymentRedirect from "./Profile/PaymentRedirect.js";
+import ResponseRedirect from "./Profile/ResponseRedirect.js";
+
 
 
 
@@ -153,6 +155,8 @@ const Routes = (props) => {
      <Route path="/notification/:linkid" component={DoctorLink}/>
      <Route exact path="/paymentStatus" component={ResponsePage} />
     <Route exact path="/paymentRedirection" component={PaymentRedirect} />
+    <Route exact path="/statusPayment" component={ResponseRedirect} />
+
 
 
     
