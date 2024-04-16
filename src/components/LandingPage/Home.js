@@ -168,10 +168,10 @@ class Home extends Component {
    
     loadFloater = async() => {
       // console.log("checkgin the api 123");
-      //    console.log('call floater')
+         // console.log('call floater')
     await  axios.get(`${backendHost}/data/newsletter/get`)
      .then(res => {
-        // console.log(res.data)
+      //   console.log(res.data)
         this.setState ({
           images:res.data
         })
@@ -214,7 +214,7 @@ class Home extends Component {
  }
 
  diseasePosts(){                   // For specific cures like "/cures/diabetes"
-   console.log('not delayed')
+   // console.log('not delayed')
    fetch(`${backendHost}/isearch/${this.state.param.type}`)
      .then((res) => res.json())
      .then((json) => {
@@ -231,7 +231,7 @@ class Home extends Component {
  fetchData = async () => {
    try {
      const response = await axios.get(`${backendHost}/sponsored/list/ads/url/1`);
-     console.log("response API call successful",response); // Check if this log is printed
+   //   console.log("response API call successful",response); // Check if this log is printed
         
 
      if(response.data!= 'All Ads are Served'){
@@ -239,8 +239,8 @@ class Home extends Component {
       const ids=id.match(/\d+/)
        const adsId=ids[0]
 
-      console.log(adsId)
-         console.log(id)
+      // console.log(adsId)
+      //    console.log(id)
 
          this.setState({
            adId:adsId
@@ -249,7 +249,7 @@ class Home extends Component {
       }
 
     const newResponse=`https://uat.all-cures.com:444${response.data}`
-    console.log(newResponse)
+   //  console.log(newResponse)
      this.setState({
       //  ads: response.data,
           ads: newResponse,
@@ -273,11 +273,11 @@ class Home extends Component {
    
      postSubscribtion() {
         var phoneNumber = this.state.value.split('+')[1];
-        console.log(this.state.value);
+      //   console.log(this.state.value);
         var countryCodeLength = phoneNumber.length % 10;
         var countryCode = phoneNumber.slice(0, countryCodeLength);
         var StringValue = phoneNumber.slice(countryCodeLength).replace(/,/g, '');
-        console.log(isValidPhoneNumber(this.state.value));
+      //   console.log(isValidPhoneNumber(this.state.value));
       
         if (!isValidPhoneNumber(this.state.value)) {
           this.Alert('Please enter a 10-digit phone number!');
@@ -325,11 +325,8 @@ class Home extends Component {
          method: "POST",
          credentials: "include",headers: {'Access-Control-Allow-Credentials': true}
       })
-      //  axios.defaults.withCredentials = true
-      //  axios.post(`${backendHost}/LogoutActionController`,{ headers: {'Access-Control-Allow-Credentials': true}}
-      //  )
+    
        .then(res => {
-         // if(res.data === '/cures/Login.html?msg=You have successfully logged out.'){
             Cookies.remove('uName')
             setTimeout(() => {
                window.location.reload()
@@ -436,7 +433,7 @@ class Home extends Component {
                                   <div class="collapse navbar-collapse" id="navbarNavDropdown">
      <ul class="navbar-nav">
        <li class="nav-item">
-         <a class="nav-link" href="/">Home</a>
+         <a class="nav-link" href="/">Homes</a>
        </li>
        <li class="nav-item dropdown">
          <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
@@ -658,17 +655,7 @@ class Home extends Component {
                         <h2  style={{display:'none'}}>Ayurveda, Homeopathy, Chinese Medicine, Persian, Unani</h2>
                      <div className="h4 mt-4" itemprop="Category">Choose by Diseases</div>
                   </div>
-                  {/* <!-- Nav tabs --> */}
-                  {/* <ul>
-                     <li role="presentation" className="active"><a href="#Men" aria-controls="Men" role="tab" data-toggle="tab">Men</a>
-                     </li>
-                     <li role="presentation"><a href="#Women" aria-controls="Women" role="tab" data-toggle="tab">Women</a>
-                     </li>
-                     <li role="presentation"><a href="#Children" aria-controls="Children" role="tab" data-toggle="tab">Children</a>
-                     </li>
-                     
-                     
-                  </ul> */}
+                
                </div>
                   <Carousel1 city={this.state.searchParams.city}/>
           </div>
@@ -693,21 +680,6 @@ class Home extends Component {
       </section>
 
 
-
-                      
-
-{/* {
-                           
-                              this.state.ads!=="https://uat.all-cures.com:444All Ads are Served" ? (
-                                 <div className="container">
-                                    <div>
-                              <img className="mb-4"  src={this.state.ads}/>
-                              </div>
-                              </div>
-                              ):null
-                            
-                            
-         }   */}
 
 
 {
@@ -766,60 +738,7 @@ class Home extends Component {
       </section>
       
 
-      {/* <section className="consultunt">
-         <div className="container">
-            <div className="row">
-               <div className="consultunt-inner">
-                  <h1>Meet Our Consultants Online</h1>
-                  <p>Video visits can address immediate medical issues or routine healthcare needs. Doctors are ready to treat a variety of issues or help you with prescriptions or referrals.</p>
-                  <div className="startVideo">
-                     <Link to="#" className="btn-bg startVideoBtn allBtn">Start Video Consultation</Link>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </section> */}
-      {/* <section className="doctor">
-         <div className="container">
-            <div className="row">
-               <div className="comman-heading">
-               <div className="h4">Our Top Doctors</div>
-               </div>
-            </div>
-            
-            <div className="row">
-               <Carousel2/>
-            </div>
-        
-         </div>
-         
-      </section><br/><br/> */}
-      {/* <section className="partner">
-         <div className="container">
-            <div className="row">
-               <div className="partnerBG">
-                  <h2>Be our Partners and <br/> Expand your Client base</h2>
-                  <div className="learnBtn">
-                     <Link href="/#" className="btn-bg nearmoreBtn">Learn More</Link>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </section> */}
-      {/* <section className="testomonial" id="testimonials">
-         <div className="container">
-            <div className="row">
-               <div className="comman-heading">
-                  <h2>What our patients say</h2>
-               </div>
-            </div>
-            <div className="row">
-               <CarouselReview/>
-                   
-            </div> 
-       
-         </div>
-      </section> */}
+     
       <div>
          
          <button id="mobile-subscribe-fixed-btn" className="btn newsletter-icon rounded subscribe-btn newsletter_float" data-toggle="modal"data-target=".bd-example-modal-lg"
@@ -924,14 +843,9 @@ function ToggleButton(props) {
              </Dropdown.Item>
 
 
-{/* web stories */}
-
-            
 
 
-
-
-
+         
              <Dropdown.Item >
                <Link to="/editSubscribe" className="text-dark btn">
                   Edit Subscription</Link>
@@ -972,12 +886,7 @@ function ToggleButton(props) {
       >
             Sign in/Sign up
       </button>
-      {/* <Link 
-         className="btn-white loginSignbtn color-blue-dark" 
-         to={{pathname: props.match, search: '?login=true', state: {open: true}}}
-      >
-         Sign in/Sign up
-      </Link> */}
+   
       </>
    )
 }
