@@ -806,8 +806,8 @@ position: absolute;
   width: 275px;
   height: 264px;
   vertical-align: middle;
-  object-fit: cover;
-  /* object-fit: fill; */
+/*   object-fit: cover; */
+  object-fit: fill;
 }
 #specialists .item-imgsBack , #featured .item-imgsBack,
 #doctor .item-imgsBack {
