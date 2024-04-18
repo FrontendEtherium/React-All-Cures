@@ -55,7 +55,7 @@ const [isDefaultImage, setIsDefaultImage] = useState(false);
   } */}
 
 {img?
-  <img src={`https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-180,h-230,f-webp${img}`} className="item-imgs" alt="doc" />:
+  <img src={`https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-200,h-280,f-webp${img}`} className="item-imgs" alt="doc" />:
   <i class="fas fa-user-md fa-10x"></i>
   }
     
