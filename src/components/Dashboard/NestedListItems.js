@@ -605,6 +605,15 @@ setOpenn(!openn);
           <ListItemText primary="Create Webstories" />
         </Link>
       </ListItem>
+
+               <ListItem button style={{backgroundColor:'lightblue'}}>
+        <ListItemIcon>
+          <DashboardIcon />
+        </ListItemIcon>
+        <Link to="/dashboard?webstoriesList">
+          <ListItemText primary=" Webstories Edit" />
+        </Link>
+      </ListItem>
       
 </>:
 <>
