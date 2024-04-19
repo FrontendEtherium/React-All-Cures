@@ -67,6 +67,10 @@ import UpdateDoctorAvail from './DoctorItems/UpdateDoctorAvail';
 import CreateServicePaymentMethod from './DoctorItems/CreateServicePaymentMethod';
 import ServicePaymentMethodList from './DoctorItems/ServicePaymentMethodList';
 import UpdateServicePayment from './DoctorItems/UpdateServicePayment';
+import WebstoriesList from './WebstoriesList';
+import WebstoriesUpdate from './WebstoriesUpdate';
+
+
 
 
 
@@ -466,7 +470,19 @@ function RenderComponent(props){
     )
   
   } 
+   else if(props.search.split('=')[0] === '?webstoriesList'){
+    return(
+      < WebstoriesList search={props.search}/>
+    )
   
+  } 
+
+  else if(props.search.split('=')[0] === '?webstoriesUpdate'){
+    return(
+      < WebstoriesUpdate search={props.search}/>
+    )
+  
+  } 
   else if(props.search.split('=')[0] === '?createcompany'){
     return(
       <CreateCompany search={props.search}/>
