@@ -59,7 +59,7 @@ function LoginInfo(props) {
                     setAlert(true)
                 setTimeout(()=>{
                     window.location.href="/home";
-                },1000)
+                },100000)
                
           
             }else if(res.data === "Sorry, the email address you entered does not exist in our database."){
