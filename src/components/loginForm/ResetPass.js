@@ -143,7 +143,7 @@ function LoginInfo(props) {
                        <div className="d-flex flex-column  align-items-md-center">
                        <Form.Group className="col-md-6  " style={{zIndex: 1}}>
                                 <Form.Label>Email</Form.Label>
-                                <Form.Control disabled onChange={setMail} value={email} type="Email" name="" placeholder="Enter Email" required/>
+                                <Form.Control onChange={setMail} value={email} type="Email" name="" placeholder="Enter Email" required/>
                             </Form.Group>
                             <Form.Group className="col-md-6  " style={{zIndex: 1}}>
                                 <Form.Label>Password</Form.Label>
