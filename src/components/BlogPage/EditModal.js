@@ -349,14 +349,11 @@ const EditModal = (props) => {
       };
 
       
-    const submitArticleForm = async e => {
+   const submitArticleForm = async e => {
         setafterSubmitLoad(true)
         e.preventDefault();
         axios.defaults.withCredentials = true
-        const headers = {
-            'Authorization': 'Bearer secret@2TfPj7sLqG',
-            'Content-Type': 'application/json'
-        };
+     
         axios.post(`${backendHost}/content?cmd=createArticle`, {
         
             "title":title,
@@ -383,9 +380,12 @@ const EditModal = (props) => {
                 "countryId": country,
                 "featured_article":featuredArticle,
 
-        }
-        ,{
-            headers: headers
+        },
+        {
+            headers: {
+                'Authorization': 'secret@2TfPj7sLqG', // Assuming Bearer token
+                'Content-Type': 'application/json'
+            }
         })
         .then(res => {
             setafterSubmitLoad(false)
@@ -404,7 +404,6 @@ const EditModal = (props) => {
             Alert('Some error occured! Please try again later.')
         })
     }
-
     const handleImageSubmission = () => {
         // e.preventDefault()
 		const formData = new FormData();
