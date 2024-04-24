@@ -348,15 +348,17 @@ const EditModal = (props) => {
         return output;
       };
 
-      const submitArticleForm = async e => {
+      
+    const submitArticleForm = async e => {
         setafterSubmitLoad(true)
         e.preventDefault();
         axios.defaults.withCredentials = true
-        const headers = new Headers({
-            'Authorization': 'Bearer secret@2TfPj7sLqG' 
-          });
+        const headers = {
+            'Authorization': 'Bearer secret@2TfPj7sLqG',
+            'Content-Type': 'application/json'
+        };
         axios.post(`${backendHost}/content?cmd=createArticle`, {
-            headers:headers,
+        
             "title":title,
             // "introduction":intro,
                 "friendlyName": articleDisplay,
@@ -381,6 +383,9 @@ const EditModal = (props) => {
                 "countryId": country,
                 "featured_article":featuredArticle,
 
+        }
+        ,{
+            headers: headers
         })
         .then(res => {
             setafterSubmitLoad(false)
