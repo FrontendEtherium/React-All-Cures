@@ -59,7 +59,7 @@ const WebstoriesList = () => {
                                 <div className="pb-2"><span className="font-weight-bold">Description:</span> {i.description}</div>
                                 <div className="pb-2"><span className="font-weight-bold">Link:</span> {i.link}</div>
                                 <div className="pb-2">
-                                    <img src={`https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/${i.image}`} />
+                                    <img src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/${i.image}`} />
                                 </div>
                                
                                
