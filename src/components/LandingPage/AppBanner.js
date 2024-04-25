@@ -33,6 +33,12 @@ const AppBanner = () => {
     }
   };
 
+  const closePopup = () => {
+    setShowPopup(false);
+    // Set the flag in sessionStorage to indicate that the popup has been shown
+    sessionStorage.setItem('popupShown', 'true');
+  };
+
   return (
     <div>
       {showPopup && (
@@ -42,7 +48,7 @@ const AppBanner = () => {
             <button onClick={openAppOrStore} className="btn btn-secondary mb-2">Open in App</button>
           </div>
           <div className="d-flex justify-content-center">
-            <button onClick={() => setShowPopup(false)} className="btn btn-secondary mb-2">Stay on the Website</button>
+            <button onClick={closePopup} className="btn btn-secondary mb-2">Stay on the Website</button>
           </div>
         </div>
       )}
