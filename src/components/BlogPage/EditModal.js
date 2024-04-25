@@ -108,12 +108,19 @@ const EditModal = (props) => {
         )
     }
     
-    const singlePostEdit = (e) => {
+   const singlePostEdit = (e) => {
         e.preventDefault()
         setafterSubmitLoad(true)
         if(parseInt(articleStatus) === 3){
-            axiosInstance.post(`/article/${editId.id}`, {
+
+            const headers = {
+                'Authorization': 'Bearer super@2TfPj7sLqG',
+                'Content-Type': 'application/json'
+            };
+            axios.post(`${backendHost}/article/update/${editId.id}`, {
+
                 "title":title,
+                // "introduction":intro,
                 "friendly_name": articleDisplay,
                 // "subheading": "1",,                
                 "content_type": contentType,
@@ -139,6 +146,9 @@ const EditModal = (props) => {
                 "update_subscribers": updateSubscribers,
                 "featured_article":featuredArticle,
                 "content_small": encodeURIComponent(contentSmall)
+            }
+            ,{
+                headers: headers
             })
             .then(res => {
                 setafterSubmitLoad(false)
@@ -154,8 +164,15 @@ const EditModal = (props) => {
                 Alert('Some error occured. Try again later')
             })
         } else {
-            axiosInstance.post(`/article/${editId.id}`, {
+
+            const headers = {
+                'Authorization': 'Bearer super@2TfPj7sLqG',
+                'Content-Type': 'application/json'
+            };
+            axios.post(`/article/update/${editId.id}`,{
+                
                 "title":title,
+                // "introduction":intro,
                 "friendly_name": articleDisplay,
                 // "subheading": "1",
                 "content_type": contentType,
@@ -181,7 +198,11 @@ const EditModal = (props) => {
                 "update_subscribers": updateSubscribers,
                 "featured_article":featuredArticle,
                 "content_small": encodeURIComponent(contentSmall)
-            })
+            }
+            ,{
+                headers: headers
+            }
+        )
             .then(res => {
                 setafterSubmitLoad(false)
                 if(res.data === 1){
