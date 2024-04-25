@@ -909,6 +909,9 @@ class Home extends Component {
 }
 
 function ToggleButton(props) {
+    const handleDropdownItemClick = (itemName) => {
+      console.log(`Dropdown item clicked: ${itemName}`);
+  };
    if(props.userAccess){
        return(
          <>
@@ -936,7 +939,7 @@ function ToggleButton(props) {
                </Dropdown.Item>
 
              { props.userAccess >= 4?
-                <Dropdown.Item >
+                <Dropdown.Item onClick={() => handleDropdownItemClick('Dashboard')} >
                <Link to="/dashboard" className="text-dark btn">
                   Dashboard</Link>
                </Dropdown.Item>
