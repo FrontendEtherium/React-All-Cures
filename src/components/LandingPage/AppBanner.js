@@ -6,7 +6,7 @@ const AppBanner = () => {
 
   useEffect(() => {
     // Check if the popup has been shown in the current session
-    const popupShown = sessionStorage.getItem('popupShown');
+    const popupShown = getCookie('popupShown');
 
     // If the popup has not been shown in the current session, show it after a delay
     if (!popupShown) {
@@ -15,8 +15,6 @@ const AppBanner = () => {
       if (isMobileDevice) {
         setTimeout(() => {    
           setShowPopup(true);
-          // Set the flag in sessionStorage to indicate that the popup has been shown
-          sessionStorage.setItem('popupShown', 'true');
         }, 2000); 
       }
     }
@@ -31,12 +29,31 @@ const AppBanner = () => {
     if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
       window.location.href = 'https://www.all-cures.com/appRedirect'; 
     }
+    
+    // Close the popup
+    setShowPopup(false);
+    // Set a cookie to indicate that the popup has been shown
+    setCookie('popupShown', true, 1); // Set cookie to expire after 1 day
   };
 
   const closePopup = () => {
+    // Close the popup
     setShowPopup(false);
-    // Set the flag in sessionStorage to indicate that the popup has been shown
-    sessionStorage.setItem('popupShown', 'true');
+    // Set a cookie to indicate that the popup has been shown
+    setCookie('popupShown', true, 1); // Set cookie to expire after 1 day
+  };
+
+  // Function to set a cookie
+  const setCookie = (name, value, days) => {
+    const expires = new Date();
+    expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+    document.cookie = name + '=' + value + ';expires=' + expires.toUTCString() + ';path=/';
+  };
+
+  // Function to get a cookie
+  const getCookie = (name) => {
+    const keyValue = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+    return keyValue ? true : false;
   };
 
   return (
