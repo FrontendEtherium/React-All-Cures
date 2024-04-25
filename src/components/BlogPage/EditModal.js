@@ -342,13 +342,11 @@ const EditModal = (props) => {
         setType(ctype);
     }
 
-    const handleSelectFeatured = function(e, c) {
-        const farticle = [];
-        for (let i = 0; i < c.length; i++) {
-            farticle.push(c[i].value);
-        }
-        setFeaturedArticle(farticle);
+   const handleSelectFeatured = function(e) {
+        const selectedOption = e.target.value;
+        setFeaturedArticle(selectedOption);
     }
+    
     
      const sanitizer = (input) => {
         const output = {
@@ -730,21 +728,20 @@ const EditModal = (props) => {
                     />
                 </div>
 
-                <div className="col-lg-6 form-group">
-                    <label htmlFor="">Featured Article</label>
-                    <select 
-                    multiple
-                    name="featured" placeholder="Featured" 
-                    value={featuredArticle}
-                    onChange={(e)=> {
-                        handleSelectFeatured(e, e.target.selectedOptions)
-                    }}
-                     className="form-control">
-                        <option value="1">Yes</option>
-                        <option value="0">No</option>
-                       
-                    </select>
-                </div>
+                          <div className="col-lg-6 form-group">
+    <label htmlFor="">Featured Article</label>
+    <select 
+        multiple
+        name="featured" 
+        placeholder="Featured" 
+        value={featuredArticle}
+        onChange={handleSelectFeatured}
+        className="form-control"
+    >
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+    </select>
+</div>
                 
 
                 </div>
