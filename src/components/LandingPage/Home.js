@@ -937,15 +937,14 @@ function ToggleButton(props) {
                <Link to="/chatlist" className="text-dark btn">
                My Inbox</Link>
                </Dropdown.Item>
-
-             { props.userAccess >= 4?
-                <Dropdown.Item onClick={() => handleDropdownItemClick('Dashboard')} >
+{ props.userAccess >= 4?
+               <Dropdown.Item >
                <Link to="/dashboard" className="text-dark btn">
                   Dashboard</Link>
                </Dropdown.Item>
                :  <Dropdown.Item >
                <Link to="/my-cures" className="text-dark btn">
-                  My Favourite Cures</Link>
+                  My Cures</Link>
                </Dropdown.Item>
             }
              
