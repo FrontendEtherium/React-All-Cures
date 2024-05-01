@@ -909,16 +909,13 @@ class Home extends Component {
 }
 
 function ToggleButton(props) {
-    const handleDropdownItemClick = (itemName) => {
-      console.log(`Dropdown item clicked: ${itemName}`);
-  };
    if(props.userAccess){
        return(
          <>
          <Dropdown>
-           <Dropdown.Toggle  className="header-drop text-capitalize" id="drop-down">
-            
-           <img className='filter-white' src={Account} height="30px" alt="account"/>
+           <Dropdown.Toggle  className="header-drop text-capitalize" id="dropHead">
+          
+           <img alt="list" className='filter-white' src={Account} height="30px" />
            </Dropdown.Toggle>
            <Dropdown.Menu>
              <Dropdown.Item>
@@ -928,16 +925,18 @@ function ToggleButton(props) {
              </Dropdown.Item>
 
 
+                    
              <Dropdown.Item >
                <Link to="/editSubscribe" className="text-dark btn">
                   Edit Subscription</Link>
                </Dropdown.Item>
-
+            
                <Dropdown.Item >
                <Link to="/chatlist" className="text-dark btn">
                My Inbox</Link>
                </Dropdown.Item>
-{ props.userAccess >= 4?
+
+             { props.userAccess >= 4?
                <Dropdown.Item >
                <Link to="/dashboard" className="text-dark btn">
                   Dashboard</Link>
@@ -947,10 +946,10 @@ function ToggleButton(props) {
                   My Cures</Link>
                </Dropdown.Item>
             }
-             
              <Dropdown.Item >
              <button className="btn text-dark text-capitalize" onClick={props.logout}> Logout</button>
              </Dropdown.Item>
+             
            </Dropdown.Menu>
          </Dropdown>
        </>
@@ -959,8 +958,8 @@ function ToggleButton(props) {
    return(
       <>
       <button 
-         className="btn primary-btn-color text-light loginSignbtn color-blue-darks" 
-       
+         className="btn primary-btn-color text-light loginSignbtn color-blue-dark" 
+         id="signIn"
          variant="dark" 
          style={{width: '10rem'}}
          onClick={() => props.setModalShow(true)}
@@ -976,5 +975,4 @@ function ToggleButton(props) {
       </>
    )
 }
-
 export default Home;
