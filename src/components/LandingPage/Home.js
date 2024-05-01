@@ -917,58 +917,61 @@ function ToggleButton(props) {
            <img className='filter-white' src={Account} height="30px" alt="account"/>
            </Dropdown.Toggle>
            <Dropdown.Menu>
-             <Dropdown.Item onClick={() => console.log("Profile clicked")}>
-               <Link  className="text-dark btn" to={`/user/profile`}>
-                 Profile
-               </Link>
+             <Dropdown.Item>
+             <Link  className="text-dark btn" to={`/user/profile`}>
+                               Profile
+                      </Link>
              </Dropdown.Item>
-         
-             <Dropdown.Item onClick={() => console.log("Edit Subscription clicked")}>
+             <Dropdown.Item >
                <Link to="/editSubscribe" className="text-dark btn">
-                 Edit Subscription
-               </Link>
-             </Dropdown.Item>
+                  Edit Subscription</Link>
+               </Dropdown.Item>
 
-             <Dropdown.Item onClick={() => console.log("My Inbox clicked")}>
+               <Dropdown.Item >
                <Link to="/chatlist" className="text-dark btn">
-                 My Inbox
-               </Link>
-             </Dropdown.Item>
+               My Inbox</Link>
+               </Dropdown.Item>
 
              { props.userAccess >= 4?
-                <Dropdown.Item onClick={() => console.log("Dashboard clicked")}>
-                  <Link to="/dashboard" className="text-dark btn">
-                    Dashboard
-                  </Link>
-                </Dropdown.Item>
-                :  
-                <Dropdown.Item onClick={() => console.log("My Favourite Cures clicked")}>
-                  <Link to="/my-cures" className="text-dark btn">
-                    My Favourite Cures
-                  </Link>
-                </Dropdown.Item>
-             }
+                <Dropdown.Item >
+               <Link to="/dashboard" className="text-dark btn">
+                  Dashboard</Link>
+               </Dropdown.Item>
+               :  <Dropdown.Item >
+               <Link to="/my-cures" className="text-dark btn">
+                  My Cures</Link>
+               </Dropdown.Item>
+            }
              
-             <Dropdown.Item onClick={() => console.log("Logout clicked")}>
-               <button className="btn text-dark text-capitalize" onClick={props.logout}> Logout</button>
+             <Dropdown.Item >
+             <button className="btn text-dark text-capitalize" onClick={props.logout}> Logout</button>
              </Dropdown.Item>
            </Dropdown.Menu>
          </Dropdown>
        </>
-       );
+          );
    }
    return(
       <>
       <button 
          className="btn primary-btn-color text-light loginSignbtn color-blue-darks" 
+       
          variant="dark" 
          style={{width: '10rem'}}
          onClick={() => props.setModalShow(true)}
       >
             Sign in/Sign up
       </button>
+      {/* <Link 
+         className="btn-white loginSignbtn color-blue-dark" 
+         to={{pathname: props.match, search: '?login=true', state: {open: true}}}
+      >
+         Sign in/Sign up
+      </Link> */}
+      
       </>
    )
 }
+
 
 export default Home;
