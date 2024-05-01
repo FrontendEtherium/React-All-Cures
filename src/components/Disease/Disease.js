@@ -896,7 +896,7 @@ componentDidMount() {
     var artContent = items.content;
     var a = JSON.parse(decodeURIComponent(artContent))
     var b = a.blocks
-// console.log('img',b)
+console.log('img',b)
 
        
 
