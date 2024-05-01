@@ -72,12 +72,14 @@
     "use-state-with-callback": "^2.0.3",
     "web-vitals": "^1.1.1"
   },
-  "scripts": {
+ "scripts": {
     "start": "react-scripts start",
-    "build": "cp -r ./src/assets/img/*  ./build/static/media && react-scripts build",
+    "build": "cp -r ./src/assets/img/* ./build/static/media && npm run minify-js && npm run minify-css && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "postbuild": "react-snap"
+    "postbuild": "react-snap",
+    "minify-js": "uglifyjs src/**/*.js --compress --mangle --output ./build/static/js/main.min.js",
+    "minify-css": "cssnano ./src/**/*.css ./build/static/css/main.min.css"
   },
   "eslintConfig": {
     "extends": [
