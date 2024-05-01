@@ -100,6 +100,8 @@
     ]
   },
   "devDependencies": {
-    "react-snap": "^1.23.0"
+    "react-snap": "^1.23.0",
+      "uglify-js": "^3.14.8",
+    "cssnano": "^5.0.8"
   }
 }
