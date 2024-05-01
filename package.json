@@ -78,8 +78,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "postbuild": "react-snap",
-    "minify-js": "uglifyjs src/**/*.js --compress --mangle --output ./build/static/js/main.min.js",
-    "minify-css": "cssnano ./src/**/*.css ./build/static/css/main.min.css"
+   
   },
   "eslintConfig": {
     "extends": [
@@ -101,7 +100,6 @@
   },
   "devDependencies": {
     "react-snap": "^1.23.0",
-      "uglify-js": "^3.14.8",
-    "cssnano": "^5.0.8"
+     
   }
 }
