@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import axios from 'axios';
 import { backendHost } from '../api-config';
 import { Button, Modal } from "react-bootstrap";
