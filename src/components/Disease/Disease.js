@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Suspense, lazy } from 'react';
-
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import { Select, MenuItem } from '@material-ui/core';
@@ -79,14 +77,6 @@ const options = {
       }
   },
 };
-
-const SidebarRightt = lazy(() => import('./RightMenu'));
-
-const LazySideBarRight = (props) => (
-  <Suspense fallback={<div>Loading...</div>}>
-    <SidebarRightt {...props} />
-  </Suspense>
-);
 
 class Disease extends Component {
   constructor(props) {
@@ -1468,7 +1458,7 @@ console.log('img',b)
             </div>
           </Col> 
           <Col id="right-sidebar-wrapper">      
-            <LazySideBarRight title={items.title} history={this.props.history} dcName={items.dc_name} id={items.article_id}/>
+            <SidebarRight title={items.title} history={this.props.history} dcName={items.dc_name} id={items.article_id}/>
           </Col>
         </Row>
         <div>
