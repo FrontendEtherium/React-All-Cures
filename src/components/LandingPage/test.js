@@ -150,7 +150,7 @@ const Test = (props) => {
           } else{
             window.location.reload()
           }
-        }, 500);
+        }, 500000);
       } else {
         document.getElementById('login-msg').innerText="Some error occured!"
       }
