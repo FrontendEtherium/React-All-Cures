@@ -110,6 +110,7 @@ const EditModal = (props) => {
         )
     }
     const token=localStorage.getItem('token')
+	console.log("valuee",token);
    const singlePostEdit = (e) => {
         e.preventDefault()
         setafterSubmitLoad(true)
