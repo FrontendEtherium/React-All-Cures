@@ -1410,7 +1410,7 @@ console.log('img',b)
 
             
                {/* <h5>Source :  <a href="https://all-cures.com/Editorial" style={{textTransform:"none"}}>https://all-cures.com/editorial/</a></h5> */}
-               // <h5  className=" ml-3 ">Source: {items.window_title}</h5>
+             
 
                <div className="ml-3">
                <button  className="btn btn-primary" onClick={this.handleSource}>
