@@ -117,7 +117,7 @@ class Disease extends Component {
        likeClicked:false,
       dislikeClicked:false ,
     };
-    this.handleShows = this.handleShows.bind(this);
+   
    
 
   }
