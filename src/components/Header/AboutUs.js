@@ -20,7 +20,7 @@ function AboutUs(props) {
     return (
         <>
             <div>
-                <Header history={props.history} />
+                {/* <Header history={props.history} /> */}
                 <div className="container mt-8">
                     <h3>About Us</h3>
                     <p className='mt-3'>All Cures is a product developed, managed and owned by Etherium Technologies. 
@@ -47,7 +47,7 @@ function AboutUs(props) {
                     show={modalShow}
                     onHide={() => setModalShow(false)}
                 /> */}
-                <Footer></Footer>
+                {/* <Footer></Footer> */}
             </div>
         </>
     );
