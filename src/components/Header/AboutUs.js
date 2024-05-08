@@ -41,7 +41,7 @@ function AboutUs(props) {
                     userName={Cookies.get('uName')}
                     setModalShow={setModalShow}
                     userAccess={userAccess}
-                    logout={logout}
+                    // logout={logout}
                 />
                 <DeleteLogin
                     show={modalShow}
