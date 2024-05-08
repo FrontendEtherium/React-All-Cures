@@ -29,15 +29,15 @@ function AboutUs(props) {
                         We are passionate about giving our users the unique experience that is both fulfilling and wholesome.
                     </p>
                 </div>
-                <div className="container mb-90" style={{ marginBottom: '20' }}>
+                {/* <div className="container mb-90" style={{ marginBottom: '20' }}>
                     <h3>Contact Us</h3>
                     <h5 className='mt-3'>Email id: <a href={`mailto:${mail}`} id="email">{mail.toLowerCase()}</a></h5>
                     <h5>Phone No.: <a href="tel:+91 191 295 9035">+91 191 295 9035</a></h5>
                     <div className="container my-3">
                         <h3><a href="/feedback"><button id="" className="article-search btn btn-dark mt-10">Submit Your Feedback</button></a></h3>
                     </div>
-                </div>
-                <ToggleButton
+                </div> */}
+                {/* <ToggleButton
                     userName={Cookies.get('uName')}
                     setModalShow={setModalShow}
                     userAccess={userAccess}
@@ -46,29 +46,29 @@ function AboutUs(props) {
                 <DeleteLogin
                     show={modalShow}
                     onHide={() => setModalShow(false)}
-                />
+                /> */}
                 <Footer></Footer>
             </div>
         </>
     );
 
-    function ToggleButton(props) {
-        return (
-            <div className='container mb-30' style={{ fontSize: '.9rem', marginTop: '6rem' }}>
-                As a customer of AllCures, you have the ability to delete your profile.
-                If your objective is for AllCures to not contact you, you have the ability of Unsubscribing
-                to our NewsLetter by <a href="/editSubscribe">Editing your subscription. </a>
-                If you would like to Delete your profile, you can do that by &nbsp;
-                <button className="text-dark " id="signIn"
-                    variant="dark"
-                    style={{ border: 'none', padding: '0', background: 'white', marginLeft: '.1rem' }}
-                    onClick={() => props.setModalShow(true)}>Clicking Here. </button>
-                If you would like AllCures to remove all your information from our databases,
-                please send us an email at info@etheriumtech.com with the Subject of 'Delete My Profile'.
-                In the subject of the body, also indicate your email address.
-            </div>
-        );
-    }
+    // function ToggleButton(props) {
+    //     return (
+    //         <div className='container mb-30' style={{ fontSize: '.9rem', marginTop: '6rem' }}>
+    //             As a customer of AllCures, you have the ability to delete your profile.
+    //             If your objective is for AllCures to not contact you, you have the ability of Unsubscribing
+    //             to our NewsLetter by <a href="/editSubscribe">Editing your subscription. </a>
+    //             If you would like to Delete your profile, you can do that by &nbsp;
+    //             <button className="text-dark " id="signIn"
+    //                 variant="dark"
+    //                 style={{ border: 'none', padding: '0', background: 'white', marginLeft: '.1rem' }}
+    //                 onClick={() => props.setModalShow(true)}>Clicking Here. </button>
+    //             If you would like AllCures to remove all your information from our databases,
+    //             please send us an email at info@etheriumtech.com with the Subject of 'Delete My Profile'.
+    //             In the subject of the body, also indicate your email address.
+    //         </div>
+    //     );
+    // }
 }
 
 export default AboutUs;
