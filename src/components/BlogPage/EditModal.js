@@ -116,7 +116,7 @@ const EditModal = (props) => {
         if(parseInt(articleStatus) === 3){
 
             const headers = {
-                'Authorization':  'Bearer secret@2TfPj7sLqG',
+                'Authorization':  'Bearer super@2TfPj7sLqG',
                 'Content-Type': 'application/json'
             };
             axios.post(`${backendHost}/article/update/${editId.id}`, {
@@ -168,7 +168,7 @@ const EditModal = (props) => {
         } else {
 
             const headers = {
-                'Authorization': 'Bearer secret@2TfPj7sLqG',
+                'Authorization': 'Bearer super@2TfPj7sLqG',
                 'Content-Type': 'application/json'
             };
             axios.post(`/article/update/${editId.id}`,{
