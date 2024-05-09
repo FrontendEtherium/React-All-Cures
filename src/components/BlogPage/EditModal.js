@@ -406,7 +406,7 @@ const EditModal = (props) => {
         },
         {
             headers: {
-                'Authorization': 'secret@2TfPj7sLqG', // Assuming Bearer token
+                'Authorization':  `Bearer ${token} `, // Assuming Bearer token
                 'Content-Type': 'application/json'
             }
         })
