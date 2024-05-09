@@ -377,7 +377,7 @@ const EditModal = (props) => {
         e.preventDefault();
         axios.defaults.withCredentials = true
      
-        axios.post(`${backendHost}/content?cmd=createArticle`, {
+        axios.post(`${backendHost}/article/add`, {
         
             "title":title,
             // "introduction":intro,
