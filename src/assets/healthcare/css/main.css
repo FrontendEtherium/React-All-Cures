@@ -3029,6 +3029,11 @@ box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
   overflow: hidden; 
   text-overflow: ellipsis; /* Add an ellipsis (...) to indicate truncated content */
   } 
+
+.countryDrop{
+    max-height: 400px;
+    overflow-y: auto;
+  }
   
 
   
