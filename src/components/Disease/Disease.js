@@ -1055,7 +1055,7 @@ console.log('img',b)
                       <Dropdown.Toggle className="mr-2 my-1 btn btn-info color-white">
                         <span className="color-white">{i.countryname}</span>
                       </Dropdown.Toggle>
-                    <Dropdown.Menu>
+                    <Dropdown.Menu className="countryDrop">
                     {
                       this.state.regionalPost.map(j => j.countryname === i.countryname 
                         &&(
