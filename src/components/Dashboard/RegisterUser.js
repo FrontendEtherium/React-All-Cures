@@ -58,7 +58,7 @@ class RegisterUser extends React.Component {
                                     <td style={{width:"230px"}}>{item[1]}</td>
                                     <td style={{width:"230px"}}>{item[2]}</td>
                                     <td style={{width:"230px"}}>{item[3]}</td>
-                                    <td style={{width:"230px"}}>{item[5]}</td>
+                                    <td style={{width:"230px"}}>{item[4]}</td>
                                 </tr>
                                 
                             </tbody>
