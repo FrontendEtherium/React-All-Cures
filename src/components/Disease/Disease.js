@@ -852,6 +852,12 @@ componentDidMount() {
     if ( prevProps.match.params.id !== this.props.match.params.id){
       this.fetchBlog()
       window.scrollTo(0, 340);
+
+        this.setState({
+        likeClicked:null,
+        dislikeClicked:null,
+        showSource:null        
+      })
     }
   }
 
