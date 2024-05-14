@@ -12,6 +12,11 @@ RewriteEngine On
 RewriteCond %{HTTP_HOST} ^all-cures.com [NC]
 RewriteRule ^(.*)$ https://www.all-cures.com/$1 [L,R=301]
 
+# Cache Control for specific file types
+<FilesMatch "\.(jpg|jpeg|png|gif|svg|ico|css|js)$">
+    Header set Cache-Control "max-age=31536000, public"
+</FilesMatch>
+
 #RewriteEngine On
 #RewriteCond %{HTTPS} !=on
 #RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
