@@ -89,6 +89,7 @@ export default class Carousel2 extends Component {
             state = {i.map.state}
             country = {i.map.country}
             img={i.map.imgLoc}
+            prefix={i.map.prefix}
           />
          ))}
                         
