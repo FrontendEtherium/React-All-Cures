@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { backendHost } from '../../api-config';
 import DummyDoc from "../../assets/healthcare/img/images/defaultDoc1.png";
 
-const DoctorsCard = ({docID, firstName, lastName, primarySpl, hospitalAffliated, state, country,img}) => {
+const DoctorsCard = ({docID, firstName, lastName, primarySpl, hospitalAffliated, state, country,img,prefix}) => {
    
 const[doctImage,setDoctImage]=useState([])
 const [isDefaultImage, setIsDefaultImage] = useState(false);
@@ -63,7 +63,7 @@ const [isDefaultImage, setIsDefaultImage] = useState(false);
     </div>
     <div className="sider-contain">
        <div className="slider-heading">
-          <h2>Dr. {firstName} {lastName}</h2>
+          <h2>{prefix} {firstName} {lastName}</h2>
           <p>{primarySpl}</p>
           <h5 className="text-center">{hospitalAffliated} {state} </h5>
        </div>
