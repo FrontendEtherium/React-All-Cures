@@ -231,7 +231,7 @@ const Routes = (props) => {
  <Route exact path="/searchcategory" component={Categorypage}/>
       <Route path="/searchcategory/disease/:disease_condition_id" component={Categorypage}/>
       {/* Cure according to article_id*/}
-      <Route auth={Auth.auth} exact path="/cure/:cureType/:id" component={Disease}/>
+     {/* <Route auth={Auth.auth} exact path="/cure/:cureType/:id" component={Disease}/> */}
 
       <Route auth={Auth.auth} exact path="/cure/:id" component={Disease}/>
       
