@@ -41,7 +41,7 @@ export default function EditTip(props){
         axios.put(`${backendHost}/tip/updatetip/${id}`, {
         
             "tip_title":title,
-            "user_id":userId,
+            "createdBy":userId,
             
          
         })
