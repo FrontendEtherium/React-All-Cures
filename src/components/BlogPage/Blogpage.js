@@ -23,7 +23,9 @@ export default class Blogpage extends Component{
           regionPostsLoaded: false,
           country: new URLSearchParams(this.props.location.search).get('c'),
           diseaseCondition: new URLSearchParams(this.props.location.search).get('dc'),
-          articleFilter: 'recent'
+          articleFilter: 'recent',
+          isDiseasePostsActive: false
+            
         };
       }
 
@@ -80,6 +82,9 @@ export default class Blogpage extends Component{
       
       diseasePosts(type){                     // For specific blogs like "/blogs/diabetes"
         // if(type){
+          
+            this.setState({ isDiseasePostsActive: true }); // Set to true when diseasePosts is called
+          
           fetch(`${backendHost}/isearch/${type}`)
           .then((res) => res.json())
           .then((json) => {
@@ -105,7 +110,12 @@ export default class Blogpage extends Component{
       }
 
        handleScroll = () => {
-        const { articleFilter } = this.state;
+       const { articleFilter, isDiseasePostsActive } = this.state;
+
+        // Check if diseasePosts is active
+        if (isDiseasePostsActive) {
+          return; // Exit the function if diseasePosts is active
+        }
       
         // Check if the selected tab is 'recent' or 'earliest'
         if (articleFilter === 'recent' || articleFilter === 'earliest') {
