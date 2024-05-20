@@ -1357,6 +1357,17 @@ console.log('img',b)
 
           </div>
 
+
+   <div className="ml-3">
+               <button  className="btn btn-primary" onClick={this.handleSource}>
+        Source 
+      </button>
+      </div>
+
+      <div>
+      <h5  className=" ml-3 mt-3 "> {this.state.showSource && items.window_title} </h5>
+      </div>
+
            
           {
 
@@ -1411,16 +1422,7 @@ console.log('img',b)
                {/* <h5>Source :  <a href="https://all-cures.com/Editorial" style={{textTransform:"none"}}>https://all-cures.com/editorial/</a></h5> */}
               
 
-               <div className="ml-3">
-               <button  className="btn btn-primary" onClick={this.handleSource}>
-        Source 
-      </button>
-      </div>
-
-      <div>
-      <h5  className=" ml-3 mt-3 "> {this.state.showSource && items.window_title} </h5>
-      </div>
-
+            
 <h5> 
   <div className="d-flex mt-4  ml-3 ">
     <div style={{textTransform:"none"}}> Was this article helpful?</div>
