@@ -476,7 +476,7 @@ class Home extends Component {
          <a class="nav-link" href="/cures/AboutUs">About Us</a>
        </li>
                <li className="nav-item">
-         <a className="nav-link" href="webstories">Webstories</a>
+         <a className="nav-link" href="/webstories">Webstories</a>
        </li>
      </ul>
      </div>
