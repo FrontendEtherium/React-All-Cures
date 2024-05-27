@@ -433,7 +433,7 @@ class Home extends Component {
                                   <div class="collapse navbar-collapse" id="navbarNavDropdown">
      <ul class="navbar-nav">
        <li class="nav-item">
-         <a class="nav-link" href="/">Homes</a>
+          <Link className="nav-link" to="/">Homes</Link>
        </li>
        <li class="nav-item dropdown">
          <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
