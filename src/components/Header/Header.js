@@ -214,48 +214,48 @@ import { userAccess } from "../UserAccess";
                                </button>
                                <div class="collapse navbar-collapse" id="navbarNavDropdown">
   <ul class="navbar-nav">
-    <li class="nav-item">
-       <Link className="nav-link" to="/">Home.</Link>
+  <li class="nav-item">
+      <Link class="nav-link" to="/">Home</Link>
     </li>
     <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
+      <Link class="nav-link dropdown-toggle" to="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</Link>
       <div class="dropdown-menu" aria-labelledby="categoriesDropdown">
-        <a class="dropdown-item" href="/searchcategory/disease/1">Arthritis</a>
-        <a class="dropdown-item" href="/searchcategory/disease/74">Diabetes</a>
-        <a class="dropdown-item" href="/searchcategory/disease/50">Hypertension</a>
+        <Link class="dropdown-item" to="/searchcategory/disease/1">Arthritis</Link>
+        <Link class="dropdown-item" to="/searchcategory/disease/74">Diabetes</Link>
+        <Link class="dropdown-item" to="/searchcategory/disease/50">Hypertension</Link>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="/allcategory">View More</a>
+        <Link class="dropdown-item" to="/allcategory">View More</Link>
       </div>
     </li>
     <li class="nav-item dropdown ">
-      <a class="nav-link dropdown-toggle" href="#" id="trendingCuresDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Trending Cures</a>
+      <Link class="nav-link dropdown-toggle" to="#" id="trendingCuresDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Trending Cures</Link>
       <div class="dropdown-menu" aria-labelledby="trendingCuresDropdown">
-        <a class="dropdown-item" href="/searchmedicine/medicinetype/1">Ayurveda</a>
-        <a class="dropdown-item" href="/searchmedicine/medicinetype/4">Chinese Medicine</a>
-        <a class="dropdown-item" href="/searchmedicine/medicinetype/12" onMouseEnter={this.handleUnaniMouseEnter} onMouseLeave={this.handleUnaniMouseLeave}>Arabic
+        <Link class="dropdown-item" to="/searchmedicine/medicinetype/1">Ayurveda</Link>
+        <Link class="dropdown-item" to="/searchmedicine/medicinetype/4">Chinese Medicine</Link>
+        <Link class="dropdown-item" to="/searchmedicine/medicinetype/12" onMouseEnter={this.handleUnaniMouseEnter} onMouseLeave={this.handleUnaniMouseLeave}>Arabic
 
                <li className="nav-item dropdown newDropdown" onMouseEnter={this.handleUnaniMouseEnter} onMouseLeave={this.handleUnaniMouseLeave}>
-          <a className="nav-link dropdown-toggle" href="#" id="unaniDropdownToggle" role="button" data-bs-toggle="dropdown">
+          <Link className="nav-link dropdown-toggle" to="#" id="unaniDropdownToggle" role="button" data-bs-toggle="dropdown">
          <span style={{fontSize:"1rem",color:" #212529"}}>  <ArrowDropDownIcon/></span>  
-          </a>
+          </Link>
           {this.state.isUnaniDropdownOpen && (
             <ul className="dropdown-menu newDropdown-menu" aria-labelledby="unaniDropdownToggle">
               <li>
-                <a className="dropdown-item" href="/searchmedicine/medicinetype/2"> Unani</a>
+                <Link className="dropdown-item" to="/searchmedicine/medicinetype/2"> Unani</Link>
               </li>
               <li>
-                <a className="dropdown-item" href="/searchmedicine/medicinetype/3">Persian</a>
+                <Link className="dropdown-item" to="/searchmedicine/medicinetype/3">Persian</Link>
               </li>
             </ul>
           )}
         </li>
-        </a>
-        <a class="dropdown-item" href="/searchmedicine/medicinetype/6">Japanese</a>
-        <a class="dropdown-item" href="/searchmedicine/medicinetype/5">Scandinavian</a>
+        </Link>
+        <Link class="dropdown-item" to="/searchmedicine/medicinetype/6">Japanese</Link>
+        <Link class="dropdown-item" to="/searchmedicine/medicinetype/5">Scandinavian</Link>
       </div>
     </li>
     <li class="nav-item">
-      <Link class="nav-link" to="/AboutUs">About Us</Link>
+      <Link class="nav-link" to="/cures/AboutUs">About Us</Link>
     </li>
             <li className="nav-item">
          <Link className="nav-link" to="/webstories">Webstories</Link>
