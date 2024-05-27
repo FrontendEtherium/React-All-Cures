@@ -137,7 +137,7 @@ const Routes = (props) => {
        <Route exact path="/home" component={Home} />
        <Route exact path="/feedback" component={Feedback} />
        <Route exact path="/alldisease" component={AllDisease}/>
-       <Route exact path="/aboutus" component={AboutUs}/>
+       <Route exact path="/cures/aboutus" component={AboutUs}/>
        <Route exact path="/DeleteUserProfile" component={DeleteUserProfile}/>
        <Route exact path="/editorial" component={Editorial}/>
        <Route exact path="/medical" component={Medical}/>
