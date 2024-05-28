@@ -219,7 +219,7 @@ const Routes = (props) => {
       {/* Cure according to article_id*/}
       {/* <Route auth={Auth.auth} exact path="/cure/:cureType/:id" component={Disease}/> */}
 
-      <Route auth={Auth.auth} exact path="/cure/:id" component={Disease}/>
+      <Route auth={Auth.auth} exact path="/cures/:id" component={Disease}/>
       
       {/* Doctor profile page */}
        <Route auth={Auth.auth} exact path="/doctor/:id" component={Profile} />
