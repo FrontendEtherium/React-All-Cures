@@ -190,7 +190,7 @@ import { userAccess } from "../UserAccess";
    }
    render() {
       return(
-         <div className="profilePage">
+         <div className="profilePage" >
             <div className="">
                <section className="pageHeader zIndex-2" >
                   <div className="webAlign" >
