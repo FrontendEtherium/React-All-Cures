@@ -433,7 +433,7 @@ class Home extends Component {
                                   <div class="collapse navbar-collapse" id="navbarNavDropdown">
      <ul class="navbar-nav">
         <li class="nav-item">
-         <Link className="nav-link" to="/cures/home">Home</Link>
+         <Link className="nav-link" to="/">Home</Link>
        </li>
        <li class="nav-item dropdown">
          <Link class="nav-link dropdown-toggle" to="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</Link>
@@ -473,7 +473,7 @@ class Home extends Component {
          </div>
        </li>
        <li class="nav-item">
-         <Link class="nav-link" to="/cures/AboutUs">About Us</Link>
+         <Link class="nav-link" to="/AboutUs">About Us</Link>
        </li>
                <li className="nav-item">
          <Link className="nav-link" to="/webstories">Webstories</Link>
