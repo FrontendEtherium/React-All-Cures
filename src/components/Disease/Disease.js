@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
+import { Suspense, lazy } from 'react';
+
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import { Select, MenuItem } from '@material-ui/core';
@@ -9,6 +11,13 @@ import CenterWell from './CenterWell';
 import Sidebar from "./leftMenu";
 import SidebarRight from "./RightMenu";
 import Doct from "../../assets/img/doct.png";
+import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
+import ThumbDownOutlinedIcon from '@mui/icons-material/ThumbDownOutlined';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+
+
+
 
 
 import { backendHost } from '../../api-config';
@@ -40,15 +49,8 @@ import Date from '../Date'
 import { imagePath } from '../../image-path'
 import { faKeybase } from '@fortawesome/free-brands-svg-icons';
 import headers from '../../api-fetch';
+
 import axiosInstance from '../../axiosInstance';
-import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
-import ThumbDownOutlinedIcon from '@mui/icons-material/ThumbDownOutlined';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import ThumbDownIcon from '@mui/icons-material/ThumbDown';
-
-
-
-
 
 
 
@@ -78,10 +80,31 @@ const options = {
   },
 };
 
+// const CenterWelll = lazy(() => import('./CenterWell'));
+const SidebarRightt = lazy(() => import('./RightMenu'));
+
+// const LazyCenterWell = (props) => (
+//   <Suspense fallback={<div>Loading CenterWell...</div>}>
+//     <CenterWelll {...props} />
+//   </Suspense>
+// );
+
+
+const LazySideBarRight = (props) => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <SidebarRightt {...props} />
+  </Suspense>
+);
+
 class Disease extends Component {
   constructor(props) {
     super(props);
     this.childDiv = React.createRef()
+
+    this.containerRef = createRef();
+    this.handleScroll = this.handleScroll.bind(this);
+    this.handleLinkClick = this.handleLinkClick.bind(this);
+
     this.state = { 
 
       
@@ -114,9 +137,12 @@ class Disease extends Component {
       ads:'',
       isWindowLoaded: false,
       adId:'',
-        likeClicked:false,
-      dislikeClicked:false ,
-       showSource:false,
+       likeClicked:null,
+      dislikeClicked:null ,
+      showSource:false,
+      alertShown: false,
+      isModalOpen: false,
+      currentIndex: 0 // State variable for the current index
     };
     this.handleShows = this.handleShows.bind(this);
    
@@ -168,7 +194,7 @@ showModal() {
 }
 
   likeButton=()=>{
-  console.log("like clicked")
+  // console.log("like clicked")
   this.setState({
     likeClicked:true,
     dislikeClicked:false
@@ -177,7 +203,7 @@ showModal() {
 }
 
 dislikeButton=()=>{
-  console.log("dislike clicked")
+  // console.log("dislike clicked")
   this.setState({
     dislikeClicked:true,
     likeClicked:false,
@@ -186,12 +212,16 @@ dislikeButton=()=>{
 
 }
 
-  handleSource=()=>{
+
+handleSource=()=>{
+
+  console.log("clicked source")
 
   this.setState(prevState => ({
     showSource: !prevState.showSource
   }));
 }
+
 
 
 fetchBlog = async() => {
@@ -215,7 +245,7 @@ fetchBlog = async() => {
 
 
       
-      console.log(json)
+      // console.log(json)
      
         this.setState({
           isLoaded: true,
@@ -235,11 +265,16 @@ fetchBlog = async() => {
           this.fetchParentDiseaseId( this.props.match.params.id.split('-')[0]);
           this.loadFloater();
 
-          document.title = `${this.state.items.title}`;
+          // document.title = `${this.state.items.title}`;
+          const newTitle = `${json.title}`;
+          document.title = newTitle;
+          console.log('Document Title:', newTitle);
         });
 
         
-      console.log('id', this.props.match.params.id.split('-')[0]);
+      // console.log('id', this.props.match.params.id.split('-')[0]);
+
+      
       // console.log('parent_dc_id:', json_new.parent_dc_id);
       // if (json_new.parent_dc_id !== 0) {
       //   console.log('delayed not null');
@@ -289,7 +324,10 @@ fetchBlog = async() => {
           this.fetchParentDiseaseId( this.props.match.params.id.split('-')[0]);
           this.loadFloater();
           
-          document.title = `${this.state.items.title}`;
+          // document.title = `${this.state.items.title}`;
+          const newTitle = `${json.title}`;
+          document.title = newTitle;
+          console.log('Document Title:', newTitle);
         });
 
              
@@ -314,18 +352,18 @@ fetchBlog = async() => {
 
 
 loadFloater = async() => {
-  console.log("checkgin the api 123");
-     console.log('call floater')
+  // console.log("checkgin the api 123");
+  //    console.log('call floater')
 await  axios.get(`${backendHost}/data/newsletter/get`)
  .then(res => {
-    console.log(res.data)
-    console.log("image");
+    // console.log(res.data)
+    // console.log("image");
     this.setState ({
       images:res.data
     })
  })
  .catch(res =>  null)
-console.log("1232121 testing");
+// console.log("1232121 testing");
 };
 
 floaterInterval = null;
@@ -383,7 +421,7 @@ rotateImages = () => {
       var id = this.props.match.params.id.split('-')[0]
       await axios.post(`${backendHost}/${id}/${userId}`)
       .then(res => {
-        console.log(res.data)
+        // console.log(res.data)
          this.setState({
             afterSubmitLoad: false
          })
@@ -395,34 +433,17 @@ rotateImages = () => {
   
       pageLoad();
       this.pageLoading();
+
+     
+      
   }
 
+ 
 
-  //  fetchDatas = async (disease_condition_id) => {
-  //   console.log('DC_cond',disease_condition_id)
-  //   try {
-  //     const response = await axios.get(`${backendHost}/sponsored/list/ads/url/2`,{
-  //     params: {
-  //       DC_Cond: disease_condition_id,
-  //     },
-  //   })
-
-    
-  //     console.log("API call successful"); // Check if this log is printed
-  //     const newResponse=`https://uat.all-cures.com:444${response.data}`
-
-  //     this.setState({
-  //       ads: newResponse,
-  //     });
-  //   } catch (error) {
-  //     this.setState({
-  //       error: error.message,
-  //     });
-  //   }
-  // };
-
+  
   fetchData = async (parent_dc_id) => {
-    console.log('DC_Cond:', parent_dc_id); // Check if parent_dc_id is passed correctly
+    // console.log('DC_Cond:', parent_dc_id);
+    // Check if parent_dc_id is passed correctly
     try {
       // Send parent_dc_id as a request parameter
       const response = await axios.get(`${backendHost}/sponsored/list/ads/url/2`, {
@@ -430,28 +451,28 @@ rotateImages = () => {
           DC_Cond: parent_dc_id,
         },
       });
-      console.log("API call successful");
+      // console.log("API call successful");
       
       // Check the response data
-      console.log("Response data:", response.data);
+      // console.log("Response data:", response.data);
 
       if(response.data!= 'All Ads are Served'){
       const id=response.data.split('/')[3]
       const ids=id.match(/\d+/)
        const adsId=ids[0]
 
-      console.log(adsId)
-         console.log(id)
+      // console.log(adsId)
+      //    console.log(id)
 
          this.setState({
            adId:adsId
          });
 
       }
-      const newResponse = `https://all-cures.com:444${response.data}`;
+      const newResponse = `https://uat.all-cures.com:444${response.data}`;
   
       // Check if state is being updated correctly
-      console.log("New Response:", newResponse);
+      // console.log("New Response:", newResponse);
   
       this.setState({
 
@@ -592,7 +613,7 @@ rotateImages = () => {
     fetch(`${backendHost}/isearch/treatmentregions/${id}`)       // /isearch/treatmentregions/${this.state.diseaseCondition}
     .then((res) => res.json())
     .then((json) => {
-      console.log('regional posts')
+      // console.log('regional posts')
       this.setState({
         regionPostsLoaded: true,
         regionalPost: json,
@@ -670,13 +691,13 @@ rotateImages = () => {
 
 handleClick = (ad) => {
   
-  console.log('Image clicked!',ad);
+  // console.log('Image clicked!',ad);
   axios.put(`${backendHost}/sponsored/ads/clicks/${ad}`)
 }
  getDisease = () => {
   axiosInstance.get(`/article/all/table/disease_condition`)
     .then(res => {
-      console.log('getdisease')
+      // console.log('getdisease')
         this.setState({
           diseaseList:res.data
         })
@@ -692,14 +713,14 @@ handleClick = (ad) => {
     .then((res) => res.json())
     .then((json) => {
         
-      console.log('recieved',id)
-       console.log(json.parent_dc_id)
+      // console.log('recieved',id)
+      //  console.log(json.parent_dc_id)
      
-      console.log('parent_dc_id:', json.parent_dc_id);
+      // console.log('parent_dc_id:', json.parent_dc_id);
       
         if(json.parent_dc_id != 0){
       
-          console.log('delayd not null')
+          // console.log('delayd not null')
          
           this.fetchData(json.parent_dc_id);
           
@@ -720,7 +741,7 @@ diseasePosts(dcName) {
   return fetch(`${backendHost}/isearch/${dcName}`)
     .then((res) => res.json())
     .then((json) => {
-      console.log('disease posts')
+      // console.log('disease posts')
 
       var temp= []
       json.forEach(i => {
@@ -738,71 +759,20 @@ diseasePosts(dcName) {
 }
 
 
-//  componentDidMount() {
-//   setTimeout(() => {
-//     console.log('delay');    
-//     this.diseasePosts(this.state.items.dc_name)
-//       .then(() => {
-    
-//       })
-//       .catch((error) => {
-//         // Handle any errors here
-//         console.error(error);
-//       });
-//   },);
-// }
-
-
-
-
- 
-// componentDidMount() {
-//   window.scrollTo(0, 0);
-//   this.fetchBlog();
-//   this.handleShow();
-//   this.getDisease();
-//   this.pageLoading();
-
-//   const canonicalLink = document.createElement('link');
-//   canonicalLink.rel = 'canonical';
-
-//   const currentURL = window.location.href.toLowerCase();
-//   const canonicalURL = currentURL.replace(/(https?:\/\/)?www\./, '$1');
-
-//   if (canonicalURL.match(/\/cure\/\d+/)) {
-//     const id = this.props.match.params.id.split('-')[0];
-
-//     fetch(`${backendHost}/article/${id}`)
-//       .then((res) => res.json())
-//       .then((json) => {
-//         const title = json.title;
-//         canonicalLink.href = `${window.location.origin}/cure/${id}-${title.replace(/\s+/g, '-')}`;
-//         document.head.appendChild(canonicalLink);
-//         console.log('Canonical Link:', canonicalLink.outerHTML);
-//       })
-//       .catch((err) => {
-//         canonicalLink.href = canonicalURL;
-//         document.head.appendChild(canonicalLink);
-//         console.log('Canonical Link:', canonicalLink.outerHTML);
-//       });
-//   } else {
-//     canonicalLink.href = canonicalURL;
-//     document.head.appendChild(canonicalLink);
-//     console.log('Canonical Link:', canonicalLink.outerHTML);
-//   }
-// }
-
 
 componentDidMount() {
   // window.scrollTo(0, 0);
 
 
+  
   const isMobileView = window.innerWidth <= 768
     window.scrollTo({
-      top: isMobileView ? 650 : 200, // Adjust the values as needed
+      top: isMobileView ? 650 : 0, // Adjust the values as needed
       behavior: 'smooth',
     });
 
+
+    window.addEventListener('scroll', this.handleScroll);
 
   this.fetchBlog();
   this.handleShow();
@@ -844,12 +814,69 @@ componentDidMount() {
 }
 
 
+componentWillUnmount() {
+  window.removeEventListener('scroll', this.handleScroll);
+}
 
+handleScroll() {
+  const container = this.containerRef.current;
+  if (container) {
+    const { scrollTop, scrollHeight, clientHeight } = container;
+    if (scrollTop + clientHeight >= scrollHeight && !this.state.alertShown) {
+      this.setState((prevState) => ({
+        alertShown: true,
+        isModalOpen: true,
+       
+      }));
+      // alert("You've reached the end of the div!");
+    } else if (scrollTop + clientHeight < scrollHeight) {
+      this.setState({ alertShown: false });
+    }
+  }
+}
+
+// handleLinkClick = (e, url) => {
+//   e.preventDefault();
+//   window.scrollTo(0, 0);
+//   setTimeout(() => {
+//     window.location.href = url;
+//   }, 0);
+// }
+
+ handleLinkClick = (e, url) => {
+    e.preventDefault();
+     window.scrollTo(0, 0);
+     axios.post(`${backendHost}/analytics/clicks?articleID=${this.props.match.params.id.split('-')[0]}`)
+    this.setState((prevState) => ({
+      isModalOpen: false,
+       currentIndex: (prevState.currentIndex + 1) % this.state.carouselItems.length // Update the index
+    }), () => {
+
+       setTimeout(() => {
+      this.props.history.push(url);
+
+       }, 0);
+       const container = this.containerRef.current;
+    if (container) {
+      container.scrollTop = 0;
+    }
+    });
+  };
+
+closeModal = () => {
+  this.setState({ isModalOpen: false });
+}
 
   componentDidUpdate(prevProps){
     if ( prevProps.match.params.id !== this.props.match.params.id){
       this.fetchBlog()
+      
       window.scrollTo(0, 340);
+      this.setState({
+        likeClicked:null,
+        dislikeClicked:null,
+        showSource:null        
+      })
     }
   }
 
@@ -964,7 +991,7 @@ console.log('img',b)
                                
                               this.state.ads?
                            
-                              this.state.ads!=="https://all-cures.com:444All Ads are Served"?
+                              this.state.ads!=="https://uat.all-cures.com:444All Ads are Served"?
                              <div className="d-flex justify-content-center">
                                <img className="mt-5" id="left-menu-ad" src={this.state.ads} alt="adjjjj"
                               onClick={() => this.handleClick(this.state.adId)}
@@ -1046,23 +1073,23 @@ console.log('img',b)
                  
 
 
-                 <div   >
+              <div>
                { finalRegions?
                   finalRegions.map(i => i.countryname!== null && (
                    <Dropdown key={i.countryname}>
                       <Dropdown.Toggle className="mr-2 my-1 btn btn-info color-white">
                         <span className="color-white">{i.countryname}</span>
                       </Dropdown.Toggle>
-                    <Dropdown.Menu>
+                    <Dropdown.Menu  className="countryDrop">
                     {
                       this.state.regionalPost.map(j => j.countryname === i.countryname 
                         &&(
                         <>
-                        <Dropdown.Item href="#" className="pt-2" key={j.countryname}>
+                        <Dropdown.Item href="#" className="pt-2" key={j.countryname} >
                         <Link to={ `/cure/${j.article_id}` }  className="d-flex justify-content-between align-items-center mr-2">
-                          <div className="d-flex justify-content-between align-items-center mb-2"id="artBtn">
+                          <div className="d-flex justify-content-between align-items-center mb-2"id="artBtn" >
                             <div>                  
-                              <div className="card-title mr-5" id="overview">{j.title.substr(0,25)+'...'}</div>
+                              <div className="card-title mr-5" id="overview">{j.title.substr(0,27)+'...'}</div>
                             </div>
                             <div>
                               {
@@ -1089,55 +1116,7 @@ console.log('img',b)
                       </div>
 
 
-                      {/* <div className="d-md-none">
-                      <OwlCarousel nav="true" items={5} margin={10} autoPlay="true" {...options} >
-          {finalRegions
-            ? finalRegions.map((i) => i.countryname !== null && (
-
-
-              <Dropdown key={i.countryname}>
-              <Dropdown.Toggle className="mr-2 btn btn-info color-white">
-                <span className="color-white">{i.countryname}</span>
-              </Dropdown.Toggle>
-            <Dropdown.Menu>
-            {
-              this.state.regionalPost.map(j => j.countryname === i.countryname 
-                &&(
-                <>
-                <Dropdown.Item href="#" className="pt-2" key={j.countryname}>
-                <Link to={ `/cure/${j.article_id}` }  className="d-flex justify-content-between align-items-center mr-2">
-                  <div className="d-flex justify-content-between align-items-center mb-2"id="artBtn">
-                    <div>                  
-                      <div className="card-title mr-5">{j.title.substr(0,25)+'...'}</div>
-                    </div>
-                    <div>
-                      {
-                        j.type.includes(1)?
-                          <div className="chip overview">Overview</div>
-                        : j.type.includes(2)?
-                          <div className="chip cure">Cures</div>
-                        : j.type.includes(3)?
-                          <div className="chip symptoms">Symptoms</div>
-                        : null
-                      }
-                    </div>
-                  </div>
-                </Link>
-                </Dropdown.Item>
-                </>
-              ))
-            }
-          </Dropdown.Menu>
-        </Dropdown>
-              
-            ))
-            : null
-          }
-        </OwlCarousel>
-      </div> */}
-    
-
-
+                     
 
 
 
@@ -1229,16 +1208,7 @@ console.log('img',b)
              
              
               
-              {/* Show average rating */}
-              {/* <div id="rate">
-            
-             <a href='#docRate'>Click To Rate Here</a></div> */}
-            {/* <Dropdown>
-                      <Dropdown.Toggle className="mr-220 btn btn-info color-white">
-                       < a href='#docRate'className="color-white" >Click Here To Rate</a>
-                      </Dropdown.Toggle>
-                   
-                    </Dropdown> */}
+             
               {
                 this.state.ratingValue?
                 <div className="average-rating mb-4 ml-3 mt-2" id="avg-rating">
@@ -1259,32 +1229,8 @@ console.log('img',b)
             </div>
 
             {/* Center Well article main content */}
-              <div id="article-main-content">
-                {/* {b.map((i, idx) => (
-
-
-                  <CenterWell
-                    key={idx}
-                    pageTitle = {items.title}
-                    level = {i.data.level}
-                    content = {i.data.content}
-                    type = {i.type}
-                    text = {i.data.text}
-                    title = {i.data.title}
-                    message = {i.data.message}
-                    source = {i.data.source}
-                    embed = {i.data.embed}
-                    caption = {i.data.caption}
-                    alignment = {i.data.alignment}
-                    // imageUrl = {i.data.file? i.data.file.url: null}
-                    imageUrl={i.data.file ? `https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/${i.data.file.url.replace(/^.*[\\/]/, '')}` : null}
-                    link = {i.data.link}
-                    url = {i.data.url}
-                    item = {i.data.items}
-                    props = {this.props}
-                  />
-                ))} */}
-
+              <div id="article-main-content" ref={this.containerRef} style={{ height: '100vh', overflowY: 'scroll' }}>
+              
 
 {b.map((i, idx) => {
   const fileUrl = i.data.file ? i.data.file.url : null;
@@ -1318,6 +1264,45 @@ console.log('img',b)
   );
 })}
 
+
+
+{this.state.isModalOpen && (
+         <Modal show={this.state.isModalOpen} onHide={this.closeModal} className="prompt">
+         <Modal.Header closeButton>
+           
+         </Modal.Header>
+         <Modal.Body className="p-4 m-4 ">
+         <Link to={`/cure/${carouselItems[this.state.currentIndex].article_id}-${carouselItems[this.state.currentIndex].title}`} className='fs-08' 
+          onClick={(e) => this.handleLinkClick(e, `/cures/${carouselItems[this.state.currentIndex].article_id}-${carouselItems[this.state.currentIndex].title}`)}>
+          
+          <h4>Click here to read the next article.</h4>
+          </Link>
+          
+          </Modal.Body>
+        
+       </Modal>
+
+      // <div className="card">
+      //   <div className="card=body z-5">
+   
+      // <div className="d-flex justify-content-center">
+      //   <div>
+
+      // <Link to={`/cures/${carouselItems[this.state.currentIndex].article_id}-${carouselItems[this.state.currentIndex].title}`} className='fs-08' 
+      // onClick={(e) => this.handleLinkClick(e, `/cures/${carouselItems[this.state.currentIndex].article_id}-${carouselItems[this.state.currentIndex].title}`)}>
+      
+      // <h4>Click here to read the next article.</h4>
+      // </Link>
+
+      // </div>
+      // </div>
+      // </div>
+
+      // </div>
+        )}
+
+          
+
               </div>
               <hr/>
               {/* Author */}
@@ -1336,11 +1321,7 @@ console.log('img',b)
               </>
              
             }
-              {/* <Button className="ml-3 mt-4 btn-article-search" id="textComment" >
-               Add To Favourite
-             </Button> */}
-
-
+             
                                            
 {
                 userAccess?
@@ -1357,9 +1338,8 @@ console.log('img',b)
 
           </div>
 
-
-   <div className="ml-3  mt-3 ">
-               <button  className="btn btn-primary" onClick={this.handleSource}>
+          <div className="ml-3 mt-3">
+               <button  className="btn  btn-primary" onClick={this.handleSource}>
         Source 
       </button>
       </div>
@@ -1367,6 +1347,7 @@ console.log('img',b)
       <div>
       <h5  className=" ml-3 mt-3 "> {this.state.showSource && items.window_title} </h5>
       </div>
+
 
            
           {
@@ -1400,29 +1381,15 @@ console.log('img',b)
                   </div>
                 : null
               }
-                              
-                              
-{/*                               
-                                    {
-                userAccess?
-                  <div id="favbutton">   
-                  {
-                          this.state.favourite.length === 0  ?
-                     <Favourite  article_id={this.props.match.params.id.split('-')[0]}/>
-                     :<Favourites  article_id={this.props.match.params.id.split('-')[0]}/>
-                  }
-                     </div>
-                : null
-              } */}
-              
+                                        
 
 
-              
             
                {/* <h5>Source :  <a href="https://all-cures.com/Editorial" style={{textTransform:"none"}}>https://all-cures.com/editorial/</a></h5> */}
-              
+               {/* <h5  className=" ml-3 ">Source: {items.window_title}</h5> */}
 
-            
+
+
 <h5> 
   <div className="d-flex mt-4  ml-3 ">
     <div style={{textTransform:"none"}}> Was this article helpful?</div>
@@ -1440,6 +1407,7 @@ console.log('img',b)
     </div>
   </div>
 </h5>
+             
              
             <div id="comments-column">              
 
@@ -1478,7 +1446,7 @@ console.log('img',b)
             </div>
           </Col> 
           <Col id="right-sidebar-wrapper">      
-            <SidebarRight title={items.title} history={this.props.history} dcName={items.dc_name} id={items.article_id}/>
+            <SidebarRight title={items.title} history={this.props.history} dcName={items.dc_name} id={items.article_id}  />
           </Col>
         </Row>
         <div>
@@ -1629,9 +1597,7 @@ console.log('img',b)
     <div className="modal-content">
     <div className="modal-header">
         
-        {/* <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleShows}>
-          <span aria-hidden="true">&times;</span>
-        </button> */}
+       
           <button type="button" className="close" onClick={this.handleShows}>
                                     <span>&times;</span>
                                 </button>
