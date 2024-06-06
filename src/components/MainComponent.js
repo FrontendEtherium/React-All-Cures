@@ -134,10 +134,10 @@ const Routes = (props) => {
       {/* Home Page */}
 
        <Route exact path="/" component={Home} />
-       <Route exact path="/cures/home" component={Home} />
+       <Route exact path="/home" component={Home} />
        <Route exact path="/feedback" component={Feedback} />
        <Route exact path="/alldisease" component={AllDisease}/>
-       <Route exact path="/cures/aboutus" component={AboutUs}/>
+       <Route exact path="/aboutus" component={AboutUs}/>
        <Route exact path="/DeleteUserProfile" component={DeleteUserProfile}/>
        <Route exact path="/editorial" component={Editorial}/>
        <Route exact path="/medical" component={Medical}/>
@@ -219,7 +219,7 @@ const Routes = (props) => {
       {/* Cure according to article_id*/}
       {/* <Route auth={Auth.auth} exact path="/cure/:cureType/:id" component={Disease}/> */}
 
-      <Route auth={Auth.auth} exact path="/cures/:id" component={Disease}/>
+      <Route auth={Auth.auth} exact path="/cure/:id" component={Disease}/>
       
       {/* Doctor profile page */}
        <Route auth={Auth.auth} exact path="/doctor/:id" component={Profile} />
