@@ -67,6 +67,10 @@ const EditModal = (props) => {
 	const [isFilePicked, setIsFilePicked] = useState(false);
 
     const [path, setPath] = useState("")
+    const[intro,setIntro]= useState('')
+
+    const[description,setDescription]=useState('')
+
 
     function Alert(msg){
       setShowAlert(true)
@@ -122,7 +126,8 @@ const EditModal = (props) => {
             axios.post(`${backendHost}/article/update/${editId.id}`, {
 
                 "title":title,
-                // "introduction":intro,
+	       "description":description,
+                "introduction":intro,
                 "friendly_name": articleDisplay,
                 // "subheading": "1",,                
                 "content_type": contentType,
@@ -174,7 +179,8 @@ const EditModal = (props) => {
             axios.post(`/article/update/${editId.id}`,{
                 
                 "title":title,
-                // "introduction":intro,
+		     "description":description,
+                "introduction":intro,
                 "friendly_name": articleDisplay,
                 // "subheading": "1",
                 "content_type": contentType,
@@ -378,6 +384,7 @@ const EditModal = (props) => {
         axios.post(`${backendHost}/article/create/new`, {
         
             "title":title,
+	    "description":description,
             // "introduction":intro,
                 "friendlyName": articleDisplay,
                 "contentType": contentType,
@@ -518,6 +525,11 @@ const EditModal = (props) => {
                     <div className="col-lg-6 form-group">
                     <label htmlFor="">Title</label>
                     <input type="text" value={title}   onChange={(e) => setTitle(e.target.value)} placeholder="Enter title" className="form-control" required/>
+                </div>
+
+                 <div className="col-lg-6 form-group">
+                    <label htmlFor="">Enter Keyword Introduction (Optional)</label>
+                    <input type="text" value={intro}   onChange={(e) => setIntro(e.target.value)} placeholder="Enter keyword" className="form-control"/>
                 </div>
                 {
                     parseInt(userAccess) === 7 || parseInt(userAccess) === 9?
@@ -662,6 +674,12 @@ const EditModal = (props) => {
                 <div className="col-lg-6 form-group">
                     <label htmlFor="">Sources</label>
                     <textarea value={win}  onChange={(e) => setWin(e.target.value)} placeholder="Enter title" className="form-control" />
+                </div>
+
+			    
+                <div className="col-lg-6 form-group">
+                    <label htmlFor="">Description</label>
+                    <textarea value={description}  onChange={(e) => setDescription(e.target.value)} placeholder="Enter Description" className="form-control" />
                 </div>
                 {   
                     type?
