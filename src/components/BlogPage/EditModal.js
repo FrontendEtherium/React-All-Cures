@@ -105,6 +105,8 @@ const EditModal = (props) => {
             setContentSmall(decodeURIComponent(res.data.content_small))
             setArticleContent(JSON.parse(decodeURIComponent(res.data.content)))
             setPath(res.data.content_location.replace('json', 'png').split('/webapps/')[1])
+	    setIntro(res.data.introduction)
+            setDescription(res.data.description)
         })
         .catch(err => {
             return
