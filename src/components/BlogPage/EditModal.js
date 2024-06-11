@@ -385,7 +385,7 @@ const EditModal = (props) => {
         
             "title":title,
 	    "description":description,
-            // "introduction":intro,
+            "introduction":intro,
                 "friendlyName": articleDisplay,
                 "contentType": contentType,
                 "type": type,
