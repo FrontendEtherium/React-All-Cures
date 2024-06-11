@@ -78,7 +78,8 @@
     "build": "NODE_OPTIONS='--max_old_space_size=8192' react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "postbuild": "react-snap cp -R build/* /home/uat/All-Cures/cures/src/main/webapp/ "
+     "postbuild": "react-snap && cp -R build/* /home/uat/All-Cures/cures/src/main/webapp/"
+
    
   },
   "eslintConfig": {
