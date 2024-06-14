@@ -58,9 +58,7 @@ const Side = props => {
                     {/* <div className=" menu-item">
                         <Link className="text-dark h6 pr-3">Symptoms & Diagnosis</Link>
                     </div> */}
-                    // <div className=" menu-item">
-                    //     <Link className="text-dark h6" to={`/cure/${props.name}/${props.id}`}>Cures</Link>
-                    // </div>
+                  
                     {/* <div className=" menu-item">
                         <Link className="text-dark h6">Living with</Link>
                     </div> */}
