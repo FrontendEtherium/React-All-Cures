@@ -1376,7 +1376,7 @@ console.log('img',b)
 
       <div>
       <h5  className=" ml-3 mt-3 "> {this.state.showSource && items.window_title} </h5>
-      </div>
+      </div><br/>
 
            
           {
