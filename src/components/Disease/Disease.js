@@ -1068,7 +1068,7 @@ console.log('img',b)
                         &&(
                         <>
                         <Dropdown.Item href="#" className="pt-2" key={j.countryname}>
-                        <Link to={ `/cure/${j.article_id}` }  className="d-flex justify-content-between align-items-center mr-2">
+                        <Link to={ `/cure/${j.article_id}-${j.title}` } className="d-flex justify-content-between align-items-center mr-2">
                           <div className="d-flex justify-content-between align-items-center mb-2"id="artBtn">
                             <div>                  
                               <div className="card-title mr-5" id="overview">{j.title.substr(0,27)+'...'}</div>
