@@ -13,6 +13,7 @@ import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import ThumbDownOutlinedIcon from '@mui/icons-material/ThumbDownOutlined';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import StarIcon from '@material-ui/icons/Star';
 
 
 
@@ -1385,7 +1386,7 @@ console.log('img',b)
                     {
                           this.state.rating.length === 0 ?
                             <span className='h6 mt-3 ml-3'> You Have Not Rated Yet, Please Rate </span>
-                            : <p className='h4 mt-3 ml-3'>Your Earlier Rated {this.state.rating } <span className="icon-star-1"></span><br/>Rate Again,</p>
+                            : <p className='h4 mt-3 ml-3'>Your Earlier Rated {this.state.rating } <StarIcon style={{ color: 'orange' }} /><br/>Rate Again,</p>
                             
                         }          
                   </>
