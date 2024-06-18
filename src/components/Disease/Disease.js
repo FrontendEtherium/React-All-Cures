@@ -1324,7 +1324,6 @@ console.log('img',b)
 
        </div>
         
-
           
 
               </div>
