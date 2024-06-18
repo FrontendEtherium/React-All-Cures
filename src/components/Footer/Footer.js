@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
 // import Heart from "../../assets/img/heart.png";
+import { imgKitImagePath } from '../../image-path';
 
 
 
@@ -302,7 +303,7 @@ class Footer extends Component {
         <div className="col-md-4">
          <div className="textSize logo">
                      <a href="/#">
-                        <img src={'https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/heart.30b5f0b3cbbf79450c5a.png'} alt="All Cures Logo"  style={{width:"40px"}}/><span>All Cures</span>
+                        <img src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/heart.png`} alt="All Cures Logo"  style={{width:"40px"}}/><span>All Cures</span>
                     </a>
                   </div>
          </div> 
@@ -318,7 +319,7 @@ class Footer extends Component {
                         <li>
                            <a href="https://www.facebook.com/All-Cures-100610265834385" target="_blank" rel="noreferrer">
                               <span>
-                                 <img src={Facebook} alt="Facebook Link" height="30px" width="30px"></img>
+                                 <img src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/facebook.svg`} alt="Facebook Link" height="30px" width="30px"></img>
                               </span> 
                               <span className="path1"></span>
                               <span className="path2"></span>
@@ -327,7 +328,7 @@ class Footer extends Component {
                         <li>
                            <a href="https://www.instagram.com/allcuresinfo/" target="_blank" rel="noreferrer">
                               <span>
-                                 <img src={Instagram} alt="Instagram Link" height="30px" width="30px"></img>
+                                 <img src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/instagram.svg`} alt="Instagram Link" height="30px" width="30px"></img>
                               </span> 
                               <span className="path1"></span>
                               <span className="path2"></span>
@@ -336,7 +337,7 @@ class Footer extends Component {
                         <li>
                            <a href="https://twitter.com/allcuresinfo" target="_blank" rel="noreferrer">
                               <span>
-                                 <img src={Twitter} alt="Twitter Link" height="30px" width="30px"></img>
+                                 <img src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/twitter.svg`} alt="Twitter Link" height="30px" width="30px"></img>
                               </span> 
                               <span className="path1"></span>
                               <span className="path2"></span>
@@ -345,7 +346,7 @@ class Footer extends Component {
                         <li>
                            <a href="https://www.linkedin.com/company/etherium-technologies/" target="_blank" rel="noreferrer">
                               <span>
-                                 <img src={Linkedin} alt="LinkedIn Link" height="30px" width="30px"></img>
+                                 <img src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/linkedin.svg`} alt="LinkedIn Link" height="30px" width="30px"></img>
                               </span> 
                               <span className="path1"></span>
                               <span className="path2"></span>
