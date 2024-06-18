@@ -1386,7 +1386,7 @@ console.log('img',b)
                     {
                           this.state.rating.length === 0 ?
                             <span className='h6 mt-3 ml-3'> You Have Not Rated Yet, Please Rate </span>
-                            : <p className='h4 mt-3 ml-3'>Your Earlier Rated {this.state.rating } <StarIcon style={{ color: 'orange' }} /><br/>Rate Again,</p>
+                            : <p className='h4 mt-3 ml-3'>Your Earlier Rated {this.state.rating } <StarIcon style={{ color: 'orange' }} /><br/>Rate Again</p>
                             
                         }          
                   </>
