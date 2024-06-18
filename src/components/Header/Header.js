@@ -198,7 +198,7 @@ import { userAccess } from "../UserAccess";
                         <div className="header" style={{width:"100%"}}>
                            <div className=" logo mt-3"> 
                               <Link to='/'>
-                                <img src={'https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/heart.30b5f0b3cbbf79450c5a.png'} alt="All Cures Logo"/>
+                                <img src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/heart.png`} alt="All Cures Logo"/>
                                 <span>All Cures</span>
                               </Link>
                            </div>
@@ -306,13 +306,13 @@ import { userAccess } from "../UserAccess";
                            {
                               userAccess?
                               <Link className="btn mr-2 primary-btn-color loginSignbtn color-blue-dark" id="Article" to="/article">
-                              <img src={CreateCures} alt="create cures" className='filter-white' height="30px"/>
+                              <img src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/edit_black_48dp.svg`} alt="create cures" className='filter-white' height="30px"/>
                             </Link>
                               : <button 
                               className="btn mr-2 primary-btn-color loginSignbtn color-blue-dark" id="Article" 
                               onClick={() => this.setModalShow(true)}
                             >
-                              <img src={CreateCures} alt="create cures" className='filter-white' height="30px"/>
+                              <img src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/edit_black_48dp.svg`} alt="create cures" className='filter-white' height="30px"/>
                             </button>
                            }   
                            <ToggleButton 
@@ -424,7 +424,7 @@ function ToggleButton(props) {
          <Dropdown>
            <Dropdown.Toggle  className="header-drop text-capitalize" id="dropHead">
           
-           <img alt="list" className='filter-white' src={Account} height="30px" />
+           <img alt="list" className='filter-white' src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/account_circle_black_48dp.svg`} height="30px" />
            </Dropdown.Toggle>
            <Dropdown.Menu>
              <Dropdown.Item>
