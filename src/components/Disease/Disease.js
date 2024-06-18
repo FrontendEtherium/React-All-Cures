@@ -843,7 +843,7 @@ handleScroll() {
 //   }, 0);
 // }
 
-handleLinkClick = (e, url) => {
+ handleLinkClick = (e, url) => {
     e.preventDefault();
      window.scrollTo(0, 0);
      axios.post(`${backendHost}/analytics/clicks?articleID=${this.props.match.params.id.split('-')[0]}`)
@@ -1324,6 +1324,7 @@ console.log('img',b)
 
        </div>
         )}
+
           
 
               </div>
