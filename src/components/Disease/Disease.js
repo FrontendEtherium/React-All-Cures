@@ -1266,7 +1266,7 @@ console.log('img',b)
 
 
 
-{this.state.isModalOpen && (
+
       //    <Modal show={this.state.isModalOpen} onHide={this.closeModal} className="prompt">
       //    <Modal.Header closeButton>
            
@@ -1323,7 +1323,7 @@ console.log('img',b)
       </div>
 
        </div>
-        )}
+        
 
           
 
