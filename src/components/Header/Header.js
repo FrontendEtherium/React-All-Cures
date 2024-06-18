@@ -20,6 +20,8 @@ import Account from '../../assets/icon/icons-AllCures/account_circle_black_48dp.
 import CreateCures from '../../assets/icon/icons-AllCures/edit_black_48dp.svg'
 import List from '../../assets/icon/icons-AllCures/list_black_48dp.svg'
 import { userAccess } from "../UserAccess";
+import { imgKitImagePath } from "../../image-path";
+
 
    class Header extends Component {
        
