@@ -46,7 +46,7 @@ import Heart from"../../assets/img/heart.png";
 import {userId} from "../UserId"
 import { userAccess } from '../UserAccess';
 import Date from '../Date'
-import { imagePath } from '../../image-path'
+import { imagePath, imgKitImagePath } from '../../image-path'
 import { faKeybase } from '@fortawesome/free-brands-svg-icons';
 import headers from '../../api-fetch';
 
@@ -843,7 +843,7 @@ handleScroll() {
 //   }, 0);
 // }
 
- handleLinkClick = (e, url) => {
+handleLinkClick = (e, url) => {
     e.preventDefault();
      window.scrollTo(0, 0);
      axios.post(`${backendHost}/analytics/clicks?articleID=${this.props.match.params.id.split('-')[0]}`)
@@ -1021,7 +1021,7 @@ console.log('img',b)
           </div>
           
           <Col  md={7} id="page-content-wrapper" className="col-xs-12 pb-5">
-            <div id="center-well" className="">
+            <div id="center-well"  ref={this.containerRef} style={{ height: '130rem', overflowY: 'scroll',overflowX: 'hidden' }}>
 
              
                 
@@ -1229,7 +1229,7 @@ console.log('img',b)
             </div>
 
             {/* Center Well article main content */}
-              <div id="article-main-content" ref={this.containerRef} style={{ height: '100vh', overflowY: 'scroll' }}>
+              <div id="article-main-content">
               
 
 {b.map((i, idx) => {
@@ -1267,40 +1267,63 @@ console.log('img',b)
 
 
 {this.state.isModalOpen && (
-         <Modal show={this.state.isModalOpen} onHide={this.closeModal} className="prompt">
-         <Modal.Header closeButton>
+      //    <Modal show={this.state.isModalOpen} onHide={this.closeModal} className="prompt">
+      //    <Modal.Header closeButton>
            
-         </Modal.Header>
-         <Modal.Body className="p-4 m-4 ">
-         <Link to={`/cure/${carouselItems[this.state.currentIndex].article_id}-${carouselItems[this.state.currentIndex].title}`} className='fs-08' 
-          onClick={(e) => this.handleLinkClick(e, `/cures/${carouselItems[this.state.currentIndex].article_id}-${carouselItems[this.state.currentIndex].title}`)}>
+      //    </Modal.Header>
+      //    <Modal.Body className="p-4 m-4 ">
+      //    <Link to={`/cure/${carouselItems[this.state.currentIndex].article_id}-${carouselItems[this.state.currentIndex].title}`} className='fs-08' 
+      //     onClick={(e) => this.handleLinkClick(e, `/cure/${carouselItems[this.state.currentIndex].article_id}-${carouselItems[this.state.currentIndex].title}`)}>
           
-          <h4>Click here to read the next article.</h4>
-          </Link>
+      //     <h4>Click here to read the next article.</h4>
+      //     </Link>
           
-          </Modal.Body>
+      //     </Modal.Body>
         
-       </Modal>
+      //  </Modal>
 
-      // <div className="card">
-      //   <div className="card=body z-5">
+      <div className="">
+        <div className="">
    
-      // <div className="d-flex justify-content-center">
-      //   <div>
+      <div className="d-flex justify-content-center mt-2 mb-2">
+        <div>
 
-      // <Link to={`/cures/${carouselItems[this.state.currentIndex].article_id}-${carouselItems[this.state.currentIndex].title}`} className='fs-08' 
-      // onClick={(e) => this.handleLinkClick(e, `/cures/${carouselItems[this.state.currentIndex].article_id}-${carouselItems[this.state.currentIndex].title}`)}>
       
-      // <h4>Click here to read the next article.</h4>
-      // </Link>
+      <Link to={`/cure/${carouselItems[this.state.currentIndex].article_id}-${carouselItems[this.state.currentIndex].title}`} className='fs-08' 
+      onClick={(e) => this.handleLinkClick(e, `/cure/${carouselItems[this.state.currentIndex].article_id}-${carouselItems[this.state.currentIndex].title}`)}>
+      
+      <div className="mb-2"><h4>Click here to read the next article.</h4></div>
+      </Link>
 
-      // </div>
-      // </div>
-      // </div>
 
-      // </div>
+      {
+    (() => {
+      const imageLocation = carouselItems[this.state.currentIndex].content_location;
+      let imageLoc;
+      if (imageLocation && imageLocation.includes('cures_articleimages')) {
+        imageLoc = `https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/` + imageLocation.replace('json', 'png').split('/webapps/')[1];
+      } else {
+        imageLoc = 'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/cures_articleimages//299/default.png';
+      }
+      return (
+        <div className="d-flex justify-content-center">
+          <div>
+        <img src={imageLoc} alt="Article Image" />
+        <p className="mt-2 fs-5">{carouselItems[this.state.currentIndex].title}</p>
+           </div>
+        
+        </div>
+      );
+    })()
+  }
+
+
+      </div>
+      </div>
+      </div>
+
+       </div>
         )}
-
           
 
               </div>
@@ -1614,7 +1637,7 @@ console.log('img',b)
                            {this.state.images.length>0 ?(
                          
                          <img src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp${this.state.images[this.state.currentIndex]}`} alt="doct"  style={{maxHeight:"400px",width:"405px"}}/>)
-                         :  <img src={Doct} alt="doctor"  style={{maxHeight:"400px",width:"397px"}}/> 
+                         :  <img src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/doct.png`} alt="doctor"  style={{maxHeight:"400px",width:"397px"}}/> 
                          
                          }
 
