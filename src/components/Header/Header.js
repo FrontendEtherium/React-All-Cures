@@ -217,7 +217,7 @@ import { imgKitImagePath } from "../../image-path";
                                <div class="collapse navbar-collapse" id="navbarNavDropdown">
   <ul class="navbar-nav">
   <li class="nav-item">
-      <Link class="nav-link" to="/">Home </Link>
+      <Link class="nav-link" to="/">Homes </Link>
     </li>
     <li class="nav-item dropdown">
       <Link class="nav-link dropdown-toggle" to="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</Link>
