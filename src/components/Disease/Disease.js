@@ -1267,21 +1267,7 @@ console.log('img',b)
 
 
 
-      //    <Modal show={this.state.isModalOpen} onHide={this.closeModal} className="prompt">
-      //    <Modal.Header closeButton>
-           
-      //    </Modal.Header>
-      //    <Modal.Body className="p-4 m-4 ">
-      //    <Link to={`/cure/${carouselItems[this.state.currentIndex].article_id}-${carouselItems[this.state.currentIndex].title}`} className='fs-08' 
-      //     onClick={(e) => this.handleLinkClick(e, `/cure/${carouselItems[this.state.currentIndex].article_id}-${carouselItems[this.state.currentIndex].title}`)}>
-          
-      //     <h4>Click here to read the next article.</h4>
-      //     </Link>
-          
-      //     </Modal.Body>
         
-      //  </Modal>
-
       <div className="">
         <div className="">
    
@@ -1323,7 +1309,8 @@ console.log('img',b)
       </div>
 
        </div>
-        
+
+          
           
 
               </div>
