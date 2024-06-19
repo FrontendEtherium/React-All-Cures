@@ -1266,8 +1266,9 @@ console.log('img',b)
 
 
 
+ {this.state.carouselItems && this.state.carouselItems.length > 0 && (
+      
 
-        
       <div className="">
         <div className="">
    
@@ -1309,8 +1310,57 @@ console.log('img',b)
       </div>
 
        </div>
+        )} 
+
+
+
+
+        
+        
+      {/* <div className="">
+        <div className="">
+   
+      <div className="d-flex justify-content-center mt-2 mb-2">
+        <div>
+
+      
+      <Link to={`/cure/${carouselItems[this.state.currentIndex].article_id}-${carouselItems[this.state.currentIndex].title}`} className='fs-08' 
+      onClick={(e) => this.handleLinkClick(e, `/cure/${carouselItems[this.state.currentIndex].article_id}-${carouselItems[this.state.currentIndex].title}`)}>
+      
+      <div className="mb-2"><h4>Click here to read the next article.</h4></div>
+      </Link>
+
+
+      {
+    (() => {
+      const imageLocation = carouselItems[this.state.currentIndex].content_location;
+      let imageLoc;
+      if (imageLocation && imageLocation.includes('cures_articleimages')) {
+        imageLoc = `https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/` + imageLocation.replace('json', 'png').split('/webapps/')[1];
+      } else {
+        imageLoc = 'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/cures_articleimages//299/default.png';
+      }
+      return (
+        <div className="d-flex justify-content-center">
+          <div>
+        <img src={imageLoc} alt="Article Image" />
+        <p className="mt-2 fs-5">{carouselItems[this.state.currentIndex].title}</p>
+           </div>
+        
+        </div>
+      );
+    })()
+  }
+
+
+      </div>
+      </div>
+      </div>
+
+       </div> */}
 
           
+
           
 
               </div>
