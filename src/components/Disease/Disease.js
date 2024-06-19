@@ -1021,7 +1021,7 @@ console.log('img',b)
           </div>
           
           <Col  md={7} id="page-content-wrapper" className="col-xs-12 pb-5">
-            <div id="center-well"  ref={this.containerRef} style={{ height: '130rem', overflowY: 'scroll',overflowX: 'hidden' }}>
+            <div id="center-well"  ref={this.containerRef}>
 
              
                 
