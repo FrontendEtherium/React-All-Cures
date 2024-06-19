@@ -3070,5 +3070,17 @@ box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
   }
   
   
+  #center-well {
+    overflow-y: auto; /* Ensures the content is scrollable on mobile */
+  }
+  
+  /* Desktop styles */
+  @media (min-width: 768px) {
+    #center-well {
+      height: 130rem;
+      overflow-y: scroll;
+      overflow-x: hidden;
+    }
+  }
 
   
