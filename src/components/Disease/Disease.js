@@ -961,7 +961,7 @@ console.log('img',b)
         </HelmetMetaData>
         <div className="ad-spac">
         <button className="btn" data-toggle="modal"data-target=".bd-example-modal-lg">
-          <img src={'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-900,f-webp/static/media/97x90%20Plain.395a48b7.jpg'} alt="advertisment"/>
+            <img src={`${imgKitImagePath}/tr:w-900,f-webp/assets/img/97x90_Plain.jpg`} alt="advertisment"/>
      
             </button>
         </div>
@@ -1000,7 +1000,7 @@ console.log('img',b)
                               <button className="btn pl-4 mt-2 " id="left-menu-ad" data-toggle="modal"data-target=".bd-example-modal-lg">
                                  {/* <img className="pl-4" src={PersianAd} alt="adhhh"
                                  /> */}
-                                  <img className="pl-4" src={'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-180,f-webp/static/media/Persian.954aca12.jpg'} alt="adhhh"
+                                    <img className="pl-4" src={`${imgKitImagePath}/tr:w-180,f-webp/assets/img/Persian.jpg`} alt="adhhh"
                                  />
                                  </button>
                                  :null
