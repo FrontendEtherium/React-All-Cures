@@ -270,7 +270,7 @@ import { imgKitImagePath } from "../../image-path";
 
                           
                            <form onSubmit={(e) => this.articleSearch(e)} className="" id="searchArticle">
-                              <div className="col-md-12 row" >
+                              <div className="col-md-12 row mr-2" >
                                  <div className="col-md-10 p-0">    
                                     <Autocomplete className="bg-white color-black"
                                        freeSolo
