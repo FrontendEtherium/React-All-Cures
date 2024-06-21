@@ -83,29 +83,25 @@ console.log('getid->',getId)
       .catch((err) => err);
   };
   
-
-  const sendMessage = (e) => {
+ const sendMessage = (e) => {
     e.preventDefault();
-      const newChat={
-        Message:message,
-        From_id:userId
-      }
-      setNewMessage(true);
-      setChats(prevMessages => [...prevMessages,newChat]);
-      const toid = toId;
-      const chatId = chats[0].Chat_id;
-      const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: false })
-      const newMessage = `${fromId}:${toid}:${chatId}:${message}`;
-      console.log(newMessage)
-
-      socket.send(newMessage);
-      setMessage('');
-      // chatRef.current.scrollIntoView({ behavior: 'smooth' });
-        scrollToBottom();
-      
-    
-    
+    const newChat = {
+      Message: message,
+      From_id: docID == 0 ? userId : docID  // This line was changed
     };
+    setNewMessage(true);
+    setChats(prevMessages => [...prevMessages, newChat]);
+    const toid = toId;
+    const chatId = chats[0].Chat_id;
+    const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: false });
+    const newMessage = `${newChat.From_id}:${toid}:${chatId}:${message}`;  // This line was changed
+    console.log(newMessage);
+  
+    socket.send(newMessage);
+    setMessage('');
+    scrollToBottom();
+  };
+  
     const startWebSocket = (getChatId) => {
       // Close the previous WebSocket connection if it exists
       if (socket && socket.readyState === WebSocket.OPEN) {
