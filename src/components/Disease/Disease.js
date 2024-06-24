@@ -117,6 +117,9 @@ class Disease extends Component {
        likeClicked:false,
       dislikeClicked:false ,
        showSource:false,
+        alertShown: false,
+      isModalOpen: false,
+      currentIndex: 0 // State variable for the current index
     };
     this.handleShows = this.handleShows.bind(this);
    
