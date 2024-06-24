@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import { Select, MenuItem } from '@material-ui/core';
@@ -13,7 +13,6 @@ import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import ThumbDownOutlinedIcon from '@mui/icons-material/ThumbDownOutlined';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
-import StarIcon from '@material-ui/icons/Star';
 
 
 
@@ -48,6 +47,7 @@ import Date from '../Date'
 import { imagePath } from '../../image-path'
 import { faKeybase } from '@fortawesome/free-brands-svg-icons';
 import headers from '../../api-fetch';
+import StarIcon from '@material-ui/icons/Star';
 
 import axiosInstance from '../../axiosInstance';
 
@@ -82,11 +82,18 @@ class Disease extends Component {
   constructor(props) {
     super(props);
     this.childDiv = React.createRef()
+
+    this.containerRef = createRef();
+    this.handleScroll = this.handleScroll.bind(this);
+    this.handleLinkClick = this.handleLinkClick.bind(this);
+
     this.state = { 
 
       
+
+      
       images:[],
-      currentIndex: 0,
+      currentIndexx: 0,
       items: [],
       carouselItems: [],
       comment: [],
@@ -117,7 +124,7 @@ class Disease extends Component {
        likeClicked:false,
       dislikeClicked:false ,
        showSource:false,
-        alertShown: false,
+       alertShown: false,
       isModalOpen: false,
       currentIndex: 0 // State variable for the current index
     };
@@ -347,7 +354,7 @@ handleModalClose = () => {
 
 rotateImages = () => {
   this.setState((prevState) => ({
-    currentIndex: (prevState.currentIndex + 1) % this.state.images.length,
+    currentIndexx: (prevState.currentIndexx + 1) % this.state.images.length,
   }));
 };
 
@@ -808,8 +815,9 @@ componentDidMount() {
       top: isMobileView ? 650 : 0, // Adjust the values as needed
       behavior: 'smooth',
     });
+    window.addEventListener('scroll', this.handleScroll);
 
- window.addEventListener('scroll', this.handleScroll);
+
   this.fetchBlog();
   this.handleShow();
   this.getDisease();
@@ -849,6 +857,7 @@ componentDidMount() {
   }
 }
 
+
 componentWillUnmount() {
   window.removeEventListener('scroll', this.handleScroll);
 }
@@ -871,24 +880,24 @@ handleScroll() {
 }
 
 handleLinkClick = (e, url) => {
-    e.preventDefault();
-     window.scrollTo(0, 0);
-     axios.post(`${backendHost}/analytics/clicks?articleID=${this.props.match.params.id.split('-')[0]}`)
-    this.setState((prevState) => ({
-      isModalOpen: false,
-       currentIndex: (prevState.currentIndex + 1) % this.state.carouselItems.length // Update the index
-    }), () => {
+  e.preventDefault();
+   window.scrollTo(0, 0);
+   axios.post(`${backendHost}/analytics/clicks?articleID=${this.props.match.params.id.split('-')[0]}`)
+  this.setState((prevState) => ({
+    isModalOpen: false,
+     currentIndex: (prevState.currentIndex + 1) % this.state.carouselItems.length // Update the index
+  }), () => {
 
-       setTimeout(() => {
-      this.props.history.push(url);
+     setTimeout(() => {
+    this.props.history.push(url);
 
-       }, 0);
-       const container = this.containerRef.current;
-    if (container) {
-      container.scrollTop = 0;
-    }
-    });
-  };
+     }, 0);
+     const container = this.containerRef.current;
+  if (container) {
+    container.scrollTop = 0;
+  }
+  });
+};
 
 
   componentDidUpdate(prevProps){
@@ -1045,7 +1054,7 @@ console.log('img',b)
           </div>
           
           <Col  md={7} id="page-content-wrapper" className="col-xs-12 pb-5">
-            <div id="center-well"  ref={this.containerRef} style={{ height: '130rem', overflowY: 'scroll',overflowX: 'hidden' }}>
+            <div id="center-well"  ref={this.containerRef} className="">
 
              
                 
@@ -1110,11 +1119,11 @@ console.log('img',b)
                         &&(
                         <>
                         <Dropdown.Item href="#" className="pt-2" key={j.countryname}>
-                                             <Link 
+                        <Link 
     to={ `/cure/${j.article_id}-${j.title.replace(/\s+/g, '-')}`}  
     className="d-flex justify-content-between align-items-center mr-2"
 >
-                          <div className="d-flex justify-content-between align-items-center mb-2"id="artBtn">
+                            <div className="d-flex justify-content-between align-items-center mb-2"id="artBtn">
                             <div>                  
                               <div className="card-title mr-5" id="overview">{j.title.substr(0,27)+'...'}</div>
                             </div>
@@ -1370,7 +1379,8 @@ console.log('img',b)
       props={this.props}
     />
   );
-})}
+})}   
+
 
 {this.state.carouselItems && this.state.carouselItems.length > 0 && (
       
@@ -1396,7 +1406,7 @@ console.log('img',b)
       if (imageLocation && imageLocation.includes('cures_articleimages')) {
         imageLoc = `https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,h-250,f-webp/` + imageLocation.replace('json', 'png').split('/webapps/')[1];
       } else {
-        imageLoc = 'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,h-250,f-webp/cures_articleimages//299/default.png';
+        imageLoc = 'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/cures_articleimages//299/default.png';
       }
       return (
         <div className="d-flex justify-content-center">
@@ -1417,6 +1427,58 @@ console.log('img',b)
 
        </div>
         )} 
+
+
+
+
+        
+        
+      {/* <div className="">
+        <div className="">
+   
+      <div className="d-flex justify-content-center mt-2 mb-2">
+        <div>
+
+      
+      <Link to={`/cure/${carouselItems[this.state.currentIndex].article_id}-${carouselItems[this.state.currentIndex].title}`} className='fs-08' 
+      onClick={(e) => this.handleLinkClick(e, `/cure/${carouselItems[this.state.currentIndex].article_id}-${carouselItems[this.state.currentIndex].title}`)}>
+      
+      <div className="mb-2"><h4>Click here to read the next article.</h4></div>
+      </Link>
+
+
+      {
+    (() => {
+      const imageLocation = carouselItems[this.state.currentIndex].content_location;
+      let imageLoc;
+      if (imageLocation && imageLocation.includes('cures_articleimages')) {
+        imageLoc = `https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/` + imageLocation.replace('json', 'png').split('/webapps/')[1];
+      } else {
+        imageLoc = 'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/cures_articleimages//299/default.png';
+      }
+      return (
+        <div className="d-flex justify-content-center">
+          <div>
+        <img src={imageLoc} alt="Article Image" />
+        <p className="mt-2 fs-5">{carouselItems[this.state.currentIndex].title}</p>
+           </div>
+        
+        </div>
+      );
+    })()
+  }
+
+
+      </div>
+      </div>
+      </div>
+
+       </div> */}
+
+          
+
+          
+
 
               </div>
               <hr/>
@@ -1477,7 +1539,7 @@ console.log('img',b)
                     {
                           this.state.rating.length === 0 ?
                             <span className='h6 mt-3 ml-3'> You Have Not Rated Yet, Please Rate </span>
-                            : <p className='h4 mt-3 ml-3'>Your Earlier Rated {this.state.rating } <StarIcon style={{ color: 'orange' }} /><br/>Rate Again</p>
+                            : <p className='h4 mt-3 ml-3'>Your Earlier Rated {this.state.rating } <StarIcon style={{ color: 'orange' }} /><br/>Rate Again,</p>
                             
                         }          
                   </>
@@ -1747,7 +1809,7 @@ console.log('img',b)
 
                            {this.state.images.length>0 ?(
                          
-                         <img src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp${this.state.images[this.state.currentIndex]}`} alt="doct"  style={{maxHeight:"400px",width:"405px"}}/>)
+                         <img src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp${this.state.images[this.state.currentIndexx]}`} alt="doct"  style={{maxHeight:"400px",width:"405px"}}/>)
                          :  <img src={Doct} alt="doctor"  style={{maxHeight:"400px",width:"397px"}}/> 
                          
                          }
