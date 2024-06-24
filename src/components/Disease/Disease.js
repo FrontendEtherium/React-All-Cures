@@ -802,11 +802,11 @@ componentDidMount() {
 
   const isMobileView = window.innerWidth <= 768
     window.scrollTo({
-      top: isMobileView ? 650 : 200, // Adjust the values as needed
+      top: isMobileView ? 650 : 0, // Adjust the values as needed
       behavior: 'smooth',
     });
 
-
+ window.addEventListener('scroll', this.handleScroll);
   this.fetchBlog();
   this.handleShow();
   this.getDisease();
@@ -846,7 +846,46 @@ componentDidMount() {
   }
 }
 
+componentWillUnmount() {
+  window.removeEventListener('scroll', this.handleScroll);
+}
 
+handleScroll() {
+  const container = this.containerRef.current;
+  if (container) {
+    const { scrollTop, scrollHeight, clientHeight } = container;
+    if (scrollTop + clientHeight >= scrollHeight && !this.state.alertShown) {
+      this.setState((prevState) => ({
+        alertShown: true,
+        isModalOpen: true,
+       
+      }));
+      // alert("You've reached the end of the div!");
+    } else if (scrollTop + clientHeight < scrollHeight) {
+      this.setState({ alertShown: false });
+    }
+  }
+}
+
+handleLinkClick = (e, url) => {
+    e.preventDefault();
+     window.scrollTo(0, 0);
+     axios.post(`${backendHost}/analytics/clicks?articleID=${this.props.match.params.id.split('-')[0]}`)
+    this.setState((prevState) => ({
+      isModalOpen: false,
+       currentIndex: (prevState.currentIndex + 1) % this.state.carouselItems.length // Update the index
+    }), () => {
+
+       setTimeout(() => {
+      this.props.history.push(url);
+
+       }, 0);
+       const container = this.containerRef.current;
+    if (container) {
+      container.scrollTop = 0;
+    }
+    });
+  };
 
 
   componentDidUpdate(prevProps){
@@ -1003,7 +1042,7 @@ console.log('img',b)
           </div>
           
           <Col  md={7} id="page-content-wrapper" className="col-xs-12 pb-5">
-            <div id="center-well" className="">
+            <div id="center-well"  ref={this.containerRef} style={{ height: '130rem', overflowY: 'scroll',overflowX: 'hidden' }}>
 
              
                 
@@ -1329,6 +1368,52 @@ console.log('img',b)
     />
   );
 })}
+
+{this.state.carouselItems && this.state.carouselItems.length > 0 && (
+      
+
+      <div className="">
+        <div className="">
+   
+      <div className="d-flex justify-content-center mt-2 mb-2">
+        <div>
+
+      
+      <Link to={`/cure/${carouselItems[this.state.currentIndex].article_id}-${carouselItems[this.state.currentIndex].title}`} className='fs-08' 
+      onClick={(e) => this.handleLinkClick(e, `/cure/${carouselItems[this.state.currentIndex].article_id}-${carouselItems[this.state.currentIndex].title}`)}>
+      
+      <div className="mb-2"><h4>Click here to read the next article.</h4></div>
+      </Link>
+
+
+      {
+    (() => {
+      const imageLocation = carouselItems[this.state.currentIndex].content_location;
+      let imageLoc;
+      if (imageLocation && imageLocation.includes('cures_articleimages')) {
+        imageLoc = `https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,h-250,f-webp/` + imageLocation.replace('json', 'png').split('/webapps/')[1];
+      } else {
+        imageLoc = 'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,h-250,f-webp/cures_articleimages//299/default.png';
+      }
+      return (
+        <div className="d-flex justify-content-center">
+          <div>
+        <img src={imageLoc} alt="Article Image" />
+        <p className="mt-2 fs-5">{carouselItems[this.state.currentIndex].title}</p>
+           </div>
+        
+        </div>
+      );
+    })()
+  }
+
+
+      </div>
+      </div>
+      </div>
+
+       </div>
+        )} 
 
               </div>
               <hr/>
