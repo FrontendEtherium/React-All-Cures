@@ -1697,8 +1697,7 @@ console.log('img',b)
                            {this.state.images.length>0 ?(
                          
                          <img src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp${this.state.images[this.state.currentIndexx]}`} alt="doct"  style={{maxHeight:"400px",width:"405px"}}/>)
-                         :  <img src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/doct.png`} alt="doctor"  style={{maxHeight:"400px",width:"397px"}}/> 
-                         
+                         :   <img src={Doct} alt="doctor"  style={{maxHeight:"400px",width:"397px"}}/> 
                          }
 
                         </div>
