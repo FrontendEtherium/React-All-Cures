@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import Heart from"../../assets/img/heart.png";
 import Doct from "../../assets/img/doct.png";
+import { imgKitImagePath } from '../../image-path';
+
 
 
 
@@ -424,7 +426,7 @@ class Home extends Component {
                         <div className="header" style={{width:"100%"}}>
                            <div className=" logo mt-3 ml-4" > 
                               <Link to='/'>
-                                <img src={'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/static/media/heart.30b5f0b3.png'} alt="All Cures Logo"/>
+                                 <img src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/heart.png`} alt="All Cures Logo"/>
                                 <span>All Cures</span>
                               </Link>
                            </div>
@@ -527,13 +529,13 @@ class Home extends Component {
                            {
                               userAccess?
                               <Link className="btn mr-2 primary-btn-color loginSignbtn color-blue-dark" id="Article" to="/article">
-                              <img src={CreateCures} alt="create cures" className='filter-white' height="30px"/>
+                              <img src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/edit_black_48dp.svg`} alt="create cures" className='filter-white' height="30px"/>
                             </Link>
                               : <button 
                               className="btn mr-2 primary-btn-color loginSignbtn color-blue-dark" id="Article" 
                               onClick={() => this.setModalShow(true)}
                             >
-                              <img src={CreateCures} alt="create cures" className='filter-white' height="30px"/>
+                              <img src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/edit_black_48dp.svg`} alt="create cures" className='filter-white' height="30px"/>
                             </button>
                            }   
                            <ToggleButton 
@@ -858,7 +860,7 @@ class Home extends Component {
                          
                        
                           <img src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp${this.state.images[this.state.currentIndex]}`} alt="doct"  style={{maxHeight:"400px",width:"405px"}}/>)
-                          :  <img src={Doct} alt="doctor"  style={{maxHeight:"400px",width:"397px"}}/> 
+                          :  <img src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/doct.png`} alt="doctor"  style={{maxHeight:"400px",width:"397px"}}/> 
                           }
 
 
@@ -914,7 +916,7 @@ function ToggleButton(props) {
          <Dropdown>
            <Dropdown.Toggle  className="header-drop text-capitalize" id="drop-down">
             
-           <img className='filter-white' src={Account} height="30px" alt="account"/>
+           <img className='filter-white' src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/account_circle_black_48dp.svg`} height="30px" alt="account"/>
            </Dropdown.Toggle>
            <Dropdown.Menu>
              <Dropdown.Item>
