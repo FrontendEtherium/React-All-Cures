@@ -42,13 +42,14 @@ const options = {
 export default function Carousel1(props){
 
         return(
-            <div className="tab-content category " id="choose-category" style={{maxWidth:"1140px", width:"100%", zIndex: 0}}>
+                <div className="tab-content category " id="choose-category" style={{maxWidth:"1140px", width:"100%", zIndex: 0}}>
                        <OwlCarousel className="owl-theme owl-loading" items={6} loop margin={150}  {...options}>
                   <div className="item bg-pink">
                         <Link to={ `/searchcategory/disease/1` }>
                            <div className="item-img">
                               {/* <img src={Arthritis} alt="slider-img"/> */}
-                               <img src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/arthritis.png`} alt="slider-img"/>
+                              {/* <img src="https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/arthritis.9355bd39de0a7a41b763.png" alt="slider-img"/> */}
+                              <img src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/arthritis.png`} alt="slider-img"/>
                            </div>
                            <div className="slider-heading">
                               <p><strong>Arthritis</strong></p>
@@ -70,7 +71,8 @@ export default function Carousel1(props){
                         <Link to={ `/searchcategory/disease/50` }>
                            <div className="item-img">
                               {/* <img src={BloodPressure} alt="slider-img"/> */}
-                               <img src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/bloodpressure.png`} alt="slider-img"/>
+                              <img src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/bloodpressure.png`} alt="slider-img"/>
+                           </div>
                            <div className="slider-heading">
                               <p><strong>Hypertension</strong></p>
                            </div>
@@ -80,7 +82,7 @@ export default function Carousel1(props){
                         <Link to={ `/searchcategory/disease/164` }>
                            <div className="item-img">
                               {/* <img src={Slider7} alt="slider-img" /> */}
-                               <img src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/insomnia.png`} alt="slider-img"/>
+                              <img src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/insomnia.png`} alt="slider-img"/>
                            </div>
                            <div className="slider-heading">
                               <p><strong>Insomnia</strong><br/></p>
@@ -93,6 +95,7 @@ export default function Carousel1(props){
                            <div className="item-img">
                               {/* <img src={Thyroid} alt="slider-img"/> */}
                               <img src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/thyroid.png`} alt="slider-img"/>
+                              {/* <img src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/thyroid.png`} alt="slider-img"/> */}
                            </div>
                            <div className="slider-heading">
                               <p><strong>Thyroid</strong></p>
@@ -103,7 +106,8 @@ export default function Carousel1(props){
                         <Link to={ `/searchcategory/disease/160` }>
                            <div className="item-img">
                               {/* <img src={Psoriasis} alt="slider-img"/> */}
-                             <img src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/psoriasis.png`} alt="slider-img"/>
+                             
+                              <img src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/psoriasis.png`} alt="slider-img"/>
                            </div>
                            <div className="slider-heading">
                               <p><strong>Psoriasis</strong></p>
@@ -115,6 +119,7 @@ export default function Carousel1(props){
                            <div className="item-img">
                               {/* <img src={Slider5} alt="slider-img"/> */}
                               <img src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/slider-5.png`} alt="slider-img"/>
+                             
                            </div>
                            <div className="slider-heading">
                               <p><strong>Skin</strong><br/>Care</p>
@@ -124,6 +129,7 @@ export default function Carousel1(props){
                         {/* <div className="navClass">></div>  */}
       </OwlCarousel>
       </div>
+      
         )
     
 }
