@@ -6,6 +6,7 @@ import Heart from "../assets/img/heart.png"
 
 import Home from "./LandingPage/Home";
 import Profile from "./Profile/Profile";
+import Privacy from "../privacy.js";
 
 import Search from "./Search/Search";
 import SearchName from './Search/SearchName';
@@ -158,6 +159,7 @@ const Routes = (props) => {
     <Route exact path="/statusPayment" component={ResponseRedirect} />
 
 
+    <Route exact path="/privacy" component={Privacy} />
 
     
 
