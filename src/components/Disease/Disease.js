@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
+import { Suspense, lazy } from 'react';
+
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import { Select, MenuItem } from '@material-ui/core';
@@ -44,10 +46,9 @@ import Heart from"../../assets/img/heart.png";
 import {userId} from "../UserId"
 import { userAccess } from '../UserAccess';
 import Date from '../Date'
-import { imagePath } from '../../image-path'
+import { imagePath, imgKitImagePath } from '../../image-path'
 import { faKeybase } from '@fortawesome/free-brands-svg-icons';
 import headers from '../../api-fetch';
-import StarIcon from '@material-ui/icons/Star';
 
 import axiosInstance from '../../axiosInstance';
 
@@ -78,15 +79,37 @@ const options = {
       }
   },
 };
+
+// const CenterWelll = lazy(() => import('./CenterWell'));
+const SidebarRightt = lazy(() => import('./RightMenu'));
+
+// const LazyCenterWell = (props) => (
+//   <Suspense fallback={<div>Loading CenterWell...</div>}>
+//     <CenterWelll {...props} />
+//   </Suspense>
+// );
+
+
+const LazySideBarRight = (props) => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <SidebarRightt {...props} />
+  </Suspense>
+);
+
 class Disease extends Component {
   constructor(props) {
     super(props);
     this.childDiv = React.createRef()
+
+    this.containerRef = createRef();
+    this.handleScroll = this.handleScroll.bind(this);
+    this.handleLinkClick = this.handleLinkClick.bind(this);
+
     this.state = { 
 
       
       images:[],
-      currentIndex: 0,
+      currentIndexx: 0,
       items: [],
       carouselItems: [],
       comment: [],
@@ -114,9 +137,12 @@ class Disease extends Component {
       ads:'',
       isWindowLoaded: false,
       adId:'',
-       likeClicked:false,
-      dislikeClicked:false ,
-       showSource:false,
+       likeClicked:null,
+      dislikeClicked:null ,
+      showSource:false,
+      alertShown: false,
+      isModalOpen: false,
+      currentIndex: 0 // State variable for the current index
     };
     this.handleShows = this.handleShows.bind(this);
    
@@ -185,7 +211,11 @@ dislikeButton=()=>{
   axios.post(`${backendHost}/article/dislike/${this.props.match.params.id.split('-')[0]}`)
 
 }
+
+
 handleSource=()=>{
+
+  console.log("clicked source")
 
   this.setState(prevState => ({
     showSource: !prevState.showSource
@@ -235,7 +265,10 @@ fetchBlog = async() => {
           this.fetchParentDiseaseId( this.props.match.params.id.split('-')[0]);
           this.loadFloater();
 
-          document.title = `${this.state.items.title}`;
+          // document.title = `${this.state.items.title}`;
+          const newTitle = `${json.title}`;
+          document.title = newTitle;
+          console.log('Document Title:', newTitle);
         });
 
         
@@ -291,7 +324,10 @@ fetchBlog = async() => {
           this.fetchParentDiseaseId( this.props.match.params.id.split('-')[0]);
           this.loadFloater();
           
-          document.title = `${this.state.items.title}`;
+          // document.title = `${this.state.items.title}`;
+          const newTitle = `${json.title}`;
+          document.title = newTitle;
+          console.log('Document Title:', newTitle);
         });
 
              
@@ -344,7 +380,7 @@ handleModalClose = () => {
 
 rotateImages = () => {
   this.setState((prevState) => ({
-    currentIndex: (prevState.currentIndex + 1) % this.state.images.length,
+    currentIndexx: (prevState.currentIndexx + 1) % this.state.images.length,
   }));
 };
 
@@ -397,32 +433,14 @@ rotateImages = () => {
   
       pageLoad();
       this.pageLoading();
+
+     
+      
   }
 
+ 
 
-  //  fetchDatas = async (disease_condition_id) => {
-  //   console.log('DC_cond',disease_condition_id)
-  //   try {
-  //     const response = await axios.get(`${backendHost}/sponsored/list/ads/url/2`,{
-  //     params: {
-  //       DC_Cond: disease_condition_id,
-  //     },
-  //   })
-
-    
-  //     console.log("API call successful"); // Check if this log is printed
-  //     const newResponse=`https://uat.all-cures.com:444${response.data}`
-
-  //     this.setState({
-  //       ads: newResponse,
-  //     });
-  //   } catch (error) {
-  //     this.setState({
-  //       error: error.message,
-  //     });
-  //   }
-  // };
-
+  
   fetchData = async (parent_dc_id) => {
     // console.log('DC_Cond:', parent_dc_id);
     // Check if parent_dc_id is passed correctly
@@ -735,77 +753,47 @@ diseasePosts(dcName) {
         carouselItems: temp
         
       })
+
+
+      
+  const currentArticleId = this.props.match.params.id.split('-')[0];
+
+  // Filter carouselItems to exclude the current article
+  const filteredCarouselItems = this.state.carouselItems.filter(
+    item => item.article_id !== currentArticleId
+  );
+
+  // Check if the initial currentIndex needs to be adjusted
+  if (this.state.carouselItems.length > 0 && this.state.carouselItems[0].article_id == currentArticleId) {
+    this.setState({
+      carouselItems: filteredCarouselItems,
+      currentIndex: 1 % filteredCarouselItems.length // Move to the next index if the first item matches
+    });
+  } else {
+    this.setState({
+      carouselItems: filteredCarouselItems
+    });
+  }
       
     })
     .catch((err) => null);
 }
 
 
-//  componentDidMount() {
-//   setTimeout(() => {
-//     console.log('delay');    
-//     this.diseasePosts(this.state.items.dc_name)
-//       .then(() => {
-    
-//       })
-//       .catch((error) => {
-//         // Handle any errors here
-//         console.error(error);
-//       });
-//   },);
-// }
-
-
-
-
- 
-// componentDidMount() {
-//   window.scrollTo(0, 0);
-//   this.fetchBlog();
-//   this.handleShow();
-//   this.getDisease();
-//   this.pageLoading();
-
-//   const canonicalLink = document.createElement('link');
-//   canonicalLink.rel = 'canonical';
-
-//   const currentURL = window.location.href.toLowerCase();
-//   const canonicalURL = currentURL.replace(/(https?:\/\/)?www\./, '$1');
-
-//   if (canonicalURL.match(/\/cure\/\d+/)) {
-//     const id = this.props.match.params.id.split('-')[0];
-
-//     fetch(`${backendHost}/article/${id}`)
-//       .then((res) => res.json())
-//       .then((json) => {
-//         const title = json.title;
-//         canonicalLink.href = `${window.location.origin}/cure/${id}-${title.replace(/\s+/g, '-')}`;
-//         document.head.appendChild(canonicalLink);
-//         console.log('Canonical Link:', canonicalLink.outerHTML);
-//       })
-//       .catch((err) => {
-//         canonicalLink.href = canonicalURL;
-//         document.head.appendChild(canonicalLink);
-//         console.log('Canonical Link:', canonicalLink.outerHTML);
-//       });
-//   } else {
-//     canonicalLink.href = canonicalURL;
-//     document.head.appendChild(canonicalLink);
-//     console.log('Canonical Link:', canonicalLink.outerHTML);
-//   }
-// }
-
 
 componentDidMount() {
   // window.scrollTo(0, 0);
 
 
+  
   const isMobileView = window.innerWidth <= 768
     window.scrollTo({
-      top: isMobileView ? 650 : 200, // Adjust the values as needed
+      top: isMobileView ? 650 : 0, // Adjust the values as needed
       behavior: 'smooth',
     });
 
+
+    window.addEventListener('scroll', this.handleScroll);
 
   this.fetchBlog();
   this.handleShow();
@@ -844,17 +832,70 @@ componentDidMount() {
     document.head.appendChild(canonicalLink);
     console.log('Canonical Link:', canonicalLink.outerHTML);
   }
+
+
 }
 
 
+componentWillUnmount() {
+  window.removeEventListener('scroll', this.handleScroll);
+}
 
+handleScroll() {
+  const container = this.containerRef.current;
+  if (container) {
+    const { scrollTop, scrollHeight, clientHeight } = container;
+    if (scrollTop + clientHeight >= scrollHeight && !this.state.alertShown) {
+      this.setState((prevState) => ({
+        alertShown: true,
+        isModalOpen: true,
+       
+      }));
+      // alert("You've reached the end of the div!");
+    } else if (scrollTop + clientHeight < scrollHeight) {
+      this.setState({ alertShown: false });
+    }
+  }
+}
+
+// handleLinkClick = (e, url) => {
+//   e.preventDefault();
+//   window.scrollTo(0, 0);
+//   setTimeout(() => {
+//     window.location.href = url;
+//   }, 0);
+// }
+
+ handleLinkClick = (e, url) => {
+    e.preventDefault();
+     window.scrollTo(0, 0);
+     axios.post(`${backendHost}/analytics/clicks?articleID=${this.props.match.params.id.split('-')[0]}`)
+    this.setState((prevState) => ({
+      isModalOpen: false,
+       currentIndex: (prevState.currentIndex + 1) % this.state.carouselItems.length // Update the index
+    }), () => {
+
+       setTimeout(() => {
+      this.props.history.push(url);
+
+       }, 0);
+       const container = this.containerRef.current;
+    if (container) {
+      container.scrollTop = 0;
+    }
+    });
+  };
+
+closeModal = () => {
+  this.setState({ isModalOpen: false });
+}
 
   componentDidUpdate(prevProps){
     if ( prevProps.match.params.id !== this.props.match.params.id){
       this.fetchBlog()
+      
       window.scrollTo(0, 340);
-
-        this.setState({
+      this.setState({
         likeClicked:null,
         dislikeClicked:null,
         showSource:null        
@@ -943,7 +984,7 @@ console.log('img',b)
         </HelmetMetaData>
         <div className="ad-spac">
         <button className="btn" data-toggle="modal"data-target=".bd-example-modal-lg">
-          <img src={'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-900,f-webp/static/media/97x90%20Plain.395a48b7.jpg'} alt="advertisment"/>
+        <img src={'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-900,f-webp/static/media/97x90%20Plain.395a48b7.jpg'} alt="advertisment"/>
      
             </button>
         </div>
@@ -982,7 +1023,7 @@ console.log('img',b)
                               <button className="btn pl-4 mt-2 " id="left-menu-ad" data-toggle="modal"data-target=".bd-example-modal-lg">
                                  {/* <img className="pl-4" src={PersianAd} alt="adhhh"
                                  /> */}
-                                  <img className="pl-4" src={'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-180,f-webp/static/media/Persian.954aca12.jpg'} alt="adhhh"
+                                <img className="pl-4" src={'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-180,f-webp/static/media/Persian.954aca12.jpg'} alt="adhhh"
                                  />
                                  </button>
                                  :null
@@ -1003,7 +1044,7 @@ console.log('img',b)
           </div>
           
           <Col  md={7} id="page-content-wrapper" className="col-xs-12 pb-5">
-            <div id="center-well" className="">
+            <div id="center-well"  ref={this.containerRef} style={{ height: '130rem', overflowY: 'scroll',overflowX: 'hidden' }}>
 
              
                 
@@ -1055,24 +1096,21 @@ console.log('img',b)
                  
 
 
-                 <div   >
+              <div>
                { finalRegions?
                   finalRegions.map(i => i.countryname!== null && (
                    <Dropdown key={i.countryname}>
                       <Dropdown.Toggle className="mr-2 my-1 btn btn-info color-white">
                         <span className="color-white">{i.countryname}</span>
                       </Dropdown.Toggle>
-                    <Dropdown.Menu className="countryDrop">
+                    <Dropdown.Menu  className="countryDrop">
                     {
                       this.state.regionalPost.map(j => j.countryname === i.countryname 
                         &&(
                         <>
-                        <Dropdown.Item href="#" className="pt-2" key={j.countryname}>
-                        <Link 
-    to={ `/cure/${j.article_id}-${j.title.replace(/\s+/g, '-')}`}  
-    className="d-flex justify-content-between align-items-center mr-2"
->
-                            <div className="d-flex justify-content-between align-items-center mb-2"id="artBtn">
+                        <Dropdown.Item href="#" className="pt-2" key={j.countryname} >
+                        <Link to={ `/cure/${j.article_id}` }  className="d-flex justify-content-between align-items-center mr-2">
+                          <div className="d-flex justify-content-between align-items-center mb-2"id="artBtn" >
                             <div>                  
                               <div className="card-title mr-5" id="overview">{j.title.substr(0,27)+'...'}</div>
                             </div>
@@ -1101,55 +1139,7 @@ console.log('img',b)
                       </div>
 
 
-                      {/* <div className="d-md-none">
-                      <OwlCarousel nav="true" items={5} margin={10} autoPlay="true" {...options} >
-          {finalRegions
-            ? finalRegions.map((i) => i.countryname !== null && (
-
-
-              <Dropdown key={i.countryname}>
-              <Dropdown.Toggle className="mr-2 btn btn-info color-white">
-                <span className="color-white">{i.countryname}</span>
-              </Dropdown.Toggle>
-            <Dropdown.Menu>
-            {
-              this.state.regionalPost.map(j => j.countryname === i.countryname 
-                &&(
-                <>
-                <Dropdown.Item href="#" className="pt-2" key={j.countryname}>
-                <Link to={ `/cure/${j.article_id}` }  className="d-flex justify-content-between align-items-center mr-2">
-                  <div className="d-flex justify-content-between align-items-center mb-2"id="artBtn">
-                    <div>                  
-                      <div className="card-title mr-5">{j.title.substr(0,25)+'...'}</div>
-                    </div>
-                    <div>
-                      {
-                        j.type.includes(1)?
-                          <div className="chip overview">Overview</div>
-                        : j.type.includes(2)?
-                          <div className="chip cure">Cures</div>
-                        : j.type.includes(3)?
-                          <div className="chip symptoms">Symptoms</div>
-                        : null
-                      }
-                    </div>
-                  </div>
-                </Link>
-                </Dropdown.Item>
-                </>
-              ))
-            }
-          </Dropdown.Menu>
-        </Dropdown>
-              
-            ))
-            : null
-          }
-        </OwlCarousel>
-      </div> */}
-    
-
-
+                     
 
 
 
@@ -1241,16 +1231,7 @@ console.log('img',b)
              
              
               
-              {/* Show average rating */}
-              {/* <div id="rate">
-            
-             <a href='#docRate'>Click To Rate Here</a></div> */}
-            {/* <Dropdown>
-                      <Dropdown.Toggle className="mr-220 btn btn-info color-white">
-                       < a href='#docRate'className="color-white" >Click Here To Rate</a>
-                      </Dropdown.Toggle>
-                   
-                    </Dropdown> */}
+             
               {
                 this.state.ratingValue?
                 <div className="average-rating mb-4 ml-3 mt-2" id="avg-rating">
@@ -1272,31 +1253,7 @@ console.log('img',b)
 
             {/* Center Well article main content */}
               <div id="article-main-content">
-                {/* {b.map((i, idx) => (
-
-
-                  <CenterWell
-                    key={idx}
-                    pageTitle = {items.title}
-                    level = {i.data.level}
-                    content = {i.data.content}
-                    type = {i.type}
-                    text = {i.data.text}
-                    title = {i.data.title}
-                    message = {i.data.message}
-                    source = {i.data.source}
-                    embed = {i.data.embed}
-                    caption = {i.data.caption}
-                    alignment = {i.data.alignment}
-                    // imageUrl = {i.data.file? i.data.file.url: null}
-                    imageUrl={i.data.file ? `https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/${i.data.file.url.replace(/^.*[\\/]/, '')}` : null}
-                    link = {i.data.link}
-                    url = {i.data.url}
-                    item = {i.data.items}
-                    props = {this.props}
-                  />
-                ))} */}
-
+              
 
 {b.map((i, idx) => {
   const fileUrl = i.data.file ? i.data.file.url : null;
@@ -1330,6 +1287,105 @@ console.log('img',b)
   );
 })}
 
+
+
+ {this.state.carouselItems && this.state.carouselItems.length > 0 && (
+      
+
+      <div className="">
+        <div className="">
+   
+      <div className="d-flex justify-content-center mt-2 mb-2">
+        <div>
+
+      
+      <Link to={`/cure/${carouselItems[this.state.currentIndex].article_id}-${carouselItems[this.state.currentIndex].title}`} className='fs-08' 
+      onClick={(e) => this.handleLinkClick(e, `/cure/${carouselItems[this.state.currentIndex].article_id}-${carouselItems[this.state.currentIndex].title}`)}>
+      
+      <div className="mb-2"><h4>Click here to read the next article.</h4></div>
+      </Link>
+
+
+      {
+    (() => {
+      const imageLocation = carouselItems[this.state.currentIndex].content_location;
+      let imageLoc;
+      if (imageLocation && imageLocation.includes('cures_articleimages')) {
+        imageLoc = `https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,h-250,f-webp/` + imageLocation.replace('json', 'png').split('/webapps/')[1];
+      } else {
+        imageLoc = 'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/cures_articleimages//299/default.png';
+      }
+      return (
+        <div className="d-flex justify-content-center">
+          <div>
+        <img src={imageLoc} alt="Article Image" />
+        <p className="mt-2 fs-5">{carouselItems[this.state.currentIndex].title}</p>
+           </div>
+        
+        </div>
+      );
+    })()
+  }
+
+
+      </div>
+      </div>
+      </div>
+
+       </div>
+        )} 
+
+
+
+
+        
+        
+      {/* <div className="">
+        <div className="">
+   
+      <div className="d-flex justify-content-center mt-2 mb-2">
+        <div>
+
+      
+      <Link to={`/cure/${carouselItems[this.state.currentIndex].article_id}-${carouselItems[this.state.currentIndex].title}`} className='fs-08' 
+      onClick={(e) => this.handleLinkClick(e, `/cure/${carouselItems[this.state.currentIndex].article_id}-${carouselItems[this.state.currentIndex].title}`)}>
+      
+      <div className="mb-2"><h4>Click here to read the next article.</h4></div>
+      </Link>
+
+
+      {
+    (() => {
+      const imageLocation = carouselItems[this.state.currentIndex].content_location;
+      let imageLoc;
+      if (imageLocation && imageLocation.includes('cures_articleimages')) {
+        imageLoc = `https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/` + imageLocation.replace('json', 'png').split('/webapps/')[1];
+      } else {
+        imageLoc = 'https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/cures_articleimages//299/default.png';
+      }
+      return (
+        <div className="d-flex justify-content-center">
+          <div>
+        <img src={imageLoc} alt="Article Image" />
+        <p className="mt-2 fs-5">{carouselItems[this.state.currentIndex].title}</p>
+           </div>
+        
+        </div>
+      );
+    })()
+  }
+
+
+      </div>
+      </div>
+      </div>
+
+       </div> */}
+
+          
+
+          
+
               </div>
               <hr/>
               {/* Author */}
@@ -1348,11 +1404,7 @@ console.log('img',b)
               </>
              
             }
-              {/* <Button className="ml-3 mt-4 btn-article-search" id="textComment" >
-               Add To Favourite
-             </Button> */}
-
-
+             
                                            
 {
                 userAccess?
@@ -1369,17 +1421,16 @@ console.log('img',b)
 
           </div>
 
-
-
-               <div className="ml-3  mt-3 ">
-               <button  className="btn btn-primary" onClick={this.handleSource}>
+          <div className="ml-3 mt-3">
+               <button  className="btn  btn-primary" onClick={this.handleSource}>
         Source 
       </button>
       </div>
 
       <div>
       <h5  className=" ml-3 mt-3 "> {this.state.showSource && items.window_title} </h5>
-      </div><br/>
+      </div>
+
 
            
           {
@@ -1389,7 +1440,7 @@ console.log('img',b)
                     {
                           this.state.rating.length === 0 ?
                             <span className='h6 mt-3 ml-3'> You Have Not Rated Yet, Please Rate </span>
-                            : <p className='h4 mt-3 ml-3'>Your Earlier Rated {this.state.rating } <StarIcon style={{ color: 'orange' }} /><br/>Rate Again,</p>
+                            : <p className='h4 mt-3 ml-3'>Your Earlier Rated {this.state.rating } <span className="icon-star-1"></span><br/>Rate Again,</p>
                             
                         }          
                   </>
@@ -1413,26 +1464,14 @@ console.log('img',b)
                   </div>
                 : null
               }
-                              
-                              
-{/*                               
-                                    {
-                userAccess?
-                  <div id="favbutton">   
-                  {
-                          this.state.favourite.length === 0  ?
-                     <Favourite  article_id={this.props.match.params.id.split('-')[0]}/>
-                     :<Favourites  article_id={this.props.match.params.id.split('-')[0]}/>
-                  }
-                     </div>
-                : null
-              } */}
-              
+                                        
 
 
             
                {/* <h5>Source :  <a href="https://all-cures.com/Editorial" style={{textTransform:"none"}}>https://all-cures.com/editorial/</a></h5> */}
-             
+               {/* <h5  className=" ml-3 ">Source: {items.window_title}</h5> */}
+
+
 
 <h5> 
   <div className="d-flex mt-4  ml-3 ">
@@ -1490,7 +1529,7 @@ console.log('img',b)
             </div>
           </Col> 
           <Col id="right-sidebar-wrapper">      
-            <SidebarRight title={items.title} history={this.props.history} dcName={items.dc_name} id={items.article_id}/>
+            <SidebarRight title={items.title} history={this.props.history} dcName={items.dc_name} id={items.article_id}  />
           </Col>
         </Row>
         <div>
@@ -1641,9 +1680,7 @@ console.log('img',b)
     <div className="modal-content">
     <div className="modal-header">
         
-        {/* <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleShows}>
-          <span aria-hidden="true">&times;</span>
-        </button> */}
+       
           <button type="button" className="close" onClick={this.handleShows}>
                                     <span>&times;</span>
                                 </button>
@@ -1659,8 +1696,8 @@ console.log('img',b)
 
                            {this.state.images.length>0 ?(
                          
-                         <img src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp${this.state.images[this.state.currentIndex]}`} alt="doct"  style={{maxHeight:"400px",width:"405px"}}/>)
-                         :  <img src={Doct} alt="doctor"  style={{maxHeight:"400px",width:"397px"}}/> 
+                         <img src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp${this.state.images[this.state.currentIndexx]}`} alt="doct"  style={{maxHeight:"400px",width:"405px"}}/>)
+                         :  <img src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/doct.png`} alt="doctor"  style={{maxHeight:"400px",width:"397px"}}/> 
                          
                          }
 
