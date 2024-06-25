@@ -46,7 +46,7 @@ import Heart from"../../assets/img/heart.png";
 import {userId} from "../UserId"
 import { userAccess } from '../UserAccess';
 import Date from '../Date'
-import { imagePath, imgKitImagePath } from '../../image-path'
+import { imagePath } from '../../image-path'
 import { faKeybase } from '@fortawesome/free-brands-svg-icons';
 import headers from '../../api-fetch';
 
