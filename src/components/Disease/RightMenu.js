@@ -8,6 +8,7 @@ import './style.css'
 import { Container } from 'react-bootstrap';
 import { backendHost } from '../../api-config';
 import Heart from"../../assets/img/heart.png";
+import Image_1 from"../../assets/img/img_1.jpeg"
 const Side = (props) => {
 
     const [isloaded, setisLoaded] = useState(false)
@@ -65,7 +66,13 @@ const Side = (props) => {
                 
             <Nav.Item className="set-width"  id="dc-right-menu">
                 <div className="h4 pb-3"><u className="text-decoration-none">{props.dcName} Cures</u></div>
-             
+                       
+            <div className="d-flex justify-content-center d-lg-block">
+   <div className="d-flex justify-content-center mb-2"> <img src={Image_1} style={{height: "100%", width: "70%"}} /></div>
+    
+    
+
+</div>
 
 
                 
