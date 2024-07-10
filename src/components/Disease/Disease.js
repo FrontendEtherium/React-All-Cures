@@ -11,6 +11,8 @@ import CenterWell from './CenterWell';
 import Sidebar from "./leftMenu";
 import SidebarRight from "./RightMenu";
 import Doct from "../../assets/img/doct.png";
+import Image_1 from "../../assets/img/img_1.jpeg"
+import Image_2 from "../../assets/img/img_2 .jpeg"
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import ThumbDownOutlinedIcon from '@mui/icons-material/ThumbDownOutlined';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
