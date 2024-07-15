@@ -68,8 +68,13 @@ const Side = (props) => {
                 <div className="h4 pb-3"><u className="text-decoration-none">{props.dcName} Cures</u></div>
                        
             <div className="d-flex justify-content-center d-lg-block">
-   <div className="d-flex justify-content-center mb-2"> <img src={Image_1} style={{height: "100%", width: "70%"}} /></div>
-    
+
+        <div className="d-flex justify-content-center mb-2">
+  <a href="https://uat.all-cures.com/searchmedicine/medicinetype/1">
+    <img src={Image_1} style={{height: "100%", width: "70%"}} />
+  </a>
+</div>
+
     
 
 </div>
