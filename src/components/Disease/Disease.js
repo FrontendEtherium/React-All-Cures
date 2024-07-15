@@ -1231,8 +1231,8 @@ console.log('img',b)
             </div>
   
             <div className="d-flex justify-content-center container  d-lg-none">
-   <div> <img src={Image_1} style={{height: "100%", width: "70%"}} /></div>
-    <div ><img src={Image_2} style={{height: "100%", width: "70%"}} /></div>
+   <div> <a href="https://uat.all-cures.com/searchmedicine/medicinetype/1"><img src={Image_1} style={{height: "100%", width: "70%"}} /> </a></div>
+    <div >  <a href="https://uat.all-cures.com/searchmedicine/medicinetype/1"><img src={Image_2} style={{height: "100%", width: "70%"}} /></a></div>
     
 
 </div>
