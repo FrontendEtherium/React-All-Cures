@@ -32,7 +32,7 @@ const ResponsePage = () => {
 
       sendMessageToApp()
 
-      const redirectURL = "https://www.all-cures.com/statusPayment" 
+      const redirectURL = "https://www.all-cures.com:444/cures/statusPayment" 
      
 
     // Redirecting to the URL
