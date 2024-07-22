@@ -171,6 +171,7 @@ export default class Blogpage extends Component{
           } else {
             this.allPosts()
           }
+             this.adSponsored(this.props.match.params.medicine_type)
           
         }
         window.addEventListener('scroll', this.handleScroll, {
