@@ -23,7 +23,8 @@ export default class Medicinepage extends Component{
           regionPostsLoaded: false,
           country: new URLSearchParams(this.props.location.search).get('c'),
           diseaseCondition: new URLSearchParams(this.props.location.search).get('dc'),
-          articleFilter: 'recent'
+          articleFilter: 'recent',
+             adImage:''
         };
       }
        allPosts(loadMore) {                        // For all available blogs "/blogs"
@@ -101,6 +102,28 @@ export default class Medicinepage extends Component{
           .catch(err => {return})
         // }
       }
+
+      adSponsored(medicine_type){                     // For specific blogs like "/blogs/diabetes"
+       
+
+      
+          fetch(`${backendHost}/sponsored/list/ads/url/1?Med_Type=${medicine_type}`)
+          // fetch(`${backendHost}/sponsored/list/ads/url/1?Med_Type=1`)
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return res.json();
+          })
+          .then((json) => {
+            this.setState({
+              isLoaded: true,
+              adImage: json,
+            });
+          })
+          .catch(err => {return})
+        // }
+      }
       componentDidMount() {
         // if(this.props.match.params.type === undefined){
         //   this.allPosts()
@@ -112,6 +135,7 @@ export default class Medicinepage extends Component{
         } else {
           this.allPosts()
         }
+          this.adSponsored(this.props.match.params.medicine_type)
       }
 
       componentDidUpdate(prevProps, prevState){
@@ -151,6 +175,15 @@ export default class Medicinepage extends Component{
                 <h1 className="h2 text-center">Cures related to "{this.state.param.medicine_type}"</h1>
                 :<h1 className="h2 text-center">All Cures</h1>
               } */}
+
+         {(this.state.adImage &&   this.state.adImage!=="All Ads are Served") && (
+                 
+
+                 <div className="sponsads d-flex justify-content-center mt-2 mb-4">
+                  <img src={`https://uat.all-cures.com:444/${this.state.adImage}`}  className="img-fluid" alt="Ad"/>
+
+                  </div>
+                )}
                 <div className="row" id="posts-container">
                     
                 {
