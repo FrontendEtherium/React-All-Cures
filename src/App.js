@@ -37,15 +37,20 @@ const App = () => {
             alignItem: "center",
         
           }}
+          buttonText="Accept"
+          contentClasses="myclass"
         >
           <div
+
+          className="cookie-consent-text"
             style={{
               color: "#fff",
               margin: "0",
               maxWidth: "100%",
-              fontSize: "15px",
+              
             
             }}
+
           >
             We use cookies to ensure you have the best browsing experience on
             our website. By using our site, you acknowledge that you have read
