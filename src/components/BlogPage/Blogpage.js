@@ -25,11 +25,10 @@ export default class Blogpage extends Component{
           diseaseCondition: new URLSearchParams(this.props.location.search).get('dc'),
           articleFilter: 'recent',
           isDiseasePostsActive: false
-            
         };
       }
 
-      allPosts(loadMore) {                        // For all available blogs "/blogs"
+      allPosts(loadMore) {                        
         const headers = new Headers({
           'Authorization': 'Bearer local@7KpRq3XvF9' 
         });
@@ -55,50 +54,35 @@ export default class Blogpage extends Component{
               this.setState({ noMoreArticles: true })
               return null
             }
-            var temp = []
-              if(this.state.articleFilter === 'recent'){
-                
-                json.forEach(i => {
-                    if(i.pubstatus_id === 3){
-                        temp.push(i)
-                    }
-                });
-                //this.setState({isLoaded: true, items: [...this.state.items, ...temp]})
-              } else if(this.state.articleFilter === 'earliest'){
-                  json.forEach(i => {
-                      if(i.pubstatus_id === 3){
-                          temp.push(i)
-                      }
-                  });
-                  
-              }
-              this.setState({LoadMore: true})
-              this.setState({isLoaded: true, items: temp.reverse()})
+            let temp = []
+            if(this.state.articleFilter === 'recent'){
+                temp = json.filter(i => i.pubstatus_id === 3)
+            } else if(this.state.articleFilter === 'earliest'){
+                temp = json.filter(i => i.pubstatus_id === 3)
+            }
+            temp.sort((a, b) => new Date(b.published_date) - new Date(a.published_date))
+            this.setState({LoadMore: true, isLoaded: true, items: loadMore ? [...this.state.items, ...temp] : temp})
           })
           .catch(err => {return})
         }
-        
       }
       
-      diseasePosts(type){                     // For specific blogs like "/blogs/diabetes"
-        // if(type){
-          
-            this.setState({ isDiseasePostsActive: true }); // Set to true when diseasePosts is called
-          
+      diseasePosts(type){                     
+          this.setState({ isDiseasePostsActive: true }); 
           fetch(`${backendHost}/isearch/${type}`)
           .then((res) => res.json())
           .then((json) => {
+            json.sort((a, b) => new Date(b.published_date) - new Date(a.published_date))
             this.setState({
               isLoaded: true,
               items: json,
             });
           })
           .catch(err => {return})
-        // }
       }
 
       regionalPosts(){
-        fetch(`${backendHost}/isearch/treatmentregions/${this.state.dc.split('=')[1]}`)       // /isearch/treatmentregions/${this.state.diseaseCondition}
+        fetch(`${backendHost}/isearch/treatmentregions/${this.state.dc.split('=')[1]}`)       
         .then((res) => res.json())
         .then((json) => {
           this.setState({
@@ -110,14 +94,12 @@ export default class Blogpage extends Component{
       }
 
        handleScroll = () => {
-       const { articleFilter, isDiseasePostsActive } = this.state;
+        const { articleFilter, isDiseasePostsActive } = this.state;
 
-        // Check if diseasePosts is active
         if (isDiseasePostsActive) {
-          return; // Exit the function if diseasePosts is active
+          return;
         }
-      
-        // Check if the selected tab is 'recent' or 'earliest'
+        
         if (articleFilter === 'recent' || articleFilter === 'earliest') {
           const bottom =
             Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight;
@@ -134,12 +116,8 @@ export default class Blogpage extends Component{
         }
       };
       
-      // React.useEffect(() => {
-        
-      // }, []);
-
       articleFilterClick(e, filter) {
-        this.setState({articleFilter: filter})
+        this.setState({articleFilter: filter, offset: 0})
         var siblings = e.target.parentNode.parentElement.children
         if(siblings){
             for(var i=0;i<siblings.length; i++){
@@ -149,12 +127,9 @@ export default class Blogpage extends Component{
               }
             e.target.parentElement.classList.add('active')
         }
-    }
+      }
 
       componentDidMount() {
-        // if(this.props.match.params.type === undefined){
-        //   this.allPosts()
-        // }
         if(this.props.match.params.type !== undefined){
           this.diseasePosts(this.props.match.params.type)
         } else if(this.props.location.search){
@@ -171,13 +146,11 @@ export default class Blogpage extends Component{
           } else {
             this.allPosts()
           }
-             this.adSponsored(this.props.match.params.medicine_type)
-          
         }
         window.addEventListener('scroll', this.handleScroll, {
           passive: true
         });
-    
+
         return () => {
           window.removeEventListener('scroll', this.handleScroll);
         };
@@ -190,42 +163,23 @@ export default class Blogpage extends Component{
         <>
           <Header history={this.props.history}/>
             <div className="loader my-4">
-              {/* <i className="fa fa-spinner fa-spin fa-6x" /> */}
               <img src={Heart} alt="All Cures Logo" id="heart"/>
-
             </div>
           <Footer/>
         </>  
       );
     } 
-    // else if(isLoaded && items.length === 0){
-    //   return(
-    //     <>
-    //       <Header history={this.props.history}/>
-    //         <div className="loader my-4">
-    //           <div>No articles</div>
-    //         </div>
-    //       <Footer/>
-    //     </> 
-    //   )
-    // }
     else if(isLoaded){
         return(
             <>
             <Header history={this.props.history}/>
-            
                 <div className="container cures-search my-4">
                   {
                     this.props.match.params.type?
                     <div className="h3 text-capitalize text-center font-weight-bold mb-4">Cures Related to "{this.props.match.params.type.toLowerCase()}"</div>
                     :<div className="tab-nav">
-                    {/* <div class="comman-heading">
-                       <div class="h3 mb-4 text-capitalize mr-5">
-                          {this.state.articleFilter} Cures
-                       </div>
-                    </div> */}
                     <ul>
-                       <li role="presentation" className='my-1' >
+                       <li role="presentation" className='my-1'>
                           <button className="btn mr-2" 
                           onClick={(e) => this.setState({ articleFilter: 'recent'}, () => {
                             this.allPosts()
@@ -302,9 +256,6 @@ export default class Blogpage extends Component{
                             this.articleFilterClick(e, 'Healthy Living')
                             })}>Healthy Living</button>
                        </li>
-                       {/* <li role="presentation" className='my-1'>
-                          <button className="btn" onClick={(e) => articleFilterClick(e, 'recent')}>Most Rated</button>
-                       </li> */}
                     </ul>
                  </div>
                   }
@@ -315,7 +266,7 @@ export default class Blogpage extends Component{
 
                     <div className="row mt-4" id="posts-container">
                     {items.map((i) => (
-                      i.pubstatus_id === 3 ?            // Selects articles with publish status = 3 (Published)
+                      i.pubstatus_id === 3 ?            
                         <AllPost
                             docID = {i.docID}
                             id = {i.article_id}
@@ -334,26 +285,19 @@ export default class Blogpage extends Component{
                         />
                         : null
                     ))}
-                    {/* <button className="white-button-shadow btn w-100" 
-                    onClick={() => {
-                      this.setState({
-                        limit: this.state.limit+25
-                      }, () => this.allPosts())
-                    }}>Show more</button> */}
                     </div>
                 </div>
                 {
-                  LoadMore  && (this.state.articleFilter == 'recent'|| this.state.articleFilter == 'earliest')?
+                  LoadMore  && (this.state.articleFilter === 'recent' || this.state.articleFilter === 'earliest') ?
                     <div className="loader my-4">
                       <img src={Heart} alt="All Cures Logo" id="heart"/>
                     </div>
                   : null
                 }
                 {
-                  this.state.noMoreArticles  && (this.state.articleFilter == 'recent'|| this.state.articleFilter == 'earliest')?
+                  this.state.noMoreArticles  && (this.state.articleFilter === 'recent' || this.state.articleFilter === 'earliest') ?
                     <div className='container h4 text-center mb-5 pb-2'>
                       You have reached end of page. Thanks!
-                      
                     </div>
                     : null
                 } 
@@ -364,7 +308,6 @@ export default class Blogpage extends Component{
       return(
         <>
             <Header history={this.props.history}/>
-            
                 <div className="container my-4">
                   {
                     this.state.param.type?
@@ -373,14 +316,11 @@ export default class Blogpage extends Component{
                   }
                     <div className="row" id="posts-container">
                     {items.map((i) => (
-                      parseInt(i.country_id) === parseInt(this.state.country) ?            // Selects articles according to country required
+                      parseInt(i.country_id) === parseInt(this.state.country) ?            
                         <AllPost
                             id = {i.article_id}
                             title = {i.title}
                             key = {i.article_id}
-                            // f_title = {i.friendly_name}
-                            // w_title = {i.window_title}
-                            // allPostsContent={() => this.allPosts()}
                         />
                         : null
                     ))}
