@@ -1,0 +1,28 @@
+.CookieConsent{
+    display: block !important;
+}
+
+#rcc-confirm-button{
+    margin-bottom: 10px !important;
+    margin-top: 0px !important;
+    align-items:center !important
+
+}
+
+.myclass{
+    flex:min-content !important;
+    margin:3px !important;
+    
+}
+
+.cookie-consent-text {
+    font-size: 9px;
+    padding:5px
+  }
+  
+  /* Media query for desktops */
+  @media (min-width: 768px) {
+    .cookie-consent-text {
+      font-size: 14px;
+    }
+  }
