@@ -10,7 +10,7 @@
 
 }
 .buttonClass{
-    display:flex
+    display:flex !important
 }
 
 .myclass{
