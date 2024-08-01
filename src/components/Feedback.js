@@ -52,7 +52,7 @@ function Feedback() {
       <div>
                 <Header  history={history}/>    
           
-          <div className="promo-page">
+          <div className="promo-page feedbackmobile">
                 <div className="container">
                 <div className="card my-3">
                         <div className="card-title h3 text-center py-2 border-bottom">We would love to hear from you. Please share any feedback</div>
