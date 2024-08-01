@@ -39,6 +39,7 @@ const App = () => {
           }}
           buttonText="Accept"
           contentClasses="myclass"
+             buttonWrapperClasses="buttonClass"
         >
           <div
 
