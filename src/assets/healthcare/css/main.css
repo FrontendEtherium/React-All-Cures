@@ -3062,6 +3062,12 @@ box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
       overflow-x: hidden;
     }
   }
-  
+  @media only screen and (min-width: 300px) and (max-width: 768px) {
+
+    .feedbackmobile{
+      margin-top:60px;
+
+    }
+  }
 
   
