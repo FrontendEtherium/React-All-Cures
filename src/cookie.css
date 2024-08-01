@@ -1,6 +1,7 @@
 
 .CookieConsent{
     display: block !important;
+     text-align:center !important;
 }
 
 #rcc-confirm-button{
@@ -10,7 +11,8 @@
 
 }
 .buttonClass{
-    display:flex !important
+     text-align:center !important
+    
 }
 
 .myclass{
