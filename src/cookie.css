@@ -9,6 +9,9 @@
     align-items:center !important
 
 }
+.buttonClass{
+    display:flex
+}
 
 .myclass{
     flex:min-content !important;
