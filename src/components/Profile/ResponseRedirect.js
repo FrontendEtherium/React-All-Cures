@@ -70,7 +70,7 @@ const ResponseRedirect = () => {
                 </div>
 
                 <div className="mt-4 text-center">
-        <p style={{ fontSize: "20px" }}>
+         <p style={{ fontSize: "22px",textAlign:"center" }}>
           Your transaction has been completed successfully.
           Please check your email for appointment details.
         </p>
