@@ -44,6 +44,7 @@ import FeaturedArticles from './FeaturedArticles';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import headers from '../../api-fetch';
 import Banner from "../../assets/img/Banner_New.svg"
+import DocPatient from "../../assets/img/DocPatient.jpeg"
 
 env.REACT_APP = 'http://117.241.171.115:8080/cures';
 
