@@ -3087,4 +3087,34 @@ box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
       margin-right: 20px!important ;
     }
   }
+
+ @media (min-width: 768px) {
+    .docPatientCard {
+     min-width:800px;
+    }
+  }
+
+  @media (max-width: 567px) {
+    .docPatientCard {
+     width:300px;
+    }
+  }
+
+  .desktopBanner {
+    display: block; /* This rule could override the media query if it has higher specificity */
+}
+
+@media (max-width: 567px) {
+    .desktopBanner {
+        display: none !important;
+    }
+}
+  @media (min-width: 567px) {
+    .mobileBanner {
+     display:none;
+    }
+  }
+
+
+  
   
