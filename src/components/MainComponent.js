@@ -75,6 +75,12 @@ import Z from './Header/Health A To Z/Z'
 import AppRedirect from "./LandingPage/AppRedirect";
 import Webstories from "./WebStories/Webstories";
 import DoctorLink from "./Profile/DoctorLink.js";
+import ResponsePage from "./Profile/ResponsePage.js";
+import PaymentRedirect from "./Profile/PaymentRedirect.js";
+import ResponseRedirect from "./Profile/ResponseRedirect.js";
+import Bookings from "./Profile/Bookings.js";
+import DocPatientConnect from "./LandingPage/DocPatientConnect.js";
+
 
 
 function Main(props) {
@@ -146,6 +152,14 @@ const Routes = (props) => {
     
        <Route exact path="/webStories" component={Webstories} />
      <Route path="/notification/:linkid" component={DoctorLink}/>
+    <Route exact path="/paymentStatus" component={ResponsePage} />
+     <Route exact path="/paymentRedirection" component={PaymentRedirect} />
+     <Route exact path="/statusPayment" component={ResponseRedirect} />
+
+     <Route exact path="/bookings" component={Bookings} />
+     <Route exact path="/docPatientConnect" component={DocPatientConnect} />
+
+
 
 
 
