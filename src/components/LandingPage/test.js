@@ -137,9 +137,9 @@ const Test = (props) => {
     setClicked(1);
     // Sett withCredentials on $axios before creating instance
     axios.defaults.withCredentials = true
-    axios.post(`${backendHost}/login?cmd=login&email=${email}&psw=${signInpassword}&rempwd=${rememberMe}`,
-    {headers: {'Content-Type': 'application/json'}
-  })
+    axios.post(`${backendHost}/login?cmd=login&email=${email}&psw=${signInpassword}&rempwd=${rememberMe}`
+   
+  )
     .then(response => {
       if(response.data.registration_id){
         Cookies.set('uName', response.data.first_name, { expires: 365 })
