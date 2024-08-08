@@ -43,6 +43,8 @@ import TrendingArticles from './TrendingArticles';
 import FeaturedArticles from './FeaturedArticles';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import headers from '../../api-fetch';
+import Banner from "../../assets/img/Banner_New.svg"
+
 env.REACT_APP = 'http://117.241.171.115:8080/cures';
 
 class Home extends Component {
@@ -93,6 +95,8 @@ class Home extends Component {
          },
          ads:'',
          adId:'',
+         showDocModal: false,
+        
         
     };      
   }
@@ -161,7 +165,10 @@ class Home extends Component {
 
     this.fetchData();
     }
-
+  setTimeout(() => {
+        this.setState({ showDocModal: true });
+      }, 5000);
+    
     
    }
 
@@ -643,6 +650,13 @@ class Home extends Component {
                      </div>   
                   </div>
                </section>
+
+             <div className="d-flex justify-content-center mb-3 mt-5 desktopBanner">
+      <Link to="/docPatientConnect">
+      <img src={Banner}  className=" img-fluid"alt="img"/>
+      </Link>
+    </div> 
+                                 
       <section className="tabslider clerfix">
           <div className="container">
             <div className="row">
@@ -820,6 +834,49 @@ class Home extends Component {
     </div>
   </div>
 </div>
+
+<div className=" mobileBanner">
+
+<div
+  className={`modal fade ${this.state.showDocModal ? 'show' : ''}`}
+  tabIndex="-1"
+  style={{ display: this.state.showDocModal ? 'block' : 'none' }}
+>
+  <div className="modal-dialog modal-dialog-centered mx-auto" style={{ maxWidth: '300px', width: '100%' }}>
+    <div className="modal-content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', width: '100%' }}>
+      <div className="modal-header">
+        <h5 className="modal-title mt-2">Looking For a Doctor?</h5>
+        <button type="button" className="close" aria-label="Close"  onClick={() => this.setState({ showDocModal: false })}>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div className="modal-body d-flex flex-column align-items-center" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div className="d-flex justify-content-center">
+          <div>
+            <img style={{ width: '200px' }} src={DocPatient} alt="doctor" />
+          </div>
+        </div>
+        <p className="p-3">
+          Connect with our expert doctors from the comfort of your home through video consultation.
+          Enjoy personalized medical advice without the need for a physical visit. Click "Schedule Now"
+          to book your appointment.
+        </p>
+      </div>
+
+      <div className="modal-footer">
+      <Link to="/docPatientConnect" className="btn btn-secondary text-decoration-none">
+    Schedule Now
+  </Link>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+
+                                    
       <Footer/>
       </div>
       
