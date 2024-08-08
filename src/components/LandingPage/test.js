@@ -138,7 +138,7 @@ const Test = (props) => {
     // Sett withCredentials on $axios before creating instance
     axios.defaults.withCredentials = true
     axios.post(`${backendHost}/login?cmd=login&email=${email}&psw=${signInpassword}&rempwd=${rememberMe}`,
-    {headers: {'Access-Control-Allow-Credentials': true}
+    {headers: {'Content-Type': 'application/json'}
   })
     .then(response => {
       if(response.data.registration_id){
