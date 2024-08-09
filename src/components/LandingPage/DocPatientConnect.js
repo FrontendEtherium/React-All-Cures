@@ -99,15 +99,14 @@ class DocPatientConnect extends Component {
       searchQuery: "",
       showAlert: false,
       appointmentAlert: false,
+      signInAlert:false,
+      signInAlertDocId: null
     };
   }
 
   componentDidMount() {
     this.getFeaturedDoctors();
     this.fetchData();
-    // this.fetchAvailStatus(this.state.docId);
-    // // this.fetchUserAvailStatus(14485);
-    // this.fetchAppointmentDetails(this.state.docId);
   }
 
   bookAppn = (e) => {
@@ -252,17 +251,20 @@ class DocPatientConnect extends Component {
     }
   };
 
-  getDocId = (id) => {
+  getDocId = async (id) => {
     console.log("doctorid", id);
-    this.setState({
-      docId: id,
+    await new Promise((resolve) => {
+      this.setState({ docId: id }, resolve);
     });
 
-    this.fetchAvailStatus(this.state.docId);
-    // this.fetchUserAvailStatus(14485);
-    this.fetchAppointmentDetails(this.state.docId);
-  };
 
+     this.fetchAvailStatus(this.state.docId);
+     this.fetchAppointmentDetails(this.state.docId);
+
+     axios
+     .post(`${backendHost}/video/post/leads?userID=${userId}&docID=${id}`)
+
+  }
   handleSearchInputChange = (event) => {
     this.setState({
       searchQuery: event.target.value,
@@ -342,6 +344,17 @@ class DocPatientConnect extends Component {
 
   handleTimeSlot = (time) => {
     this.setState({ selectedTimeSlot: time });
+  };
+
+  handleSignInAlert = (docID) => {
+    this.setState({ 
+      signInAlertDocId: docID,
+    signInAlert:true });
+    setTimeout(()=>{
+      this.setState({
+        signInAlert:false
+      })
+    },5000)
   };
 
   fetchAvailStatus = (id) => {
@@ -515,17 +528,6 @@ class DocPatientConnect extends Component {
         <div>
           <Header history={this.props.history} />
 
-          {/* <div className="search-bar" style={{width:"50%"}}>
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={this.handleSearchInputChange}
-            placeholder="Search doctors..."
-            
-          />
-          <button onClick={this.handleSearch}>🔍</button>
-        </div> */}
-
           <div className="row ml-2 mt-5 d-flex justify-content-center">
             <div className="col-md-3">
               <input
@@ -565,6 +567,14 @@ class DocPatientConnect extends Component {
                     className="card shadow-sm mt-2 mb-4 docPatientCard"
                   >
                     <div className="card-body">
+
+                    {(this.state.signInAlert && this.state.signInAlertDocId === d.docID ) &&
+                            <div  className="" style={{width:"50%"}}>
+                            <Alert variant="warning" className="h6 mx-3 text-center">
+                              Sign in first to book an Appointment!!!
+                            </Alert>
+                            </div>
+                            }
                       <div className="d-flex align-items-center">
                         <div className="mr-5">
                           <div className="mb-2 bookings">
@@ -582,22 +592,20 @@ class DocPatientConnect extends Component {
                               <button
                                 type="button"
                                 className="btn btn-primary bg-dark"
-                              
-                                onClick={() =>
-                                  this.setState({ modalShow: true })
+                                onClick={() => this.handleSignInAlert(d.docID)
                                 }
                               >
                                 Schedule
                               </button>
                             )}
 
-                            <Test
+                          
+
+                            {/* <Test
                               show={this.state.modalShow}
-                             
                               onHide={() => this.setState({ modalShow: false })}
-                               backdrop={false}  // Disable the dark background
-                            
-                            />
+                              backdrop={false} // Disable the dark background
+                            /> */}
 
                             {
                               userId && d.videoService == 1 ? (
@@ -954,6 +962,8 @@ class DocPatientConnect extends Component {
                 </div>
               );
             })}
+
+
 
           <Footer />
         </div>
