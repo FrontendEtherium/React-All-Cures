@@ -31,6 +31,7 @@ import { PickersDay } from "@mui/x-date-pickers/PickersDay";
 import { styled } from "@mui/material/styles";
 import moment from "moment";
 import { Modal, Alert } from "react-bootstrap";
+import DocModal from "./DocModal";
 import Heart from "../../assets/img/heart.png";
 import Test from "./test";
 
@@ -99,7 +100,8 @@ class DocPatientConnect extends Component {
       showAlert: false,
       appointmentAlert: false,
       signInAlert:false,
-      signInAlertDocId: null
+      signInAlertDocId: null,
+      amount:null
     };
   }
 
@@ -121,7 +123,7 @@ class DocPatientConnect extends Component {
         appointmentDate: this.state.selectedDate,
         startTime: this.state.selectedTimeSlot,
         paymentStatus: 0,
-        amount: "1.00",
+        amount: this.state.amount,
         currency: "INR",
       })
       .then((res) => {
@@ -234,6 +236,17 @@ class DocPatientConnect extends Component {
     // }
   };
 
+  handleProfileClick = () => {
+    // Close the modal programmatically
+    const modalElement = document.getElementById('exampleModalCenter');
+    const modalInstance = new window.bootstrap.Modal(modalElement);
+    modalInstance.hide();
+  
+    // Navigate to the doctor's profile
+    const { docId } = this.state;
+    window.location.href = `/doctor/${docId}`;
+  };
+
   fetchData = async () => {
     try {
       const response = await fetch(`${backendHost}/video/get/doctors/list`);
@@ -307,7 +320,7 @@ class DocPatientConnect extends Component {
     fetch(`${backendHost}/appointments/get/Slots/14485`)
       .then((res) => res.json())
       .then((json) => {
-        // console.log('response',json)
+        console.log('response amount',json.amount)
 
         // Extract the totalDates from the JSON response
         const totalDates = json.totalDates;
@@ -333,6 +346,7 @@ class DocPatientConnect extends Component {
         // Set the state of unbookedSlots using the extracted unbooked slots
         this.setState({
           unbookedSlots: unbookedSlots,
+          amount: json.amount
         });
       });
   };
@@ -670,7 +684,7 @@ class DocPatientConnect extends Component {
                                     >
                                       Close
                                     </button>
-                                    <button
+                                    {/* <button
                                       type="button"
                                       class="btn btn-primary"
                                     >
@@ -681,7 +695,15 @@ class DocPatientConnect extends Component {
                                       >
                                         Go to Doctor's Profile
                                       </Link>
-                                    </button>
+                                    </button> */}
+
+<button
+                type="button"
+                className="btn btn-primary"
+                onClick={this.handleProfileClick}
+              >
+                Go to Doctor's Profile
+              </button>
                                   </div>
                                 </div>
                               </div>
@@ -900,6 +922,13 @@ class DocPatientConnect extends Component {
                                 </div>
 
                                 <div>
+
+                                  {this.state.amount && (
+                                     <p
+                                     className="ml-4 my-2"
+                                     style={{ fontSize: "18px" }}
+                                   >Consultation Fee: Rs {this.state.amount} </p>
+                                  )}
                                   {this.state.selectedDate && (
                                     <p
                                       className="ml-4 my-2"
