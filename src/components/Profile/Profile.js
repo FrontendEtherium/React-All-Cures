@@ -134,7 +134,8 @@ class Profile extends Component {
       alertBooking:false,
       bookingLoading:false,
       userAvailStatus:'',
-      appointmentAlert:false
+      appointmentAlert:false,
+      amount:null
     
 
     };
@@ -469,7 +470,6 @@ else{
   // });
 }
 
-
   handleImageSubmission = (e) => {
     // e.preventDefault()
     this.setState({ imageUploadLoading: true });
@@ -688,6 +688,7 @@ else{
           
         });
         // console.log('availStatus',this.state.availStatus)
+        // console.log('availStatus',this.state.availStatus)
       });
       
   };
@@ -701,7 +702,9 @@ else{
       .then((json) => {
 
         // console.log('useravailstatus',id,userId)
+        // console.log('useravailstatus',id,userId)
        
+        // console.log('useravailStatus',json)
         // console.log('useravailStatus',json)
 
         const currentDate = new Date();
@@ -713,7 +716,7 @@ else{
         // console.log('startTimeuseravailStatus', json.startTime)
         // console.log('endTimeuseravailStatus', json.endTime)
 
-        
+
         // json.forEach(appointment => {
         //   console.log('Start Time:', appointment.startTime);
         //   console.log('End Time:', appointment.endTime);
@@ -741,6 +744,7 @@ else{
         });
 
         // console.log('userrrravail',  this.state.userAvailStatus)
+        // console.log('userrrravail',  this.state.userAvailStatus)
       })
     
       
@@ -754,7 +758,9 @@ else{
     .then((res) => res.json())
       .then((json) => {
 
-      console.log('response',json)
+      // console.log('response',json)
+
+
        // Extract the totalDates from the JSON response
       //  const totalDates = json.totalDates;
 
@@ -767,9 +773,15 @@ else{
        // console.log('Allslots',timeslots)
        // console.log(json.unbookedSlots,'unbooked')
        // console.log('selected state',this.state.selectedDate)
+      //  console.log('Allslots',timeslots)
+      //  console.log(json.unbookedSlots,'unbooked')
+      //  console.log('selected state',this.state.selectedDate)
 
        const highlightedDate = json.completelyBookedDates;
        // console.log(highlightedDate,'highlighteddates')
+
+
+      //  console.log(highlightedDate,'highlighteddates')
  
        // Set the state of timeslots using the extracted timeslots
        this.setState({
@@ -803,7 +815,7 @@ const generateDateRange = (startDate, endDate) => {
            // Find the missing dates
            const missingDates = allPossibleDates.filter(date => !totalDates.includes(date));
 
-            console.log('missing dates',missingDates)
+            // console.log('missing dates',missingDates)
    
             this.setState({
               unavailableDates: missingDates
@@ -821,10 +833,16 @@ const generateDateRange = (startDate, endDate) => {
        // if (unbookedSlots.length === 0) {
        //   console.log('No unbooked slots available for the selected date',this.state.selectedDate);
        // }
+
+      //  if (unbookedSlots.length === 0) {
+      //    console.log('No unbooked slots available for the selected date',this.state.selectedDate);
+      //  }
  
        // Set the state of unbookedSlots using the extracted unbooked slots
        this.setState({
          unbookedSlots: unbookedSlots,
+         amount: json.amount
+        
        });
       
       });
@@ -1013,13 +1031,16 @@ const generateDateRange = (startDate, endDate) => {
   };
 
   handleTimeSlot =(time)=>{
-console.log('handle')
-    console.log('time',time)
+
+    // console.log('handle')
+    // console.log('time',time)
+
     this.setState(
       { selectedTimeSlot: time },
-      () => {
-        console.log("selectedslot", this.state.selectedTimeSlot);
-      }
+      // () => {
+
+      //   console.log("selectedslot",this.state.selectedTimeSlot);
+      // }
     );
   }
 
@@ -1048,8 +1069,9 @@ console.log('handle')
   initVideoChat = () => {
 
 
-    // console.log('idcreated',docid)
+    
     const id = this.props.match.params.id.split("-")[0];
+    // console.log('idcreated',id)
     // console.log('idcreated',id)
 
 
@@ -1529,6 +1551,14 @@ console.log('handle')
                                   </div>
 
                                   <div>
+
+                                  {this.state.amount && (
+                                     <p
+                                     className="ml-4 my-2"
+                                     style={{ fontSize: "18px" }}
+                                   >Consultation Fee: Rs {this.state.amount} </p>
+                                  )}
+
                                     {this.state.selectedDate&& (
                                       <p  className="ml-4 my-2" style={{fontSize:"18px"}}>
                                         Date:{" "}
@@ -1575,7 +1605,8 @@ console.log('handle')
                                 : null
                                 }
 
-    {
+
+                              {
                             this.state.appointmentAlert?
                                 <Alert variant="success" className="h6 mx-3">Booked successfully!! Check your Email.</Alert>
                                 : null
