@@ -26,7 +26,7 @@ export default class Medicinepage extends Component{
           country: new URLSearchParams(this.props.location.search).get('c'),
           diseaseCondition: new URLSearchParams(this.props.location.search).get('dc'),
           articleFilter: 'recent',
-             adImage:''
+          adImage:''
         };
       }
        allPosts(loadMore) {                        // For all available blogs "/blogs"
@@ -126,6 +126,7 @@ export default class Medicinepage extends Component{
           .catch(err => {return})
         // }
       }
+
       componentDidMount() {
         // if(this.props.match.params.type === undefined){
         //   this.allPosts()
@@ -137,7 +138,8 @@ export default class Medicinepage extends Component{
         } else {
           this.allPosts()
         }
-          this.adSponsored(this.props.match.params.medicine_type)
+
+        this.adSponsored(this.props.match.params.medicine_type)
       }
 
       componentDidUpdate(prevProps, prevState){
@@ -148,6 +150,7 @@ export default class Medicinepage extends Component{
             this.allPosts()
           }
           
+          this.adSponsored(this.props.match.params.medicine_type)
         }
       
     
@@ -178,17 +181,17 @@ export default class Medicinepage extends Component{
                 :<h1 className="h2 text-center">All Cures</h1>
               } */}
 
-         // {(this.state.adImage &&   this.state.adImage!=="All Ads are Served") && (
+
+{/*              
+                {(this.state.adImage &&   this.state.adImage!=="All Ads are Served") && (
                  
 
-         //         <div className="sponsads d-flex justify-content-center mt-2 mb-4">
-         //          <img src={`https://uat.all-cures.com:444/${this.state.adImage}`}  className="img-fluid" alt="Ad"/>
+                 <div className="sponsads d-flex justify-content-center mt-2 mb-4">
+                  <img src={`https://uat.all-cures.com:444/${this.state.adImage}`}  className="img-fluid" alt="Ad"/>
 
-         //          </div>
-         //        )}
+                  </div>
+                )} */}
 
-
-    
     <div className="sponsads d-flex justify-content-center align-items-center mt-2 mb-4 d-none d-lg-block" style={{marginLeft:"130px"}}>
     <img src={desktopad} className="img-fluid mx-auto" alt="Ad" />
                </div>
@@ -199,6 +202,8 @@ export default class Medicinepage extends Component{
 
                   </div>
             
+
+
 
 
                 <div className="row" id="posts-container">
