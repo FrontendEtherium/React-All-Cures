@@ -6,6 +6,8 @@ import { backendHost } from '../../api-config';
 import { Link } from 'react-router-dom';
 import Heart from"../../assets/img/heart.png";
 import Subscribe from '../Subscribe';
+import mobilead from "../../assets/img/mobile_adImg.jpeg"
+import desktopad from "../../assets/img/Desktop_adImg.jpeg"
 
 export default class Medicinepage extends Component{
     constructor(props) {
@@ -176,14 +178,29 @@ export default class Medicinepage extends Component{
                 :<h1 className="h2 text-center">All Cures</h1>
               } */}
 
-         {(this.state.adImage &&   this.state.adImage!=="All Ads are Served") && (
+         // {(this.state.adImage &&   this.state.adImage!=="All Ads are Served") && (
                  
 
-                 <div className="sponsads d-flex justify-content-center mt-2 mb-4">
-                  <img src={`https://uat.all-cures.com:444/${this.state.adImage}`}  className="img-fluid" alt="Ad"/>
+         //         <div className="sponsads d-flex justify-content-center mt-2 mb-4">
+         //          <img src={`https://uat.all-cures.com:444/${this.state.adImage}`}  className="img-fluid" alt="Ad"/>
+
+         //          </div>
+         //        )}
+
+
+    
+    <div className="sponsads d-flex justify-content-center align-items-center mt-2 mb-4 d-none d-lg-block" style={{marginLeft:"130px"}}>
+    <img src={desktopad} className="img-fluid mx-auto" alt="Ad" />
+               </div>
+
+                                  
+                   <div className="mt-3 d-flex justify-content-center mt-2 mb-4 d-sm-block d-lg-none">
+                  <img src={mobilead}  className="img-fluid" alt="Ad" style={{height:"70%", marginTop:"30px"}}/>
 
                   </div>
-                )}
+            
+
+
                 <div className="row" id="posts-container">
                     
                 {
