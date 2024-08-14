@@ -3116,6 +3116,14 @@ box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
     }
   }
 
+ @media (max-width: 567px) {
+    .sponsads {
+     display:none !important;
+    }
+}
+
+
+
 
   
   
