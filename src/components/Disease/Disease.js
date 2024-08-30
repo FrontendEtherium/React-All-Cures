@@ -168,7 +168,7 @@ class Disease extends Component {
         this.floaterShow();
 
       })
-   }, 9000);
+   }, 4000);
   } 
     
 }
