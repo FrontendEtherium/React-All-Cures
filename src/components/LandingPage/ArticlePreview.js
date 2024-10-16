@@ -408,6 +408,9 @@ const ArticlePreview = (props) => {
             }
             </div>
 
+            
+            </div>
+            
             {
                 articleFilter === "recent"?
                 <div className='pagination-preview'>
@@ -455,8 +458,6 @@ const ArticlePreview = (props) => {
             </div>
             : null
             }
-            
-            </div>
             </div>
         </>
     )
