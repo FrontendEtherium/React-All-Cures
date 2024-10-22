@@ -175,7 +175,7 @@ const ArticlePreview = (props) => {
         } else if (articleFilter === "recent") {
 
           json.forEach((i) => {
-            if (i.pubstatus_id === 3 || i.pubstatus_id === 2) {
+            if (i.pubstatus_id === 3 ) {
               temp.push(i);
             }
           });
