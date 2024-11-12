@@ -258,9 +258,9 @@ import { imgKitImagePath } from "../../image-path"
     <li class="nav-item">
       <a class="nav-link" href="/AboutUs">About Us</a>
     </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
          <a className="nav-link" href="/webstories">Webstories</a>
-       </li>
+       </li> */}
   </ul>
   </div>
 </nav>
