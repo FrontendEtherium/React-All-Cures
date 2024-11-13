@@ -366,7 +366,7 @@ bookAppn = (e) => {
       const response=  JSON.stringify(enc)
 
      const responseObject = JSON.parse(response);
-    console.log('res',responseObject.encRequest)
+    console.log('res of ',responseObject.encRequest)
     console.log("count",res.data.Count)
 
 
