@@ -764,6 +764,13 @@ class Home extends Component {
                           }
                           renderInput={(params) => (
                             <TextField
+                            InputLabelProps={{
+                              style: {
+                                marginTop: '10px',
+                                transform: 'translateY(-20px)',
+                                transition: 'all 0.3s ease',
+                              },
+                            }}
                               {...params}
                               label="Search Doctors (City or Pin)"
                             />
