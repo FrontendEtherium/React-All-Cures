@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import Rating from "../StarRating";
@@ -7,46 +7,37 @@ import "../../assets/healthcare/css/main.css";
 import "../../assets/healthcare/css/responsive.css";
 import "../../assets/healthcare/css/animate.css";
 import "../../assets/healthcare/icomoon/style.css";
-import { Container, Button } from "react-bootstrap";
-import { makeStyles } from '@material-ui/core/styles';
+import { Container, Button, Modal } from "react-bootstrap";
+import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 import EditProfile from "./EditProfile";
 import { backendHost } from "../../api-config";
 import Comment from "../Comment";
+
 import "../../assets/healthcare/css/mobile.css";
 // import ArticleComment from '../ArticleComment';
 import { userId } from "../UserId";
 import { userAccess } from "../UserAccess";
 import AllPost from "../BlogPage/Allpost";
 import Heart from "../../assets/img/heart.png";
-import { Modal,Alert } from "react-bootstrap";
+import { Alert } from "react-bootstrap";
 
 import HelmetMetaData from "../HelmetMetaData";
 import { imagePath } from "../../image-path";
 import Chat from "./Chat";
-import VideoCallOutlined from "@mui/icons-material/VideoCallOutlined";
-import { green, pink } from "@mui/material/colors";
-import Avatar from "@mui/material/Avatar";
+
 // import Calendar from 'react-calendar';
 import dayjs from "dayjs";
+import VideocamRoundedIcon from "@mui/icons-material/VideocamRounded";
 
-import { subDays, isBefore, addDays } from 'date-fns';
-
-import DailyIframe from '@daily-co/daily-js';
+import DailyIframe from "@daily-co/daily-js";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import {
-  LocalizationProvider,
-  StaticDatePicker,
-  TimePicker,
-} from "@mui/x-date-pickers";
-
+import { LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
 
 import { PickersDay } from "@mui/x-date-pickers/PickersDay";
 import { styled } from "@mui/material/styles";
-import moment from 'moment'
-
-
+import Test from "../LandingPage/test";
 
 const HighlightedDay = styled(PickersDay)(({ theme }) => ({
   "&.Mui-selected": {
@@ -55,1919 +46,989 @@ const HighlightedDay = styled(PickersDay)(({ theme }) => ({
   },
 }));
 
+const ServerDay = ({
+  highlightedDays = [],
+  day,
+  outsideCurrentMonth,
+  ...other
+}) => {
+  const isSelected =
+    !outsideCurrentMonth && highlightedDays.includes(day.format("YYYY-MM-DD"));
+  return (
+    <HighlightedDay
+      {...other}
+      day={day}
+      selected={isSelected}
+      outsideCurrentMonth={outsideCurrentMonth}
+    />
+  );
+};
+function Profile() {
+  const { id } = useParams();
+  const history = useHistory();
+  const [state, setState] = useState({
+    items: [],
+    articleItems: [],
+    comment: [],
+    ratingValue: "",
+    rating: [],
+    highlightedDays: [],
+    unavailableDates: [],
+    timeSlots: [],
+    unbookedSlots: [],
+    selectedDate: null,
+    selectedTimeSlot: "",
+    isLoaded: false,
+    modalShow: false,
+    showAlert: false,
+    alertMsg: "",
+    bookingLoading: false,
+    alertBooking: false,
+    docid: null,
+    initial: 4,
+    value: dayjs(),
+  });
+  const [callFrame, setCallFrame] = useState(null);
 
-class ServerDay extends Component {
-  render() {
-    const { highlightedDays = [], day, outsideCurrentMonth, ...other } =
-      this.props;
+  useEffect(() => {
+    fetchDoctorData();
+    fetchAvailStatus();
+    fetchUserAvailStatus();
+    fetchAppointmentDetails();
+    getComments();
+    getRating();
+    getRate();
+    allPosts();
+  }, []);
 
-    const isSelected =
-      !this.props.outsideCurrentMonth &&
-      highlightedDays.includes(day.format("YYYY-MM-DD"));
-
-    return (
-      <HighlightedDay
-        {...other}
-        outsideCurrentMonth={outsideCurrentMonth}
-        day={day}
-        selected={isSelected}
-      />
-    );
-  }
-}
-
-
-
-
-
-
-class Profile extends Component {
-  constructor(props) {
-    super(props);
-    const params = props.match.params;
-    this.editToggle = this.editToggle.bind(this);
-    this.fetchDoctorData = this.fetchDoctorData.bind(this);
-    this.state = {
-      items: [],
-      articleItems: [],
-      comment: [],
-      ratingValue: "",
-      rating: [],
-      firstName: [],
-      lastName: [],
-      isLoaded: false,
-      param: params,
-      edit: false,
-      showMore: false,
-      modalShow: false,
-      show: false,
-      imageExists: false,
-      selectedFile: "",
-      isFilePicked: false,
-      imageUploadLoading: false,
-      showAlert: false,
-      alertMsg: "",
-      show: false,
-      docid: null,
-      initial: 4,
-      doctImage: [],
-      isDefaultImage: false,
-      selectedDate: null,
-      selectedTime: null,
-      callFrame:null,
-      videoLink:null,
-      availStatus:null,
-      // value: new Date(),
-      // date: new Date()
-
-      value: dayjs(),
-      // highlightedDays: [ "2024-03-06", "2024-03-15",'2024-03-11','2024-03-18','2024-04-03'],
-      highlightedDays:[],
-      unavailableDates:[],
-      // unavailableDates:[ "2024-03-07", "2024-03-16",'2024-03-12','2024-03-19'],
-      // timeSlots:['10:00:00 AM','10:45:00 AM','11:30:00 AM','12:15:00 PM','13:00:00 PM','13:45:00 PM','14:30:00 PM','15:15:00 PM','16:00:00 PM','16:45:00 PM','17:30:00 PM'],
-      timeSlots:[],
-      unbookedSlots:[],
-      selectedTimeSlot:'',
-      selectedDate: "", // Initialize selectedDate state   
-      alert:false,
-      alertBooking:false,
-      bookingLoading:false,
-      userAvailStatus:'',
-    
-
-    };
-    this.showModal = this.showModal.bind(this);
-    this.hideModal = this.hideModal.bind(this);
-  }
-
-
-   disableDate = (date) => {
-    const currentDate = new Date();
-    const isPastDate = date< currentDate;
-    const isBooked = this.state.highlightedDays.includes(date.format("YYYY-MM-DD"));
-    const isUnavail = this.state.unavailableDates.includes(date.format("YYYY-MM-DD"));
-    return  isBooked || isUnavail;
+  const fetchDoctorData = async () => {
+    try {
+      const response = await axios.get(
+        `${backendHost}/DoctorsActionController?DocID=${
+          id.split("-")[0]
+        }&cmd=getProfile`
+      );
+      setState((prev) => ({
+        ...prev,
+        isLoaded: true,
+        items: response.data,
+        docid: response.data.docID,
+      }));
+    } catch (err) {
+      console.error("Error fetching doctor data:", err);
+    }
   };
 
-  // highlightedDays are completely booked dates
-  // unavailabledates are when doctor is not avail for whole day
+  const fetchAvailStatus = async () => {
+    try {
+      const response = await axios.get(
+        `${backendHost}/video/get/${id.split("-")[0]}/availability`
+      );
+      setState((prev) => ({ ...prev, availStatus: response.data }));
+    } catch (err) {
+      console.error("Error fetching availability status:", err);
+    }
+  };
 
-
-
-  // renderDay = (date, selectedDate, dayInCurrentMonth) => {
-  //   const isBooked = this.state.bookedDates.includes(date.toISOString().split('T')[0]); // Check if date is in bookedDates array
-  //   return (
-  //     <div
-  //       style={{
-  //         backgroundColor: isBooked ? 'red' : 'inherit',
-  //         color: isBooked ? 'white' : 'inherit',
-  //         borderRadius: '50%', // Optional: adds a circular background for the booked dates
-  //         pointerEvents: isBooked ? 'none' : 'auto', // Disable pointer events for booked dates
-  //       }}
-  //     >
-  //       {date.getDate()}
-  //     </div>
-  //   );
-  // };
-
-
-
-  handleDatesChange = (newValue) => {
-    this.setState({
-      value: newValue,
-      selectedDate: newValue.format("YYYY-MM-DD"), // Update selectedDate state
-    });
-
-
-    fetch(`${backendHost}/appointments/get/Slots/${this.props.match.params.id.split("-")[0]}`)
-  
-    .then((res) => res.json())
-      .then((json) => {
-
-    
-       // Extract the totalDates from the JSON response
-       const totalDates = json.totalDates;
-
-       // Extract the first date from totalDates object
-       const firstDate = Object.keys(totalDates)[0];
-       
-       // Extract the timeslots for the first date
-       const timeslots = totalDates[firstDate];
-
-       // console.log('Allslots',timeslots)
-       // console.log(json.unbookedSlots,'unbooked')
-       // console.log('selected state',this.state.selectedDate)
- 
-       
-
-       const unbookedSlots = json.unbookedSlots[this.state.selectedDate] || [];
-
-       // Check if unbookedSlots array is empty
-       // if (unbookedSlots.length === 0) {
-       //   console.log('No unbooked slots available for the selected date',this.state.selectedDate);
-       // }
- 
-       // Set the state of unbookedSlots using the extracted unbooked slots
-       this.setState({
-         unbookedSlots: unbookedSlots,
-       });
-      
+  const fetchUserAvailStatus = async () => {
+    try {
+      const response = await axios.get(
+        `${backendHost}/appointments/get/${id.split("-")[0]}/${userId}`
+      );
+      const availability = response.data.some((appointment) => {
+        const currentDate = new Date();
+        const currentTime = `${currentDate.getHours()}:${currentDate.getMinutes()}`;
+        return (
+          appointment.appointmentDate ===
+            currentDate.toISOString().split("T")[0] &&
+          currentTime >= appointment.startTime &&
+          currentTime <= appointment.endTime
+        );
       });
+      setState((prev) => ({ ...prev, userAvailStatus: availability ? 1 : 0 }));
+    } catch (err) {
+      console.error("Error fetching user availability status:", err);
+    }
   };
 
+  const fetchAppointmentDetails = async () => {
+    try {
+      const response = await axios.get(
+        `${backendHost}/appointments/get/Slots/${id.split("-")[0]}`
+      );
+      const totalDates = Object.keys(response.data.totalDates);
+      const highlightedDays = response.data.completelyBookedDates || [];
+      const unavailableDates = getUnavailableDates(totalDates);
 
-
-  // handleDateChange = (newDate) => {
-  //   this.setState({ selectedDate: newDate });
-  // };
-
-  handleTimeChange = (newTime) => {
-    this.setState({ selectedTime: newTime });
+      setState((prev) => ({
+        ...prev,
+        timeSlots: response.data.totalDates[totalDates[0]] || [],
+        highlightedDays,
+        unavailableDates,
+      }));
+    } catch (err) {
+      console.error("Error fetching appointment details:", err);
+    }
   };
 
-  showModal = () => {
-    this.setState({ show: true });
+  const getUnavailableDates = (availableDates) => {
+    const currentDate = new Date();
+    const next30Days = new Date(
+      currentDate.getTime() + 30 * 24 * 60 * 60 * 1000
+    );
+    const allPossibleDates = generateDateRange(currentDate, next30Days);
+
+    return allPossibleDates.filter((date) => !availableDates.includes(date));
   };
 
-  hideModal = () => {
-    this.setState({ show: false });
+  const generateDateRange = (startDate, endDate) => {
+    const dates = [];
+    let currentDate = new Date(startDate);
+    while (currentDate <= endDate) {
+      dates.push(currentDate.toISOString().slice(0, 10));
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    return dates;
   };
 
-  // Image Upload
-  changeHandler = (event) => {
-    if (event.target.files[0].size > 1048576) {
-      this.Alert("Image should be less than 1MB!");
+  const getComments = async () => {
+    try {
+      const response = await axios.get(
+        `${backendHost}/rating/target/${id.split("-")[0]}/targettype/1`
+      );
+      const filteredComments = response.data.filter(
+        (comment) => comment.reviewed === 1 && comment.comments !== "null"
+      );
+      setState((prev) => ({ ...prev, comment: filteredComments }));
+    } catch (err) {
+      console.error("Error fetching comments:", err);
+    }
+  };
+
+  const getRating = async () => {
+    try {
+      const response = await axios.get(
+        `${backendHost}/rating/target/${id.split("-")[0]}/targettype/1/avg`
+      );
+      setState((prev) => ({ ...prev, ratingValue: response.data }));
+    } catch (err) {
+      console.error("Error fetching rating:", err);
+    }
+  };
+
+  const getRate = async () => {
+    try {
+      const response = await axios.get(
+        `${backendHost}/rating/target/${
+          id.split("-")[0]
+        }/targettype/1?userid=${userId}`
+      );
+      setState((prev) => ({
+        ...prev,
+        rating: response.data[0]?.ratingVal || "",
+      }));
+    } catch (err) {
+      console.error("Error fetching user rating:", err);
+    }
+  };
+
+  const allPosts = async () => {
+    try {
+      const response = await axios.get(
+        `${backendHost}/article/authallkv/reg_type/1/reg_doc_pat_id/${
+          id.split("-")[0]
+        }?offset=0&limit=${state.initial}`
+      );
+      console.log("all post fetched", response.data);
+
+      const articles = response.data.filter(
+        (article) => article.pubstatus_id === 3
+      );
+      setState((prev) => ({
+        ...prev,
+        articleItems: [...prev.articleItems, ...articles],
+        initial: prev.initial + 4,
+      }));
+    } catch (err) {
+      console.error("Error fetching posts:", err);
+    }
+  };
+
+  const initVideoChat = async () => {
+    try {
+      const response = await axios.get(
+        `${backendHost}/video/create/room/${id.split("-")[0]}`
+      );
+      if (!callFrame && response.data !== "Error") {
+        const newCallFrame = DailyIframe.createFrame({ showLeaveButton: true });
+        newCallFrame.join({ url: response.data });
+        newCallFrame.on("left-meeting", () => {
+          newCallFrame.destroy();
+          setCallFrame(null);
+        });
+        setCallFrame(newCallFrame);
+      }
+    } catch (err) {
+      console.error("Error initializing video chat:", err);
+    }
+  };
+  const changeHandler = (event) => {
+    const file = event.target.files[0];
+
+    if (file.size > 1048576) {
+      Alert("Image should be less than 1MB!");
       return;
     }
-    this.setState(
-      {
-        selectedFile: event.target.files[0],
-      },
-      (event) => this.handleImageSubmission(event)
-    );
+
+    setState((prevState) => ({
+      ...prevState,
+      selectedFile: file,
+    }));
+
+    handleImageSubmission(file);
   };
+  const handleImageSubmission = (file, setState, Alert) => {
+    setState((prev) => ({ ...prev, imageUploadLoading: true }));
 
-
-//   bookAppn=(e)=>{
-//     e.preventDefault();
-
-//     console.log('clicked bboking')
-//     // const time = moment(this.state.selectedTime, 'HH:mm').toDate();
-//     console.log('time', dayjs(this.state.selectedTime).format("HH:mm"))
-
-// // Format the time to the desired format, e.g., "1:15 PM"
-// // const formattedTime = moment(time).format('h:mm A');
-
-
-//     axios.post(`${backendHost}/appointments/create`,{
-     
-//       "docID": this.state.docid,
-//       // "userID": parseInt(userId),
-//       "userID": parseInt(userId),
-//       "appointmentDate": this.state.selectedDate,
-//       "startTime":this.state.selectedTimeSlot,
-//       "paymentStatus": 0,
-//       "amount":"1.00",
-//       "currency":"INR",
-     
-       
-//   })
-//   // .then(  this.setState({ bookingLoading: true })
-//   // )
-//   .then((res)=>{
-
-
-//     const enc=res.data
-//     console.log('enc',enc)
-   
-//     fetch("https://test.ccavenue.com/transaction.do?command=initiateTransaction", {
-//       method: 'POST',
-     
-//       body: JSON.stringify({ 
-//         encRequest:'enc',
-//         accessCode: "AVKI05LC59AW25IKWA"
-//       })
-//     })
-//     .then(response => {
-//       if (!response.ok) {
-//         throw new Error('Network response was not ok');
-//       }
-//       return response.json();
-//     })
-//     .then(data => {
-//       // Handle successful response data
-//       console.log("Response:", data);
-//     })
-//     .catch(error => {
-//       // Handle fetch error
-//       console.error("Fetch Error:", error);
-//     });
- 
-// })
-// .catch(res => this.setState({ bookingLoading: true })
-// )
-//   }
-
-
-// payment = (e) => {
-//   e.preventDefault();
-
-//   // Create a hidden form element
-//   const form = document.createElement('form');
-//   form.setAttribute('method', 'post');
-//   form.setAttribute('action', 'https://test.ccavenue.com/transaction.do?command=initiateTransaction');
-//   form.style.display = 'none'; // Hide the form
-
-//   // Create and append hidden input fields for encRequest and accessCode
-//   const encRequestInput = document.createElement('input');
-//   encRequestInput.setAttribute('type', 'hidden');
-//   encRequestInput.setAttribute('name', 'encRequest');
-//   encRequestInput.setAttribute('value', '9923507A9100B3502A10278D5A73DB7DC0FD65087325AD1DC97D18CA378846B6BA9906804FD410FBC280C13C2144DF93E5D7E76E3A4A9FAF1A5C1E7BCDC2CECC7BC65287C7C1A529849F2C6ED62CD7A5E1651DE519A147D76245E9BF480A0BEAF9497671DC5B7AE43A0123EFC27A87F81A124EEEEDB68F46047D5F0A8A011ACC479F534A566E490DEC170B11A7D234084B135CAC3E54E4792472DD8F1ACD0D50A53DA0FD54609BBDF97B69A6509B78BBF334F7642703326511AEBA5EE8117CF9EA7FF2726FE279CB4838F4619E8D93F9EDD747C6F7CE8D33DA0A40F104C87C58');
-  
-//   const accessCodeInput = document.createElement('input');
-//   accessCodeInput.setAttribute('type', 'hidden');
-//   accessCodeInput.setAttribute('name', 'access_code');
-//   accessCodeInput.setAttribute('value', 'AVNH05LB56CF25HNFC');
-
-//   // Append input fields to the form
-//   form.appendChild(encRequestInput);
-//   form.appendChild(accessCodeInput);
-
-//   // Append the form to the document body
-//   document.body.appendChild(form);
-
-//   // Submit the form
-//   form.submit();
-// }
-
-
-bookAppn = (e) => {
-  e.preventDefault();
-
-  // console.log('clicked booking');
-  // console.log('time', dayjs(this.state.selectedTime).format("HH:mm"));
-
-  axios.post(`${backendHost}/appointments/create`, {
-      "docID": this.state.docid,
-      "userID": parseInt(userId),
-      "appointmentDate": this.state.selectedDate,
-      "startTime": this.state.selectedTimeSlot,
-      "paymentStatus": 0,
-      "amount": "1.00",
-      "currency": "INR",
-  })
-  .then((res) => {
-      let enc = res.data
-      // console.log('resppp', enc);
-      const response=  JSON.stringify(enc)
-
-     const responseObject = JSON.parse(response);
-    // console.log('res',responseObject.encRequest)
-
-
-      localStorage.setItem('encKey',responseObject.encRequest)
-      localStorage.setItem('apiResponse', JSON.stringify(res.data));
-
-    const redirectURL = "https://www.all-cures.com/paymentRedirection" +
-      `?encRequest=${responseObject.encRequest}` +
-      `&accessCode=AVWN42KL59BP42NWPB`; // Your accessCode here
-
-    // Redirecting to the URL
-    window.location.href = redirectURL;
-
-      // If enc is a string, parse it to an object
-      // if (typeof enc === 'string') {
-      //     try {
-      //         enc = JSON.parse(enc);
-      //     } catch (error) {
-      //         console.error('Error parsing enc:', error);
-      //     }
-      // }
-
-      // Sending the modified payload
-      // return fetch("https://test.ccavenue.com/transaction.do?command=initiateTransaction", {
-      //     method: 'POST',
-      //     headers: {
-      //         'Content-Type': 'application/json'
-      //     },
-      //     body: JSON({
-      //         encRequest: enc,
-      //         accessCode: "AVKI05LC59AW25IKWA"
-      //     })
-      // });
-
-
-
-
-
-
-
-
-
-
-      // const form = document.createElement('form');
-      // form.setAttribute('method', 'post');
-      // form.setAttribute('action', 'https://test.ccavenue.com/transaction.do?command=initiateTransaction');
-      // form.style.display = 'none'; // Hide the form
-    
-      // // Create and append hidden input fields for encRequest and accessCode
-      // const encRequestInput = document.createElement('input');
-      // encRequestInput.setAttribute('type', 'hidden');
-      // encRequestInput.setAttribute('name', 'encRequest');
-      // encRequestInput.setAttribute('value', responseObject.encRequest);
-      
-      // const accessCodeInput = document.createElement('input');
-      // accessCodeInput.setAttribute('type', 'hidden');
-      // accessCodeInput.setAttribute('name', 'access_code');
-      // accessCodeInput.setAttribute('value', 'AVNH05LB56CF25HNFC');
-      // // accessCodeInput.setAttribute('value', 'AVWN42KL59BP42NWPB');
-    
-      // // Append input fields to the form
-      // form.appendChild(encRequestInput);
-      // form.appendChild(accessCodeInput);
-    
-      // // Append the form to the document body
-      // document.body.appendChild(form);
-    
-      // // Submit the form
-      // form.submit();
-  })
-  // .then(response => {
-  //     if (!response.ok) {
-  //         throw new Error('Network response was not ok');
-  //     }
-  //     return response.json();
-  // })
-  // .then(data => {
-  //     console.log("Response:", data);
-  //     // Handle successful response data
-  // })
-  // .catch(error => {
-  //     console.error("Fetch Error:", error);
-  //     // Handle fetch error
-  // });
-}
-
-  handleImageSubmission = (e) => {
-    // e.preventDefault()
-    this.setState({ imageUploadLoading: true });
     const formData = new FormData();
-    formData.append("File", this.state.selectedFile);
-    fetch(
-      `${backendHost}/dashboard/imageupload/doctor/${
-        this.props.match.params.id.split("-")[0]
-      }`,
-      {
-        method: "POST",
-        body: formData,
-      }
-    )
+    formData.append("File", file);
+
+    fetch(`${backendHost}/dashboard/imageupload/doctor/${id.split("-")[0]}`, {
+      method: "POST",
+      body: formData,
+    })
       .then((response) => response.json())
       .then((result) => {
         setTimeout(() => {
-          this.setState({
+          setState((prev) => ({
+            ...prev,
             isFilePicked: true,
             imageUploadLoading: false,
-          });
+          }));
         }, 5000);
 
-        this.Alert("Image uploaded successfully.");
+        Alert("Image uploaded successfully.");
       })
       .catch((error) => {
-        return;
+        console.error("Error uploading image:", error);
       });
   };
-  Alert = (msg) => {
-    console.log(msg);
-    this.setState({
-      showAlert: true,
-      alertMsg: msg,
-    });
-    setTimeout(() => {
-      this.setState({
-        showAlert: false,
-      });
-    }, 5000);
-  };
-  postLead = (id) => {
-    this.showModal();
-    axios
-      .post(
-        `${backendHost}/leads/count/${this.props.match.params.id.split("-")[0]}`
-      )
-
-      .then((res) => {
-        console.log("id", res.data);
-      })
-      .catch((err) => err);
-  };
-  // DOCTOR'S WRITTEN CURES
-
-
-//   onChange(value) {
-//     this.setState({ value });
-//   }
-
-  // handleDateChange(date) {
-  //   this.setState({ date });
-  // }
-
-
-
-//   tileDisabled = ({ date, view }) => {
-//     const today = new Date();
-//     const thirtyDaysFromNow = new Date();
-//     thirtyDaysFromNow.setDate(today.getDate() + 30);
-//     return date < today || date > thirtyDaysFromNow;
-//   };
-
-//   // Function to customize tile content
-//   tileContent = ({ date, view }) => {
-//     // Example: Mark dates 5 days from now as blue and 10 days from now as red
-//     const fiveDaysFromNow = new Date();
-//     fiveDaysFromNow.setDate(fiveDaysFromNow.getDate() + 5);
-//     const tenDaysFromNow = new Date();
-//     tenDaysFromNow.setDate(tenDaysFromNow.getDate() + 10);
-
-//     if (date.toDateString() === fiveDaysFromNow.toDateString()) {
-//       return <div className="blue-dot"></div>;
-//     } else if (date.toDateString() === tenDaysFromNow.toDateString()) {
-//       return <div className="red-dot"></div>;
-//     }
-//     return null;
-//   };
-
-  allPosts = () => {
-    // For all available blogs "/blogs"
-    fetch(
-      `${backendHost}/article/authallkv/reg_type/1/reg_doc_pat_id/${
-        this.props.match.params.id.split("-")[0]
-      }?offset=0&limit=${this.state.initial}`
-    )
-      .then((res) => res.json())
-      .then((json) => {
-        var temp = [];
-        json.forEach((i) => {
-          if (i.pubstatus_id === 3) {
-            temp.push(i);
-          }
-        });
-        this.setState((prevState) => ({
-          articleItems: temp,
-          initial: prevState.initial + 4,
-        }));
-      })
-      .catch((err) => {
-        return;
-      });
-  };
-
-  
-
-  getComments = (id) => {
-    axios
-      .get(`${backendHost}/rating/target/${id}/targettype/1`)
-      .then((res) => {
-        var temp = [];
-        res.data.forEach((i) => {
-          if (i.reviewed === 1 && i.comments !== "null") {
-            temp.push(i);
-          }
-        });
-        this.setState({
-          comment: temp,
-        });
-      })
-      .catch((err) => {
-        return;
-      });
-  };
-
-  showComments = (item, i) => {
+  const showComments = (item, i) => {
     return (
-      <>
-        <div className="col-12">
-          <div className="card my-4 ">
-            <div className="card-body">
-              <h5 className="h6"> {item.comments}</h5>
-              <div className="card-info">
-                <h6 className="card-subtitle mb-2 text-muted">
-                  <b>By : </b> {item.first_name} {item.last_name}
-                </h6>
-              </div>
+      <div className="col-12" key={i}>
+        <div className="card my-4">
+          <div className="card-body">
+            <h5 className="h6">{item.comments}</h5>
+            <div className="card-info">
+              <h6 className="card-subtitle mb-2 text-muted">
+                <b>By: </b> {item.first_name} {item.last_name}
+              </h6>
             </div>
           </div>
         </div>
+      </div>
+    );
+  };
+
+  const bookAppointment = async () => {
+    try {
+      const response = await axios.post(`${backendHost}/appointments/create`, {
+        docID: state.docid,
+        userID: parseInt(userId),
+        appointmentDate: state.selectedDate,
+        startTime: state.selectedTimeSlot,
+        paymentStatus: 0,
+        amount: "1.00",
+        currency: "INR",
+      });
+      const redirectURL = `https://www.all-cures.com/paymentRedirection?encRequest=${response.data.encRequest}&accessCode=AVWN42KL59BP42NWPB`;
+      window.location.href = redirectURL;
+    } catch (err) {
+      console.error("Error booking appointment:", err);
+    }
+  };
+  const [modalShow, setModalShow] = useState();
+  const {
+    items,
+    isLoaded,
+    selectedDate,
+    selectedTimeSlot,
+    timeSlots,
+    unbookedSlots,
+  } = state;
+  const [alertVisible, setAlertVisible] = useState();
+  if (!isLoaded) {
+    return (
+      <>
+        <Header history={history} />
+        <div className="loader my-4">
+          <img src={Doct} alt="Loading" />
+        </div>
+        <Footer />
       </>
     );
-  };
-
-  getRating = (docId) => {
-    axios
-      .get(`${backendHost}/rating/target/${docId}/targettype/1/avg`)
-      .then((res) => {
-        this.setState(
-          {
-            ratingValue: res.data,
-          },
-          () => {
-            setTimeout(() => {
-              this.showRating(this.state.ratingValue);
-            }, 1000);
-          }
-        );
-      })
-      .catch((err) => {
-        return;
-      });
-  };
-
-  getRate = (docId) => {
-    axios
-      .get(
-        `${backendHost}/rating/target/${docId}/targettype/1?userid=${userId}`
-      )
-      .then((res) => {
-        this.setState({
-          rating: res.data[0].ratingVal,
-        });
-      })
-      .catch((err) => {
-        return;
-      });
-  };
-
-  fetchDoctorData = (id) => {
-    fetch(`${backendHost}/DoctorsActionController?DocID=${id}&cmd=getProfile`)
-      // .then(res => JSON.parse(res))
-      .then((res) => res.json())
-      .then((json) => {
-
-        // console.log('firstname', 'id',id,json.firstName)
-        // document.title = `${json.firstName} ${json.lastName}`;
-
-        this.setState({
-          isLoaded: true,
-          items: json,
-          docid: json.docID,
-        });
-      });
-  };
-
-
-  fetchAvailStatus = (id) => {
-    fetch(`${backendHost}/video/get/${id}/availability`)
-      // .then(res => JSON.parse(res))
-      .then((res) => res.json())
-      .then((json) => {
-        this.setState({
-          
-          availStatus: json,
-          
-        });
-        // console.log('availStatus',this.state.availStatus)
-      });
-      
-  };
-
-
-  fetchUserAvailStatus = (id) => {
-    fetch(`${backendHost}/appointments/get/${id}/${userId}`)
-   
-      // .then(res => JSON.parse(res))
-      .then((res) => res.json())
-      .then((json) => {
-
-        // console.log('useravailstatus',id,userId)
-       
-        // console.log('useravailStatus',json)
-
-        const currentDate = new Date();
-        const currentTime = currentDate.getHours() + ':' + currentDate.getMinutes();
-
-        // console.log('dateuseravailStatus', currentDate.toISOString().split('T')[0])
-        // console.log('timeuseravailStatus', currentTime)
-        // console.log('dateuseravailStatus', json.appointmentDate)
-        // console.log('startTimeuseravailStatus', json.startTime)
-        // console.log('endTimeuseravailStatus', json.endTime)
-        
-        // json.forEach(appointment => {
-        //   console.log('Start Time:', appointment.startTime);
-        //   console.log('End Time:', appointment.endTime);
-        //   console.log('Date:', appointment.appointmentDate);
-        // });
-      
-        
-
-  
-        // Check each appointment for current time and date
-        let availability = 0;
-        json.forEach(appointment => {
-          if (appointment.appointmentDate === currentDate.toISOString().split('T')[0]) {
-            // Check if current time is within the time range of the appointment
-            if (currentTime >= appointment.startTime && currentTime <= appointment.endTime) {
-              availability = 1;
-              // If a match is found, you can break the loop since you have already found the availability
-              return;
-            }
-          }
-        });
-        // Set availability state based on the check
-        this.setState({
-          userAvailStatus: availability
-        });
-
-        // console.log('userrrravail',  this.state.userAvailStatus)
-      })
-    
-      
-  };
-
-
-
-  fetchAppointmentDetails = (id) => {
-    fetch(`${backendHost}/appointments/get/Slots/${id}`)
-  
-    .then((res) => res.json())
-      .then((json) => {
-
-      // console.log('response',json)
-        
-       // Extract the totalDates from the JSON response
-      //  const totalDates = json.totalDates;
-
-       // Extract the first date from totalDates object
-       const firstDate = Object.keys(json.totalDates)[0];
-       
-       // Extract the timeslots for the first date
-       const timeslots = json.totalDates[firstDate];
-
-       // console.log('Allslots',timeslots)
-       // console.log(json.unbookedSlots,'unbooked')
-       // console.log('selected state',this.state.selectedDate)
-
-       const highlightedDate = json.completelyBookedDates;
-        
-       // console.log(highlightedDate,'highlighteddates')
- 
-       // Set the state of timeslots using the extracted timeslots
-       this.setState({
-         timeSlots: timeslots,
-         highlightedDays:highlightedDate
-       });
-
-
-//
-
-const totalDates = Object.keys(json.totalDates);
-
-
-const generateDateRange = (startDate, endDate) => {
-  const dates = [];
-  let currentDate = new Date(startDate);
-  while (currentDate <= endDate) {
-      dates.push(currentDate.toISOString().slice(0, 10));
-      currentDate = new Date(currentDate.getTime() + (24 * 60 * 60 * 1000));
-  }
-  return dates;
-};
-
-           
-
-           // Generate all possible dates for the next 30 days
-           const currentDate = new Date();
-           const next30Days = new Date(currentDate.getTime() + (30 * 24 * 60 * 60 * 1000));
-           const allPossibleDates = generateDateRange(currentDate, next30Days);
-
-           // Find the missing dates
-           const missingDates = allPossibleDates.filter(date => !totalDates.includes(date));
-
-            // console.log('missing dates',missingDates)
-   
-            this.setState({
-              unavailableDates: missingDates
-            })
-             
-
-
-
-
-
-
-       const unbookedSlots = json.unbookedSlots[this.state.selectedDate] || [];
-
-       // Check if unbookedSlots array is empty
-       // if (unbookedSlots.length === 0) {
-       //   console.log('No unbooked slots available for the selected date',this.state.selectedDate);
-       // }
- 
-       // Set the state of unbookedSlots using the extracted unbooked slots
-       this.setState({
-         unbookedSlots: unbookedSlots,
-       });
-      
-      });
-      
-  };
-
-
-
-
-  showRating = (val) => {
-    if (document.getElementById("doctor-avg-rating")) {
-      for (let i = 0; i < val; i++) {
-        document
-          .getElementById("doctor-avg-rating")
-          .children[i].classList.add("checked");
-      }
-    }
-  };
-
-  editToggle = () => {
-    if (this.state.edit === false) {
-      this.setState({
-        edit: true,
-      });
-    } else {
-      this.setState({
-        edit: false,
-      });
-    }
-  };
-
-
-
-
-  // calendarStyle = {
-  //   backgroundColor: 'white',
-  //   color: 'black',
-  //   fontSize: '16px',
-  //   border: '1px solid black',
-  //   borderRadius: '1px',
-  //   width: '600px', // Example width
-  //   height: '500px', // Example height
-  // };
-
-
-
-  //  tileContent = ({ date }) => {
-  //   // Get today's date
-  //   const today = new Date();
-  
-  //   // Get the date 30 days from today
-  //   const next30Days = new Date();
-  //   next30Days.setDate(today.getDate() + 30);
-  
-  //   // Check if the date is within the range of today to the next 30 days
-  //   const isWithinRange = date >= today && date <= next30Days;
-  
-  //   // Check if the date is odd or even
-  //   const isEvenDate = date.getDate() % 2 === 0;
-  
-  //   // Define styles for the date based on whether it's within the range and odd/even
-  //   const tileStyle = {
-  //     backgroundColor: isWithinRange ? (isEvenDate ? 'lightblue' : 'red') : 'lightgray',
-  //     color: isWithinRange ? 'black' : 'gray', // Adjust text color as needed
-  //     borderRadius: '50%', // Optional: make dates circular
-  //     width: '30px', // Optional: adjust width of each date
-  //     height: '30px', // Optional: adjust height of each date
-  //     display: 'flex',
-  //     justifyContent: 'center',
-  //     alignItems: 'center',
-  //   };
-  
-  //   return (
-  //     <div style={tileStyle}>
-  //       {date.getDate()} {/* Render the date */}
-  //     </div>
-  //   );
-  // };
-
-
-
-
-//    isWithinNext30Days = (date) => {
-//     const today = new Date();
-//     const next30Days = addDays(today, 30);
-//     return isBefore(date, next30Days) && !isBefore(date, today);
-// };
-
-// // Function to check if a date is in the past
-//  isPastDate = (date) => {
-//     const today = new Date();
-//     return isBefore(date, today);
-// };
-
-  // componentDidMount() {
-  //   window.scrollTo(0, 0);
-  //   this.fetchDoctorData(this.props.match.params.id.split('-')[0])
-  //   this.getComments(this.props.match.params.id.split('-')[0])
-  //   this.getRating(this.props.match.params.id.split('-')[0])
-  //   this.getRate(this.props.match.params.id.split('-')[0])
-  //   this.allPosts()
-
-  //   const canonicalLink = document.createElement('link');
-  //   canonicalLink.rel = 'canonical';
-  //   canonicalLink.href = window.location.href;
-  //   document.head.appendChild(canonicalLink);
-
-  //   console.log('Canonical link:', canonicalLink);
-
-  //   return () => {
-  //     document.head.removeChild(canonicalLink);
-  //   };
-  // }
-
-  componentDidMount() {
-    window.scrollTo(0, 0);
-    this.fetchDoctorData(this.props.match.params.id.split("-")[0]);
-    this.fetchAvailStatus(this.props.match.params.id.split("-")[0]);
-    this.fetchUserAvailStatus(this.props.match.params.id.split("-")[0]);
-    this.fetchAppointmentDetails(this.props.match.params.id.split("-")[0]); 
-    this.getComments(this.props.match.params.id.split("-")[0]);
-    this.getRating(this.props.match.params.id.split("-")[0]);
-    this.getRate(this.props.match.params.id.split("-")[0]);
-    this.allPosts();
-    // this.getImg();
-
-    const canonicalLink = document.createElement("link");
-    canonicalLink.rel = "canonical";
-
-    const currentURL = window.location.href;
-    // Remove "www" from the URL if it's present
-    const canonicalURL = currentURL.replace(/(https?:\/\/)?www\./, "$1");
-
-    if (canonicalURL.match(/\/profile\/\d+-[a-zA-Z0-9-]+/)) {
-      canonicalLink.href = canonicalURL;
-      // Log the constructed canonical link to the console
-      console.log("Canonical Link:", canonicalLink.outerHTML);
-    } else if (canonicalURL.match(/\/profile\/\d+/)) {
-      // If URL contains only ID
-      const id = this.props.match.params.id.split("-")[0];
-
-      // Fetch the first name and last name based on the ID
-      fetch(`${backendHost}/DoctorsActionController?DocID=${id}&cmd=getProfile`)
-        .then((res) => res.json())
-        .then((json) => {
-          // Use the first name and last name directly from the API response
-          const firstName = json.firstName;
-          const lastName = json.lastName;
-
-          canonicalLink.href = `${window.location.origin}/profile/${id}-${firstName}-${lastName}`;
-          document.head.appendChild(canonicalLink);
-
-          // Log the constructed canonical link to the console
-          console.log("Canonical Link:", canonicalLink.outerHTML);
-        })
-        .catch((err) => {
-          // Handle the error or use a default name
-          canonicalLink.href = canonicalURL;
-          document.head.appendChild(canonicalLink);
-
-          // Log the constructed canonical link to the console
-          console.log("Canonical Link:", canonicalLink.outerHTML);
-        });
-    } else {
-      canonicalLink.href = canonicalURL;
-      // Log the constructed canonical link to the console
-      console.log("Canonical Link:", canonicalLink.outerHTML);
-    }
   }
 
-  setModalShow = (action) => {
-    this.setState({
-      modalShow: action,
-    });
-  };
-  handleClose = () => {
-    this.setState({
-      show: false,
-    });
-  };
+  const handleDatesChange = (newValue) => {
+    const formattedDate = newValue.format("YYYY-MM-DD");
 
-  handleShow = () => {
-    this.setState({
-      show: true,
-    });
-  };
+    setState((prevState) => ({
+      ...prevState,
+      selectedDate: formattedDate,
+      value: newValue,
+    }));
 
-  handleTimeSlot =(time)=>{
-// console.log('handle')
-//     console.log('time',time)
-    this.setState(
-      { selectedTimeSlot: time },
-      // () => {
-      //   console.log("selectedslot", this.state.selectedTimeSlot);
-      // }
-    );
-  }
-
-  checkIfImageExits = (imageUrl) => {
-    fetch(imageUrl, { method: "HEAD" })
-      .then((res) => {
-        if (res.ok) {
-          this.setState({
-            imageExists: true,
-          });
-        } else {
-          this.setState({
-            imageExists: false,
-          });
-        }
-      })
-      .catch((err) => {
-        return;
-      });
-  };
-
-  onError = (e) => {
-    e.target.parentElement.innerHTML = `<i class="fas fa-user-md fa-6x"></i>`;
-  };
-
-  initVideoChat = () => {
-
-
-    // console.log('idcreated',docid)
-    const id = this.props.match.params.id.split("-")[0];
-    
-    // console.log('idcreated',id)
-
-
-    fetch(`${backendHost}/video/create/room/${id}`)
-      // .then(res => JSON.parse(res))
+    fetch(`${backendHost}/appointments/get/Slots/${state.docid}`)
       .then((res) => res.json())
       .then((json) => {
-        
+        const unbookedSlotsForDate = json.unbookedSlots[formattedDate] || [];
+        const timeSlotsForDate = json.totalDates[formattedDate] || [];
 
-        // this.setState({
-        //  videoLink:json,
-        
-        // });
-
-
-
-        if (!this.state.callFrame && json != "Error") {
-          // Initialize the video chat
-          const newCallFrame =  DailyIframe.createFrame({
-           
-        // Check if callFrame already exists
-         showLeaveButton: true,
-          });
-
-
-             
-          // newCallFrame.join({ url: 'https://uat.daily.co/qLxOzn6ZKVyqkQ6YByzL' });
-          newCallFrame.join({ url:json });
-    
-          // Attach a listener for the 'left-meeting' event
-          newCallFrame.on('left-meeting', () => {
-            // When leaving the meeting, destroy the frame
-            newCallFrame.destroy();
-            this.setState({ callFrame: null });
-          });
-    
-          
-    
-          this.setState({ callFrame: newCallFrame });
-          
-        }
+        setState((prevState) => ({
+          ...prevState,
+          unbookedSlots: unbookedSlotsForDate,
+          timeSlots: timeSlotsForDate,
+        }));
+      })
+      .catch((error) => {
+        console.error("Error fetching slots:", error);
       });
+  };
 
-
-
-
-  
-  }
-
-  render() {
-
-    const { value, highlightedDays } = this.state;
-    const today = dayjs();
-
-    const { selectedDate, selectedTime } = this.state;
-    var { isLoaded, items } = this.state;
-    if (!isLoaded) {
-      return (
-        <>
-          <Header history={this.props.history} />
-          <div className="loader my-4">
-            {/* <i className="fa fa-spinner fa-spin fa-6x" /> */}
-            <img src={Heart} alt="All Cures Logo" id="heart" />
-          </div>
-          <Footer />
-        </>
-      );
-    } else if (isLoaded && items == null) {
-      return (
-        <>
-          <Header history={this.props.history} />
-          <Container className="mt-5 my-5">
-            <h3 className="m-auto text-center">
-              <span className="icon-loupe "></span>
-            </h3>
-            <h3 className="text-center">Doctor not found</h3>
-          </Container>
-          <Footer />
-        </>
-      );
-    } else if (isLoaded) {
-      const { isFilePicked, showAlert, alertMsg } = this.state;
-      return (
-        <div>
-          {showAlert && (
-            <div className="alert alert-success pop-up border-bottom">
-              <div className="h5 mb-0 text-center">{alertMsg}</div>
-              <div className="timer"></div>
-            </div>
-          )}
-          <HelmetMetaData
-            title={
-              items.prefix +
-              " " +
-              items.firstName +
-              " " +
-              items.lastName
-            }
-            description={items.about}
-            image={`${imagePath}/cures_articleimages/doctors/${items.docID}.png`}
-            keywords={
-              items.firstName +
-              " " +
-              items.lastName +
-              " , " +
-              items.hospitalAffiliated +
-              " , " +
-              items.primarySpl
-            }
-          ></HelmetMetaData>
-          <Header history={this.props.history} />
-
-          <section className="Profileleft">
-            <div className="container">
-              <div className="row">
-                <div className="col-md-8 pd-0">
-                  <div className="profile-card clearfix">
-                    <div className="col-md-3">
-                      <div className="profileImageBlok">
-                        <div
-                          className="profile-card-img text-center"
-                          id="profile-card-img"
-                        >
-                          {/* {
-                            imageUploadLoading?
-                              <div className="loader">
-                                <img src={Heart} alt="All Cures Logo" id="heart"/>
-                              </div>
-                            : null
-                          } */}
-                          <h1 style={{ display: "none" }}>
-                            All Cures is a product developed, managed and owned
-                            by Etherium Technologies. Our mission is to make it
-                            simple and convenient for users to get information
-                            on Cures from anywhere in the world. Our belief is
-                            that your wellness is your well-being. We are
-                            passionate about giving our users the unique
-                            experience that is both fulfilling and wholesome.
-                          </h1>
-                          <h2 style={{ display: "none" }}>
-                            Ayurveda, Homeopathy, Chinese Medicine, Persian,
-                            Unani
-                          </h2>
-                          {items.imgLoc? (
-                            <img
-                              alt={items.firstName}
-                              src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-180,h-230,f-webp${items.imgLoc}`}
-                            />
-                          ) : (
-                            <i class="fas fa-user-md fa-6x"></i>
-                          )}
+  const today = dayjs();
+  return (
+    <div>
+      <HelmetMetaData
+        title={`${items.prefix} ${items.firstName} ${items.lastName}`}
+        description={items.about}
+        image={`${imagePath}/cures_articleimages/doctors/${items.docID}.png`}
+        keywords={`${items.firstName} ${items.lastName}`}
+      />
+      <Header history={history} />
+      <section className="Profileleft">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-8 pd-0">
+              <div className="profile-card clearfix">
+                <div className="col-md-3">
+                  <div className="profileImageBlok">
+                    <div
+                      className="profile-card-img text-center"
+                      id="profile-card-img"
+                    >
+                      {/* Example loader implementation */}
+                      {state.imageUploadLoading ? (
+                        <div className="loader">
+                          <img src={Heart} alt="All Cures Logo" id="heart" />
                         </div>
-
-                        {/* {   this.state.userAvailStatus==1 &&
-                        <div
-                          style={{
-                            marginTop: "-44px",
-                            marginLeft: "102px",
-                            position: "absolute",
-                          }}
-                        >
-                          <button
-                            type="button"
-                            class="btn btn-primary bg-transparent border-0"
-                            // data-toggle="modal"
-                            // data-target="#exampleModal"
-                            onClick={this. initVideoChat}
-                          >
-                            <Avatar sx={{ bgcolor: green[500] }}>
-                              <VideoCallOutlined />
-                            </Avatar>
-
-                           
-                          </button>
-
-                        </div>
-    } */}
-                        {this.props.match.params.id.split("-")[0] === userId ||
-                        userAccess == 9 ? (
-                          <>
-                            <label for="fileInput" className="image-edit-icon">
-                              <i className="fas fa-edit fa-2x"></i>
-                            </label>
-                            <input
-                              id="fileInput"
-                              type="file"
-                              name="file"
-                              onChange={this.changeHandler}
-                              required
-                            />
-                          </>
-                        ) : null}
-
-                        {/* {isFilePicked ? (
-
-                              <div>
-                                
-                                  <p>Filename: {selectedFile.name}</p>
-
-                                  <p>Filetype: {selectedFile.type}</p>
-
-                                  <p>Size in bytes: {selectedFile.size}</p>
-
-                                  <p>
-
-                                      lastModifiedDate:{' '}
-
-                                      {selectedFile.lastModifiedDate.toLocaleDateString()}
-
-                                  </p>
-
-                              </div>
-
-                              ) : (
-
-                              <p>Select a file to show details</p>
-
-                              )} */}
-                      </div>
-                    </div>
-                    <div className="col-md-9">
-                      <div className="profile-info">
-                        <div className="profile-infoL-card">
-                          <div className="profile-info-name" id="DocDetails">
-                            <div className="h4 font-weight-bold">
-                              {items.prefix} {items.firstName}{" "}
-                              {items.middleName} {items.lastName}{" "}
-                              {/* Show average rating */}
-                              {this.state.ratingValue ? (
-                                <div
-                                  className=" mt-2 mb-4"
-                                  id="doctor-avg-rating"
-                                >
-                                  <span class="fa fa-star opacity-7"></span>
-                                  <span class="fa fa-star opacity-7"></span>
-                                  <span class="fa fa-star opacity-7"></span>
-                                  <span class="fa fa-star opacity-7"></span>
-                                  <span class="fa fa-star opacity-7"></span>
-                                </div>
-                              ) : null}
-                            </div>
-                            <div className="h5 text-capitalize">
-                              <i class="fas fa-award pr-1"></i>
-                              {/* {items.Primary_Spl.toLowerCase()} */}
-                              {items.primarySpl}
-                            </div>
-                            <div className="h5 ">{items.experience}</div>
-                            <div className="h5 text-capitalize">
-                              <i class="fas fa-hospital pr-1"></i>
-                              {items.hospitalAffiliated} {items.country}
-                            </div>
-
-                            <div></div>
-                          </div>
-                        </div>
-                        <div className="rating-reviews">
-                          <div className="profile-info-rating">
-                            <h2>
-                              <form className="rating"></form>
-                            </h2>
-                          </div>
-                          <div className="reviews">
-                            {userAccess === "9" ||
-                            parseInt(userId) ===
-                              parseInt(
-                                this.props.match.params.id.split("-")[0]
-                              ) ? (
-                              <Button
-                                variant="dark"
-                                onClick={() => this.setModalShow(true)}
-                              >
-                                Edit Profile
-                              </Button>
-                            ) : null}
-
-
-                           {    userId &&
-                           this.state.items.videoService==1 &&
-                               <button
-                            type="button"
-                            class="btn btn-primary bg-dark border-0 ml-2"
-                            data-toggle="modal"
-                            data-target="#exampleModal"
-                          >
-                           Video Consultation
-                          </button>
-
-                                         }
-                          
-                          <div
-                            class="modal fade"
-                            id="exampleModal"
-                            tabindex="-1"
-                            role="dialog"
-                            aria-labelledby="exampleModalLabel"
-                            aria-hidden="true"
-                          >
-                            <div class="modal-dialog" role="document">
-                              <div class="modal-content" style={{minWidth:"600px"}}>
-                                <div class="modal-header">
-                                  <h5
-                                    class="modal-title p-3 font-weight-bold "
-                                    id="exampleModalLabel"
-                                  >
-                                    Schedule your Appointment
-                                  </h5>
-                                  <button
-                                    type="button"
-                                    class="close appn"
-                                    data-dismiss="modal"
-                                    aria-label="Close"
-                                  >
-                                    <span aria-hidden="true">&times;</span>
-                                  </button>
-                                </div>
-                                <div
-                                  class="modal-body"
-                                  style={{ minHeight: "500px" }}
-                                >
-                                  {/* <div className="d-flex">
-                                   
-                                  </div> */}
-
-
-                                  {/* <Calendar onChange={this.onChange} value={this.state.value} /> */}
-                                    
-{/* 
-                                    <div style={this.calendarStyle}>
-                                  <Calendar 
-                                   onChange={this.state.date} 
-                                   value={this.state.value}
-                                   tileContent={this.tileContent}
-                                 className="calButton"
-                                    />
-
-                                    </div>
-
-                                  <p className='text-center'>
-          <span className='bold'>Selected Date:</span>{' '}
-          {this.state.date.toDateString()}
-        </p> */}
-
-
-        <div className="row">
-
-          <div className=" col-md-8">
-
-                                  <LocalizationProvider
-                                    dateAdapter={AdapterDayjs}
-                                  >
-                                    <DemoContainer
-                                      components={["DatePicker", "TimePicker"]}
-                                    >
-
-                                    
-{/* <StaticDatePicker
-    label="Select Date"
-    value={selectedDate}
-    onChange={this.handleDateChange}
-    sx={{
-        '.MuiPickersDay-root': {
-            borderRadius: 6,
-            borderWidth: 1,
-            borderColor: '#2196f3',
-            border: '1px solid',
-            backgroundColor: '#bbdefb',
-            '&:nth-child(even)': {
-                backgroundColor: '#FFC0CB', // Example color for even days
-            },
-            '&:nth-child(odd)': {
-                backgroundColor: '#87CEEB', // Example color for odd days
-            },
-        },
-    }}
-/> */}
-
-
-
-         
-
-            <StaticDatePicker
-            defaultValue={today}
-            minDate={today}
-            maxDate={today.add(1, "month")}
-            slots={{
-              day: ServerDay,
-            }}
-            slotProps={{
-              day: {
-                highlightedDays,
-              },
-            }}
-        
-
-            onChange={this.handleDatesChange} // Add onChange to update selectedDate
-            showToolbar={false} 
-            shouldDisableDate={this.disableDate}
-            // renderDay={this.renderDay}
-          />
-          
-           
-
-
-                                      
-
-                                      {/* <TimePicker
-                                        label="Select Time"
-                                        value={selectedTime}
-                                        onChange={this.handleTimeChange}
-                                        minutesStep={15}
-                                      /> */}
-
-
-                                    
-                                    </DemoContainer>
-                                  </LocalizationProvider>
-                                  </div>
-                                      <div className="col-sm-12 col-md-4 p-5">
-
-
-                                      {this.state.selectedDate && 
-                                      <>
-
-                                        <p> Select Time Slot</p>
-                                        
-
-                                      {
-                                        this.state.timeSlots && this.state.timeSlots.map((time,index)=>{
-
-                                          const isUnbooked = this.state.unbookedSlots.includes(time);
-                                          const isSelected = this.state.selectedTimeSlot === time;
-
-
-                                          // Parse the time slot to get hours and minutes
-    const [hours, minutes] = time.split(':');
-
-    // Get the current date and time
-    const currentDate = new Date();
-    const currentDateString = currentDate.toDateString();
-    const currentTime = currentDate.getHours() * 60 + currentDate.getMinutes(); // Current time in minutes
-
-    // Get the selected date
-    const selectedDate = new Date(this.state.selectedDate);
-    const selectedDateString = selectedDate.toDateString();
-
-    // Check if the selected date is today
-    const isToday = currentDateString === selectedDateString;
-
-    // Calculate the time slot in minutes
-    const timeSlotTime = parseInt(hours) * 60 + parseInt(minutes);
-
-    // Check if the time slot is for today and in the past
-    const isPast = isToday && timeSlotTime < currentTime;
-
-                                          return(
-                                            <div className="row pt-2">
-                                              <div col-md-6 className=""> 
-                                              <div style={{minWidth:"100px"}}>                                          
-                                              <Button
-                                               variant={isSelected ? "primary" : (isUnbooked ? "outline-primary" : "outline-danger")}
-                                                 disabled={!isUnbooked || isPast}  className="w-100 d-block"  onClick={() => this.handleTimeSlot(time)}>{time}</Button>
-                                              {/* onClick={()=>this.handleTimeSlot(time)} */}
-                                              </div>
-
-                                               </div>
-                                             </div>
-                                          )
-                                        })
-                                      }
-                                      </>
-
-                                    }
-           
-
-                                      </div>
-
-                                  </div>
-
-                                  <div>
-                                    {this.state.selectedDate&& (
-                                      <p  className="ml-4 my-2" style={{fontSize:"18px"}}>
-                                        Date:{" "}
-                                        {dayjs(this.state.selectedDate).format(
-                                          "YYYY-MM-DD"
-                                        )}
-                                      </p>
-                                    )}
-
-                                  {this.state.selectedTimeSlot && (
-                                      <p   className="ml-4 my-2" style={{fontSize:"18px"}}>
-                                      Time:{this.state.selectedTimeSlot}
-                                        {/* {dayjs(selectedTime).format("HH:mm")} */}
-                                      </p>
-                                  )}
-                                  </div>
-
-                                   
-                                  {this.state.selectedTimeSlot &&
-
-                                  <Button
-                                variant="dark"
-                                onClick={this.bookAppn}
-                                className="p-2 m-4"
-                              >
-                                Book Appointment
-                              </Button>
-
-                              
-
-                                  }
-                                                     {/* <Button
-                                variant="dark"
-                                onClick={this.payment}
-                                className="p-2 m-4"
-                              >
-                                Pay Now
-                              </Button> */}
-
-                                
-                               {
-                            this.state.bookingLoading?
-                                <Alert variant="danger" className="h6 mx-3">Please wait while we book your Appointment!!</Alert>
-                                : null
-                                }
-
-
-                              {
-                            this.state.alertBooking?
-                                <Alert variant="success" className="h6 mx-3">Booked successfully!! Check your Email.</Alert>
-                                : null
-                        }
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-
-                            <EditProfile
-                              show={this.state.modalShow}
-                              onHide={() => this.setModalShow(false)}
-                              items={items}
-                              fetchDoctor={this.fetchDoctorData}
-                              id={this.props.match.params.id.split("-")[0]}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="aboutDr">
-                    <div className="h4 font-weight-bold">
-                      About {items.prefix} {items.firstName}{" "}
-                      {items.middleName} {items.lastName}
-                    </div>
-
-                    <div id="about-contain">
-                      <p className="text one">
-                        {" "}
-                        {items.about.includes("•")
-                          ? items.about
-                              .split("•")
-                              .map((i, idx) => (
-                                <li className={`list-${idx}`}>{i}</li>
-                              ))
-                          : items.about}{" "}
-                        {/* {this.props.match.params.id.split('-')[0] == 874?<li>More about him at <a href="https://planetayurveda.com" target="_blank" rel="noreferrer">www.planetayurveda.com</a>.</li>: null} */}
-                        {this.props.match.params.id.split("-")[0] == 872 ? (
-                          <>
-                            <br />
-                            More about him at{" "}
-                            <a
-                              href="https://ayurvedguru.com"
-                              target="_blank"
-                              rel="noreferrer"
-                            >
-                              www.ayurvedguru.com
-                            </a>
-                            .
-                          </>
-                        ) : null}
-                        {this.props.match.params.id.split("-")[0] == 878 ? (
-                          <>
-                            <br />
-                            More about him at{" "}
-                            <a
-                              href="http://www.ayushmanbhavayurveda.com/"
-                              target="_blank"
-                              rel="noreferrer"
-                            >
-                              www.ayushmanbhavayurveda.com
-                            </a>
-                            .
-                          </>
-                        ) : null}
-                        {/* {this.props.match.params.id.split('-')[0] == 878?<><br/>More about him at <a href="https://www.ayurvedanashik.com" target="_blank" rel="noreferrer">www.ayurvedanashik.com</a>.</>: null} */}
-                        {this.props.match.params.id.split("-")[0] == 884 ? (
-                          <>
-                            <br />
-                            More about him at{" "}
-                            <a
-                              href="http://expertayurveda.com/"
-                              target="_blank"
-                              rel="noreferrer"
-                            >
-                              http://expertayurveda.com/
-                            </a>
-                            .
-                          </>
-                        ) : null}
-                      </p>
-                      <a
-                        href={`${items.websiteUrl}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="h6"
-                      >
-                        {items.websiteUrl}
-                      </a>
-                    </div>
-                    <div></div>
- 
-                    <br />
-                    <div className="abt-eduction ">
-                      <div className="h4 font-weight-bold">Education</div>
-                      {items.degDesc}
-                    </div>
-                    <div className="mt-5">
-                      <div className="h4 font-weight-bold">Accomplishments</div>
-                      {items.awards.split("•").map((i, idx) => (
-                        <li className={`list-${idx}`}>{i}</li>
-                      ))}
-                    </div>
-
-                    <br />
-                    <div className="about-specialties">
-                      <div className="h4 font-weight-bold">Specialties</div>
-                      <ul>
-                        <li>{items.primarySpl}</li>
-                      </ul>
-                      <ul>
-                        <li>{items.otherSpecializations}</li>
-                      </ul>
-                    </div>
-                    <br />
-
-                    {/* </div> */}
-                    <div className="abt-eduction ">
-                      <div className="h4 font-weight-bold">Miscellaneous</div>
-                      <div className="h6 font-weight-bold">
-                        City:
-                        <span> {items.city}</span>
-                      </div>
-                      <div className="h6 font-weight-bold">
-                        State:
-                        <span> {items.state}</span>
-                      </div>
-                      <div className="h6 font-weight-bold">
-                        Country:
-                        <span> {items.country}</span>
-                      </div>
-                      <div className="h6 font-weight-bold">
-                        Gender:
-                        {items.gender === 2 ? (
-                          <span> Male </span>
-                        ) : (
-                          <span> Female</span>
-                        )}
-                      </div>
-
-                      {/* {items.subscription === 1 ? (
-                        <>
-                          <Button
-                            className="ml-3 mt-4 btn-article-search"
-                            id="textComment"
-                            onClick={this.postLead}
-                          >
-                            Contact Doctor
-                          </Button>
-
-                          <Modal
-                            show={this.state.show}
-                            onHide={this.hideModal}
-                            className="rounded mt-5"
-                          >
-                            <Modal.Header
-                              className="bg-review py-3"
-                              closeButton
-                            >
-                              <Modal.Title className="pl-4">
-                                {items.prefix}. {items.docname_first}{" "}
-                                {items.docname_middle} {items.docname_last}{" "}
-                                contact info...
-                              </Modal.Title>
-                            </Modal.Header>
-
-                            <Modal.Body className="rounded">
-                              <div className="pl-4"></div>
-
-                              <div className="pl-4"></div>
-                            </Modal.Body>
-                            <Modal.Footer></Modal.Footer>
-                          </Modal>
-                        </>
-                      ) : null} */}
-                    </div>
-                  </div>
-
-                  {userAccess ? (
-                    <>
-                      {this.state.rating.length === 0 ? (
-                        <span className="h5 mt-3">
-                          {" "}
-                          You feedback is valuable to us, Please rate here...{" "}
-                        </span>
+                      ) : null}
+
+                      <h1 style={{ display: "none" }}>
+                        All Cures is a product developed, managed, and owned by
+                        Etherium Technologies. Our mission is to make it simple
+                        and convenient for users to get information on Cures
+                        from anywhere in the world. Our belief is that your
+                        wellness is your well-being. We are passionate about
+                        giving our users the unique experience that is both
+                        fulfilling and wholesome.
+                      </h1>
+                      <h2 style={{ display: "none" }}>
+                        Ayurveda, Homeopathy, Chinese Medicine, Persian, Unani
+                      </h2>
+                      {state.items.imgLoc ? (
+                        <img
+                          alt={state.items.firstName}
+                          src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-180,h-230,f-webp${state.items.imgLoc}`}
+                        />
                       ) : (
-                        <p className="h5 mt-3">
-                          Your Earlier Rated {this.state.rating}{" "}
-                          <span className="icon-star-1"></span>
-                          <br />
-                          Rate Again,
-                        </p>
+                        <i className="fas fa-user-md fa-6x"></i>
                       )}
-                    </>
-                  ) : (
-                    <div className="h5 mt-3">Rate here</div>
-                  )}
-                  <div id="">
-                    <Rating
-                      docid={this.props.match.params.id.split("-")[0]}
-                      ratingVal={this.state.rating}
-                    />
-                  </div>
+                    </div>
 
-                  {
-                  
-                    userId && items.chatService == 1 && userAccess != 1 ? (
+                    {/* Show the file input only if the user has permission */}
+                    {id.split("-")[0] === userId || userAccess === 9 ? (
                       <>
-                        {items.imgLoc ? (
-                          <Chat
-                            imageURL={items.imgLoc}
-                            items={items}
-                            docid={this.state.docid}
-                          />
-                        ) : (
-                          <Chat
-                            dummy={<i class="fas fa-user-sm "></i>}
-                            items={items}
-                            docid={items.docID}
-                          />
-                        )}
-                      </>
-                    ) : null
-                  }
-
-                  <div className="comment-box">
-                    {userId ? (
-                      <>
-                        <Comment
-                          refreshComments={this.getComments}
-                          docid={this.props.match.params.id.split("-")[0]}
+                        <label htmlFor="fileInput" className="image-edit-icon">
+                          <i className="fas fa-edit fa-2x"></i>
+                        </label>
+                        <input
+                          id="fileInput"
+                          type="file"
+                          name="file"
+                          onChange={changeHandler}
+                          required
                         />
                       </>
                     ) : null}
                   </div>
-
-                  {/* SHOW ALL COMMENTS */}
-                  <div className="main-hero">
-                    {!this.state.showMore
-                      ? this.state.comment
-                          .slice(0, 3)
-                          .map((item, i) => this.showComments(item, i))
-                      : this.state.comment.map((item, i) =>
-                          this.showComments(item, i)
-                        )}
-                  </div>
-                  {this.state.comment
-                    ? this.state.comment.length > 3 && (
-                        <button
-                          id="show-hide-comments"
-                          className="white-button-shadow btn w-100"
-                          onClick={() => {
-                            this.state.showMore
-                              ? this.setState({
-                                  showMore: false,
-                                })
-                              : this.setState({
-                                  showMore: true,
-                                });
-                          }}
-                        >
-                          {!this.state.showMore ? "Show more" : "Hide"}
-                        </button>
-                      )
-                    : null}
                 </div>
-                <div className="col-md-4">
-                  <div
-                    className="profile-card doctors-article d-flex flex-column hideScroll"
-                    style={{ overflowY: " auto", maxHeight: "960px" }}
-                  >
-                    <div className="h5 font-weight-bold mb-3">
-                      {/* No cures By Dr. {items.docname_first} {items.docname_middle} {items.docname_last} yet */}
-                      <div className="text-center">Explore Cures</div>
-                    </div>
-                    {this.state.articleItems
-                      ? this.state.articleItems.map((i, index) => (
-                          <AllPost
-                            id={i.article_id}
-                            title={i.title}
-                            f_title={i.friendly_name}
-                            w_title={i.window_title}
-                            type={i.type}
-                            content={decodeURIComponent(
-                              i.content
-                                ? i.content.includes("%22%7D%7D%5D%7D")
-                                  ? i.content
-                                  : i.content.replace("%7D", "%22%7D%7D%5D%7D")
-                                : null
-                            )}
-                            // type = {i.type}
-                            published_date={i.published_date}
-                            over_allrating={i.over_allrating}
-                            // country = {i.country_id}
-                            imgLocation={i.content_location}
-                            // history = {props.history}
-                          />
-                        ))
-                      : null}
-
-                    {this.state.articleItems.length > 0 && (
-                      <div className="d-grid mt-3 mb-5 text-center">
-                        <button
-                          onClick={this.allPosts}
-                          type="button"
-                          className="btn btn-danger"
-                        >
-                          Load More
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-          <section className="chat">
-            <div className="container">
-              <div className="row">
-                <div className="">
-                  {" "}
-                  <a href="//#">
-                    {" "}
-                    <span className="icon-chatbot">
-                      <span className="path1"></span>
-                      <span className="path2"></span>
-                      <span className="path3"></span>
-                      <span className="path4"></span>
-                      <span className="path5"></span>
-                      <span className="path6"></span>
-                      <span className="path7"></span>
-                      <span className="path8"></span>
-                      <span className="path9"></span>
-                      <span className="path10"></span>
-                      <span className="path11"></span>
-                      <span className="path12"></span>
-                      <span className="path13"></span>
-                      <span className="path14"></span>
-                      <span className="path15"></span>
-                      <span className="path16"></span>
-                      <span className="path17"></span>
-                      <span className="path18"></span>
-                      <span className="path19"></span>
-                    </span>{" "}
-                  </a>{" "}
-                </div>
-              </div>
-            </div>
-          </section>
-          <div></div>
-          <div
-            className="modal fade bd-example-modal-lg"
-            tabindex="-1"
-            role="dialog"
-            aria-labelledby="myLargeModalLabel"
-            aria-hidden="true"
-          >
-            <div className="modal-dialog modal-lg">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <button
-                    type="button"
-                    className="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <section className="appStore">
-                  <div className="container">
-                    <div className="row">
-                      <div
-                        className="appStoreBg clearfix"
-                        style={{
-                          display: "flex",
-                          width: "100%",
-                          flexWrap: "wrap",
-                        }}
-                      >
-                        <div className="col-md-6 col-sm-6 col-sx-12">
-                          <div className="innerapp">
-                            <div className="doc-img">
-                              <img src={Doct} alt="doct" />
+                <div className="col-md-9">
+                  <div className="profile-info">
+                    <div className="profile-infoL-card">
+                      <div className="profile-info-name" id="DocDetails">
+                        <div className="h4 font-weight-bold">
+                          {state.items.prefix} {state.items.firstName}{" "}
+                          {state.items.middleName} {state.items.lastName}
+                          {state.ratingValue && (
+                            <div className="mt-2 mb-4" id="doctor-avg-rating">
+                              {[...Array(5)].map((_, index) => (
+                                <span
+                                  key={index}
+                                  className="fa fa-star opacity-7"
+                                ></span>
+                              ))}
                             </div>
-                            <div className="btn-Gropu">
-                              <a href="/#" className="appBTN">
-                                App Store
-                              </a>
-                              <a href="/#" className="appBTN">
-                                App Store
-                              </a>
+                          )}
+                        </div>
+                        <div className="h5 text-capitalize">
+                          <i className="fas fa-award pr-1"></i>
+                          {state.items.primarySpl}
+                        </div>
+                        <div className="h5">{state.items.experience}</div>
+                        <div className="h5 text-capitalize">
+                          <i className="fas fa-hospital pr-1"></i>
+                          {state.items.hospitalAffiliated} {state.items.country}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="rating-reviews">
+                      <div className="profile-info-rating">
+                        <h2>
+                          <form className="rating"></form>
+                        </h2>
+                      </div>
+                      <div className="reviews">
+                        {(userAccess === "9" ||
+                          parseInt(userId) === parseInt(id.split("-")[0])) && (
+                          <Button
+                            variant="dark"
+                            onClick={() =>
+                              setState({ ...state, modalShow: true })
+                            }
+                          >
+                            Edit Profile
+                          </Button>
+                        )}
+
+                        {state.items.videoService == 1 && (
+                          <button
+                            type="button"
+                            className="btn btn-primary bg-success border-0 ml-2 "
+                            onClick={() => {
+                              if (userId) {
+                                // User is logged in, show the modal
+                                document
+                                  .getElementById("exampleModal")
+                                  .classList.add("show");
+                                document.getElementById(
+                                  "exampleModal"
+                                ).style.display = "block";
+                                document.body.classList.add("modal-open");
+                              } else {
+                                // User is not logged in, show an alert
+                                console.log("user id not available");
+                               alert(" You need to log in to book a consultation. Please log in or create an account to proceed.")
+                                // <Test
+                                //   show={true}
+                                //   onHide={() => this.setModalShow(false)}
+                                // />;
+                              }
+                            }}
+                          >
+                            <VideocamRoundedIcon />
+                            Consult Now
+                          </button>
+                        )}
+                        
+
+                        <div
+                          className="modal fade"
+                          id="exampleModal"
+                          tabIndex="-1"
+                          role="dialog"
+                          aria-labelledby="exampleModalLabel"
+                          aria-hidden="true"
+                        >
+                          <div className="modal-dialog" role="document">
+                            <div
+                              className="modal-content"
+                              style={{ minWidth: "600px" }}
+                            >
+                              <div className="modal-header">
+                                <h5
+                                  className="modal-title p-3 font-weight-bold"
+                                  id="exampleModalLabel"
+                                >
+                                  Schedule your Appointment
+                                </h5>
+                                <button
+                                  type="button"
+                                  className="close appn"
+                                  data-dismiss="modal"
+                                  aria-label="Close"
+                                >
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div
+                                className="modal-body"
+                                style={{ minHeight: "500px" }}
+                              >
+                                <div className="row">
+                                  <div className="col-md-8">
+                                    <LocalizationProvider
+                                      dateAdapter={AdapterDayjs}
+                                    >
+                                      <DemoContainer
+                                        components={[
+                                          "DatePicker",
+                                          "TimePicker",
+                                        ]}
+                                      >
+                                        <StaticDatePicker
+                                          defaultValue={state.value}
+                                          minDate={dayjs()}
+                                          maxDate={dayjs().add(1, "month")}
+                                          onChange={handleDatesChange}
+                                          shouldDisableDate={(date) =>
+                                            state.highlightedDays.includes(
+                                              date.format("YYYY-MM-DD")
+                                            )
+                                          }
+                                        />
+                                      </DemoContainer>
+                                    </LocalizationProvider>
+                                  </div>
+                                  <div className="col-sm-12 col-md-4 p-5">
+                                    {state.selectedDate && (
+                                      <>
+                                        <p>Select Time Slot</p>
+                                        {state.timeSlots.map((time, index) => {
+                                          const isUnbooked =
+                                            state.unbookedSlots.includes(time);
+                                          const isSelected =
+                                            state.selectedTimeSlot === time;
+                                          return (
+                                            <div
+                                              key={index}
+                                              className="row pt-2"
+                                            >
+                                              <div className="col-md-6">
+                                                <Button
+                                                  variant={
+                                                    isSelected
+                                                      ? "primary"
+                                                      : isUnbooked
+                                                      ? "outline-primary"
+                                                      : "outline-danger"
+                                                  }
+                                                  disabled={!isUnbooked}
+                                                  className="w-100 d-block"
+                                                  onClick={() =>
+                                                    setState({
+                                                      ...state,
+                                                      selectedTimeSlot: time,
+                                                    })
+                                                  }
+                                                >
+                                                  {time}
+                                                </Button>
+                                              </div>
+                                            </div>
+                                          );
+                                        })}
+                                      </>
+                                    )}
+                                  </div>
+                                </div>
+                                {state.selectedDate && (
+                                  <p
+                                    className="ml-4 my-2"
+                                    style={{ fontSize: "18px" }}
+                                  >
+                                    Date:{" "}
+                                    {dayjs(state.selectedDate).format(
+                                      "YYYY-MM-DD"
+                                    )}
+                                  </p>
+                                )}
+                                {state.selectedTimeSlot && (
+                                  <p
+                                    className="ml-4 my-2"
+                                    style={{ fontSize: "18px" }}
+                                  >
+                                    Time: {state.selectedTimeSlot}
+                                  </p>
+                                )}
+                                {state.selectedTimeSlot && (
+                                  <Button
+                                    variant="dark"
+                                    onClick={bookAppointment}
+                                    className="p-2 m-4"
+                                  >
+                                    Book Appointment
+                                  </Button>
+                                )}
+                                {state.bookingLoading && (
+                                  <Alert variant="danger" className="h6 mx-3">
+                                    Please wait while we book your Appointment!!
+                                  </Alert>
+                                )}
+                                {state.alertBooking && (
+                                  <Alert variant="success" className="h6 mx-3">
+                                    Booked successfully!! Check your Email.
+                                  </Alert>
+                                )}
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </section>
+                  <EditProfile
+                    show={state.modalShow}
+                    onHide={() => setState({ ...state, modalShow: false })}
+                    items={state.items}
+                    fetchDoctor={fetchDoctorData}
+                    id={id.split("-")[0]}
+                  />
+                </div>
+              </div>
+              <div className="aboutDr">
+                <div className="h4 font-weight-bold">
+                  About {state.items.prefix} {state.items.firstName}{" "}
+                  {state.items.middleName} {state.items.lastName}
+                </div>
+
+                <div id="about-contain">
+                  <p className="text one">
+                    {state.items.about.includes("•")
+                      ? state.items.about.split("•").map((item, idx) => (
+                          <li key={idx} className={`list-${idx}`}>
+                            {item}
+                          </li>
+                        ))
+                      : state.items.about}
+                    {id.split("-")[0] === "872" && (
+                      <>
+                        <br />
+                        More about him at{" "}
+                        <a
+                          href="https://ayurvedguru.com"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          www.ayurvedguru.com
+                        </a>
+                        .
+                      </>
+                    )}
+                    {id.split("-")[0] === "878" && (
+                      <>
+                        <br />
+                        More about him at{" "}
+                        <a
+                          href="http://www.ayushmanbhavayurveda.com/"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          www.ayushmanbhavayurveda.com
+                        </a>
+                        .
+                      </>
+                    )}
+                    {id.split("-")[0] === "884" && (
+                      <>
+                        <br />
+                        More about him at{" "}
+                        <a
+                          href="http://expertayurveda.com/"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          http://expertayurveda.com/
+                        </a>
+                        .
+                      </>
+                    )}
+                  </p>
+                  {state.items.websiteUrl && (
+                    <a
+                      href={state.items.websiteUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="h6"
+                    >
+                      {state.items.websiteUrl}
+                    </a>
+                  )}
+                </div>
+
+                <br />
+
+                <div className="abt-eduction">
+                  <div className="h4 font-weight-bold">Education</div>
+                  <p>{state.items.degDesc}</p>
+                </div>
+
+                <div className="mt-5">
+                  <div className="h4 font-weight-bold">Accomplishments</div>
+                  {state.items.awards.split("•").map((award, idx) => (
+                    <li key={idx} className={`list-${idx}`}>
+                      {award}
+                    </li>
+                  ))}
+                </div>
+
+                <br />
+
+                <div className="about-specialties">
+                  <div className="h4 font-weight-bold">Specialties</div>
+                  <ul>
+                    <li>{state.items.primarySpl}</li>
+                  </ul>
+                  <ul>
+                    <li>{state.items.otherSpecializations}</li>
+                  </ul>
+                </div>
+
+                <br />
+
+                <div className="abt-eduction">
+                  <div className="h4 font-weight-bold">Miscellaneous</div>
+                  <div className="h6 font-weight-bold">
+                    City:
+                    <span> {state.items.city}</span>
+                  </div>
+                  <div className="h6 font-weight-bold">
+                    State:
+                    <span> {state.items.state}</span>
+                  </div>
+                  <div className="h6 font-weight-bold">
+                    Country:
+                    <span> {state.items.country}</span>
+                  </div>
+                  <div className="h6 font-weight-bold">
+                    Gender:
+                    {state.items.gender === 2 ? (
+                      <span> Male </span>
+                    ) : (
+                      <span> Female</span>
+                    )}
+                  </div>
+                </div>
+              </div>
+              {userAccess ? (
+                <>
+                  {state.rating.length === 0 ? (
+                    <span className="h5 mt-3">
+                      Your feedback is valuable to us, please rate here...
+                    </span>
+                  ) : (
+                    <p className="h5 mt-3">
+                      Your Earlier Rating: {state.rating}{" "}
+                      <span className="icon-star-1"></span>
+                      <br />
+                      Rate Again
+                    </p>
+                  )}
+                </>
+              ) : (
+                <div className="h5 mt-3">Rate here</div>
+              )}
+              <div id="">
+                <Rating docid={id.split("-")[0]} ratingVal={state.rating} />
+              </div>
+
+              {userId && items.chatService === 1 && userAccess !== 1 && (
+                <>
+                  {items.imgLoc ? (
+                    <Chat
+                      imageURL={items.imgLoc}
+                      items={items}
+                      docid={state.docid}
+                    />
+                  ) : (
+                    <Chat
+                      dummy={<i className="fas fa-user-sm"></i>}
+                      items={items}
+                      docid={state.docid}
+                    />
+                  )}
+                </>
+              )}
+              <div className="comment-box">
+                {userId && (
+                  <Comment
+                    refreshComments={getComments}
+                    docid={id.split("-")[0]}
+                  />
+                )}
+              </div>
+
+              {/* SHOW ALL COMMENTS */}
+              <div className="main-hero">
+                {!state.showMore
+                  ? state.comment
+                      .slice(0, 3)
+                      .map((item, i) => showComments(item, i))
+                  : state.comment.map((item, i) => showComments(item, i))}
+              </div>
+
+              {state.comment.length > 3 && (
+                <button
+                  id="show-hide-comments"
+                  className="white-button-shadow btn w-100"
+                  onClick={() =>
+                    setState((prevState) => ({
+                      ...prevState,
+                      showMore: !prevState.showMore,
+                    }))
+                  }
+                >
+                  {!state.showMore ? "Show more" : "Hide"}
+                </button>
+              )}
+            </div>
+            <div className="col-md-4">
+              <div
+                className="profile-card doctors-article d-flex flex-column hideScroll"
+                style={{ overflowY: " auto", maxHeight: "960px" }}
+              >
+                <div className="h5 font-weight-bold mb-3">
+                  {/* No cures By Dr. {items.docname_first} {items.docname_middle} {items.docname_last} yet */}
+                  <div className="text-center">Explore Cures</div>
+                </div>
+                {state?.articleItems
+                  ? state?.articleItems.map((i, index) => (
+                      <AllPost
+                        id={i.article_id}
+                        title={i.title}
+                        f_title={i.friendly_name}
+                        w_title={i.window_title}
+                        type={i.type}
+                        content={decodeURIComponent(
+                          i.content
+                            ? i.content.includes("%22%7D%7D%5D%7D")
+                              ? i.content
+                              : i.content.replace("%7D", "%22%7D%7D%5D%7D")
+                            : null
+                        )}
+                        // type = {i.type}
+                        published_date={i.published_date}
+                        over_allrating={i.over_allrating}
+                        // country = {i.country_id}
+                        imgLocation={i.content_location}
+                        // history = {props.history}
+                      />
+                    ))
+                  : null}
+
+                {state?.articleItems.length > 0 && (
+                  <div className="d-grid mt-3 mb-5 text-center">
+                    <button
+                      onClick={allPosts}
+                      type="button"
+                      className="btn btn-danger"
+                    >
+                      Load More
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
-          <Footer />
         </div>
-      );
-    }
-  }
+      </section>
+      <section className="chat">
+        <div className="container">
+          <div className="row">
+            <div className="">
+              {" "}
+              <a href="//#">
+                {" "}
+                <span className="icon-chatbot">
+                  <span className="path1"></span>
+                  <span className="path2"></span>
+                  <span className="path3"></span>
+                  <span className="path4"></span>
+                  <span className="path5"></span>
+                  <span className="path6"></span>
+                  <span className="path7"></span>
+                  <span className="path8"></span>
+                  <span className="path9"></span>
+                  <span className="path10"></span>
+                  <span className="path11"></span>
+                  <span className="path12"></span>
+                  <span className="path13"></span>
+                  <span className="path14"></span>
+                  <span className="path15"></span>
+                  <span className="path16"></span>
+                  <span className="path17"></span>
+                  <span className="path18"></span>
+                  <span className="path19"></span>
+                </span>{" "}
+              </a>{" "}
+            </div>
+          </div>
+        </div>
+      </section>
+      <div
+        className="modal fade bd-example-modal-lg"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="myLargeModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-lg">
+          <div className="modal-content">
+            <div className="modal-header">
+              <button
+                type="button"
+                className="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <section className="appStore">
+              <div className="container">
+                <div className="row">
+                  <div
+                    className="appStoreBg clearfix"
+                    style={{
+                      display: "flex",
+                      width: "100%",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <div className="col-md-6 col-sm-6 col-sx-12">
+                      <div className="innerapp">
+                        <div className="doc-img">
+                          <img src={Doct} alt="doct" />
+                        </div>
+                        <div className="btn-Gropu">
+                          <a href="/#" className="appBTN">
+                            App Store
+                          </a>
+                          <a href="/#" className="appBTN">
+                            App Store
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
 }
 
 export default Profile;
