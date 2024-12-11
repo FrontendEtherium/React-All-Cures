@@ -21,7 +21,6 @@ import ErrorBoundary from "../ErrorBoundary";
 
 const Test = (props) => {
   // Sign in form's states
-  console.log("sign up box opened", props);
 
   const [click, setClick] = useState(true);
   const [email, setEmail] = useState("");
@@ -37,7 +36,7 @@ const Test = (props) => {
     firstPassword: "",
     secondPassword: "",
   });
-
+  const [terms, setTerms] = useState("");
   const [userType, setUserType] = useState("other");
   const [buttonSignUpClick, setSignUpClicked] = useState("");
   const [number, setMname] = useState("");
@@ -129,8 +128,8 @@ const Test = (props) => {
     }
   };
 
-  const handleClick = (status) => {
-    if (status) {
+  const handleClick = () => {
+    if (click === true) {
       document.getElementById("container").classList.add("right-panel-active");
     } else {
       document

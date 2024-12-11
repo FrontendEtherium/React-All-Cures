@@ -469,7 +469,7 @@ function Profile() {
                         <div className="h4 font-weight-bold">
                           {state.items.prefix} {state.items.firstName}{" "}
                           {state.items.middleName} {state.items.lastName}
-                          {state.ratingValue && (
+                          {/* {state.ratingValue && (
                             <div className="mt-2 mb-4" id="doctor-avg-rating">
                               {[...Array(5)].map((_, index) => (
                                 <span
@@ -478,7 +478,7 @@ function Profile() {
                                 ></span>
                               ))}
                             </div>
-                          )}
+                          )} */}
                         </div>
                         <div className="h5 text-capitalize">
                           <i className="fas fa-award pr-1"></i>
@@ -527,7 +527,9 @@ function Profile() {
                               } else {
                                 // User is not logged in, show an alert
                                 console.log("user id not available");
-                               alert(" You need to log in to book a consultation. Please log in or create an account to proceed.")
+                                alert(
+                                  " You need to log in to book a consultation. Please log in or create an account to proceed."
+                                );
                                 // <Test
                                 //   show={true}
                                 //   onHide={() => this.setModalShow(false)}
@@ -539,7 +541,6 @@ function Profile() {
                             Consult Now
                           </button>
                         )}
-                        
 
                         <div
                           className="modal fade"
