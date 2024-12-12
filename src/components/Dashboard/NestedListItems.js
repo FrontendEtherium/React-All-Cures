@@ -162,10 +162,10 @@ export default function NestedListItems() {
               {open ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
           )}
-          =
+
           <Collapse in={open} timeout="auto">
             <List component="divw" disablePadding>
-              {!userId == 59 && (
+              {!(userId == 59) && (
                 <ListItem button>
                   <ListItemIcon>
                     <ImportContactsIcon />
@@ -177,7 +177,7 @@ export default function NestedListItems() {
                 </ListItem>
               )}
 
-              {!userId == 59 && (
+              {!(userId == 59) && (
                 <ListItem button>
                   <ListItemIcon>
                     <ListIcon />
@@ -207,7 +207,7 @@ export default function NestedListItems() {
                 </Link>
               </ListItem>
 
-              {!userId == 59 && (
+              {!(userId == 59) && (
                 <ListItem button>
                   <ListItemIcon>
                     <AddCommentIcon />

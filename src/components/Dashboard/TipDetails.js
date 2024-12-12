@@ -69,7 +69,7 @@ function GetSubscription({ subscription_id }) {
                                 }
                                 </div> */}
                     {/* </div> */}
-                    {!userId == 59 && (
+                    {!(userId == 59) && (
                       <div className="row mx-1 my-2">
                         <Link
                           to={`/dashboard?edittip=${i.tip_id}`}
