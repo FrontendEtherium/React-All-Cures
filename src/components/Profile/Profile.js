@@ -1300,26 +1300,7 @@ class Profile extends Component {
                                                 "TimePicker",
                                               ]}
                                             >
-                                              {/* <StaticDatePicker
-    label="Select Date"
-    value={selectedDate}
-    onChange={this.handleDateChange}
-    sx={{
-        '.MuiPickersDay-root': {
-            borderRadius: 6,
-            borderWidth: 1,
-            borderColor: '#2196f3',
-            border: '1px solid',
-            backgroundColor: '#bbdefb',
-            '&:nth-child(even)': {
-                backgroundColor: '#FFC0CB', // Example color for even days
-            },
-            '&:nth-child(odd)': {
-                backgroundColor: '#87CEEB', // Example color for odd days
-            },
-        },
-    }}
-/> */}
+                                             
 
                                               <StaticDatePicker
                                                 defaultValue={today}
@@ -1337,18 +1318,14 @@ class Profile extends Component {
                                                   this.handleDatesChange
                                                 } // Add onChange to update selectedDate
                                                 showToolbar={false}
+                                                disableCloseOnSelect={false}
                                                 shouldDisableDate={
                                                   this.disableDate
                                                 }
                                                 // renderDay={this.renderDay}
                                               />
 
-                                              {/* <TimePicker
-                                        label="Select Time"
-                                        value={selectedTime}
-                                        onChange={this.handleTimeChange}
-                                        minutesStep={15}
-                                      /> */}
+                                           
                                             </DemoContainer>
                                           </LocalizationProvider>
                                         </div>
