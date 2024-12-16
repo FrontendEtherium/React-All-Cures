@@ -27,8 +27,6 @@ import Chat from "./Chat";
 // import Calendar from 'react-calendar';
 import dayjs from "dayjs";
 
-import { subDays, isBefore, addDays } from "date-fns";
-
 import DailyIframe from "@daily-co/daily-js";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -36,7 +34,6 @@ import { LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
 
 import { PickersDay } from "@mui/x-date-pickers/PickersDay";
 import { styled } from "@mui/material/styles";
-import moment from "moment";
 
 const HighlightedDay = styled(PickersDay)(({ theme }) => ({
   "&.Mui-selected": {
@@ -898,6 +895,7 @@ class Profile extends Component {
                                                 slots={{
                                                   day: ServerDay,
                                                 }}
+                                                onAccept={()=>{alert("Accepted")}}
                                                 slotProps={{
                                                   day: {
                                                     highlightedDays,
@@ -921,10 +919,10 @@ class Profile extends Component {
                                             <>
                                               <p> Select Time Slot</p>
                                               <div
-                                              style={{
-                                                maxHeight: "300px",
-                                                overflowY: "auto",
-                                              }}
+                                                style={{
+                                                  maxHeight: "300px",
+                                                  overflowY: "auto",
+                                                }}
                                               >
                                                 {this.state.timeSlots &&
                                                   this.state.timeSlots.map(
@@ -1063,7 +1061,7 @@ class Profile extends Component {
                                           variant="dark"
                                           onClick={this.bookAppn}
                                           className="p-2 m-4"
-                                          style={{background:'#00415e'}}
+                                          style={{ background: "#00415e" }}
                                         >
                                           Book Appointment
                                         </Button>

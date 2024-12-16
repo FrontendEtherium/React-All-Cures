@@ -84,14 +84,17 @@ export default function NestedListItems() {
               <ListItemText primary="Home" />
             </Link>
           </ListItem>
-          <ListItem button style={{ backgroundColor: "lightblue" }}>
-            <ListItemIcon>
-              <DashboardIcon />
-            </ListItemIcon>
-            <Link to="/dashboard">
-              <ListItemText primary="Dashboard" />
-            </Link>
-          </ListItem>
+          {!(userId == 172) && (
+            <ListItem button style={{ backgroundColor: "lightblue" }}>
+              <ListItemIcon>
+                <DashboardIcon />
+              </ListItemIcon>
+              <Link to="/dashboard">
+                <ListItemText primary="Dashboard" />
+              </Link>
+            </ListItem>
+          )}
+
           <ListItem
             button
             onClick={handleClick4}
@@ -150,8 +153,7 @@ export default function NestedListItems() {
             userId == 43 ||
             userId == 56 ||
             userId == 59 ||
-            userId == 172
-          ) && (
+            userId == 172) && (
             <ListItem
               button
               onClick={handleClick}
@@ -222,81 +224,92 @@ export default function NestedListItems() {
               )}
             </List>
           </Collapse>
-          <ListItem
-            button
-            onClick={handleClick1}
-            style={{ backgroundColor: "lightblue" }}
-          >
-            <ListItemIcon>
-              <SupervisorAccountIcon />
-            </ListItemIcon>
-            <ListItemText primary="ABOUT USERS" />
-            {openn ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
-          <Collapse in={openn} timeout="auto">
-            <List component="div2" disablePadding>
-              <ListItem button>
-                <ListItemIcon>
-                  <SupervisedUserCircleIcon />
-                </ListItemIcon>
-                {/* <ListItemText primary="Reports" /> */}
-                <Link to="/dashboard?user">
-                  <ListItemText primary="Registered" />
-                </Link>
-              </ListItem>
-              <ListItem button>
-                <ListItemIcon>
-                  <SupervisedUserCircleIcon />
-                </ListItemIcon>
-                {/* <ListItemText primary="Reports" /> */}
-                <Link to="/dashboard?subscribedusers">
-                  <ListItemText primary="Subscribed" />
-                </Link>
-              </ListItem>
-            </List>
-          </Collapse>
-          <ListItem
-            button
-            onClick={handleClick2}
-            style={{ backgroundColor: "lightblue" }}
-          >
-            <ListItemIcon>
-              <BarChartIcon />
-            </ListItemIcon>
-            <ListItemText primary="PROMOTIONS" />
-            {opennn ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
-          <Collapse in={opennn} timeout="auto">
-            <List component="div" disablePadding>
-              <ListItem button>
-                <ListItemIcon>
-                  <BarChartIcon />
-                </ListItemIcon>
-                {/* <ListItemText primary="Reports" /> */}
-                <Link to="/dashboard/Promoadmin">
-                  <ListItemText primary="Promo" />
-                </Link>
-              </ListItem>
-              <ListItem button>
-                <ListItemIcon>
-                  <BarChartIcon />
-                </ListItemIcon>
-                {/* <ListItemText primary="Customers"  /> */}
-                <Link to="/dashboard?promotions">
-                  <ListItemText primary="All Promotions" />
-                </Link>
-              </ListItem>
-              <ListItem button>
-                <ListItemIcon>
-                  <BarChartIcon />
-                </ListItemIcon>
-                {/* <ListItemText primary="Customers"  /> */}
-                <Link to="/dashboard?create_promo">
-                  <ListItemText primary="Create Promo" />
-                </Link>
-              </ListItem>
-            </List>
-          </Collapse>
+          {!(userId == 172) && (
+            <ListItem
+              button
+              onClick={handleClick1}
+              style={{ backgroundColor: "lightblue" }}
+            >
+              <ListItemIcon>
+                <SupervisorAccountIcon />
+              </ListItemIcon>
+              <ListItemText primary="ABOUT USERS" />
+              {openn ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+          )}
+
+          {!(userId == 172) && (
+            <Collapse in={openn} timeout="auto">
+              <List component="div2" disablePadding>
+                <ListItem button>
+                  <ListItemIcon>
+                    <SupervisedUserCircleIcon />
+                  </ListItemIcon>
+                  {/* <ListItemText primary="Reports" /> */}
+                  <Link to="/dashboard?user">
+                    <ListItemText primary="Registered" />
+                  </Link>
+                </ListItem>
+                <ListItem button>
+                  <ListItemIcon>
+                    <SupervisedUserCircleIcon />
+                  </ListItemIcon>
+                  {/* <ListItemText primary="Reports" /> */}
+                  <Link to="/dashboard?subscribedusers">
+                    <ListItemText primary="Subscribed" />
+                  </Link>
+                </ListItem>
+              </List>
+            </Collapse>
+          )}
+          {!(userId == 172) && (
+            <ListItem
+              button
+              onClick={handleClick2}
+              style={{ backgroundColor: "lightblue" }}
+            >
+              <ListItemIcon>
+                <BarChartIcon />
+              </ListItemIcon>
+              <ListItemText primary="PROMOTIONS" />
+              {opennn ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+          )}
+
+          {!(userId == 172) && (
+            <Collapse in={opennn} timeout="auto">
+              <List component="div" disablePadding>
+                <ListItem button>
+                  <ListItemIcon>
+                    <BarChartIcon />
+                  </ListItemIcon>
+                  {/* <ListItemText primary="Reports" /> */}
+                  <Link to="/dashboard/Promoadmin">
+                    <ListItemText primary="Promo" />
+                  </Link>
+                </ListItem>
+                <ListItem button>
+                  <ListItemIcon>
+                    <BarChartIcon />
+                  </ListItemIcon>
+                  {/* <ListItemText primary="Customers"  /> */}
+                  <Link to="/dashboard?promotions">
+                    <ListItemText primary="All Promotions" />
+                  </Link>
+                </ListItem>
+                <ListItem button>
+                  <ListItemIcon>
+                    <BarChartIcon />
+                  </ListItemIcon>
+                  {/* <ListItemText primary="Customers"  /> */}
+                  <Link to="/dashboard?create_promo">
+                    <ListItemText primary="Create Promo" />
+                  </Link>
+                </ListItem>
+              </List>
+            </Collapse>
+          )}
+
           {(userId == 37 ||
             userId == 50 ||
             userId == 51 ||
@@ -344,17 +357,21 @@ export default function NestedListItems() {
               </ListItem>
             </List>
           </Collapse>
-          <ListItem
-            button
-            onClick={handleClick5}
-            style={{ backgroundColor: "lightblue" }}
-          >
-            <ListItemIcon>
-              <BarChartIcon />
-            </ListItemIcon>
-            <ListItemText primary="ADVS SECTION" />
-            {opennnnn ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
+          {!(userId == 172) && (
+            <ListItem
+              button
+              onClick={handleClick5}
+              style={{ backgroundColor: "lightblue" }}
+            >
+              <ListItemIcon>
+                <BarChartIcon />
+              </ListItemIcon>
+
+              <ListItemText primary="ADVS SECTION" />
+              {opennnnn ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+          )}
+
           <Collapse in={opennnnn} timeout="auto">
             <List component="div" disablePadding>
               <ListItem button>
@@ -418,17 +435,20 @@ export default function NestedListItems() {
               </ListItem>
             </List>
           </Collapse>
-          <ListItem
-            button
-            onClick={handleClickList}
-            style={{ backgroundColor: "lightblue" }}
-          >
-            <ListItemIcon>
-              <BarChartIcon />
-            </ListItemIcon>
-            <ListItemText primary="SPONSORSHIP" />
-            {openList ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
+          {!(userId == 172) && (
+            <ListItem
+              button
+              onClick={handleClickList}
+              style={{ backgroundColor: "lightblue" }}
+            >
+              <ListItemIcon>
+                <BarChartIcon />
+              </ListItemIcon>
+              <ListItemText primary="SPONSORSHIP" />
+              {openList ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+          )}
+
           <Collapse in={openList} timeout="auto">
             <List component="div" disablePadding>
               <ListItem
@@ -562,22 +582,28 @@ export default function NestedListItems() {
               </ListItem>
             </List>
           </Collapse>
-          <ListItem button style={{ backgroundColor: "lightblue" }}>
-            <ListItemIcon>
-              <DashboardIcon />
-            </ListItemIcon>
-            <Link to="/dashboard?createwebstories">
-              <ListItemText primary="Create Webstories" />
-            </Link>
-          </ListItem>
-          <ListItem button style={{ backgroundColor: "lightblue" }}>
-            <ListItemIcon>
-              <DashboardIcon />
-            </ListItemIcon>
-            <Link to="/dashboard?webstoriesList">
-              <ListItemText primary=" Webstories Edit" />
-            </Link>
-          </ListItem>
+          {!(userId == 172) && (
+            <ListItem button style={{ backgroundColor: "lightblue" }}>
+              <ListItemIcon>
+                <DashboardIcon />
+              </ListItemIcon>
+
+              <Link to="/dashboard?createwebstories">
+                <ListItemText primary="Create Webstories" />
+              </Link>
+            </ListItem>
+          )}
+
+          {!(userId == 172) && (
+            <ListItem button style={{ backgroundColor: "lightblue" }}>
+              <ListItemIcon>
+                <DashboardIcon />
+              </ListItemIcon>
+              <Link to="/dashboard?webstoriesList">
+                <ListItemText primary=" Webstories Edit" />
+              </Link>
+            </ListItem>
+          )}
         </>
       ) : (
         <>
