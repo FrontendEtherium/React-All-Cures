@@ -394,7 +394,7 @@ function App() {
         <br />
         <div className="col">
           <DataTable
-            columns={userId == 59 ? columnWithoutAction : columns}
+            columns={userId == 172 ? columnWithoutAction : columns}
             data={article}
             // sortable
             highlightOnHover
