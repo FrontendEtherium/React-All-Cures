@@ -1,222 +1,244 @@
 import React, { useState } from "react";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { Button, Alert } from "react-bootstrap";
 import { LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import dayjs from "dayjs";
-import { Container, Button, Alert } from "react-bootstrap";
-
-import { PickersDay } from "@mui/x-date-pickers/PickersDay";
 import { styled } from "@mui/material/styles";
-const HighlightedDay = styled(PickersDay)(({ theme }) => ({
-  "&.Mui-selected": {
-    backgroundColor: theme.palette.error.light,
-    color: theme.palette.primary.contrastText,
-  },
+import { PickersDay } from "@mui/x-date-pickers/PickersDay";
+import axios from "axios";
+import { backendHost } from "../api-config";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+
+// Custom Day Highlighting
+const CustomDay = styled(PickersDay)(({ theme, day, selectedDate }) => ({
+  ...(selectedDate &&
+    day.format("YYYY-MM-DD") === selectedDate && {
+      backgroundColor: "#00415e", // Custom selected background
+      color: "#fff", // White text
+      borderRadius: "50%", // Circular styling
+      "&:hover": {
+        backgroundColor: "#00314b", // Slightly darker hover color
+      },
+    }),
 }));
-const ServerDay = ({
-  highlightedDays = [],
-  day,
-  outsideCurrentMonth,
-  ...other
+
+const AppointmentModal = ({
+  show,
+  onHide,
+  highlightedDays,
+  unbookedSlots,
+  disableDate,
+  onDateChange,
+  selectedDate,
+  alertBooking,
+  docId,
+  userId,
 }) => {
-  const isSelected =
-    !outsideCurrentMonth && highlightedDays.includes(day.format("YYYY-MM-DD"));
+  const today = dayjs();
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState("");
+  const [bookingLoading, setBookingLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const handleTimeSlot = (time) => {
+    setSelectedTimeSlot(time);
+  };
+
+  const bookAppn = async (e) => {
+    e.preventDefault();
+    setBookingLoading(true);
+    setError(null);
+
+    try {
+      const response = await axios.post(`${backendHost}/appointments/create`, {
+        docID: docId,
+        userID: parseInt(userId),
+        appointmentDate: selectedDate,
+        startTime: selectedTimeSlot,
+        paymentStatus: 0,
+        amount: "1.00",
+        currency: "INR",
+      });
+
+      const responseObject = response.data;
+      localStorage.setItem("encKey", responseObject.encRequest);
+      localStorage.setItem("apiResponse", JSON.stringify(response.data));
+
+      const redirectURL = `https://www.all-cures.com/paymentRedirection?encRequest=${responseObject.encRequest}&accessCode=AVWN42KL59BP42NWPB`;
+      window.location.href = redirectURL;
+    } catch (error) {
+      console.error("Error while booking appointment:", error);
+      setError("Failed to book the appointment. Please try again.");
+    } finally {
+      setBookingLoading(false);
+    }
+  };
 
   return (
-    <HighlightedDay
-      {...other}
-      outsideCurrentMonth={outsideCurrentMonth}
-      day={day}
-      selected={isSelected}
-    />
-  );
-};
-function BookAppointment() {
-  const today = dayjs();
-  const [highlightedDays] = useState()
-  return (
-    <div class="modal-dialog" role="document">
-      <div class="modal-content" style={{ minWidth: "600px" }}>
-        <div class="modal-header">
-          <h5 class="modal-title p-3 font-weight-bold " id="exampleModalLabel">
-            Schedule your Appointment
-          </h5>
-          <button
-            type="button"
-            class="close appn"
-            data-dismiss="modal"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body" style={{ minHeight: "500px" }}>
-          <div className="row">
-            <div className=" col-md-8">
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer components={["DatePicker", "TimePicker"]}>
-                  <StaticDatePicker
-                    defaultValue={today}
-                    minDate={today}
-                    maxDate={today.add(1, "month")}
-                    slots={{
-                      day: ServerDay,
-                    }}
-                    onAccept={() => {
-                      alert("Accepted");
-                    }}
-                    slotProps={{
-                      day: {
-                        highlightedDays,
-                      },
-                    }}
-                    onChange={this.handleDatesChange} // Add onChange to update selectedDate
-                    showToolbar={false}
-                    disableCloseOnSelect={false}
-                    shouldDisableDate={this.disableDate}
-                    // renderDay={this.renderDay}
-                  />
-                </DemoContainer>
-              </LocalizationProvider>
-            </div>
-            <div className="col-sm-12 col-md-4 p-5">
-              {this.state.selectedDate && (
-                <>
-                  <p> Select Time Slot</p>
-                  <div
-                    style={{
-                      maxHeight: "300px",
-                      overflowY: "auto",
-                    }}
-                  >
-                    {this.state.timeSlots &&
-                      this.state.timeSlots.map((time, index) => {
+    <div
+      className={`modal fade ${show ? "show" : ""}`}
+      style={{ display: show ? "block" : "none" }}
+      tabIndex="-1"
+      role="dialog"
+    >
+      <div className="modal-dialog modal-lg" style={{}} role="document">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title font-weight-bold mt-2 ml-2">
+              Schedule Your Appointment
+            </h5>
+            <button
+              type="button"
+              className="close"
+              onClick={onHide}
+              style={{ marginRight: "1px" }}
+            >
+              <span>&times;</span>
+            </button>
+          </div>
+
+          <div className="modal-body">
+            <div className="row">
+              {/* Date Picker */}
+              <div className="col-12 col-md-6 mb-3 text-center">
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer components={["DatePicker"]}>
+                    <StaticDatePicker
+                      defaultValue={today}
+                      minDate={today}
+                      maxDate={today.add(1, "month")}
+                      slots={{
+                        actionBar: () => null,
+                        day: (props) => (
+                          <CustomDay
+                            {...props}
+                            selected={
+                              selectedDate &&
+                              props.day.format("YYYY-MM-DD") === selectedDate
+                            }
+                          />
+                        ),
+                      }}
+                      slotProps={{ day: { highlightedDays } }}
+                      onChange={onDateChange}
+                      showToolbar={false}
+                      shouldDisableDate={disableDate}
+                    />
+                  </DemoContainer>
+                </LocalizationProvider>
+              </div>
+
+              {/* Time Slot Section */}
+              <div className="col-12 col-md-6 p-3">
+                {selectedDate && (
+                  <>
+                    <p className="font-weight-bold mb-2 text-center">
+                      Select a Time Slot:
+                    </p>
+                    <div
+                      className="d-flex flex-wrap justify-content-center"
+                      style={{
+                        gap: "10px",
+                        maxHeight: "300px",
+                        overflowY: "auto",
+                      }}
+                    >
+                      {unbookedSlots.map((time, index) => {
                         const [hours, minutes] = time.split(":").map(Number);
                         const suffix = hours >= 12 ? "PM" : "AM";
-                        const adjustedHours = hours % 12 || 12; // Convert 0 hours to 12 for 12 AM
+                        const adjustedHours = hours % 12 || 12;
                         const formattedTime = `${adjustedHours}:${
                           minutes < 10 ? "0" : ""
                         }${minutes} ${suffix}`;
 
-                        console.log("Formatted Time:", formattedTime);
-
-                        const isUnbooked =
-                          this.state.unbookedSlots.includes(time);
-                        const isSelected = this.state.selectedTimeSlot === time;
-
-                        // Get the current date and time
-                        const currentDate = new Date();
-                        const currentDateString = currentDate.toDateString();
-                        const currentTime =
-                          currentDate.getHours() * 60 +
-                          currentDate.getMinutes(); // Current time in minutes
-
-                        // Get the selected date
-                        const selectedDate = new Date(this.state.selectedDate);
-                        const selectedDateString = selectedDate.toDateString();
-
-                        // Check if the selected date is today
-                        const isToday =
-                          currentDateString === selectedDateString;
-
-                        // Calculate the time slot in minutes
-                        const timeSlotTime =
-                          parseInt(hours) * 60 + parseInt(minutes);
-
-                        // Check if the time slot is for today and in the past
-                        const isPast = isToday && timeSlotTime < currentTime;
-
                         return (
-                          <div className="row pt-2">
-                            <div className=" col-md-6 ">
-                              <div
-                                style={{
-                                  minWidth: "120px",
-                                }}
-                              >
-                                <Button
-                                  variant={
-                                    isSelected
-                                      ? "primary"
-                                      : isUnbooked
-                                      ? "outline-primary"
-                                      : "outline-danger"
-                                  }
-                                  disabled={!isUnbooked || isPast}
-                                  className="w-80 d-block"
-                                  onClick={() => this.handleTimeSlot(time)}
-                                >
-                                  {formattedTime}
-                                </Button>
-                                {/* onClick={()=>this.handleTimeSlot(time)} */}
-                              </div>
-                            </div>
-                          </div>
+                          <Button
+                            key={index}
+                            onClick={() => handleTimeSlot(time)}
+                            style={{
+                              minWidth: "80px",
+                              backgroundColor:
+                                selectedTimeSlot === time
+                                  ? "#00415e"
+                                  : "transparent",
+                              color:
+                                selectedTimeSlot === time ? "#fff" : "#00415e",
+                              border: `1px solid ${
+                                selectedTimeSlot === time
+                                  ? "#00415e"
+                                  : "#00415e"
+                              }`,
+                              borderRadius: "5px",
+                            }}
+                            onMouseEnter={(e) => {
+                              if (selectedTimeSlot !== time)
+                                e.target.style.backgroundColor = "#e6f0f8";
+                            }}
+                            onMouseLeave={(e) => {
+                              if (selectedTimeSlot !== time)
+                                e.target.style.backgroundColor = "transparent";
+                            }}
+                          >
+                            {formattedTime}
+                          </Button>
                         );
                       })}
-                  </div>
-                </>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+
+            {/* Selected Date and Time */}
+            <div className="text-center p-3 bg-light rounded">
+              {selectedDate && (
+                <div className="mb-2">
+                  <strong style={{ color: "#00415e" }}>
+                    {dayjs(selectedDate).format("dddd, MMMM D, YYYY")}
+                  </strong>
+                </div>
+              )}
+              {selectedTimeSlot && (
+                <div className="mb-2 text-success">
+                  <strong>Time: {selectedTimeSlot}</strong>
+                </div>
               )}
             </div>
+
+            {/* Book Appointment Button */}
+            {selectedTimeSlot && (
+              <div className="text-center mt-3">
+                <Button
+                  variant="dark"
+                  onClick={bookAppn}
+                  style={{ background: "#00415e", color: "#fff",marginBottom:'10px' }}
+                >
+                  <CalendarTodayIcon /> Book Appointment
+                </Button>
+              </div>
+            )}
+
+            {/* Alerts */}
+            {bookingLoading && (
+              <Alert variant="info" className="text-center mt-3">
+                Booking your appointment...
+              </Alert>
+            )}
+            {alertBooking && (
+              <Alert variant="success" className="text-center mt-3">
+                Appointment booked successfully!
+              </Alert>
+            )}
+            {error && (
+              <Alert variant="danger" className="text-center mt-3">
+                {error}
+              </Alert>
+            )}
           </div>
-
-          {/* <div>
-        {this.state.selectedDate && (
-          <p
-            className="ml-4 my-2"
-            style={{ fontSize: "18px" }}
-          >
-            Dates:{" "}
-            {dayjs(
-              this.state.selectedDate
-            ).format("YYYY-MM-DD")}
-          </p>
-        )}
-
-        {this.state.selectedTimeSlot && (
-          <p
-            className="ml-4 my-2"
-            style={{ fontSize: "18px" }}
-          >
-            Time:{this.state.selectedTimeSlot}
-        
-          </p>
-        )}
-      </div> */}
-
-          {this.state.selectedTimeSlot && (
-            <Button
-              variant="dark"
-              onClick={this.bookAppn}
-              className="p-2 m-4"
-              style={{ background: "#00415e" }}
-            >
-              Book Appointment
-            </Button>
-          )}
-          {/* <Button
-variant="dark"
-onClick={this.payment}
-className="p-2 m-4"
->
-Pay Now
-</Button> */}
-
-          {this.state.bookingLoading ? (
-            <Alert variant="danger" className="h6 mx-3">
-              Please wait while we book your Appointment!!
-            </Alert>
-          ) : null}
-
-          {this.state.alertBooking ? (
-            <Alert variant="success" className="h6 mx-3">
-              Booked successfully!! Check your Email.
-            </Alert>
-          ) : null}
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default BookAppointment;
+export default AppointmentModal;
