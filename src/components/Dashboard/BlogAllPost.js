@@ -70,11 +70,11 @@ function App() {
 
       selector: (row) =>
         parseInt(row.published_by) === 37 ? (
-          <h6 className="chip overview mr-2 col">AMAN MAM</h6>
+          <h6 className="chip overview mr-2 col">AMAN GILL</h6>
         ) : parseInt(row.published_by) === 51 ? (
-          <h6 className="chip symptoms mr-2 col">AMANDEEP MAM</h6>
+          <h6 className="chip symptoms mr-2 col">AMANDEEP KOUR</h6>
         ) : parseInt(row.published_by) === 50 ? (
-          <h6 className="chip cure mr-2 col">PRATEEK SIR </h6>
+          <h6 className="chip cure mr-2 col">PRATEEK </h6>
         ) : null,
       sortable: true,
     },
@@ -198,11 +198,11 @@ function App() {
 
       selector: (row) =>
         parseInt(row.published_by) === 37 ? (
-          <h6 className="chip overview mr-2 col">AMAN MAM</h6>
+          <h6 className="chip overview mr-2 col">AMAN GILL</h6>
         ) : parseInt(row.published_by) === 51 ? (
-          <h6 className="chip symptoms mr-2 col">AMANDEEP MAM</h6>
+          <h6 className="chip symptoms mr-2 col">AMANDEEP KOUR</h6>
         ) : parseInt(row.published_by) === 50 ? (
-          <h6 className="chip cure mr-2 col">PRATEEK SIR </h6>
+          <h6 className="chip cure mr-2 col">PRATEEK  </h6>
         ) : null,
       sortable: true,
     },
