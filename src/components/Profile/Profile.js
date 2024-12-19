@@ -123,6 +123,7 @@ class Profile extends Component {
       alertBooking: false,
       bookingLoading: false,
       userAvailStatus: "",
+      amount: null,
     };
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
@@ -501,6 +502,7 @@ class Profile extends Component {
         // Set the state of unbookedSlots using the extracted unbooked slots
         this.setState({
           unbookedSlots: unbookedSlots,
+          amount: json.amount,
         });
       });
   };
@@ -839,7 +841,9 @@ class Profile extends Component {
                                 type="button"
                                 class="btn btn-primary border-0 ml-2"
                                 data-toggle="modal"
-                                onClick={() => this.setState({ showAppointmentModal: true })}
+                                onClick={() =>
+                                  this.setState({ showAppointmentModal: true })
+                                }
                                 data-target="#exampleModal"
                                 style={{ backgroundColor: "#00415e" }}
                               >
@@ -849,28 +853,35 @@ class Profile extends Component {
                             )}
 
                             <div
-                              class="modal fade"
+                              class="modal"
                               id="exampleModal"
-                              tabindex="-1"
+                              tabindex="0"
                               role="dialog"
                               aria-labelledby="exampleModalLabel"
                               aria-hidden="true"
                             >
                               {userId ? (
-                               <AppointmentModal
-                               show={this.state.showAppointmentModal}
-                               onHide={() => this.setState({ showAppointmentModal: false })}
-                               highlightedDays={this.state.highlightedDays}
-                               unbookedSlots={this.state.unbookedSlots}
-                               disableDate={this.disableDate}
-                               onDateChange={this.handleDatesChange}
-                               onBookAppointment={(timeSlot) => this.handleTimeSlot(timeSlot)}
-                               selectedDate={this.state.selectedDate}
-                               bookingLoading={this.state.bookingLoading}
-                               alertBooking={this.state.alertBooking}
-                               docId ={this.state.docid}
-                               userId = {userId}
-                             />
+                                <AppointmentModal
+                                  show={this.state.showAppointmentModal}
+                                  onHide={() =>
+                                    this.setState({
+                                      showAppointmentModal: false,
+                                    })
+                                  }
+                                  highlightedDays={this.state.highlightedDays}
+                                  unbookedSlots={this.state.unbookedSlots}
+                                  disableDate={this.disableDate}
+                                  onDateChange={this.handleDatesChange}
+                                  onBookAppointment={(timeSlot) =>
+                                    this.handleTimeSlot(timeSlot)
+                                  }
+                                  selectedDate={this.state.selectedDate}
+                                  bookingLoading={this.state.bookingLoading}
+                                  alertBooking={this.state.alertBooking}
+                                  docId={this.state.docid}
+                                  userId={userId}
+                                  amount={this.state.amount}
+                                />
                               ) : (
                                 <div className="modal-dialog" role="document">
                                   <div
@@ -1103,6 +1114,7 @@ class Profile extends Component {
 
                   {userId && items.chatService == 1 && userAccess != 1 ? (
                     <>
+                      {console.log("loc", items.imgLoc)}
                       {items.imgLoc ? (
                         <Chat
                           imageURL={items.imgLoc}

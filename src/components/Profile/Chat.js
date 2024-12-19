@@ -24,35 +24,28 @@ function ChatButton(props) {
   const [chatId, setChatId] = useState(null);
   const [newMessage, setNewMessage] = useState(false);
 
-
   const checkChat = () => {
     // Close the previous WebSocket connection if it exists
-  
 
-    
+    console.log("getid->", userId);
 
-console.log('getid->',userId)
-  
     axios
       .get(`${backendHost}/chat/${userId}/${props.docid}`)
       .then((res) => {
-if(res.data[0].Chat_id!=null){
-   console.log('initiate')
-        setChatId(res.data[0].Chat_id);
-        setToId(props.docid);
-        setChats(res.data);
-        startWebSocket(res.data[0].Chat_id);
-        // Create a new WebSocket connection
-}else{
-  console.log('start')
-  favouriteForm()
-}
-      
+        if (res.data[0].Chat_id != null) {
+          console.log("initiate");
+          setChatId(res.data[0].Chat_id);
+          setToId(props.docid);
+          setChats(res.data);
+          startWebSocket(res.data[0].Chat_id);
+          // Create a new WebSocket connection
+        } else {
+          console.log("start");
+          favouriteForm();
+        }
       })
       .catch((err) => err);
   };
-
-  
 
   const startWebSocket = (getChatId) => {
     // Close the previous WebSocket connection if it exists
@@ -69,7 +62,7 @@ if(res.data[0].Chat_id!=null){
     };
 
     ws.onmessage = (event) => {
-      console.log('event');
+      console.log("event");
       const from = event.data.split(":")[0];
       const receivedMessage = event.data.split(":").pop();
       const newChat = {
@@ -98,17 +91,15 @@ if(res.data[0].Chat_id!=null){
     }
   };
 
-  
-
   const favouriteForm = () => {
     axios
       .post(`${backendHost}/chat/start/${userId}/${props.docid}`)
       .then((res) => {
-        console.log(res.data)
+        console.log(res.data);
         setChatId(res.data[0].Chat_id);
         setToId(props.docid);
         setChats([]);
-        startWebSocket(res.data[0].Chat_id);     
+        startWebSocket(res.data[0].Chat_id);
       })
       .catch((err) => console.log(err));
   };
@@ -142,29 +133,19 @@ if(res.data[0].Chat_id!=null){
     }
   };
 
-  
-  
   useEffect(() => {
     scrollToBottom();
   }, [chats]);
 
-  
-  
-
-  
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    if(isOpen)
-    {
-      console.log('checkchat')
-  checkChat()
+
+    if (isOpen) {
+      console.log("checkchat");
+      checkChat();
     }
-    
- 
- 
   };
-  
+
   return (
     <div>
       <form onSubmit={handleSubmit} className="favouriteForm">
@@ -172,32 +153,42 @@ if(res.data[0].Chat_id!=null){
           <button
             className="toggle-button"
             onClick={toggleChatBox}
-            style={{ marginTop: -290, width:400 }}
+            style={{ marginTop: -290, width: 400 }}
           >
-           <div className="d-flex align-items-center">
+            <div className="d-flex align-items-center">
               <div className="mr-2">
-            {props.imageURL &&
-             <img
-             src={props.imageURL}
-             alt="Chat Icon"
-             style={{ width: "20px", marginRight: "10px" }}
-           />}
-           {
-            props.dummy &&
-            <div  style={{ width: "20px",fontSize:"5px", marginRight: "10px" }}>
-               <i class="fas fa-user-md fa-6x"></i>
-            </div>
-           }
-           </div>
-            <div style={{ fontSize: "16px", fontWeight: "bold" }}>
-              {" "}
-               {items.prefix} {items.firstName} {items.middleName}{" "}
-              {items.lastName}
-            </div>
+                {props.imageURL && (
+                  <img
+                    src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-180,h-230,f-webp${props.imageURL}`}
+                    alt="Chat Icon"
+                    style={{ width: "20px", marginRight: "10px" }}
+                  />
+                )}
+                {props.dummy && (
+                  <div
+                    style={{
+                      width: "20px",
+                      fontSize: "5px",
+                      marginRight: "10px",
+                    }}
+                  >
+                    <i class="fas fa-user-md fa-6x"></i>
+                  </div>
+                )}
               </div>
+              <div style={{ fontSize: "16px", fontWeight: "bold" }}>
+                {" "}
+                {items.prefix} {items.firstName} {items.middleName}{" "}
+                {items.lastName}
+              </div>
+            </div>
           </button>
           <div className="chat-box">
-            <div className="chat-list" ref={chatRef} style={{flex:1,overflowY:'auto'}} >
+            <div
+              className="chat-list"
+              ref={chatRef}
+              style={{ flex: 1, overflowY: "auto" }}
+            >
               {chats.map((message, index) => {
                 const isSender = message.From_id === userId;
                 const messageClass = isSender
@@ -205,10 +196,7 @@ if(res.data[0].Chat_id!=null){
                   : "receiver-message";
 
                 return (
-                  <div
-                    key={index}
-                    className={`message-item ${messageClass}`}
-                  >
+                  <div key={index} className={`message-item ${messageClass}`}>
                     <p
                       className="message-text"
                       style={{
@@ -249,4 +237,3 @@ if(res.data[0].Chat_id!=null){
 }
 
 export default ChatButton;
-

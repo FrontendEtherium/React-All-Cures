@@ -34,6 +34,7 @@ const AppointmentModal = ({
   alertBooking,
   docId,
   userId,
+  amount,
 }) => {
   const today = dayjs();
   const [selectedTimeSlot, setSelectedTimeSlot] = useState("");
@@ -56,7 +57,7 @@ const AppointmentModal = ({
         appointmentDate: selectedDate,
         startTime: selectedTimeSlot,
         paymentStatus: 0,
-        amount: "1.00",
+        amount: amount,
         currency: "INR",
       });
 
@@ -90,6 +91,7 @@ const AppointmentModal = ({
             <button
               type="button"
               className="close"
+              data-dismiss="modal"
               onClick={onHide}
               style={{ marginRight: "1px" }}
             >
@@ -211,7 +213,11 @@ const AppointmentModal = ({
                 <Button
                   variant="dark"
                   onClick={bookAppn}
-                  style={{ background: "#00415e", color: "#fff",marginBottom:'10px' }}
+                  style={{
+                    background: "#00415e",
+                    color: "#fff",
+                    marginBottom: "10px",
+                  }}
                 >
                   <CalendarTodayIcon /> Book Appointment
                 </Button>
