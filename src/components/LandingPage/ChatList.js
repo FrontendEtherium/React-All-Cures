@@ -94,7 +94,7 @@ export default function App(usr_id) {
       const toid = toId;
       const chatId = chats[0].Chat_id;
       const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: false })
-      const newMessage = `${fromId}:${toid}:${chatId}:${message}`;
+      const newMessage = `${fromId}:${toid}:${chatId}:${message}:`;
       console.log(newMessage)
 
       socket.send(newMessage);
