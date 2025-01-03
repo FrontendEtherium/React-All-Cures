@@ -1,18 +1,12 @@
 import React, { useState, useEffect, useRef, Suspense, lazy } from "react";
-import { Link, useHistory, useParams, useLocation } from "react-router-dom";
-import { Breadcrumb, Col, Container, Dropdown, Row } from "react-bootstrap";
-
+import { useHistory, useParams, useLocation } from "react-router-dom";
+import { Col, Container, Row } from "react-bootstrap";
 import axios from "axios";
-import OwlCarousel from "react-owl-carousel";
-import "owl.carousel/dist/assets/owl.carousel.css";
-import "owl.carousel/dist/assets/owl.theme.default.css";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import CenterWell from "./CenterWell";
 import Sidebar from "./leftMenu";
 import SidebarRight from "./RightMenu";
 import { backendHost } from "../../api-config";
-import PhoneInput from "react-phone-number-input";
 import Heart from "../../assets/img/heart.png";
 import "react-phone-number-input/style.css";
 import ArticleRating from "../ArticleRating";
@@ -24,13 +18,14 @@ import headers from "../../api-fetch";
 import { userAccess } from "../UserAccess";
 import { userId } from "../UserId";
 import { imagePath, imgKitImagePath } from "../../image-path";
-import CarouselPreview from "./CarouselPreview";
 import SubscriberBtn from "./DiseasePageComponent/SubscriberBtn";
 import CarouselArticle from "./DiseasePageComponent/CarouselArticle";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
+import ArticleDetails from "./DiseasePageComponent/ArticleDetails";
+import Breadcrumbs from "./DiseasePageComponent/Breadcrumbs";
 const Disease = () => {
   const [state, setState] = useState({
     images: [],
@@ -61,6 +56,7 @@ const Disease = () => {
     isModalOpen: false,
     currentIndex: 0,
   });
+  console.log("component rendered");
 
   const { id } = useParams();
   const location = useLocation();
@@ -444,34 +440,13 @@ const Disease = () => {
         </div>
         <Col md={7} id="page-content-wrapper" className="col-xs-12 pb-5">
           <div id="center-well" ref={containerRef}>
-            <Breadcrumb>
-              <Breadcrumb.Item className="mt-1 pb-2" href="/" id="s1">
-                Home
-              </Breadcrumb.Item>
-              <Breadcrumb.Item className="mt-1" id="s1">
-                <Link to={`/searchcures/${state.items.dc_name}`}>
-                  {state.items.dc_name}
-                </Link>
-              </Breadcrumb.Item>
-              <Breadcrumb.Item className="mt-1" id="s1">
-                {state.items.type.includes(1) &&
-                !this.props.match.params.cureType ? (
-                  <Link to="#">Overview</Link>
-                ) : (
-                  <Link to="#">Cures</Link>
-                )}
-              </Breadcrumb.Item>
-
-              {state.items.parent_Medicine_type != null && (
-                <Breadcrumb.Item className="mt-1 pb-2" id="s1">
-                  {state.items.parent_Medicine_type}
-                </Breadcrumb.Item>
-              )}
-
-              <Breadcrumb.Item className="mt-1 pb-2" id="s1">
-                {state.items.medicine_type_name}
-              </Breadcrumb.Item>
-            </Breadcrumb>
+            <Breadcrumbs
+              homeLink="/"
+              dcName={state.items.dc_name}
+              type={state.items.type}
+              parentMedicineType={state.items.parent_Medicine_type}
+              medicineTypeName={state.items.medicine_type_name}
+            />
             <CarouselArticle
               diseaseConditionId={diseaseConditionId}
               carouselItems={state.carouselItems}
@@ -544,131 +519,18 @@ const Disease = () => {
                 </button>
               </Col>
             </Row>
-            <>
-              <div className="article-title-container">
-                <h1 className="font-weight-bold text-decoration-underline">
-                  {state.items.title}
-                </h1>
+            <ArticleDetails
+              title={state.items.title}
+              ratingValue={state.ratingValue}
+              parsedContent={parsedContent}
+              carouselItems={state.carouselItems}
+              currentIndex={state.currentIndex}
+              authorsName={state.items.authors_name}
+              authoredBy={state.items.authored_by}
+              regDocPatId={state.items.reg_doc_pat_id}
+              publishedDate={state.items.published_date}
+            />
 
-                {state.ratingValue && (
-                  <div
-                    className="average-rating mb-4 ml-3 mt-2"
-                    id="avg-rating"
-                  >
-                    {[...Array(5)].map((_, index) => (
-                      <span key={index} className="fa fa-star opacity-7"></span>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              <div id="article-main-content">
-                {parsedContent.blocks?.map((block, idx) => {
-                  const fileUrl = block.data.file?.url || null;
-                  const imageUrl = fileUrl
-                    ? `https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-1000,f-webp/cures_articleimages/${fileUrl.replace(
-                        /^.*[\\/]/,
-                        ""
-                      )}`
-                    : null;
-
-                  return (
-                    <CenterWell
-                      key={idx}
-                      pageTitle={state.items.title}
-                      level={block.data.level}
-                      content={block.data.content}
-                      type={block.type}
-                      text={block.data.text}
-                      title={block.data.title}
-                      message={block.data.message}
-                      source={block.data.source}
-                      embed={block.data.embed}
-                      caption={block.data.caption}
-                      alignment={block.data.alignment}
-                      imageUrl={imageUrl}
-                      link={block.data.link}
-                      url={block.data.url}
-                      item={block.data.items}
-                    />
-                  );
-                })}
-
-                {state.carouselItems?.length > 0 && (
-                  <div className="d-flex justify-content-center mt-2 mb-2">
-                    <div>
-                      <Link
-                        to={`/cure/${
-                          state.carouselItems[state.currentIndex]?.article_id
-                        }-${state.carouselItems[state.currentIndex]?.title}`}
-                        className="fs-08"
-                        onClick={() =>
-                          handleLinkClick(
-                            `/cure/${
-                              state.carouselItems[state.currentIndex]
-                                ?.article_id
-                            }-${state.carouselItems[state.currentIndex]?.title}`
-                          )
-                        }
-                      >
-                        <div className="mb-2">
-                          <h4>Click here to read the next article.</h4>
-                        </div>
-                      </Link>
-
-                      {state.carouselItems[state.currentIndex]
-                        ?.content_location && (
-                        <div className="d-flex justify-content-center">
-                          <div>
-                            <img
-                              src={
-                                state.carouselItems[
-                                  state.currentIndex
-                                ]?.content_location.includes(
-                                  "cures_articleimages"
-                                )
-                                  ? `https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,h-250,f-webp/${
-                                      state.carouselItems[
-                                        state.currentIndex
-                                      ]?.content_location
-                                        .replace("json", "png")
-                                        .split("/webapps/")[1]
-                                    }`
-                                  : "https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/cures_articleimages//299/default.png"
-                              }
-                              alt="Article Image"
-                            />
-                            <p className="mt-2 fs-5">
-                              {state.carouselItems[state.currentIndex]?.title}
-                            </p>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <hr />
-
-              {state.items.authors_name && (
-                <div className="h5 text-left ml-3 mb-2">
-                  <span>Author: </span>
-                  {state.items.authored_by?.includes(7) ? (
-                    state.items.authors_name
-                  ) : (
-                    <Link to={`/doctor/${state.items.reg_doc_pat_id}`}>
-                      {state.items.authors_name}
-                    </Link>
-                  )}
-                </div>
-              )}
-
-              <div className="h6 text-muted text-left ml-3 mb-4">
-                <span>Published on: </span>
-                {state.items.published_date || "Unknown"}
-              </div>
-            </>
             {userAccess ? (
               <div id="favbutton">
                 {state.favourite.length === 0 ? (
