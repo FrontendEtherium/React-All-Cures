@@ -74,7 +74,6 @@ const Disease = () => {
   }, [id]);
 
   const handleClick = (ad) => {
-    // console.log('Image clicked!',ad);
     axios.put(`${backendHost}/sponsored/ads/clicks/${ad}`);
   };
   const fetchBlog = async () => {
