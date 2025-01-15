@@ -41,9 +41,11 @@ import TrendingArticles from "./TrendingArticles";
 import FeaturedArticles from "./FeaturedArticles";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import headers from "../../api-fetch";
+import Banner from "../../assets/img/Banner_New.svg";
+import DocPatient from "../../assets/img/DocPatient.jpeg";
 import DoctorSearch from "../Header/DoctorSearch";
 
-env.REACT_APP = "http://115.246.93.94:8080/cures";
+env.REACT_APP = "http://117.241.171.115:8080/cures";
 
 class Home extends Component {
   constructor(props) {
@@ -93,6 +95,7 @@ class Home extends Component {
       },
       ads: "",
       adId: "",
+      showDocModal: false,
     };
   }
 
@@ -102,7 +105,6 @@ class Home extends Component {
     }
 
     this.loadFloater();
-
     const loadUsers = async () => {
       await axios
         .get(`${backendHost}/city/all`)
@@ -150,15 +152,18 @@ class Home extends Component {
     window.onload = () => {
       this.fetchData();
     };
+    setTimeout(() => {
+      this.setState({ showDocModal: true });
+    }, 5000);
   }
 
   loadFloater = async () => {
     // console.log("checkgin the api 123");
-    //    console.log('call floater')
+    // console.log('call floater')
     await axios
       .get(`${backendHost}/data/newsletter/get`)
       .then((res) => {
-        // console.log(res.data)
+        //   console.log(res.data)
         this.setState({
           images: res.data,
         });
@@ -198,7 +203,7 @@ class Home extends Component {
 
   diseasePosts() {
     // For specific cures like "/cures/diabetes"
-    console.log("not delayed");
+    // console.log('not delayed')
     fetch(`${backendHost}/isearch/${this.state.param.type}`)
       .then((res) => res.json())
       .then((json) => {
@@ -215,23 +220,23 @@ class Home extends Component {
       const response = await axios.get(
         `${backendHost}/sponsored/list/ads/url/1`
       );
-      console.log("response API call successful", response); // Check if this log is printed
+      //   console.log("response API call successful",response); // Check if this log is printed
 
       if (response.data != "All Ads are Served") {
         const id = response.data.split("/")[3];
         const ids = id.match(/\d+/);
         const adsId = ids[0];
 
-        console.log(adsId);
-        console.log(id);
+        // console.log(adsId)
+        //    console.log(id)
 
         this.setState({
           adId: adsId,
         });
       }
 
-      const newResponse = `https://all-cures.com:444${response.data}`;
-      console.log(newResponse);
+      const newResponse = `https://uat.all-cures.com:444${response.data}`;
+      //  console.log(newResponse)
       this.setState({
         //  ads: response.data,
         ads: newResponse,
@@ -250,11 +255,11 @@ class Home extends Component {
 
   postSubscribtion() {
     var phoneNumber = this.state.value.split("+")[1];
-    console.log(this.state.value);
+    //   console.log(this.state.value);
     var countryCodeLength = phoneNumber.length % 10;
     var countryCode = phoneNumber.slice(0, countryCodeLength);
     var StringValue = phoneNumber.slice(countryCodeLength).replace(/,/g, "");
-    console.log(isValidPhoneNumber(this.state.value));
+    //   console.log(isValidPhoneNumber(this.state.value));
 
     if (!isValidPhoneNumber(this.state.value)) {
       this.Alert("Please enter a 10-digit phone number!");
@@ -307,11 +312,7 @@ class Home extends Component {
       credentials: "include",
       headers: { "Access-Control-Allow-Credentials": true },
     })
-      //  axios.defaults.withCredentials = true
-      //  axios.post(`${backendHost}/LogoutActionController`,{ headers: {'Access-Control-Allow-Credentials': true}}
-      //  )
       .then((res) => {
-        // if(res.data === '/cures/Login.html?msg=You have successfully logged out.'){
         Cookies.remove("uName");
         setTimeout(() => {
           window.location.reload();
@@ -426,14 +427,14 @@ class Home extends Component {
                         >
                           <ul class="navbar-nav">
                             <li class="nav-item">
-                              <a class="nav-link" href="/">
+                              <Link className="nav-link" to="/">
                                 Home
-                              </a>
+                              </Link>
                             </li>
                             <li class="nav-item dropdown">
-                              <a
+                              <Link
                                 class="nav-link dropdown-toggle"
-                                href="#"
+                                to="#"
                                 id="categoriesDropdown"
                                 role="button"
                                 data-bs-toggle="dropdown"
@@ -441,39 +442,39 @@ class Home extends Component {
                                 aria-expanded="false"
                               >
                                 Categories
-                              </a>
+                              </Link>
                               <div
                                 class="dropdown-menu"
                                 aria-labelledby="categoriesDropdown"
                               >
-                                <a
+                                <Link
                                   class="dropdown-item"
-                                  href="/searchcategory/disease/1"
+                                  to="/searchcategory/disease/1"
                                 >
                                   Arthritis
-                                </a>
-                                <a
+                                </Link>
+                                <Link
                                   class="dropdown-item"
-                                  href="/searchcategory/disease/74"
+                                  to="/searchcategory/disease/74"
                                 >
                                   Diabetes
-                                </a>
-                                <a
+                                </Link>
+                                <Link
                                   class="dropdown-item"
-                                  href="/searchcategory/disease/50"
+                                  to="/searchcategory/disease/50"
                                 >
                                   Hypertension
-                                </a>
+                                </Link>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="/allcategory">
+                                <Link class="dropdown-item" to="/allcategory">
                                   View More
-                                </a>
+                                </Link>
                               </div>
                             </li>
                             <li class="nav-item dropdown ">
-                              <a
+                              <Link
                                 class="nav-link dropdown-toggle"
-                                href="#"
+                                to="#"
                                 id="trendingCuresDropdown"
                                 role="button"
                                 data-bs-toggle="dropdown"
@@ -481,26 +482,26 @@ class Home extends Component {
                                 aria-expanded="false"
                               >
                                 Trending Cures
-                              </a>
+                              </Link>
                               <div
                                 class="dropdown-menu"
                                 aria-labelledby="trendingCuresDropdown"
                               >
-                                <a
+                                <Link
                                   class="dropdown-item"
-                                  href="/searchmedicine/medicinetype/1"
+                                  to="/searchmedicine/medicinetype/1"
                                 >
                                   Ayurveda
-                                </a>
-                                <a
+                                </Link>
+                                <Link
                                   class="dropdown-item"
-                                  href="/searchmedicine/medicinetype/4"
+                                  to="/searchmedicine/medicinetype/4"
                                 >
                                   Chinese Medicine
-                                </a>
-                                <a
+                                </Link>
+                                <Link
                                   class="dropdown-item"
-                                  href="/searchmedicine/medicinetype/12"
+                                  to="/searchmedicine/medicinetype/12"
                                   onMouseEnter={this.handleUnaniMouseEnter}
                                   onMouseLeave={this.handleUnaniMouseLeave}
                                 >
@@ -510,9 +511,9 @@ class Home extends Component {
                                     onMouseEnter={this.handleUnaniMouseEnter}
                                     onMouseLeave={this.handleUnaniMouseLeave}
                                   >
-                                    <a
+                                    <Link
                                       className="nav-link dropdown-toggle"
-                                      href="#"
+                                      to="#"
                                       id="unaniDropdownToggle"
                                       role="button"
                                       data-bs-toggle="dropdown"
@@ -526,57 +527,57 @@ class Home extends Component {
                                         {" "}
                                         <ArrowDropDownIcon />
                                       </span>
-                                    </a>
+                                    </Link>
                                     {this.state.isUnaniDropdownOpen && (
                                       <ul
                                         className="dropdown-menu newDropdown-menu"
                                         aria-labelledby="unaniDropdownToggle"
                                       >
                                         <li>
-                                          <a
+                                          <Link
                                             className="dropdown-item"
-                                            href="/searchmedicine/medicinetype/2"
+                                            to="/searchmedicine/medicinetype/2"
                                           >
                                             {" "}
                                             Unani
-                                          </a>
+                                          </Link>
                                         </li>
                                         <li>
-                                          <a
+                                          <Link
                                             className="dropdown-item"
-                                            href="/searchmedicine/medicinetype/3"
+                                            to="/searchmedicine/medicinetype/3"
                                           >
                                             Persian
-                                          </a>
+                                          </Link>
                                         </li>
                                       </ul>
                                     )}
                                   </li>
-                                </a>
-                                <a
+                                </Link>
+                                <Link
                                   class="dropdown-item"
-                                  href="/searchmedicine/medicinetype/6"
+                                  to="/searchmedicine/medicinetype/6"
                                 >
                                   Japanese
-                                </a>
-                                <a
+                                </Link>
+                                <Link
                                   class="dropdown-item"
-                                  href="/searchmedicine/medicinetype/5"
+                                  to="/searchmedicine/medicinetype/5"
                                 >
                                   Scandinavian
-                                </a>
+                                </Link>
                               </div>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link" href="/AboutUs">
+                              <Link class="nav-link" to="/AboutUs">
                                 About Us
-                              </a>
+                              </Link>
                             </li>
-                            {/* <li className="nav-item">
-                              <a className="nav-link" href="/webstories">
+                            <li className="nav-item">
+                              <Link className="nav-link" to="/webstories">
                                 Webstories
-                              </a>
-                            </li> */}
+                              </Link>
+                            </li>
                           </ul>
                         </div>
                       </nav>
@@ -675,8 +676,7 @@ class Home extends Component {
             </section>
           </div>
         </div>
-        {/* old banner */}
-        {/* <section className="banner">
+        <section className="banner">
           <div className="banner-title h1 d-flex justify-content-center align-items-center">
             <h1 className="color-white font-weight-bold " id="head1">
               All Cures
@@ -685,22 +685,15 @@ class Home extends Component {
               Getting You Closer To Cures From Around The World
             </div>
           </div>
-        </section> */}
-        <div style={{ textAlign: "center" }}>
-          <img
-            src={`${imgKitImagePath}/assets/img/doctorconsult.jpg`}
-            alt="Descriptive Alt Text"
-            className="img-fluid rounded"
-            style={{
-              height: "380px",
-              objectFit: "fill",
-              maxWidth: "100%",
-              width: "100%",
-            }}
-          />
+        </section>
+        <DoctorSearch />
+
+        <div className="d-flex justify-content-center mb-3 mt-5 desktopBanner">
+          <Link to="/docPatientConnect">
+            <img src={Banner} className=" img-fluid" alt="img" />
+          </Link>
         </div>
 
-       <DoctorSearch/>
         <section className="tabslider clerfix">
           <div className="container">
             <div className="row">
@@ -725,17 +718,6 @@ class Home extends Component {
                     Choose by Diseases
                   </div>
                 </div>
-                {/* <!-- Nav tabs --> */}
-                {/* <ul>
-                     <li role="presentation" className="active"><a href="#Men" aria-controls="Men" role="tab" data-toggle="tab">Men</a>
-                     </li>
-                     <li role="presentation"><a href="#Women" aria-controls="Women" role="tab" data-toggle="tab">Women</a>
-                     </li>
-                     <li role="presentation"><a href="#Children" aria-controls="Children" role="tab" data-toggle="tab">Children</a>
-                     </li>
-                     
-                     
-                  </ul> */}
               </div>
               <Carousel1 city={this.state.searchParams.city} />
             </div>
@@ -755,21 +737,9 @@ class Home extends Component {
           </div>
         </section>
 
-        {/* {
-                           
-                              this.state.ads!=="https://uat.all-cures.com:444All Ads are Served" ? (
-                                 <div className="container">
-                                    <div>
-                              <img className="mb-4"  src={this.state.ads}/>
-                              </div>
-                              </div>
-                              ):null
-                            
-                            
-         }   */}
-
         {this.state.ads ? (
-          this.state.ads !== "https://all-cures.com:444All Ads are Served" ? (
+          this.state.ads !==
+          "https://uat.all-cures.com:444All Ads are Served" ? (
             <div className="container d-flex justify-content-center">
               <img
                 className=" mb-5 ml-1"
@@ -814,60 +784,6 @@ class Home extends Component {
           </div>
         </section>
 
-        {/* <section className="consultunt">
-         <div className="container">
-            <div className="row">
-               <div className="consultunt-inner">
-                  <h1>Meet Our Consultants Online</h1>
-                  <p>Video visits can address immediate medical issues or routine healthcare needs. Doctors are ready to treat a variety of issues or help you with prescriptions or referrals.</p>
-                  <div className="startVideo">
-                     <Link to="#" className="btn-bg startVideoBtn allBtn">Start Video Consultation</Link>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </section> */}
-        {/* <section className="doctor">
-         <div className="container">
-            <div className="row">
-               <div className="comman-heading">
-               <div className="h4">Our Top Doctors</div>
-               </div>
-            </div>
-            
-            <div className="row">
-               <Carousel2/>
-            </div>
-        
-         </div>
-         
-      </section><br/><br/> */}
-        {/* <section className="partner">
-         <div className="container">
-            <div className="row">
-               <div className="partnerBG">
-                  <h2>Be our Partners and <br/> Expand your Client base</h2>
-                  <div className="learnBtn">
-                     <Link href="/#" className="btn-bg nearmoreBtn">Learn More</Link>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </section> */}
-        {/* <section className="testomonial" id="testimonials">
-         <div className="container">
-            <div className="row">
-               <div className="comman-heading">
-                  <h2>What our patients say</h2>
-               </div>
-            </div>
-            <div className="row">
-               <CarouselReview/>
-                   
-            </div> 
-       
-         </div>
-      </section> */}
         <div>
           <button
             id="mobile-subscribe-fixed-btn"
@@ -920,9 +836,9 @@ class Home extends Component {
                       <div className="col-md-6 col-sm-6 col-sx-12">
                         <div className="innerapp">
                           <div className="doc-img ">
-                            {this.state.images.length > 0 ? (
+                            {this.state.images ? (
                               <img
-                                src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp${
+                                src={`https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp${
                                   this.state.images[this.state.currentIndex]
                                 }`}
                                 alt="doct"
@@ -983,12 +899,87 @@ class Home extends Component {
             </div>
           </div>
         </div>
+
+        <div className=" mobileBanner">
+          <div
+            className={`modal fade ${this.state.showDocModal ? "show" : ""}`}
+            tabIndex="-1"
+            style={{ display: this.state.showDocModal ? "block" : "none" }}
+          >
+            <div
+              className="modal-dialog modal-dialog-centered mx-auto"
+              style={{ maxWidth: "300px", width: "100%" }}
+            >
+              <div
+                className="modal-content"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  textAlign: "center",
+                  width: "100%",
+                }}
+              >
+                <div className="modal-header">
+                  <h5 className="modal-title mt-2">Looking For a Doctor?</h5>
+                  <button
+                    type="button"
+                    className="close"
+                    aria-label="Close"
+                    onClick={() => this.setState({ showDocModal: false })}
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div
+                  className="modal-body d-flex flex-column align-items-center"
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <div className="d-flex justify-content-center">
+                    <div>
+                      <img
+                        style={{ width: "200px" }}
+                        src={DocPatient}
+                        alt="doctor"
+                      />
+                    </div>
+                  </div>
+                  <p className="p-3">
+                    Connect with our expert doctors from the comfort of your
+                    home through video consultation. Enjoy personalized medical
+                    advice without the need for a physical visit. Click
+                    "Schedule Now" to book your appointment.
+                  </p>
+                </div>
+
+                <div className="modal-footer">
+                  <Link
+                    to="/docPatientConnect"
+                    className="btn btn-secondary text-decoration-none"
+                  >
+                    Schedule Now
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <Footer />
       </div>
     );
   }
 }
+
 function ToggleButton(props) {
+  const handleDropdownItemClick = (itemName) => {
+    console.log(`Dropdown item clicked: ${itemName}`);
+  };
   if (props.userAccess) {
     return (
       <>
@@ -1010,6 +1001,7 @@ function ToggleButton(props) {
                 Profile
               </Link>
             </Dropdown.Item>
+
             <Dropdown.Item>
               <Link to="/editSubscribe" className="text-dark btn">
                 Edit Subscription
@@ -1024,7 +1016,11 @@ function ToggleButton(props) {
 
             {props.userAccess >= 4 ? (
               <Dropdown.Item>
-                <Link to="/dashboard" className="text-dark btn">
+                <Link
+                  to="/dashboard"
+                  className="text-dark btn"
+                  onClick={() => handleDropdownItemClick("Dashboard")}
+                >
                   Dashboard
                 </Link>
               </Dropdown.Item>
@@ -1060,12 +1056,6 @@ function ToggleButton(props) {
       >
         Sign in/Sign up
       </button>
-      {/* <Link 
-         className="btn-white loginSignbtn color-blue-dark" 
-         to={{pathname: props.match, search: '?login=true', state: {open: true}}}
-      >
-         Sign in/Sign up
-      </Link> */}
     </>
   );
 }
