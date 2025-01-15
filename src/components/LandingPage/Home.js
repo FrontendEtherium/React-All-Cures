@@ -41,6 +41,7 @@ import TrendingArticles from "./TrendingArticles";
 import FeaturedArticles from "./FeaturedArticles";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import headers from "../../api-fetch";
+import DoctorSearch from "../Header/DoctorSearch";
 
 env.REACT_APP = "http://115.246.93.94:8080/cures";
 
@@ -674,7 +675,8 @@ class Home extends Component {
             </section>
           </div>
         </div>
-        <section className="banner">
+        {/* old banner */}
+        {/* <section className="banner">
           <div className="banner-title h1 d-flex justify-content-center align-items-center">
             <h1 className="color-white font-weight-bold " id="head1">
               All Cures
@@ -683,130 +685,22 @@ class Home extends Component {
               Getting You Closer To Cures From Around The World
             </div>
           </div>
-        </section>
+        </section> */}
+        <div style={{ textAlign: "center" }}>
+          <img
+            src={`${imgKitImagePath}/assets/img/doctorconsult1.jpg`}
+            alt="Doctor Patient Connect"
+            className="img-fluid rounded"
+            style={{
+              maxHeight: "380px",
+              objectFit: "fill",
+              maxWidth: "100%",
+              width: "100%",
+            }}
+          />
+        </div>
 
-        <section className="megaSearch">
-          <div className="container">
-            <div className="row">
-              <Test
-                show={this.state.modalShow}
-                path={this.state.path}
-                onHide={() => this.setModalShow(false)}
-              />
-              <div className="search-wrap-inner clearfix">
-                <form onSubmit={(e) => this.onSearch(e)} className="mainSearch">
-                  {/* <div className="col-md-6 pd-0 col-sx-12 col-sm-4">
-                   			<div className="form-group search"> */}
-                  <div className="col-md-12 p-0">
-                    <div className="row">
-                      <div className="doc-name col-md-6 col-sm-12" id="homeDoc">
-                        <Autocomplete
-                          className="bg-white color-black"
-                          freeSolo
-                          value={this.state.name}
-                          onChange={(event, newValue) => {
-                            this.setState({
-                              name: newValue,
-                            });
-                          }}
-                          inputValue={this.state.name ? this.state.name : ""}
-                          onInputChange={(event, newInputValue) => {
-                            this.setState({
-                              name: newInputValue,
-                            });
-                          }}
-                          id="combo-box-demo-1"
-                          options={
-                            this.state.doctorLoaded
-                              ? this.state.name
-                                ? this.state.name.length >= 1
-                                  ? this.state.doctor.map.Doctorname.myArrayList
-                                  : []
-                                : []
-                              : []
-                          }
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              label="Search Doctors (Name)"
-                            />
-                          )}
-                        />
-                      </div>
-
-                      {/* </div>
-                              </div> */}
-                      {/* <div className="col-md-5 pd-0 col-sx-12 col-sm-4">
-                                 <div className="form-group city zipcode"> */}
-                      <div className="city-name col-md-5" id="homeCity">
-                        <Autocomplete
-                          className="bg-white p-0 color-black"
-                          freeSolo
-                          value={this.state.city}
-                          onChange={(event, newValue) => {
-                            this.setState({
-                              city: newValue,
-                            });
-                          }}
-                          inputValue={this.state.city ? this.state.city : ""}
-                          onInputChange={(event, newInputValue) => {
-                            this.setState({
-                              city: newInputValue,
-                            });
-                          }}
-                          id="combo-box-demo-2"
-                          options={
-                            this.state.city
-                              ? this.state.city.length >= 1
-                                ? this.state.cityList
-                                : []
-                              : []
-                          }
-                          renderInput={(params) => (
-                            <TextField
-                            InputLabelProps={{
-                              style: {
-                                marginTop: '10px',
-                                transform: 'translateY(-20px)',
-                                transition: 'all 0.3s ease',
-                              },
-                            }}
-                              {...params}
-                              label="Search Doctors (City or Pin)"
-                            />
-                          )}
-                        />
-                      </div>
-
-                      <div className="mainBtn col-md-1">
-                        <button
-                          type="submit"
-                          className=" btn btn-article-search color-white float-right"
-                          id="btnDoc"
-                        >
-                          <i className="fas fa-search"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <input
-                    type="hidden"
-                    name="Latitude"
-                    id="Latitude"
-                    className="form-control"
-                  />
-
-                  <input
-                    type="hidden"
-                    name="Longitude"
-                    id="Longitude"
-                    className="form-control"
-                  />
-                </form>
-              </div>
-            </div>
-          </div>
-        </section>
+        <DoctorSearch />
         <section className="tabslider clerfix">
           <div className="container">
             <div className="row">
@@ -831,17 +725,7 @@ class Home extends Component {
                     Choose by Diseases
                   </div>
                 </div>
-                {/* <!-- Nav tabs --> */}
-                {/* <ul>
-                     <li role="presentation" className="active"><a href="#Men" aria-controls="Men" role="tab" data-toggle="tab">Men</a>
-                     </li>
-                     <li role="presentation"><a href="#Women" aria-controls="Women" role="tab" data-toggle="tab">Women</a>
-                     </li>
-                     <li role="presentation"><a href="#Children" aria-controls="Children" role="tab" data-toggle="tab">Children</a>
-                     </li>
-                     
-                     
-                  </ul> */}
+             
               </div>
               <Carousel1 city={this.state.searchParams.city} />
             </div>

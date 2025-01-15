@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import axios from "axios";
-import { backendHost } from "../../api-config";
+
 import Header from "./Header";
 import Footer from '../Footer/Footer';
 

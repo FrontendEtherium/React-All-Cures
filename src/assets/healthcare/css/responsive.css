@@ -348,7 +348,7 @@
   .socia-media-footer ul {
     display: flex;
     justify-content: center;
-/*     margin-right: 2.4rem; */
+    /*     margin-right: 2.4rem; */
   }
   .consultunt {
     margin: 0 1rem;
@@ -388,8 +388,6 @@
 }
 
 @media only screen and (max-width: 768px) {
- 
-
   .alert.pop-up {
     width: 90%;
     padding: 0.6rem;
@@ -466,8 +464,31 @@
   .mainSearch {
     flex-direction: row;
     z-index: 0;
+    width: 100%;
   }
   .autocomplete {
     display: block;
   }
+}
+
+.background-section {
+  position: relative;
+  background-image: url("https://ik.imagekit.io/hg4fpytvry/product-images/assets/img/doctorconsult.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh; /* Full height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.background-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Add a dark overlay for better contrast */
+  z-index: 1;
 }
