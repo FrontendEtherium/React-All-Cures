@@ -4,13 +4,12 @@ import { Suspense, lazy } from 'react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import { Select, MenuItem } from '@material-ui/core';
-import parse from 'html-react-parser';
 import {Container, Row, Col, Breadcrumb } from "react-bootstrap";
 import {Link } from 'react-router-dom'
 import CenterWell from './CenterWell';
 import Sidebar from "./leftMenu";
 import SidebarRight from "./RightMenu";
-import Doct from "../../assets/img/doct.png";
+
 import Image_1 from "../../assets/img/img_1.jpeg"
 import Image_2 from "../../assets/img/img_2 .jpeg"
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';

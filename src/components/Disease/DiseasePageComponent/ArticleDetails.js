@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CenterWell from "../CenterWell";
-
+import { userAccess } from "../../UserAccess";
+import Favourite from "../../favourite";
+import Favourites from "../../UpdateFavourite";
+import { backendHost } from "../../../api-config";
+import { userId } from "../../UserId";
 const ArticleDetails = React.memo(
   ({
     title,
-    ratingValue,
+
     parsedContent,
     carouselItems,
     currentIndex,
@@ -14,10 +18,44 @@ const ArticleDetails = React.memo(
     authoredBy,
     regDocPatId,
     publishedDate,
+    id,
   }) => {
-
-    console.log("Article details re renderd");
+    console.log("article details poage re rendered");
     
+    const [state, setState] = useState({
+      showSource: false,
+      favourite: [],
+      ratingValue: "",
+    });
+    const articleId = id.split("-")[0];
+    useEffect(() => {
+      getRating();
+      if (userAccess) {
+        getFavourite();
+      }
+    }, []);
+    const getRating = async () => {
+      try {
+        const response = await fetch(
+          `${backendHost}/rating/target/${articleId}/targettype/2/avg`
+        );
+        const data = await response.json();
+        setState((prev) => ({ ...prev, ratingValue: data }));
+      } catch (error) {
+        console.error("Error fetching rating:", error);
+      }
+    };
+    const getFavourite = async () => {
+      try {
+        const response = await fetch(
+          `${backendHost}/favourite/userid/${userId}/articleid/${articleId}/favourite`
+        );
+        const data = await response.json();
+        setState((prev) => ({ ...prev, favourite: data[0]?.status || [] }));
+      } catch (error) {
+        console.error("Error fetching favourite status:", error);
+      }
+    };
     return (
       <div>
         <div className="article-title-container">
@@ -25,7 +63,7 @@ const ArticleDetails = React.memo(
             {title}
           </h1>
 
-          {ratingValue && (
+          {state.ratingValue && (
             <div className="average-rating mb-4 ml-3 mt-2" id="avg-rating">
               {[...Array(5)].map((_, index) => (
                 <span key={index} className="fa fa-star opacity-7"></span>
@@ -98,7 +136,7 @@ const ArticleDetails = React.memo(
                               }`
                             : "https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/cures_articleimages//299/default.png"
                         }
-                        alt="Article Image"
+                        alt="Article"
                       />
                       <p className="mt-2 fs-5">
                         {carouselItems[currentIndex]?.title}
@@ -128,6 +166,15 @@ const ArticleDetails = React.memo(
           <span>Published on: </span>
           {publishedDate || "Unknown"}
         </div>
+        {userAccess ? (
+          <div id="favbutton">
+            {state.favourite.length === 0 ? (
+              <Favourite article_id={id.split("-")[0]} />
+            ) : (
+              <Favourites article_id={id.split("-")[0]} />
+            )}
+          </div>
+        ) : null}
       </div>
     );
   }

@@ -9,36 +9,26 @@ import SidebarRight from "./RightMenu";
 import { backendHost } from "../../api-config";
 import Heart from "../../assets/img/heart.png";
 import "react-phone-number-input/style.css";
-import ArticleRating from "../ArticleRating";
-import Favourite from "../favourite";
-import Favourites from "../UpdateFavourite";
-import ArticleComment from "../ArticleComment";
 import HelmetMetaData from "../HelmetMetaData";
 import headers from "../../api-fetch";
-import { userAccess } from "../UserAccess";
-import { userId } from "../UserId";
 import { imagePath, imgKitImagePath } from "../../image-path";
-import SubscriberBtn from "./DiseasePageComponent/SubscriberBtn";
+import SubscriberBtn from "./DiseasePageComponent/SubscriberBtn.js";
 import CarouselArticle from "./DiseasePageComponent/CarouselArticle";
-import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
-import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import ArticleDetails from "./DiseasePageComponent/ArticleDetails";
 import Breadcrumbs from "./DiseasePageComponent/Breadcrumbs";
+import Rating from "./DiseasePageComponent/Rating.js";
+import ArticleComments from "./DiseasePageComponent/ArticleComments.js";
+import DiseaseModal from "./DiseasePageComponent/DiseaseModal.js";
 const Disease = () => {
   const [state, setState] = useState({
-    images: [],
     currentIndexx: 0,
     items: [],
     carouselItems: [],
     comment: [],
     isLoaded: false,
-    ratingValue: "",
-    rating: [],
     favourite: [],
     regions: [],
-    regionalPost: [],
+
     showMore: false,
     value: "",
     type: [],
@@ -49,17 +39,15 @@ const Disease = () => {
     showCuresCards: false,
     modalState: false,
     adId: "",
-    likeClicked: null,
-    dislikeClicked: null,
     showSource: false,
     alertShown: false,
     isModalOpen: false,
     currentIndex: 0,
   });
-  console.log("component rendered");
 
+  console.log("component rendered");
+  // const MarkdownPreview = lazy(() => import("./MarkdownPreview.js"));
   const { id } = useParams();
-  const location = useLocation();
   const history = useHistory();
   const containerRef = useRef(null);
   const [parsedContent, setParsedContent] = useState();
@@ -74,6 +62,7 @@ const Disease = () => {
   }, [id]);
 
   const handleClick = (ad) => {
+    // console.log('Image clicked!',ad);
     axios.put(`${backendHost}/sponsored/ads/clicks/${ad}`);
   };
   const fetchBlog = async () => {
@@ -101,15 +90,8 @@ const Disease = () => {
         // Perform subsequent calls and updates
         await Promise.all([
           diseasePosts(json.dc_name),
-          getDisease(),
-          regionalPosts(json.disease_condition_id),
 
-          comments(articleId),
-          getRating(articleId),
-          getRate(articleId),
-          userAccess ? getFavourite(articleId) : null,
           fetchParentDiseaseId(articleId),
-          loadFloater(),
         ]);
 
         // Update the document title
@@ -135,16 +117,8 @@ const Disease = () => {
 
         // Perform subsequent calls and updates
         await Promise.all([
-          regionalPosts(json.disease_condition_id),
           diseasePosts(json.dc_name),
-          getDisease(),
-
-          comments(articleId),
-          getRating(articleId),
-          getRate(articleId),
-          userAccess ? getFavourite(articleId) : null,
           fetchParentDiseaseId(articleId),
-          loadFloater(),
         ]);
 
         // Update the document title
@@ -154,87 +128,20 @@ const Disease = () => {
       }
     }
   };
-  function regionalPosts(id) {
-    fetch(`${backendHost}/isearch/treatmentregions/${id}`) // /isearch/treatmentregions/${this.state.diseaseCondition}
-      .then((res) => res.json())
-      .then((json) => {
-        // console.log('regional posts')
-        setState((prev) => ({
-          ...prev,
-          regionalPost: json,
-        }));
-      })
-      .catch((err) => null);
-  }
+
+  const [initial, setInitial] = useState(15);
   const diseasePosts = async (dcName) => {
     try {
-      const response = await fetch(`${backendHost}/isearch/${dcName}`);
+      const response = await fetch(
+        `${backendHost}/isearch/limit/${dcName}?offset=0&limit=${initial}&&order=published_date:desc`
+      );
       const data = await response.json();
       setState((prev) => ({ ...prev, carouselItems: data }));
     } catch (error) {
       console.error("Error fetching disease posts:", error);
     }
   };
-  const showComments = ({ item }) => {
-    return (
-      <div className="col-12">
-        <div className="card my-4">
-          <div className="card-body d-flex">
-            <div className="comment-img">
-              <i className="fas fa-user-md fa-4x pl-3 mb-2"></i>
-              <h6 className="card-subtitle my-2 text-muted">
-                {item.first_name} {item.last_name}
-              </h6>
-            </div>
-            <div>
-              <h5 className="h5 mt-3">{item.comments}</h5>
-              <div className="card-info"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
-  const getDisease = async () => {
-    try {
-      const response = await fetch(
-        `${backendHost}/article/all/table/disease_condition`
-      );
-      const data = await response.json();
-      setState((prev) => ({ ...prev, diseaseList: data }));
-    } catch (error) {
-      console.error("Error fetching diseases:", error);
-    }
-  };
 
-  const comments = async (articleId) => {
-    try {
-      const response = await fetch(
-        `${backendHost}/rating/target/${articleId}/targettype/2`
-      );
-      const data = await response.json();
-      setState((prev) => ({
-        ...prev,
-        comment: data.filter(
-          (item) => item.reviewed === 1 && item.comments !== "null"
-        ),
-      }));
-    } catch (error) {
-      console.error("Error fetching comments:", error);
-    }
-  };
-
-  const getRating = async (articleId) => {
-    try {
-      const response = await fetch(
-        `${backendHost}/rating/target/${articleId}/targettype/2/avg`
-      );
-      const data = await response.json();
-      setState((prev) => ({ ...prev, ratingValue: data }));
-    } catch (error) {
-      console.error("Error fetching rating:", error);
-    }
-  };
   const fetchData = async (parent_dc_id) => {
     try {
       const response = await axios.get(
@@ -258,31 +165,6 @@ const Disease = () => {
       setState((prev) => ({ ...prev, error: error.message }));
     }
   };
-  const getRate = async (articleId) => {
-    try {
-      const response = await fetch(
-        `${backendHost}/rating/target/${articleId}/targettype/2?userid=${
-          userId || 0
-        }`
-      );
-      const data = await response.json();
-      setState((prev) => ({ ...prev, rating: data[0]?.ratingVal || [] }));
-    } catch (error) {
-      console.error("Error fetching rate:", error);
-    }
-  };
-
-  const getFavourite = async (articleId) => {
-    try {
-      const response = await fetch(
-        `${backendHost}/favourite/userid/${userId}/articleid/${articleId}/favourite`
-      );
-      const data = await response.json();
-      setState((prev) => ({ ...prev, favourite: data[0]?.status || [] }));
-    } catch (error) {
-      console.error("Error fetching favourite status:", error);
-    }
-  };
 
   const fetchParentDiseaseId = async (articleId) => {
     try {
@@ -298,38 +180,6 @@ const Disease = () => {
     }
   };
 
-  const loadFloater = async () => {
-    try {
-      const response = await fetch(`${backendHost}/data/newsletter/get`);
-      const data = await response.json();
-      setState((prev) => ({ ...prev, images: data }));
-    } catch (error) {
-      console.error("Error loading floater:", error);
-    }
-  };
-
-  const likeButton = async () => {
-    setState((prev) => ({ ...prev, likeClicked: true, dislikeClicked: false }));
-    const articleId = id.split("-")[0];
-
-    try {
-      await axios.post(`${backendHost}/article/like/${articleId}`);
-    } catch (error) {
-      console.error("Error liking article:", error);
-    }
-  };
-
-  const dislikeButton = async () => {
-    setState((prev) => ({ ...prev, likeClicked: false, dislikeClicked: true }));
-    const articleId = id.split("-")[0];
-
-    try {
-      await axios.post(`${backendHost}/article/dislike/${articleId}`);
-    } catch (error) {
-      console.error("Error disliking article:", error);
-    }
-  };
-
   const handleSource = () => {
     setState((prev) => ({ ...prev, showSource: !prev.showSource }));
   };
@@ -338,9 +188,29 @@ const Disease = () => {
     setState((prev) => ({ ...prev, showMore: !prev.showMore }));
   };
   const adSpacRef = useRef();
-  const handleLinkClick = (url) => {
-    history.push(url);
-    window.scrollTo(0, 0);
+  const handleLinkClick = async (e, url) => {
+    window.scrollTo(0, 0); // Scroll to the top of the page
+
+    try {
+      // Send a POST request for analytics
+      await axios.post(
+        `${backendHost}/analytics/clicks?articleID=${id.split("-")[0]}`
+      );
+    } catch (error) {
+      console.error("Error logging analytics:", error);
+    }
+
+    // Update the carousel index
+    setState((prevState) => ({
+      ...prevState,
+      currentIndex:
+        (prevState.currentIndex + 1) % prevState.carouselItems.length,
+    }));
+
+    // Navigate to the new page
+    setTimeout(() => {
+      history.push(url); // Use history.push to navigate
+    }, 0);
   };
 
   if (!state.isLoaded) {
@@ -385,57 +255,37 @@ const Disease = () => {
       <Row>
         <div className="left-menu pb-3">
           <div id="sidebar-wrapper">
-            {state.regionalPost.length !== 0 && (
-              <Sidebar
-                diseaseId={state.items.disease_condition_id}
-                id={id}
-                regionalPosts={
-                  state.regionPostsLoaded ? state.regionalPost : null
-                }
-                name={state.items.dc_name}
-              />
-            )}
+            <Sidebar
+              diseaseId={state.items.disease_condition_id}
+              id={id}
+              name={state.items.dc_name}
+            />
           </div>
-
-          {/* 
-                    <button className="btn pl-4 mt-2 " id="left-menu-ad" data-toggle="modal"data-target=".bd-example-modal-lg">
-                                 <img className="pl-4" src={PersianAd} alt="ad"/>
-                                 </button> */}
-
-          {
-            state.ads ? (
-              state.ads !== "https://all-cures.com:444All Ads are Served" ? (
-                <div className="d-flex justify-content-center">
-                  <img
-                    className="mt-5"
-                    id="left-menu-ad"
-                    src={state.ads}
-                    alt="adjjjj"
-                    onClick={() => handleClick(state.adId)}
-                  />
-                </div>
-              ) : (
-                <button
-                  className="btn pl-4 mt-2 "
+          {state.ads &&
+            (state.ads !== "https://all-cures.com:444All Ads are Served" ? (
+              <div className="d-flex justify-content-center">
+                <img
+                  className="mt-5"
                   id="left-menu-ad"
-                  data-toggle="modal"
-                  data-target=".bd-example-modal-lg"
-                >
-                  {/* <img className="pl-4" src={PersianAd} alt="adhhh"
-                                 /> */}
-                  <img
-                    className="pl-4"
-                    src={`${imgKitImagePath}/tr:w-180,f-webp/assets/img/Persian.jpg`}
-                    alt="adhhh"
-                  />
-                </button>
-              )
-            ) : null
-
-            // : <button className="btn pl-4 mt-2 " id="left-menu-ad" data-toggle="modal"data-target=".bd-example-modal-lg">
-            //  <img className="pl-4" src={PersianAd} alt="adhhh"/>
-            //  </button>
-          }
+                  src={state.ads}
+                  alt="adjjjj"
+                  onClick={() => handleClick(state.adId)}
+                />
+              </div>
+            ) : (
+              <button
+                className="btn pl-4 mt-2"
+                id="left-menu-ad"
+                data-toggle="modal"
+                data-target=".bd-example-modal-lg"
+              >
+                <img
+                  className="pl-4"
+                  src={`${imgKitImagePath}/tr:w-180,f-webp/assets/img/Persian.jpg`}
+                  alt="adhhh"
+                />
+              </button>
+            ))}
         </div>
         <Col md={7} id="page-content-wrapper" className="col-xs-12 pb-5">
           <div id="center-well" ref={containerRef}>
@@ -451,94 +301,19 @@ const Disease = () => {
               carouselItems={state.carouselItems}
               id={id}
             />
-            <Row className="align-items-center justify-content-between mx-2">
-              <Col md={6}>
-                {userAccess ? (
-                  <>
-                    {state.rating.length === 0 ? (
-                      <span className="text-muted medium">
-                        You have not rated yet. Please rate.
-                      </span>
-                    ) : (
-                      <p
-                        className="small font-weight-bold"
-                        style={{ color: "#00415e" }}
-                      >
-                        Your previous rating: {state.rating}{" "}
-                        <span className="icon-star-1"></span>
-                        <br />
-                        Rate again below:
-                      </p>
-                    )}
-                  </>
-                ) : (
-                  <div className="text-muted small">Rate here:</div>
-                )}
-                <div id="docRate" className="">
-                  <ArticleRating article_id={id.split("-")[0]} />
-                </div>
-              </Col>
-
-              <Col
-                md={6}
-                className="d-flex align-items-center justify-content-end"
-              >
-                <span className="small text-muted">
-                  Was this article helpful?
-                </span>
-                <button
-                  className="btn btn-link p-1 mx-2"
-                  onClick={likeButton}
-                  aria-label="Like"
-                >
-                  {state.likeClicked ? (
-                    <ThumbUpIcon
-                      style={{ fontSize: "20px", color: "#00415e" }}
-                    />
-                  ) : (
-                    <ThumbUpOutlinedIcon
-                      style={{ fontSize: "20px", color: "#6c757d" }}
-                    />
-                  )}
-                </button>
-                <button
-                  className="btn btn-link p-1"
-                  onClick={dislikeButton}
-                  aria-label="Dislike"
-                >
-                  {state.dislikeClicked ? (
-                    <ThumbDownIcon
-                      style={{ fontSize: "20px", color: "#00415e" }}
-                    />
-                  ) : (
-                    <ThumbDownOutlinedIcon
-                      style={{ fontSize: "20px", color: "#6c757d" }}
-                    />
-                  )}
-                </button>
-              </Col>
-            </Row>
+            <Rating id={id} />
             <ArticleDetails
               title={state.items.title}
-              ratingValue={state.ratingValue}
               parsedContent={parsedContent}
+              handleLinkClick={handleLinkClick}
               carouselItems={state.carouselItems}
               currentIndex={state.currentIndex}
               authorsName={state.items.authors_name}
               authoredBy={state.items.authored_by}
               regDocPatId={state.items.reg_doc_pat_id}
               publishedDate={state.items.published_date}
+              id={id}
             />
-
-            {userAccess ? (
-              <div id="favbutton">
-                {state.favourite.length === 0 ? (
-                  <Favourite article_id={id.split("-")[0]} />
-                ) : (
-                  <Favourites article_id={id.split("-")[0]} />
-                )}
-              </div>
-            ) : null}
           </div>
           <div className="ml-3 mt-3">
             <button className="btn  btn-primary" onClick={handleSource}>
@@ -553,44 +328,7 @@ const Disease = () => {
             </h5>
           </div>
 
-          {/* Review Button (Rating + Comment) */}
-          {userAccess ? (
-            <div className="ml-3 mb-3">
-              <ArticleComment
-                refreshComments={comments}
-                article_id={id.split("-")[0]}
-              />
-            </div>
-          ) : null}
-          <div id="comments-column">
-            {/* SHOW ALL COMMENTS */}
-            <div className="main-hero">
-              {!state.showMore
-                ? state.comment
-                    .slice(0, 1)
-                    .map((item, i) => showComments(item, i))
-                : state.comment.map((item, i) => showComments(item, i))}
-            </div>
-            {state.comment
-              ? state.comment.length > 1 && (
-                  <button
-                    id="show-hide-comments"
-                    className="white-button-shadow btn w-75 mb-4 ml-3"
-                    onClick={() => {
-                      this.state.showMore
-                        ? this.setState({
-                            showMore: false,
-                          })
-                        : this.setState({
-                            showMore: true,
-                          });
-                    }}
-                  >
-                    {!state.showMore ? "Show more" : "Hide"}
-                  </button>
-                )
-              : null}
-          </div>
+          <ArticleComments id={id} />
         </Col>
         <Col id="right-sidebar-wrapper">
           <SidebarRight
@@ -601,10 +339,20 @@ const Disease = () => {
           />
         </Col>
       </Row>
+      <DiseaseModal
+        modalState={state.modalState}
+        currentIndexx={state.currentIndexx}
+        postSubscription={() => this.postSubscribtion()}
+      />
       <SubscriberBtn />
+
       <Footer />
     </div>
   );
 };
 
+Disease.whyDidYouRender = {
+  logOnDifferentValues: true,
+  customName: "Article",
+};
 export default Disease;

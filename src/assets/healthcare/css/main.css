@@ -510,7 +510,7 @@ h6 {
   bottom: 90px;
 }
 .search-wrap-inner {
-  margin-top: -69px;
+  
   width: 100%;
 }
 
@@ -1241,9 +1241,7 @@ button.appBtn:hover {
 .footer-bootm .logo {
   padding-top: 8px;
 }
-.pageHeader {
-  height: 200px;
-}
+
 .comman-pg-header {
   background: #cde4f8;
 }
