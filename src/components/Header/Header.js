@@ -17,7 +17,7 @@ const Header = () => {
   const [article, setArticle] = useState("");
   const [diseaseTitle, setDiseaseTitle] = useState([]);
   const [modalShow, setModalShow] = useState(false);
-  console.log("header re rendered");
+
   
   useEffect(() => {
     if (article) {

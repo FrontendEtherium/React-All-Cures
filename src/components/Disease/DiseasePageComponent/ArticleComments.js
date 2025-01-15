@@ -5,7 +5,7 @@ import ArticleComment from "../../ArticleComment";
 function ArticleComments({ id }) {
   const [comments, setComments] = useState([]);
   const [showMore, setShowMore] = useState(false);
-  console.log("articlecommet re rendered", id);
+
   const articleId = id.split("-")[0];
 
   useEffect(() => {

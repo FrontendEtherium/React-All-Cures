@@ -20,7 +20,7 @@ const ArticleDetails = React.memo(
     publishedDate,
     id,
   }) => {
-    console.log("article details poage re rendered");
+    // console.log("article details poage re rendered");
     
     const [state, setState] = useState({
       showSource: false,

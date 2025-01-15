@@ -44,7 +44,7 @@ const Disease = () => {
     currentIndex: 0,
   });
 
-  console.log("component rendered");
+  // console.log("component rendered");
   // const MarkdownPreview = lazy(() => import("./MarkdownPreview.js"));
   const { id } = useParams();
   const history = useHistory();

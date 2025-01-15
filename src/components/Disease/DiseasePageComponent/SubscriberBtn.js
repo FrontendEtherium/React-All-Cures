@@ -29,7 +29,7 @@ const SubscriberBtn = () => {
     alertMsg: "",
   });
   // Fetch diseases on mount
-  console.log("subscribe btn re rendered");
+  // console.log("subscribe btn re rendered");
   
   useEffect(() => {
     const fetchDiseases = async () => {

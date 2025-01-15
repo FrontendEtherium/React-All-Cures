@@ -23,7 +23,7 @@ const RatingButton = React.memo(
 );
 
 function Rating({ id }) {
-  console.log("Rating Re-rendered");
+  // console.log("Rating Re-rendered");
 
   const [state, setState] = useState({
     likeClicked: false,

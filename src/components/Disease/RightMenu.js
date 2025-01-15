@@ -13,8 +13,8 @@ const Side = (props) => {
   const [items, setItems] = useState([]);
   const [index, setIndex] = useState(5);
   const [initial, setInitial] = useState(5);
-  const initialPosts = slice(items, 0, index);
-  console.log("right menu re rendered");
+
+  // console.log("right menu re rendered");
 
   function diseasePosts() {
     // For specific blogs like "/blogs/diabetes"

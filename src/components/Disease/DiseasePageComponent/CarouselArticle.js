@@ -41,7 +41,7 @@ const options = {
 function CarouselArticle({ diseaseConditionId, carouselItems, id }) {
   const [region, setRegion] = useState([]);
   const location = useLocation();
-  console.log("carousel article re rendered");
+  // console.log("carousel article re rendered");
   
 
   // Fetch regions once when the component mounts
