@@ -23,12 +23,6 @@ import { isValidPhoneNumber } from "react-phone-number-input";
 
 import "react-phone-number-input/style.css";
 import "./Home.css";
-
-// ICONS
-import Account from "../../assets/icon/icons-AllCures/account_circle_black_48dp.svg";
-import CreateCures from "../../assets/icon/icons-AllCures/edit_black_48dp.svg";
-import List from "../../assets/icon/icons-AllCures/list_black_48dp.svg";
-
 import { backendHost } from "../../api-config";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -302,6 +296,8 @@ class Home extends Component {
     });
 
   logout = async (e) => {
+    console.log("Logout started");
+
     fetch(`${backendHost}/LogoutActionController`, {
       method: "POST",
       credentials: "include",
@@ -672,6 +668,11 @@ class Home extends Component {
                   </div>
                 </div>
               </div>
+              <Test
+                show={this.state.modalShow}
+                path={this.state.path}
+                onHide={() => this.setModalShow(false)}
+              />
             </section>
           </div>
         </div>
@@ -725,7 +726,6 @@ class Home extends Component {
                     Choose by Diseases
                   </div>
                 </div>
-             
               </div>
               <Carousel1 city={this.state.searchParams.city} />
             </div>

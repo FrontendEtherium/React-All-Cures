@@ -510,12 +510,14 @@ h6 {
   bottom: 90px;
 }
 .search-wrap-inner {
+  margin-top: 15px;
   width: 100%;
   align-self: center;
 }
 
 @media only screen and (min-width: 220px) and (max-width: 412px) {
   .search-wrap-inner {
+    margin-top: 1px;
     width: 100%;
     margin-bottom: 120px;
   }
@@ -523,6 +525,7 @@ h6 {
 
 @media only screen and (min-width: 412px) and (max-width: 720px) {
   .search-wrap-inner {
+    margin-top: 1px;
     width: 100%;
     margin-bottom: 120px;
   }

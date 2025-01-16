@@ -11,6 +11,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { userAccess } from "../UserAccess";
 import { imgKitImagePath } from "../../image-path";
 import DoctorSearch from "./DoctorSearch";
+import Test from "../LandingPage/test";
 
 const Header = () => {
   const [isUnaniDropdownOpen, setIsUnaniDropdownOpen] = useState(false);
@@ -32,6 +33,8 @@ const Header = () => {
   const handleUnaniMouseLeave = () => setIsUnaniDropdownOpen(false);
 
   const logout = () => {
+    console.log("logout started");
+    
     axios.defaults.withCredentials = true;
     axios
       .post(`${backendHost}/LogoutActionController`, {
@@ -39,7 +42,7 @@ const Header = () => {
       })
       .then(() => {
         Cookies.remove("uName");
-        setTimeout(() => window.location.reload(), 200);
+        setTimeout(() => window.location.reload(), 500);
       })
       .catch((err) => console.error("Error logging out", err));
   };
@@ -249,6 +252,8 @@ const Header = () => {
             </div>
           </div>
         </div>
+        <Test show={modalShow}
+        onHide={() => setModalShow(false)}/>
       </section>
       <DoctorSearch />
     </div>
