@@ -41,7 +41,7 @@ const Disease = () => {
     showSource: false,
     alertShown: false,
     isModalOpen: false,
-    currentIndex: 0,
+    currentIndex: 1,
   });
 
   // console.log("component rendered");
@@ -338,9 +338,7 @@ const Disease = () => {
           />
         </Col>
       </Row>
-      <DiseaseModal
-
-      />
+      <DiseaseModal />
       <SubscriberBtn />
 
       <Footer />
