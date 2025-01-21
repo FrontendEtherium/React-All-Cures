@@ -25,8 +25,9 @@ function DoctorConnectSearch({ doctors }) {
         {/* Text Section */}
         <div className="tw-col-span-2 tw-text-center md:tw-text-left tw-text-2xl tw-font-bold tw-text-gray-900">
           <p className="tw-text-sm tw-text-gray-600 tw-mt-2 tw-text-center">
-            Search from our wide range of <span className=" tw-text-lg tw-text-primary">Doctors</span> across various
-            specialties and cities.
+            Search from our wide range of{" "}
+            <span className=" tw-text-lg tw-text-primary">Doctors</span> across
+            various specialties and cities.
           </p>
         </div>
 
