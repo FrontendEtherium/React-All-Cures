@@ -13,7 +13,7 @@ import { imgKitImagePath } from "../../image-path";
 import DoctorSearch from "./DoctorSearch";
 import Test from "../LandingPage/test";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-const Header = () => {
+const Header = ({showSearch = true}) => {
   const [isUnaniDropdownOpen, setIsUnaniDropdownOpen] = useState(false);
   const [article, setArticle] = useState("");
   const [diseaseTitle, setDiseaseTitle] = useState([]);
@@ -313,7 +313,7 @@ const Header = () => {
         </div>
         <Test show={modalShow} onHide={() => setModalShow(false)} />
       </section>
-      <DoctorSearch />
+      {showSearch && <DoctorSearch />}
     </div>
   );
 };

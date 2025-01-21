@@ -73,8 +73,8 @@ const ArticlePreview = (props) => {
         return res.json();
       })
       .then((json) => {
-        console.log("Article Response from articellpreview",json);
-        
+        console.log("Article Response from articellpreview", json);
+
         var temp = [];
         if (articleFilter === props.dcName) {
           json.forEach((i) => {
@@ -157,11 +157,9 @@ const ArticlePreview = (props) => {
       })
 
       .then((json) => {
-        console.log("json 2",json);
+        console.log("json 2", json);
         var temp = [];
         if (articleFilter === props.dcName) {
-   
-            
           json.forEach((i) => {
             if (
               i.dc_name === props.dcName &&
@@ -173,17 +171,16 @@ const ArticlePreview = (props) => {
           });
           setItems(temp);
         } else if (articleFilter === "recent") {
-
           json.forEach((i) => {
-            if (i.pubstatus_id === 3 ) {
+            if (i.pubstatus_id === 3) {
               temp.push(i);
             }
           });
-          console.log("temp Item",temp);
-          
+          console.log("temp Item", temp);
+
           setItems(temp);
         } else if (articleFilter === "earliest") {
-            console.log("3 run");
+          console.log("3 run");
           json.forEach((i) => {
             if (i.pubstatus_id === 3) {
               temp.push(i);
@@ -406,7 +403,7 @@ const ArticlePreview = (props) => {
                         imgLocation.includes("cures_articleimages")
                       ) {
                         imageLoc =
-                          `https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/` +
+                          `https://ik.imagekit.io/hg4fpytvry/product-images/tr:h-320,w-300,f-webp/` +
                           imgLocation
                             .replace("json", "png")
                             .split("/webapps/")[1];

@@ -373,7 +373,7 @@ const EditModal = (props) => {
             ...block,
             data: {
               ...block.data,
-              target: "_blank", // Add target="_blank" for hyperlinks
+              target: "_blank", 
             },
           };
         }
