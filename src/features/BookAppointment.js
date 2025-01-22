@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Alert } from "react-bootstrap";
 import { LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -26,24 +26,83 @@ const CustomDay = styled(PickersDay)(({ theme, day, selectedDate }) => ({
 const AppointmentModal = ({
   show,
   onHide,
-  highlightedDays,
-  unbookedSlots,
-  disableDate,
-  onDateChange,
-  selectedDate,
+
   alertBooking,
   docId,
   userId,
-  amount,
 }) => {
   const today = dayjs();
   const [selectedTimeSlot, setSelectedTimeSlot] = useState("");
   const [bookingLoading, setBookingLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [highlightedDays, setHighlightedDays] = useState([]);
+  const [unavailableDates, setUnavailableDates] = useState();
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [amount, setAmount] = useState(null);
+  const [unbookedSlots, setUnbookedSlot] = useState(null);
 
   const handleTimeSlot = (time) => {
     setSelectedTimeSlot(time);
   };
+
+  const disableDate = (date) => {
+    const currentDate = new Date();
+    const isPastDate = date < currentDate;
+    // const isBooked = highlightedDays.includes(date.format("YYYY-MM-DD"));
+    // const isUnavail = unavailableDates.includes(date.format("YYYY-MM-DD"));
+    // return isBooked || isUnavail;
+  };
+  useEffect(() => {
+    const fetchAppointmentDetails = () => {
+      fetch(`${backendHost}/appointments/get/Slots/${docId}`)
+        .then((res) => res.json())
+        .then((json) => {
+          const firstDate = Object.keys(json.totalDates)[0];
+
+          // Extract the timeslots for the first date
+          const timeslots = json.totalDates[firstDate];
+
+          const highlightedDate = json.completelyBookedDates;
+          setHighlightedDays(highlightedDate);
+
+          const totalDates = Object.keys(json.totalDates);
+
+          const generateDateRange = (startDate, endDate) => {
+            const dates = [];
+            let currentDate = new Date(startDate);
+            while (currentDate <= endDate) {
+              dates.push(currentDate.toISOString().slice(0, 10));
+              currentDate = new Date(
+                currentDate.getTime() + 24 * 60 * 60 * 1000
+              );
+            }
+            return dates;
+          };
+
+          // Generate all possible dates for the next 30 days
+          const currentDate = new Date();
+          const next30Days = new Date(
+            currentDate.getTime() + 30 * 24 * 60 * 60 * 1000
+          );
+          const allPossibleDates = generateDateRange(currentDate, next30Days);
+
+          // Find the missing dates
+          const missingDates = allPossibleDates.filter(
+            (date) => !totalDates.includes(date)
+          );
+
+          // console.log('missing dates',missingDates)
+          setUnavailableDates(missingDates);
+
+          const unbookedSlots = json.unbookedSlots[selectedDate] || [];
+
+          // Set the state of unbookedSlots using the extracted unbooked slots
+          setAmount(json.amount);
+          setUnbookedSlot(unbookedSlots);
+        });
+    };
+    fetchAppointmentDetails();
+  }, [selectedDate]);
 
   const bookAppn = async (e) => {
     e.preventDefault();
@@ -75,10 +134,23 @@ const AppointmentModal = ({
     }
   };
 
+  const handleDatesChange = (newValue) => {
+    setSelectedDate(newValue.format("YYYY-MM-DD"));
+  };
+
   return (
     <div
       className={`modal fade ${show ? "show" : ""}`}
-      style={{ display: show ? "block" : "none" }}
+      style={{
+        display: show ? "block" : "none",
+        position: "fixed", // Ensures it's positioned relative to the viewport
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        zIndex: 1050, // Ensure it appears above other elements
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+      }}
       tabIndex="-1"
       role="dialog"
     >
@@ -122,7 +194,7 @@ const AppointmentModal = ({
                         ),
                       }}
                       slotProps={{ day: { highlightedDays } }}
-                      onChange={onDateChange}
+                      onChange={handleDatesChange}
                       showToolbar={false}
                       shouldDisableDate={disableDate}
                     />
@@ -209,7 +281,7 @@ const AppointmentModal = ({
 
             {/* Book Appointment Button */}
             {selectedTimeSlot && (
-              <div className="text-center mt-3">
+              <div className="text-center mt-3 ">
                 <Button
                   variant="dark"
                   onClick={bookAppn}
@@ -217,9 +289,10 @@ const AppointmentModal = ({
                     background: "#00415e",
                     color: "#fff",
                     marginBottom: "10px",
+                    padding: "10px",
                   }}
                 >
-                  <CalendarTodayIcon /> Book Appointment
+                  Book Appointment
                 </Button>
               </div>
             )}

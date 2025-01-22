@@ -20,8 +20,6 @@ import "./test.css";
 import ErrorBoundary from "../ErrorBoundary";
 
 const Test = (props) => {
-  // Sign in form's states
-
   const [click, setClick] = useState(true);
   const [email, setEmail] = useState("");
   const [rememberMe, setRememberMe] = useState("off");
@@ -183,23 +181,21 @@ const Test = (props) => {
 
   return (
     <>
-      {hasError && <ErrorBoundary></ErrorBoundary>}
-
-      {!hasError && (
-        <div className="sign">
-          <Modal
-            {...props}
-            size="lg"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-          >
-            <Modal.Body>
-              <div className="container sign" id="container">
-                <div className="form-container sign-up-container">
-                  <form className="sign" onSubmit={SignUpForm}>
-                    <div className="h2 py-0 my-1">Create Account</div>
-                    <span>or use your email for registration</span>
-                    {/* <GoogleLogin
+      <div className="sign" style={{ zIndex: 1000 }}>
+        <Modal
+          {...props}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+    
+          <Modal.Body>
+            <div className="container sign" id="container">
+              <div className="form-container sign-up-container">
+                <form className="sign" onSubmit={SignUpForm}>
+                  <div className="h2 py-0 my-1">Create Account</div>
+                  <span>or use your email for registration</span>
+                  {/* <GoogleLogin
         clientId="529398297055-37e0rfns77ig0nih2moffq1pdp533329.apps.googleusercontent.com"
         buttonText="Register"
         onSuccess={responseGoogle}
@@ -207,201 +203,195 @@ const Test = (props) => {
         cookiePolicy={'single_host_origin'}
         className="text-dark"
       /> */}
-                    {parseInt(buttonSignUpClick) === 1 ? (
-                      <div
-                        id="signup-msg"
-                        className="alert alert-danger mt-2 py-1 px-3 border border-dark"
-                      ></div>
-                    ) : null}
-                    <input
-                      className="px-2 py-1 rounded border-dark border"
-                      type="text"
-                      placeholder="First Name"
-                      onChange={(e) => setFname(e.target.value)}
-                      required
-                    />
-                    <input
-                      className="px-2 py-1 rounded border-dark border"
-                      type="text"
-                      placeholder="Last Name"
-                      onChange={(e) => setLname(e.target.value)}
-                      required
-                    />
-                    <input
-                      className="px-2 py-1 rounded border-dark border"
-                      type="email"
-                      placeholder="Email"
-                      onChange={(e) => handleEmail(e)}
-                      required
-                    />
-                    <input
-                      className="px-2 py-1 rounded border-dark border"
-                      type="number"
-                      placeholder="Mobile Number"
-                      onChange={(e) => setMname(e.target.value)}
-                      required
-                    />
-                    <input
-                      className="px-2 py-1 rounded border-dark border"
-                      type="password"
-                      placeholder="Password"
-                      onChange={(e) => setFirst(e)}
-                      required
-                    />
-                    {buttonSignUpClick === 1 ? (
-                      <div className="rounded alert-danger">
-                        <div className="alert-msg">
-                          {!validEmail && <div>◼ Enter Valid Email! </div>}
-                          {!validLength && (
-                            <div>
-                              ◼ Password should contain at least 8 characters!{" "}
-                            </div>
-                          )}
-                          {!upperCase && (
-                            <div>
-                              ◼ Password should contain at least 1 uppercase
-                              character!{" "}
-                            </div>
-                          )}
-                          {!lowerCase && (
-                            <div>
-                              ◼ Password should contain at least 1 lowercase
-                              character!{" "}
-                            </div>
-                          )}
-                          {!match && <div>◼ Passwords don't match! </div>}
-                        </div>
+                  {parseInt(buttonSignUpClick) === 1 ? (
+                    <div
+                      id="signup-msg"
+                      className="alert alert-danger mt-2 py-1 px-3 border border-dark"
+                    ></div>
+                  ) : null}
+                  <input
+                    className="px-2 py-1 rounded border-dark border"
+                    type="text"
+                    placeholder="First Name"
+                    onChange={(e) => setFname(e.target.value)}
+                    required
+                  />
+                  <input
+                    className="px-2 py-1 rounded border-dark border"
+                    type="text"
+                    placeholder="Last Name"
+                    onChange={(e) => setLname(e.target.value)}
+                    required
+                  />
+                  <input
+                    className="px-2 py-1 rounded border-dark border"
+                    type="email"
+                    placeholder="Email"
+                    onChange={(e) => handleEmail(e)}
+                    required
+                  />
+                  <input
+                    className="px-2 py-1 rounded border-dark border"
+                    type="number"
+                    placeholder="Mobile Number"
+                    onChange={(e) => setMname(e.target.value)}
+                    required
+                  />
+                  <input
+                    className="px-2 py-1 rounded border-dark border"
+                    type="password"
+                    placeholder="Password"
+                    onChange={(e) => setFirst(e)}
+                    required
+                  />
+                  {buttonSignUpClick === 1 ? (
+                    <div className="rounded alert-danger">
+                      <div className="alert-msg">
+                        {!validEmail && <div>◼ Enter Valid Email! </div>}
+                        {!validLength && (
+                          <div>
+                            ◼ Password should contain at least 8 characters!{" "}
+                          </div>
+                        )}
+                        {!upperCase && (
+                          <div>
+                            ◼ Password should contain at least 1 uppercase
+                            character!{" "}
+                          </div>
+                        )}
+                        {!lowerCase && (
+                          <div>
+                            ◼ Password should contain at least 1 lowercase
+                            character!{" "}
+                          </div>
+                        )}
+                        {!match && <div>◼ Passwords don't match! </div>}
                       </div>
-                    ) : null}
-                    <input
-                      className="px-2 py-1 rounded border-dark border"
-                      type="password"
-                      placeholder="Confirm Password"
-                      onChange={(e) => setSecond(e)}
-                      autoComplete="off"
+                    </div>
+                  ) : null}
+                  <input
+                    className="px-2 py-1 rounded border-dark border"
+                    type="password"
+                    placeholder="Confirm Password"
+                    onChange={(e) => setSecond(e)}
+                    autoComplete="off"
+                    required
+                  />
+
+                  <FormControl className="mb-4 w-75">
+                    <InputLabel id="demo-simple-select-label">
+                      User Type
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={userType}
+                      onChange={(e) => setUserType(e.target.value)}
                       required
-                    />
-
-                    <FormControl className="mb-4 w-75">
-                      <InputLabel id="demo-simple-select-label">
-                        User Type
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={userType}
-                        onChange={(e) => setUserType(e.target.value)}
-                        required
-                      >
-                        <MenuItem value="doctor">Doctor</MenuItem>
-                        <MenuItem value="other">Other</MenuItem>
-                      </Select>
-                    </FormControl>
-                    <button type="submit" className="ghost">
-                      Sign Up
-                    </button>
-                  </form>
-                </div>
-                <div className="form-container sign-in-container">
-                  <form className="sign" onSubmit={loginForm}>
-                    <h1 id="headSign">Sign in</h1>
-                    <span id="accText">or use your account</span>
-
-                    {buttonClick === 1 && !loginSuccess && (
-                      <div
-                        id="login-msg"
-                        className="alert alert-danger mt-2 py-1 px-3 border border-dark"
-                      >
-                        Some Error Occured
-                      </div>
-                    )}
-
-                    <input
-                      className="p-2 rounded border-dark border"
-                      type="email"
-                      placeholder="Email"
-                      autoComplete="off"
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <input
-                      className="p-2 rounded border-dark border"
-                      type="password"
-                      placeholder="Password"
-                      onChange={(e) => setPass(e.target.value)}
-                    />
-                    <Link
-                      className="text-dark"
-                      to="/loginForm/verify"
-                      id="forgetPass"
                     >
-                      Forgot your password?
-                    </Link>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            name="Terms"
-                            value={rememberMe}
-                            onClick={(e) =>
-                              e.target.value === "off"
-                                ? setRememberMe("on")
-                                : setRememberMe("off")
-                            }
-                          />
-                        }
-                        label="Remember Me"
-                      />
-                    </FormGroup>
-                    <button className="ghost" id="btn1">
+                      <MenuItem value="doctor">Doctor</MenuItem>
+                      <MenuItem value="other">Other</MenuItem>
+                    </Select>
+                  </FormControl>
+                  <button type="submit" className="ghost">
+                    Sign Up
+                  </button>
+                </form>
+              </div>
+              <div className="form-container sign-in-container">
+                <form className="sign" onSubmit={loginForm}>
+                  <h1 id="headSign">Sign in</h1>
+                  <span id="accText">or use your account</span>
+
+                  {buttonClick === 1 && !loginSuccess && (
+                    <div
+                      id="login-msg"
+                      className="alert alert-danger mt-2 py-1 px-3 border border-dark"
+                    >
+                      Some Error Occured
+                    </div>
+                  )}
+
+                  <input
+                    className="p-2 rounded border-dark border"
+                    type="email"
+                    placeholder="Email"
+                    autoComplete="off"
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <input
+                    className="p-2 rounded border-dark border"
+                    type="password"
+                    placeholder="Password"
+                    onChange={(e) => setPass(e.target.value)}
+                  />
+                  <Link
+                    className="text-dark"
+                    to="/loginForm/verify"
+                    id="forgetPass"
+                  >
+                    Forgot your password?
+                  </Link>
+                  <FormGroup>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          name="Terms"
+                          value={rememberMe}
+                          onClick={(e) =>
+                            e.target.value === "off"
+                              ? setRememberMe("on")
+                              : setRememberMe("off")
+                          }
+                        />
+                      }
+                      label="Remember Me"
+                    />
+                  </FormGroup>
+                  <button className="ghost" id="btn1">
+                    Sign In
+                  </button>
+                </form>
+              </div>
+              <div className="overlay-container">
+                <div className="overlay">
+                  <div className="overlay-panel overlay-left">
+                    <h1>Welcome Back!</h1>
+                    <p className="text-center">
+                      To keep connected with us please login with your personal
+                      info or
+                    </p>
+                    <button
+                      onClick={(e) => handleClick(setClick(true))}
+                      className="ghost"
+                      id="signIn"
+                    >
                       Sign In
                     </button>
-                  </form>
-                </div>
-                <div className="overlay-container">
-                  <div className="overlay">
-                    <div className="overlay-panel overlay-left">
-                      <h1>Welcome Back!</h1>
-                      <p className="text-center">
-                        To keep connected with us please login with your
-                        personal info or
-                      </p>
-                      <button
-                        onClick={(e) => handleClick(setClick(true))}
-                        className="ghost"
-                        id="signIn"
-                      >
-                        Sign In
-                      </button>
-                    </div>
-                    <div
-                      className="overlay-panel overlay-right"
-                      id="rightPanel"
-                    >
-                      <h1 id="headSign">Hello, Friend!</h1>
-                      <p>
-                        Enter your personal details and start journey with us
-                      </p>
-                      <button
-                        onClick={(e) => handleClick(setClick(false))}
-                        className="ghost"
-                        id="signUp"
-                      >
-                        Sign Up
-                      </button>
-                    </div>
-
-                    {alert && (
-                      <Alert variant="success" className="h6 mx-3">
-                        {alert}
-                      </Alert>
-                    )}
                   </div>
+                  <div className="overlay-panel overlay-right" id="rightPanel">
+                    <h1 id="headSign">Hello, Friend!</h1>
+                    <p>Enter your personal details and start journey with us</p>
+                    <button
+                      onClick={(e) => handleClick(setClick(false))}
+                      className="ghost"
+                      id="signUp"
+                    >
+                      Sign Up
+                    </button>
+                  </div>
+
+                  {alert && (
+                    <Alert variant="success" className="h6 mx-3">
+                      {alert}
+                    </Alert>
+                  )}
                 </div>
               </div>
-            </Modal.Body>
-          </Modal>
-        </div>
-      )}
+            </div>
+          </Modal.Body>
+        </Modal>
+      </div>
     </>
   );
 };

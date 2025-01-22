@@ -7,8 +7,6 @@ import Doct from "../../assets/img/doct.png";
 import { imgKitImagePath } from "../../image-path";
 
 import axios from "axios";
-import { Navbar } from "react-bootstrap";
-import { Nav, NavDropdown, Container } from "react-bootstrap";
 import "../../assets/healthcare/css/main.css";
 import "../../assets/healthcare/css/responsive.css";
 import "../../assets/healthcare/css/animate.css";

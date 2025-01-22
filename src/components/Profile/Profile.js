@@ -28,13 +28,11 @@ import Chat from "./Chat";
 import dayjs from "dayjs";
 
 import DailyIframe from "@daily-co/daily-js";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
 
 import { PickersDay } from "@mui/x-date-pickers/PickersDay";
 import { styled } from "@mui/material/styles";
 import AppointmentModal from "../../features/BookAppointment";
+import Test from "../LandingPage/test";
 
 const HighlightedDay = styled(PickersDay)(({ theme }) => ({
   "&.Mui-selected": {
@@ -96,7 +94,7 @@ class Profile extends Component {
       imageUploadLoading: false,
       showAlert: false,
       alertMsg: "",
-      show: false,
+
       docid: null,
       initial: 4,
       doctImage: [],
@@ -630,7 +628,13 @@ class Profile extends Component {
         return;
       });
   };
-
+  consult = () => {
+    if (userAccess && userId) {
+      this.setState({ showAppointmentModal: true });
+    } else {
+      this.setState({ show: true });
+    }
+  };
   onError = (e) => {
     e.target.parentElement.innerHTML = `<i class="fas fa-user-md fa-6x"></i>`;
   };
@@ -841,15 +845,20 @@ class Profile extends Component {
                                 type="button"
                                 class="btn btn-primary border-0 ml-2"
                                 data-toggle="modal"
-                                onClick={() =>
-                                  this.setState({ showAppointmentModal: true })
-                                }
+                                onClick={() => this.consult()}
                                 data-target="#exampleModal"
                                 style={{ backgroundColor: "#00415e" }}
                               >
                                 <VideocamRoundedIcon />
                                 Consult Now
                               </button>
+                            )}
+                      
+                            {this.state.show && (
+                              <Test
+                                show={true}
+                                onHide={() => this.setState({ show: false })}
+                              />
                             )}
 
                             <div
@@ -860,7 +869,7 @@ class Profile extends Component {
                               aria-labelledby="exampleModalLabel"
                               aria-hidden="true"
                             >
-                              {userId ? (
+                              {userId && (
                                 <AppointmentModal
                                   show={this.state.showAppointmentModal}
                                   onHide={() =>
@@ -868,86 +877,17 @@ class Profile extends Component {
                                       showAppointmentModal: false,
                                     })
                                   }
-                                  highlightedDays={this.state.highlightedDays}
                                   unbookedSlots={this.state.unbookedSlots}
                                   disableDate={this.disableDate}
                                   onDateChange={this.handleDatesChange}
                                   onBookAppointment={(timeSlot) =>
                                     this.handleTimeSlot(timeSlot)
                                   }
-                                  selectedDate={this.state.selectedDate}
                                   bookingLoading={this.state.bookingLoading}
                                   alertBooking={this.state.alertBooking}
                                   docId={this.state.docid}
                                   userId={userId}
-                                  amount={this.state.amount}
                                 />
-                              ) : (
-                                <div className="modal-dialog" role="document">
-                                  <div
-                                    className="modal-content"
-                                    style={{
-                                      minWidth: "400px",
-                                      borderRadius: "10px",
-                                      overflow: "hidden",
-                                      boxShadow:
-                                        "0px 4px 10px rgba(0, 0, 0, 0.1)",
-                                    }}
-                                  >
-                                    <div
-                                      className="modal-header"
-                                      style={{
-                                        backgroundColor: "#00415e",
-                                        color: "#fff",
-                                        padding: "1rem",
-                                        display: "flex",
-                                        justifyContent: "space-between",
-                                        alignItems: "center",
-                                      }}
-                                    >
-                                      <h5
-                                        className="modal-title font-weight-bold"
-                                        id="loginModalLabel"
-                                        style={{
-                                          margin: 0,
-                                          fontSize: "1.25rem",
-                                        }}
-                                      >
-                                        Login or Register
-                                      </h5>
-                                      <button
-                                        type="button"
-                                        className="close"
-                                        data-dismiss="modal"
-                                        aria-label="Close"
-                                        style={{
-                                          background: "transparent",
-                                          border: "none",
-                                          color: "#fff",
-                                          fontSize: "1.5rem",
-                                          marginRight: "5px",
-                                        }}
-                                      >
-                                        &times;
-                                      </button>
-                                    </div>
-                                    <div
-                                      className="modal-body text-center"
-                                      style={{
-                                        padding: "1.5rem",
-                                        fontSize: "1rem",
-                                        color: "#333",
-                                        lineHeight: "1.5",
-                                      }}
-                                    >
-                                      <p style={{ marginBottom: "1rem" }}>
-                                        You need to log in or register first to
-                                        book an appointment. Please log in or
-                                        create an account to proceed.
-                                      </p>
-                                    </div>
-                                  </div>
-                                </div>
                               )}
                             </div>
 

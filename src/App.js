@@ -3,7 +3,7 @@ import Main from "./components/MainComponent";
 import CookieConsent from "react-cookie-consent";
 import AppBanner from "./components/LandingPage/AppBanner";
 import { Link } from "react-router-dom";
-import "./cookie.css"
+import "./cookie.css";
 
 const App = () => {
   return (
@@ -24,7 +24,6 @@ const App = () => {
             zIndex: "1000",
             textAlign: "center",
             maxWidth: "80%", // For better responsiveness
-       
           }}
           buttonStyle={{
             background: "#4585FF",
@@ -35,23 +34,18 @@ const App = () => {
 
             border: "none",
             alignItem: "center",
-        
           }}
           buttonText="Accept"
           contentClasses="myclass"
-             buttonWrapperClasses="buttonClass"
+          buttonWrapperClasses="buttonClass"
         >
           <div
-
-          className="cookie-consent-text"
+            className="cookie-consent-text"
             style={{
               color: "#fff",
               margin: "0",
               maxWidth: "100%",
-              
-            
             }}
-
           >
             We use cookies to ensure you have the best browsing experience on
             our website. By using our site, you acknowledge that you have read
