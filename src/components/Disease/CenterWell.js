@@ -66,7 +66,7 @@ const CenterWell = ({pageTitle, index, imageUrl, content, type, text, title, mes
                                 <div className="ce-block__content">
                                     <div className="cdx-block cdx-simple-image">
                                         <div className="cdx-simple-image__picture">
-                                            <img src={imageUrl} alt={caption} />
+                                            <img src={imageUrl} alt={pageTitle} />
                                         </div>
                                         <div className="text-center">
                                             <i>{caption}</i>
