@@ -8,7 +8,6 @@ import "../../assets/healthcare/css/responsive.css";
 import "../../assets/healthcare/css/animate.css";
 import "../../assets/healthcare/icomoon/style.css";
 import { Container, Button } from "react-bootstrap";
-import { makeStyles } from '@material-ui/core/styles';
 import axios from "axios";
 import EditProfile from "./EditProfile";
 import { backendHost } from "../../api-config";
@@ -19,34 +18,21 @@ import { userId } from "../UserId";
 import { userAccess } from "../UserAccess";
 import AllPost from "../BlogPage/Allpost";
 import Heart from "../../assets/img/heart.png";
-import { Modal,Alert } from "react-bootstrap";
-
+import { Alert } from "react-bootstrap";
+import VideocamRoundedIcon from "@mui/icons-material/VideocamRounded";
 import HelmetMetaData from "../HelmetMetaData";
 import { imagePath } from "../../image-path";
 import Chat from "./Chat";
-import VideoCallOutlined from "@mui/icons-material/VideoCallOutlined";
-import { green, pink } from "@mui/material/colors";
-import Avatar from "@mui/material/Avatar";
+
 // import Calendar from 'react-calendar';
 import dayjs from "dayjs";
 
-import { subDays, isBefore, addDays } from 'date-fns';
-
-import DailyIframe from '@daily-co/daily-js';
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import {
-  LocalizationProvider,
-  StaticDatePicker,
-  TimePicker,
-} from "@mui/x-date-pickers";
-
+import DailyIframe from "@daily-co/daily-js";
 
 import { PickersDay } from "@mui/x-date-pickers/PickersDay";
 import { styled } from "@mui/material/styles";
-import moment from 'moment'
-
-
+import AppointmentModal from "../../features/BookAppointment";
+import Test from "../LandingPage/test";
 
 const HighlightedDay = styled(PickersDay)(({ theme }) => ({
   "&.Mui-selected": {
@@ -55,11 +41,14 @@ const HighlightedDay = styled(PickersDay)(({ theme }) => ({
   },
 }));
 
-
 class ServerDay extends Component {
   render() {
-    const { highlightedDays = [], day, outsideCurrentMonth, ...other } =
-      this.props;
+    const {
+      highlightedDays = [],
+      day,
+      outsideCurrentMonth,
+      ...other
+    } = this.props;
 
     const isSelected =
       !this.props.outsideCurrentMonth &&
@@ -76,16 +65,14 @@ class ServerDay extends Component {
   }
 }
 
-
-
-
-
-
 class Profile extends Component {
   constructor(props) {
     super(props);
     const params = props.match.params;
     this.editToggle = this.editToggle.bind(this);
+    this.state = {
+      showAppointmentModal: false,
+    };
     this.fetchDoctorData = this.fetchDoctorData.bind(this);
     this.state = {
       items: [],
@@ -107,73 +94,50 @@ class Profile extends Component {
       imageUploadLoading: false,
       showAlert: false,
       alertMsg: "",
-      show: false,
+
       docid: null,
       initial: 4,
       doctImage: [],
       isDefaultImage: false,
       selectedDate: null,
       selectedTime: null,
-      callFrame:null,
-      videoLink:null,
-      availStatus:null,
+      callFrame: null,
+      videoLink: null,
+      availStatus: null,
       // value: new Date(),
       // date: new Date()
 
       value: dayjs(),
       // highlightedDays: [ "2024-03-06", "2024-03-15",'2024-03-11','2024-03-18','2024-04-03'],
-      highlightedDays:[],
-      unavailableDates:[],
+      highlightedDays: [],
+      unavailableDates: [],
       // unavailableDates:[ "2024-03-07", "2024-03-16",'2024-03-12','2024-03-19'],
       // timeSlots:['10:00:00 AM','10:45:00 AM','11:30:00 AM','12:15:00 PM','13:00:00 PM','13:45:00 PM','14:30:00 PM','15:15:00 PM','16:00:00 PM','16:45:00 PM','17:30:00 PM'],
-      timeSlots:[],
-      unbookedSlots:[],
-      selectedTimeSlot:'',
-      selectedDate: "", // Initialize selectedDate state   
-      alert:false,
-      alertBooking:false,
-      bookingLoading:false,
-      userAvailStatus:'',
-      appointmentAlert:false,
-      amount:null
-    
-
+      timeSlots: [],
+      unbookedSlots: [],
+      selectedTimeSlot: "",
+      selectedDate: "", // Initialize selectedDate state
+      alert: false,
+      alertBooking: false,
+      bookingLoading: false,
+      userAvailStatus: "",
+      amount: null,
     };
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
   }
 
-
-   disableDate = (date) => {
+  disableDate = (date) => {
     const currentDate = new Date();
-    const isPastDate = date< currentDate;
-    const isBooked = this.state.highlightedDays.includes(date.format("YYYY-MM-DD"));
-    const isUnavail = this.state.unavailableDates.includes(date.format("YYYY-MM-DD"));
-    return  isBooked || isUnavail;
+    const isPastDate = date < currentDate;
+    const isBooked = this.state.highlightedDays.includes(
+      date.format("YYYY-MM-DD")
+    );
+    const isUnavail = this.state.unavailableDates.includes(
+      date.format("YYYY-MM-DD")
+    );
+    return isBooked || isUnavail;
   };
-
-  // highlightedDays are completely booked dates
-  // unavailabledates are when doctor is not avail for whole day
-
-
-
-  // renderDay = (date, selectedDate, dayInCurrentMonth) => {
-  //   const isBooked = this.state.bookedDates.includes(date.toISOString().split('T')[0]); // Check if date is in bookedDates array
-  //   return (
-  //     <div
-  //       style={{
-  //         backgroundColor: isBooked ? 'red' : 'inherit',
-  //         color: isBooked ? 'white' : 'inherit',
-  //         borderRadius: '50%', // Optional: adds a circular background for the booked dates
-  //         pointerEvents: isBooked ? 'none' : 'auto', // Disable pointer events for booked dates
-  //       }}
-  //     >
-  //       {date.getDate()}
-  //     </div>
-  //   );
-  // };
-
-
 
   handleDatesChange = (newValue) => {
     this.setState({
@@ -181,50 +145,29 @@ class Profile extends Component {
       selectedDate: newValue.format("YYYY-MM-DD"), // Update selectedDate state
     });
 
-
-    fetch(`${backendHost}/appointments/get/Slots/${this.props.match.params.id.split("-")[0]}`)
-  
-    .then((res) => res.json())
+    fetch(
+      `${backendHost}/appointments/get/Slots/${
+        this.props.match.params.id.split("-")[0]
+      }`
+    )
+      .then((res) => res.json())
       .then((json) => {
+        // Extract the totalDates from the JSON response
+        const totalDates = json.totalDates;
 
-      // console.log('response',json)
-        
-       // Extract the totalDates from the JSON response
-       const totalDates = json.totalDates;
+        // Extract the first date from totalDates object
+        const firstDate = Object.keys(totalDates)[0];
 
-       // Extract the first date from totalDates object
-       const firstDate = Object.keys(totalDates)[0];
-       
-       // Extract the timeslots for the first date
-       const timeslots = totalDates[firstDate];
+        // Extract the timeslots for the first date
+        const timeslots = totalDates[firstDate];
 
-       // console.log('Allslots',timeslots)
-       // console.log(json.unbookedSlots,'unbooked')
-       // console.log('selected state',this.state.selectedDate)
- 
-       
+        const unbookedSlots = json.unbookedSlots[this.state.selectedDate] || [];
 
-       const unbookedSlots = json.unbookedSlots[this.state.selectedDate] || [];
-
-       // Check if unbookedSlots array is empty
-        
-       // if (unbookedSlots.length === 0) {
-       //   console.log('No unbooked slots available for the selected date',this.state.selectedDate);
-       // }
- 
-       // Set the state of unbookedSlots using the extracted unbooked slots
-       this.setState({
-         unbookedSlots: unbookedSlots,
-       });
-      
+        this.setState({
+          unbookedSlots: unbookedSlots,
+        });
       });
   };
-
-
-
-  // handleDateChange = (newDate) => {
-  //   this.setState({ selectedDate: newDate });
-  // };
 
   handleTimeChange = (newTime) => {
     this.setState({ selectedTime: newTime });
@@ -252,223 +195,40 @@ class Profile extends Component {
     );
   };
 
+  bookAppn = (e) => {
+    e.preventDefault();
 
-//   bookAppn=(e)=>{
-//     e.preventDefault();
+    // console.log('clicked booking');
+    // console.log('time', dayjs(this.state.selectedTime).format("HH:mm"));
 
-//     console.log('clicked bboking')
-//     // const time = moment(this.state.selectedTime, 'HH:mm').toDate();
-//     console.log('time', dayjs(this.state.selectedTime).format("HH:mm"))
+    axios
+      .post(`${backendHost}/appointments/create`, {
+        docID: this.state.docid,
+        userID: parseInt(userId),
+        appointmentDate: this.state.selectedDate,
+        startTime: this.state.selectedTimeSlot,
+        paymentStatus: 0,
+        amount: "1.00",
+        currency: "INR",
+      })
+      .then((res) => {
+        let enc = res.data;
 
-// // Format the time to the desired format, e.g., "1:15 PM"
-// // const formattedTime = moment(time).format('h:mm A');
+        const response = JSON.stringify(enc);
 
+        const responseObject = JSON.parse(response);
 
-//     axios.post(`${backendHost}/appointments/create`,{
-     
-//       "docID": this.state.docid,
-//       // "userID": parseInt(userId),
-//       "userID": parseInt(userId),
-//       "appointmentDate": this.state.selectedDate,
-//       "startTime":this.state.selectedTimeSlot,
-//       "paymentStatus": 0,
-//       "amount":"1.00",
-//       "currency":"INR",
-     
-       
-//   })
-//   // .then(  this.setState({ bookingLoading: true })
-//   // )
-//   .then((res)=>{
+        localStorage.setItem("encKey", responseObject.encRequest);
+        localStorage.setItem("apiResponse", JSON.stringify(res.data));
 
+        const redirectURL =
+          "https://www.all-cures.com/paymentRedirection" +
+          `?encRequest=${responseObject.encRequest}` +
+          `&accessCode=AVWN42KL59BP42NWPB`;
 
-//     const enc=res.data
-//     console.log('enc',enc)
-   
-//     fetch("https://test.ccavenue.com/transaction.do?command=initiateTransaction", {
-//       method: 'POST',
-     
-//       body: JSON.stringify({ 
-//         encRequest:'enc',
-//         accessCode: "AVKI05LC59AW25IKWA"
-//       })
-//     })
-//     .then(response => {
-//       if (!response.ok) {
-//         throw new Error('Network response was not ok');
-//       }
-//       return response.json();
-//     })
-//     .then(data => {
-//       // Handle successful response data
-//       console.log("Response:", data);
-//     })
-//     .catch(error => {
-//       // Handle fetch error
-//       console.error("Fetch Error:", error);
-//     });
- 
-// })
-// .catch(res => this.setState({ bookingLoading: true })
-// )
-//   }
-
-
-// payment = (e) => {
-//   e.preventDefault();
-
-//   // Create a hidden form element
-//   const form = document.createElement('form');
-//   form.setAttribute('method', 'post');
-//   form.setAttribute('action', 'https://test.ccavenue.com/transaction.do?command=initiateTransaction');
-//   form.style.display = 'none'; // Hide the form
-
-//   // Create and append hidden input fields for encRequest and accessCode
-//   const encRequestInput = document.createElement('input');
-//   encRequestInput.setAttribute('type', 'hidden');
-//   encRequestInput.setAttribute('name', 'encRequest');
-//   encRequestInput.setAttribute('value', '9923507A9100B3502A10278D5A73DB7DC0FD65087325AD1DC97D18CA378846B6BA9906804FD410FBC280C13C2144DF93E5D7E76E3A4A9FAF1A5C1E7BCDC2CECC7BC65287C7C1A529849F2C6ED62CD7A5E1651DE519A147D76245E9BF480A0BEAF9497671DC5B7AE43A0123EFC27A87F81A124EEEEDB68F46047D5F0A8A011ACC479F534A566E490DEC170B11A7D234084B135CAC3E54E4792472DD8F1ACD0D50A53DA0FD54609BBDF97B69A6509B78BBF334F7642703326511AEBA5EE8117CF9EA7FF2726FE279CB4838F4619E8D93F9EDD747C6F7CE8D33DA0A40F104C87C58');
-  
-//   const accessCodeInput = document.createElement('input');
-//   accessCodeInput.setAttribute('type', 'hidden');
-//   accessCodeInput.setAttribute('name', 'access_code');
-//   accessCodeInput.setAttribute('value', 'AVNH05LB56CF25HNFC');
-
-//   // Append input fields to the form
-//   form.appendChild(encRequestInput);
-//   form.appendChild(accessCodeInput);
-
-//   // Append the form to the document body
-//   document.body.appendChild(form);
-
-//   // Submit the form
-//   form.submit();
-// }
-
-bookAppn = (e) => {
-  e.preventDefault();
-
-  console.log('clicked booking');
-  console.log('time', dayjs(this.state.selectedTime).format("HH:mm"));
-
-  axios.post(`${backendHost}/appointments/create`, {
-      "docID": this.state.docid,
-      "userID": parseInt(userId),
-      "appointmentDate": this.state.selectedDate,
-      "startTime": this.state.selectedTimeSlot,
-      "paymentStatus": 0,
-      "amount": "1.00",
-      "currency": "INR",
-  })
-  .then((res) => {
-      let enc = res.data
-      console.log('resppp', enc);
-      const response=  JSON.stringify(enc)
-
-     const responseObject = JSON.parse(response);
-    console.log('res of ',responseObject.encRequest)
-    console.log("count",res.data.Count)
-
-
-      localStorage.setItem('encKey',responseObject.encRequest)
-      localStorage.setItem('apiResponse', JSON.stringify(res.data));
-
-      if (res.data.Count == 0) {
-        this.setState({
-          appointmentAlert: true
-        });
-        setTimeout(() => {
-          this.setState({
-            appointmentAlert:false
-          })
-      }, 6000);
-
-      }
-
-
-
-else{
-      const redirectURL = "https://www.all-cures.com/paymentRedirection" +
-      `?encRequest=${responseObject.encRequest}` +
-      `&accessCode=AVWN42KL59BP42NWPB`; // Your accessCode here
-
-    // Redirecting to the URL
-    window.location.href = redirectURL;
-
-}
-
-      // If enc is a string, parse it to an object
-      // if (typeof enc === 'string') {
-      //     try {
-      //         enc = JSON.parse(enc);
-      //     } catch (error) {
-      //         console.error('Error parsing enc:', error);
-      //     }
-      // }
-
-      // Sending the modified payload
-      // return fetch("https://test.ccavenue.com/transaction.do?command=initiateTransaction", {
-      //     method: 'POST',
-      //     headers: {
-      //         'Content-Type': 'application/json'
-      //     },
-      //     body: JSON({
-      //         encRequest: enc,
-      //         accessCode: "AVKI05LC59AW25IKWA"
-      //     })
-      // });
-
-
-
-
-
-
-
-
-
-
-      // const form = document.createElement('form');
-      // form.setAttribute('method', 'post');
-      // form.setAttribute('action', 'https://test.ccavenue.com/transaction.do?command=initiateTransaction');
-      // form.style.display = 'none'; // Hide the form
-    
-      // // Create and append hidden input fields for encRequest and accessCode
-      // const encRequestInput = document.createElement('input');
-      // encRequestInput.setAttribute('type', 'hidden');
-      // encRequestInput.setAttribute('name', 'encRequest');
-      // encRequestInput.setAttribute('value', responseObject.encRequest);
-      
-      // const accessCodeInput = document.createElement('input');
-      // accessCodeInput.setAttribute('type', 'hidden');
-      // accessCodeInput.setAttribute('name', 'access_code');
-      // accessCodeInput.setAttribute('value', 'AVNH05LB56CF25HNFC');
-      // // accessCodeInput.setAttribute('value', 'AVWN42KL59BP42NWPB');
-    
-      // // Append input fields to the form
-      // form.appendChild(encRequestInput);
-      // form.appendChild(accessCodeInput);
-    
-      // // Append the form to the document body
-      // document.body.appendChild(form);
-    
-      // // Submit the form
-      // form.submit();
-  })
-  // .then(response => {
-  //     if (!response.ok) {
-  //         throw new Error('Network response was not ok');
-  //     }
-  //     return response.json();
-  // })
-  // .then(data => {
-  //     console.log("Response:", data);
-  //     // Handle successful response data
-  // })
-  // .catch(error => {
-  //     console.error("Fetch Error:", error);
-  //     // Handle fetch error
-  // });
-}
+        window.location.href = redirectURL;
+      });
+  };
 
   handleImageSubmission = (e) => {
     // e.preventDefault()
@@ -523,41 +283,6 @@ else{
       })
       .catch((err) => err);
   };
-  // DOCTOR'S WRITTEN CURES
-
-
-//   onChange(value) {
-//     this.setState({ value });
-//   }
-
-  // handleDateChange(date) {
-  //   this.setState({ date });
-  // }
-
-
-
-//   tileDisabled = ({ date, view }) => {
-//     const today = new Date();
-//     const thirtyDaysFromNow = new Date();
-//     thirtyDaysFromNow.setDate(today.getDate() + 30);
-//     return date < today || date > thirtyDaysFromNow;
-//   };
-
-//   // Function to customize tile content
-//   tileContent = ({ date, view }) => {
-//     // Example: Mark dates 5 days from now as blue and 10 days from now as red
-//     const fiveDaysFromNow = new Date();
-//     fiveDaysFromNow.setDate(fiveDaysFromNow.getDate() + 5);
-//     const tenDaysFromNow = new Date();
-//     tenDaysFromNow.setDate(tenDaysFromNow.getDate() + 10);
-
-//     if (date.toDateString() === fiveDaysFromNow.toDateString()) {
-//       return <div className="blue-dot"></div>;
-//     } else if (date.toDateString() === tenDaysFromNow.toDateString()) {
-//       return <div className="red-dot"></div>;
-//     }
-//     return null;
-//   };
 
   allPosts = () => {
     // For all available blogs "/blogs"
@@ -583,8 +308,6 @@ else{
         return;
       });
   };
-
-  
 
   getComments = (id) => {
     axios
@@ -664,7 +387,6 @@ else{
       // .then(res => JSON.parse(res))
       .then((res) => res.json())
       .then((json) => {
-
         // console.log('firstname', 'id',id,json.firstName)
         // document.title = `${json.firstName} ${json.lastName}`;
 
@@ -676,62 +398,42 @@ else{
       });
   };
 
-
   fetchAvailStatus = (id) => {
     fetch(`${backendHost}/video/get/${id}/availability`)
       // .then(res => JSON.parse(res))
       .then((res) => res.json())
       .then((json) => {
         this.setState({
-          
           availStatus: json,
-          
         });
         // console.log('availStatus',this.state.availStatus)
-        // console.log('availStatus',this.state.availStatus)
       });
-      
   };
-
 
   fetchUserAvailStatus = (id) => {
     fetch(`${backendHost}/appointments/get/${id}/${userId}`)
-   
       // .then(res => JSON.parse(res))
       .then((res) => res.json())
       .then((json) => {
+        // console.log('useravailstatus',id,userId)
 
-        // console.log('useravailstatus',id,userId)
-        // console.log('useravailstatus',id,userId)
-       
-        // console.log('useravailStatus',json)
         // console.log('useravailStatus',json)
 
         const currentDate = new Date();
-        const currentTime = currentDate.getHours() + ':' + currentDate.getMinutes();
+        const currentTime =
+          currentDate.getHours() + ":" + currentDate.getMinutes();
 
-        // console.log('dateuseravailStatus', currentDate.toISOString().split('T')[0])
-        // console.log('timeuseravailStatus', currentTime)
-        // console.log('dateuseravailStatus', json.appointmentDate)
-        // console.log('startTimeuseravailStatus', json.startTime)
-        // console.log('endTimeuseravailStatus', json.endTime)
-
-
-        // json.forEach(appointment => {
-        //   console.log('Start Time:', appointment.startTime);
-        //   console.log('End Time:', appointment.endTime);
-        //   console.log('Date:', appointment.appointmentDate);
-        // });
-      
-        
-
-  
-        // Check each appointment for current time and date
         let availability = 0;
-        json.forEach(appointment => {
-          if (appointment.appointmentDate === currentDate.toISOString().split('T')[0]) {
+        json.forEach((appointment) => {
+          if (
+            appointment.appointmentDate ===
+            currentDate.toISOString().split("T")[0]
+          ) {
             // Check if current time is within the time range of the appointment
-            if (currentTime >= appointment.startTime && currentTime <= appointment.endTime) {
+            if (
+              currentTime >= appointment.startTime &&
+              currentTime <= appointment.endTime
+            ) {
               availability = 1;
               // If a match is found, you can break the loop since you have already found the availability
               return;
@@ -740,117 +442,68 @@ else{
         });
         // Set availability state based on the check
         this.setState({
-          userAvailStatus: availability
+          userAvailStatus: availability,
         });
-
-        // console.log('userrrravail',  this.state.userAvailStatus)
-        // console.log('userrrravail',  this.state.userAvailStatus)
-      })
-    
-      
+      });
   };
-
-
 
   fetchAppointmentDetails = (id) => {
     fetch(`${backendHost}/appointments/get/Slots/${id}`)
-  
-    .then((res) => res.json())
+      .then((res) => res.json())
       .then((json) => {
+        const firstDate = Object.keys(json.totalDates)[0];
 
-      // console.log('response',json)
+        // Extract the timeslots for the first date
+        const timeslots = json.totalDates[firstDate];
 
+        const highlightedDate = json.completelyBookedDates;
 
-       // Extract the totalDates from the JSON response
-      //  const totalDates = json.totalDates;
+        this.setState({
+          timeSlots: timeslots,
+          highlightedDays: highlightedDate,
+        });
 
-       // Extract the first date from totalDates object
-       const firstDate = Object.keys(json.totalDates)[0];
-       
-       // Extract the timeslots for the first date
-       const timeslots = json.totalDates[firstDate];
+        //
 
-       // console.log('Allslots',timeslots)
-       // console.log(json.unbookedSlots,'unbooked')
-       // console.log('selected state',this.state.selectedDate)
-      //  console.log('Allslots',timeslots)
-      //  console.log(json.unbookedSlots,'unbooked')
-      //  console.log('selected state',this.state.selectedDate)
+        const totalDates = Object.keys(json.totalDates);
 
-       const highlightedDate = json.completelyBookedDates;
-       // console.log(highlightedDate,'highlighteddates')
+        const generateDateRange = (startDate, endDate) => {
+          const dates = [];
+          let currentDate = new Date(startDate);
+          while (currentDate <= endDate) {
+            dates.push(currentDate.toISOString().slice(0, 10));
+            currentDate = new Date(currentDate.getTime() + 24 * 60 * 60 * 1000);
+          }
+          return dates;
+        };
 
+        // Generate all possible dates for the next 30 days
+        const currentDate = new Date();
+        const next30Days = new Date(
+          currentDate.getTime() + 30 * 24 * 60 * 60 * 1000
+        );
+        const allPossibleDates = generateDateRange(currentDate, next30Days);
 
-      //  console.log(highlightedDate,'highlighteddates')
- 
-       // Set the state of timeslots using the extracted timeslots
-       this.setState({
-         timeSlots: timeslots,
-         highlightedDays:highlightedDate
-       });
+        // Find the missing dates
+        const missingDates = allPossibleDates.filter(
+          (date) => !totalDates.includes(date)
+        );
 
+        // console.log('missing dates',missingDates)
 
-//
+        this.setState({
+          unavailableDates: missingDates,
+        });
 
-const totalDates = Object.keys(json.totalDates);
+        const unbookedSlots = json.unbookedSlots[this.state.selectedDate] || [];
 
-
-const generateDateRange = (startDate, endDate) => {
-  const dates = [];
-  let currentDate = new Date(startDate);
-  while (currentDate <= endDate) {
-      dates.push(currentDate.toISOString().slice(0, 10));
-      currentDate = new Date(currentDate.getTime() + (24 * 60 * 60 * 1000));
-  }
-  return dates;
-};
-
-           
-
-           // Generate all possible dates for the next 30 days
-           const currentDate = new Date();
-           const next30Days = new Date(currentDate.getTime() + (30 * 24 * 60 * 60 * 1000));
-           const allPossibleDates = generateDateRange(currentDate, next30Days);
-
-           // Find the missing dates
-           const missingDates = allPossibleDates.filter(date => !totalDates.includes(date));
-
-            // console.log('missing dates',missingDates)
-   
-            this.setState({
-              unavailableDates: missingDates
-            })
-             
-
-
-
-
-
-
-       const unbookedSlots = json.unbookedSlots[this.state.selectedDate] || [];
-
-       // Check if unbookedSlots array is empty
-       // if (unbookedSlots.length === 0) {
-       //   console.log('No unbooked slots available for the selected date',this.state.selectedDate);
-       // }
-
-      //  if (unbookedSlots.length === 0) {
-      //    console.log('No unbooked slots available for the selected date',this.state.selectedDate);
-      //  }
- 
-       // Set the state of unbookedSlots using the extracted unbooked slots
-       this.setState({
-         unbookedSlots: unbookedSlots,
-         amount: json.amount
-        
-       });
-      
+        // Set the state of unbookedSlots using the extracted unbooked slots
+        this.setState({
+          unbookedSlots: unbookedSlots,
+          amount: json.amount,
+        });
       });
-      
   };
-
-
-
 
   showRating = (val) => {
     if (document.getElementById("doctor-avg-rating")) {
@@ -874,95 +527,12 @@ const generateDateRange = (startDate, endDate) => {
     }
   };
 
-
-
-
-  // calendarStyle = {
-  //   backgroundColor: 'white',
-  //   color: 'black',
-  //   fontSize: '16px',
-  //   border: '1px solid black',
-  //   borderRadius: '1px',
-  //   width: '600px', // Example width
-  //   height: '500px', // Example height
-  // };
-
-
-
-  //  tileContent = ({ date }) => {
-  //   // Get today's date
-  //   const today = new Date();
-  
-  //   // Get the date 30 days from today
-  //   const next30Days = new Date();
-  //   next30Days.setDate(today.getDate() + 30);
-  
-  //   // Check if the date is within the range of today to the next 30 days
-  //   const isWithinRange = date >= today && date <= next30Days;
-  
-  //   // Check if the date is odd or even
-  //   const isEvenDate = date.getDate() % 2 === 0;
-  
-  //   // Define styles for the date based on whether it's within the range and odd/even
-  //   const tileStyle = {
-  //     backgroundColor: isWithinRange ? (isEvenDate ? 'lightblue' : 'red') : 'lightgray',
-  //     color: isWithinRange ? 'black' : 'gray', // Adjust text color as needed
-  //     borderRadius: '50%', // Optional: make dates circular
-  //     width: '30px', // Optional: adjust width of each date
-  //     height: '30px', // Optional: adjust height of each date
-  //     display: 'flex',
-  //     justifyContent: 'center',
-  //     alignItems: 'center',
-  //   };
-  
-  //   return (
-  //     <div style={tileStyle}>
-  //       {date.getDate()} {/* Render the date */}
-  //     </div>
-  //   );
-  // };
-
-
-
-
-//    isWithinNext30Days = (date) => {
-//     const today = new Date();
-//     const next30Days = addDays(today, 30);
-//     return isBefore(date, next30Days) && !isBefore(date, today);
-// };
-
-// // Function to check if a date is in the past
-//  isPastDate = (date) => {
-//     const today = new Date();
-//     return isBefore(date, today);
-// };
-
-  // componentDidMount() {
-  //   window.scrollTo(0, 0);
-  //   this.fetchDoctorData(this.props.match.params.id.split('-')[0])
-  //   this.getComments(this.props.match.params.id.split('-')[0])
-  //   this.getRating(this.props.match.params.id.split('-')[0])
-  //   this.getRate(this.props.match.params.id.split('-')[0])
-  //   this.allPosts()
-
-  //   const canonicalLink = document.createElement('link');
-  //   canonicalLink.rel = 'canonical';
-  //   canonicalLink.href = window.location.href;
-  //   document.head.appendChild(canonicalLink);
-
-  //   console.log('Canonical link:', canonicalLink);
-
-  //   return () => {
-  //     document.head.removeChild(canonicalLink);
-  //   };
-  // }
-
   componentDidMount() {
     window.scrollTo(0, 0);
     this.fetchDoctorData(this.props.match.params.id.split("-")[0]);
     this.fetchAvailStatus(this.props.match.params.id.split("-")[0]);
     this.fetchUserAvailStatus(this.props.match.params.id.split("-")[0]);
-    this.fetchAppointmentDetails(this.props.match.params.id.split("-")[0]); 
+    this.fetchAppointmentDetails(this.props.match.params.id.split("-")[0]);
     this.getComments(this.props.match.params.id.split("-")[0]);
     this.getRating(this.props.match.params.id.split("-")[0]);
     this.getRate(this.props.match.params.id.split("-")[0]);
@@ -1030,19 +600,16 @@ const generateDateRange = (startDate, endDate) => {
     });
   };
 
-  handleTimeSlot =(time)=>{
-
+  handleTimeSlot = (time) => {
     // console.log('handle')
-    // console.log('time',time)
-
+    //     console.log('time',time)
     this.setState(
-      { selectedTimeSlot: time },
+      { selectedTimeSlot: time }
       // () => {
-
-      //   console.log("selectedslot",this.state.selectedTimeSlot);
+      //   console.log("selectedslot", this.state.selectedTimeSlot);
       // }
     );
-  }
+  };
 
   checkIfImageExits = (imageUrl) => {
     fetch(imageUrl, { method: "HEAD" })
@@ -1061,68 +628,50 @@ const generateDateRange = (startDate, endDate) => {
         return;
       });
   };
-
+  consult = () => {
+    if (userAccess && userId) {
+      this.setState({ showAppointmentModal: true });
+    } else {
+      this.setState({ show: true });
+    }
+  };
   onError = (e) => {
     e.target.parentElement.innerHTML = `<i class="fas fa-user-md fa-6x"></i>`;
   };
 
   initVideoChat = () => {
-
-
-    
+    // console.log('idcreated',docid)
     const id = this.props.match.params.id.split("-")[0];
-    // console.log('idcreated',id)
-    // console.log('idcreated',id)
 
+    // console.log('idcreated',id)
 
     fetch(`${backendHost}/video/create/room/${id}`)
       // .then(res => JSON.parse(res))
       .then((res) => res.json())
       .then((json) => {
-        
-
-        // this.setState({
-        //  videoLink:json,
-        
-        // });
-
-
-
         if (!this.state.callFrame && json != "Error") {
           // Initialize the video chat
-          const newCallFrame =  DailyIframe.createFrame({
-           
-        // Check if callFrame already exists
-         showLeaveButton: true,
+          const newCallFrame = DailyIframe.createFrame({
+            // Check if callFrame already exists
+            showLeaveButton: true,
           });
 
-
-             
           // newCallFrame.join({ url: 'https://uat.daily.co/qLxOzn6ZKVyqkQ6YByzL' });
-          newCallFrame.join({ url:json });
-    
+          newCallFrame.join({ url: json });
+
           // Attach a listener for the 'left-meeting' event
-          newCallFrame.on('left-meeting', () => {
+          newCallFrame.on("left-meeting", () => {
             // When leaving the meeting, destroy the frame
             newCallFrame.destroy();
             this.setState({ callFrame: null });
           });
-    
-          
-    
+
           this.setState({ callFrame: newCallFrame });
-          
         }
       });
-
-
-
-
-  
-  }
+  };
 
   render() {
-
     const { value, highlightedDays } = this.state;
     const today = dayjs();
 
@@ -1163,13 +712,7 @@ const generateDateRange = (startDate, endDate) => {
             </div>
           )}
           <HelmetMetaData
-            title={
-              items.prefix +
-              " " +
-              items.firstName +
-              " " +
-              items.lastName
-            }
+            title={items.prefix + " " + items.firstName + " " + items.lastName}
             description={items.about}
             image={`${imagePath}/cures_articleimages/doctors/${items.docID}.png`}
             keywords={
@@ -1215,7 +758,7 @@ const generateDateRange = (startDate, endDate) => {
                             Ayurveda, Homeopathy, Chinese Medicine, Persian,
                             Unani
                           </h2>
-                          {items.imgLoc? (
+                          {items.imgLoc ? (
                             <img
                               alt={items.firstName}
                               src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-180,h-230,f-webp${items.imgLoc}`}
@@ -1225,30 +768,6 @@ const generateDateRange = (startDate, endDate) => {
                           )}
                         </div>
 
-                        {/* {   this.state.userAvailStatus==1 &&
-                        <div
-                          style={{
-                            marginTop: "-44px",
-                            marginLeft: "102px",
-                            position: "absolute",
-                          }}
-                        >
-                          <button
-                            type="button"
-                            class="btn btn-primary bg-transparent border-0"
-                            // data-toggle="modal"
-                            // data-target="#exampleModal"
-                            onClick={this. initVideoChat}
-                          >
-                            <Avatar sx={{ bgcolor: green[500] }}>
-                              <VideoCallOutlined />
-                            </Avatar>
-
-                           
-                          </button>
-
-                        </div>
-    } */}
                         {this.props.match.params.id.split("-")[0] === userId ||
                         userAccess == 9 ? (
                           <>
@@ -1264,32 +783,6 @@ const generateDateRange = (startDate, endDate) => {
                             />
                           </>
                         ) : null}
-
-                        {/* {isFilePicked ? (
-
-                              <div>
-                                
-                                  <p>Filename: {selectedFile.name}</p>
-
-                                  <p>Filetype: {selectedFile.type}</p>
-
-                                  <p>Size in bytes: {selectedFile.size}</p>
-
-                                  <p>
-
-                                      lastModifiedDate:{' '}
-
-                                      {selectedFile.lastModifiedDate.toLocaleDateString()}
-
-                                  </p>
-
-                              </div>
-
-                              ) : (
-
-                              <p>Select a file to show details</p>
-
-                              )} */}
                       </div>
                     </div>
                     <div className="col-md-9">
@@ -1347,275 +840,56 @@ const generateDateRange = (startDate, endDate) => {
                               </Button>
                             ) : null}
 
-
-                           {    userId &&
-                           this.state.items.videoService==1 &&
-                               <button
-                            type="button"
-                            class="btn btn-primary bg-dark border-0 ml-2"
-                            data-toggle="modal"
-                            data-target="#exampleModal"
-                          >
-                           Video Consultation
-                          </button>
-
-                                         }
-                          
-                          <div
-                            class="modal fade"
-                            id="exampleModal"
-                            tabindex="-1"
-                            role="dialog"
-                            aria-labelledby="exampleModalLabel"
-                            aria-hidden="true"
-                          >
-                            <div class="modal-dialog" role="document">
-                              <div class="modal-content" style={{minWidth:"600px"}}>
-                                <div class="modal-header">
-                                  <h5
-                                    class="modal-title p-3 font-weight-bold "
-                                    id="exampleModalLabel"
-                                  >
-                                    Schedule your Appointment
-                                  </h5>
-                                  <button
-                                    type="button"
-                                    class="close appn"
-                                    data-dismiss="modal"
-                                    aria-label="Close"
-                                  >
-                                    <span aria-hidden="true">&times;</span>
-                                  </button>
-                                </div>
-                                <div
-                                  class="modal-body"
-                                  style={{ minHeight: "500px" }}
-                                >
-                                  {/* <div className="d-flex">
-                                   
-                                  </div> */}
-
-
-                                  {/* <Calendar onChange={this.onChange} value={this.state.value} /> */}
-                                    
-{/* 
-                                    <div style={this.calendarStyle}>
-                                  <Calendar 
-                                   onChange={this.state.date} 
-                                   value={this.state.value}
-                                   tileContent={this.tileContent}
-                                 className="calButton"
-                                    />
-
-                                    </div>
-
-                                  <p className='text-center'>
-          <span className='bold'>Selected Date:</span>{' '}
-          {this.state.date.toDateString()}
-        </p> */}
-
-
-        <div className="row">
-
-          <div className=" col-md-8">
-
-                                  <LocalizationProvider
-                                    dateAdapter={AdapterDayjs}
-                                  >
-                                    <DemoContainer
-                                      components={["DatePicker", "TimePicker"]}
-                                    >
-
-                                    
-{/* <StaticDatePicker
-    label="Select Date"
-    value={selectedDate}
-    onChange={this.handleDateChange}
-    sx={{
-        '.MuiPickersDay-root': {
-            borderRadius: 6,
-            borderWidth: 1,
-            borderColor: '#2196f3',
-            border: '1px solid',
-            backgroundColor: '#bbdefb',
-            '&:nth-child(even)': {
-                backgroundColor: '#FFC0CB', // Example color for even days
-            },
-            '&:nth-child(odd)': {
-                backgroundColor: '#87CEEB', // Example color for odd days
-            },
-        },
-    }}
-/> */}
-
-
-
-         
-
-            <StaticDatePicker
-            defaultValue={today}
-            minDate={today}
-            maxDate={today.add(1, "month")}
-            slots={{
-              day: ServerDay,
-            }}
-            slotProps={{
-              day: {
-                highlightedDays,
-              },
-            }}
-        
-
-            onChange={this.handleDatesChange} // Add onChange to update selectedDate
-            showToolbar={false} 
-            shouldDisableDate={this.disableDate}
-            // renderDay={this.renderDay}
-          />
-          
-           
-
-
-                                      
-
-                                      {/* <TimePicker
-                                        label="Select Time"
-                                        value={selectedTime}
-                                        onChange={this.handleTimeChange}
-                                        minutesStep={15}
-                                      /> */}
-
-
-                                    
-                                    </DemoContainer>
-                                  </LocalizationProvider>
-                                  </div>
-                                      <div className="col-sm-12 col-md-4 p-5">
-
-
-                                      {this.state.selectedDate && 
-                                      <>
-
-                                        <p> Select Time Slot</p>
-                                        
-
-                                      {
-                                        this.state.timeSlots && this.state.timeSlots.map((time,index)=>{
-
-                                          const isUnbooked = this.state.unbookedSlots.includes(time);
-                                          const isSelected = this.state.selectedTimeSlot === time;
-
-
-                                          // Parse the time slot to get hours and minutes
-    const [hours, minutes] = time.split(':');
-
-    // Get the current date and time
-    const currentDate = new Date();
-    const currentDateString = currentDate.toDateString();
-    const currentTime = currentDate.getHours() * 60 + currentDate.getMinutes(); // Current time in minutes
-
-    // Get the selected date
-    const selectedDate = new Date(this.state.selectedDate);
-    const selectedDateString = selectedDate.toDateString();
-
-    // Check if the selected date is today
-    const isToday = currentDateString === selectedDateString;
-
-    // Calculate the time slot in minutes
-    const timeSlotTime = parseInt(hours) * 60 + parseInt(minutes);
-
-    // Check if the time slot is for today and in the past
-    const isPast = isToday && timeSlotTime < currentTime;
-
-                                          return(
-                                            <div className="row pt-2">
-                                              <div col-md-6 className=""> 
-                                              <div style={{minWidth:"100px"}}>                                          
-                                              <Button
-                                               variant={isSelected ? "primary" : (isUnbooked ? "outline-primary" : "outline-danger")}
-                                                 disabled={!isUnbooked || isPast}  className="w-100 d-block"  onClick={() => this.handleTimeSlot(time)}>{time}</Button>
-                                              {/* onClick={()=>this.handleTimeSlot(time)} */}
-                                              </div>
-
-                                               </div>
-                                             </div>
-                                          )
-                                        })
-                                      }
-                                      </>
-
-                                    }
-           
-
-                                      </div>
-
-                                  </div>
-
-                                  <div>
-
-                                  {this.state.amount && (
-                                     <p
-                                     className="ml-4 my-2"
-                                     style={{ fontSize: "18px" }}
-                                   >Consultation Fee: Rs {this.state.amount} </p>
-                                  )}
-
-                                    {this.state.selectedDate&& (
-                                      <p  className="ml-4 my-2" style={{fontSize:"18px"}}>
-                                        Date:{" "}
-                                        {dayjs(this.state.selectedDate).format(
-                                          "YYYY-MM-DD"
-                                        )}
-                                      </p>
-                                    )}
-
-                                  {this.state.selectedTimeSlot && (
-                                      <p   className="ml-4 my-2" style={{fontSize:"18px"}}>
-                                      Time:{this.state.selectedTimeSlot}
-                                        {/* {dayjs(selectedTime).format("HH:mm")} */}
-                                      </p>
-                                  )}
-                                  </div>
-
-                                   
-                                  {this.state.selectedTimeSlot &&
-
-                                  <Button
-                                variant="dark"
-                                onClick={this.bookAppn}
-                                className="p-2 m-4"
+                            {this.state.items.videoService == 1 && (
+                              <button
+                                type="button"
+                                class="btn btn-primary border-0 ml-2"
+                                data-toggle="modal"
+                                onClick={() => this.consult()}
+                                data-target="#exampleModal"
+                                style={{ backgroundColor: "#00415e" }}
                               >
-                                Book Appointment
-                              </Button>
+                                <VideocamRoundedIcon />
+                                Consult Now
+                              </button>
+                            )}
+                      
+                            {this.state.show && (
+                              <Test
+                                show={true}
+                                onHide={() => this.setState({ show: false })}
+                              />
+                            )}
 
-                              
-
+                            <div
+                              class="modal"
+                              id="exampleModal"
+                              tabindex="0"
+                              role="dialog"
+                              aria-labelledby="exampleModalLabel"
+                              aria-hidden="true"
+                            >
+                              {userId && (
+                                <AppointmentModal
+                                  show={this.state.showAppointmentModal}
+                                  onHide={() =>
+                                    this.setState({
+                                      showAppointmentModal: false,
+                                    })
                                   }
-                                                     {/* <Button
-                                variant="dark"
-                                onClick={this.payment}
-                                className="p-2 m-4"
-                              >
-                                Pay Now
-                              </Button> */}
-
-                                
-                               {
-                            this.state.bookingLoading?
-                                <Alert variant="danger" className="h6 mx-3">Please wait while we book your Appointment!!</Alert>
-                                : null
-                                }
-
-
-                              {
-                            this.state.appointmentAlert?
-                                <Alert variant="success" className="h6 mx-3">Booked successfully!! Check your Email.</Alert>
-                                : null
-                        }
-                                </div>
-                              </div>
+                                  unbookedSlots={this.state.unbookedSlots}
+                                  disableDate={this.disableDate}
+                                  onDateChange={this.handleDatesChange}
+                                  onBookAppointment={(timeSlot) =>
+                                    this.handleTimeSlot(timeSlot)
+                                  }
+                                  bookingLoading={this.state.bookingLoading}
+                                  alertBooking={this.state.alertBooking}
+                                  docId={this.state.docid}
+                                  userId={userId}
+                                />
+                              )}
                             </div>
-                          </div>
-
 
                             <EditProfile
                               show={this.state.modalShow}
@@ -1632,8 +906,8 @@ const generateDateRange = (startDate, endDate) => {
 
                   <div className="aboutDr">
                     <div className="h4 font-weight-bold">
-                      About {items.prefix} {items.firstName}{" "}
-                      {items.middleName} {items.lastName}
+                      About {items.prefix} {items.firstName} {items.middleName}{" "}
+                      {items.lastName}
                     </div>
 
                     <div id="about-contain">
@@ -1701,7 +975,7 @@ const generateDateRange = (startDate, endDate) => {
                       </a>
                     </div>
                     <div></div>
- 
+
                     <br />
                     <div className="abt-eduction ">
                       <div className="h4 font-weight-bold">Education</div>
@@ -1749,42 +1023,6 @@ const generateDateRange = (startDate, endDate) => {
                           <span> Female</span>
                         )}
                       </div>
-
-                      {/* {items.subscription === 1 ? (
-                        <>
-                          <Button
-                            className="ml-3 mt-4 btn-article-search"
-                            id="textComment"
-                            onClick={this.postLead}
-                          >
-                            Contact Doctor
-                          </Button>
-
-                          <Modal
-                            show={this.state.show}
-                            onHide={this.hideModal}
-                            className="rounded mt-5"
-                          >
-                            <Modal.Header
-                              className="bg-review py-3"
-                              closeButton
-                            >
-                              <Modal.Title className="pl-4">
-                                {items.prefix}. {items.docname_first}{" "}
-                                {items.docname_middle} {items.docname_last}{" "}
-                                contact info...
-                              </Modal.Title>
-                            </Modal.Header>
-
-                            <Modal.Body className="rounded">
-                              <div className="pl-4"></div>
-
-                              <div className="pl-4"></div>
-                            </Modal.Body>
-                            <Modal.Footer></Modal.Footer>
-                          </Modal>
-                        </>
-                      ) : null} */}
                     </div>
                   </div>
 
@@ -1814,26 +1052,24 @@ const generateDateRange = (startDate, endDate) => {
                     />
                   </div>
 
-                  {
-                  
-                    userId && items.chatService == 1 && userAccess != 1 ? (
-                      <>
-                        {items.imgLoc ? (
-                          <Chat
-                            imageURL={items.imgLoc}
-                            items={items}
-                            docid={this.state.docid}
-                          />
-                        ) : (
-                          <Chat
-                            dummy={<i class="fas fa-user-sm "></i>}
-                            items={items}
-                            docid={items.docID}
-                          />
-                        )}
-                      </>
-                    ) : null
-                  }
+                  {userId && items.chatService == 1 && userAccess != 1 ? (
+                    <>
+                      {console.log("loc", items.imgLoc)}
+                      {items.imgLoc ? (
+                        <Chat
+                          imageURL={items.imgLoc}
+                          items={items}
+                          docid={this.state.docid}
+                        />
+                      ) : (
+                        <Chat
+                          dummy={<i class="fas fa-user-sm "></i>}
+                          items={items}
+                          docid={items.docID}
+                        />
+                      )}
+                    </>
+                  ) : null}
 
                   <div className="comment-box">
                     {userId ? (
@@ -2020,3 +1256,4 @@ const generateDateRange = (startDate, endDate) => {
 }
 
 export default Profile;
+export { ServerDay };
