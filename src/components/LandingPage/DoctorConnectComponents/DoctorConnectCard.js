@@ -71,7 +71,7 @@ function DoctorConnectCard({ doc }) {
           <div className="doctor-details">
             <div className="doctor-name">
               Dr. {doc.firstName} {doc.lastName}{" "}
-              <VerifiedIcon color="success" fontSize="small" />
+              <VerifiedIcon color="success" style={{fontSize:"12px"}} />
             </div>
             <div className="doctor-specialty">{doc.medicineTypeName}</div>
             <div className="doctor-location">
@@ -104,7 +104,7 @@ function DoctorConnectCard({ doc }) {
         <div className="modal-backdrop-doc" role="dialog" aria-modal="true">
           <div className="modal-container-doc">
             <div className="modal-header-doc">
-              <h5 className="modal-title-doc">Doctor Unavailable</h5>
+              <h5 className="modal-title-doc">Doctor Unavailable Right Now</h5>
               <button
                 className="modal-close-button-doc"
                 onClick={() => setNotAvailable(false)}

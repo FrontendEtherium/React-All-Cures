@@ -164,14 +164,11 @@
   align-self: flex-end;
 }
 @media (max-width: 768px) {
-    .book-button-container {
-        
-        width: 100%;
- 
-        align-items: center;
-      
-        
-      }
+  .book-button-container {
+    width: 100%;
+
+    align-items: center;
+  }
 }
 .book-availability {
   text-align: center;
@@ -228,7 +225,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  margin-left: 25px;
+ 
   border-bottom: 1px solid #e5e7eb;
 }
 
@@ -239,7 +237,7 @@
 }
 
 .modal-close-button-doc {
-  font-size: 1.25rem;
+  font-size: 1.75rem;
   color: #9ca3af;
   font-weight: bold;
   cursor: pointer;
@@ -279,9 +277,11 @@
 .modal-footer-button-doc {
   background-color: #00415e;
   color: white;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem;
   border-radius: 0.375rem;
-  font-weight: 600;
+  font-weight: 200;
+  margin: 3px;
+  font-size: 13px;
 }
 
 .modal-footer-button-doc:hover {
