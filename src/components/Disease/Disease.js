@@ -21,7 +21,6 @@ import ArticleComments from "./DiseasePageComponent/ArticleComments.js";
 import DiseaseModal from "./DiseasePageComponent/DiseaseModal.js";
 const Disease = () => {
   const [state, setState] = useState({
-    currentIndexx: 0,
     items: [],
     carouselItems: [],
     comment: [],
@@ -42,10 +41,10 @@ const Disease = () => {
     showSource: false,
     alertShown: false,
     isModalOpen: false,
-    currentIndex: 0,
+    currentIndex: 1,
   });
 
-  console.log("component rendered");
+  // console.log("component rendered");
   // const MarkdownPreview = lazy(() => import("./MarkdownPreview.js"));
   const { id } = useParams();
   const history = useHistory();
@@ -339,11 +338,7 @@ const Disease = () => {
           />
         </Col>
       </Row>
-      <DiseaseModal
-        modalState={state.modalState}
-        currentIndexx={state.currentIndexx}
-        postSubscription={() => this.postSubscribtion()}
-      />
+      <DiseaseModal />
       <SubscriberBtn />
 
       <Footer />
@@ -351,8 +346,8 @@ const Disease = () => {
   );
 };
 
-Disease.whyDidYouRender = {
-  logOnDifferentValues: true,
-  customName: "Article",
-};
+// Disease.whyDidYouRender = {
+//   logOnDifferentValues: true,
+//   customName: "Article",
+// };
 export default Disease;
