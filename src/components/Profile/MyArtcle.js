@@ -122,9 +122,9 @@ const ArticlePreview = (props) => {
                         content = IsJsonValid(decodeURIComponent(i.content))
                     }
                     if(imgLocation && imgLocation.includes('cures_articleimages')){
-                        imageLoc = `https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/`+imgLocation.replace('json', 'png').split('/webapps/')[1]
+                        imageLoc = `https://ik.imagekit.io/qi0xxmh2w/productimages/tr:h-250,w-300,f-webp/`+imgLocation.replace('json', 'png').split('/webapps/')[1]
                     } else {
-                        imageLoc = 'https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/cures_articleimages//299/default.png'
+                        imageLoc = 'https://ik.imagekit.io/qi0xxmh2w/productimages/tr:h-250w-300,f-webp/cures_articleimages//299/default.png'
                     }
 
                     var title = i.title
