@@ -79,14 +79,14 @@ function DoctorConnectCard({ doc }) {
             </div>
             <div className="doctor-hospital">{doc.hospitalAffiliated}</div>
             <div className="doctor-separator"></div>
-            <div className="doctor-rating">
+            {/* <div className="doctor-rating">
               <ThumbUpIcon className="doctor-rating-icon" />
               {`${Math.ceil((doc.ratingValueAverage / 5)* 100) }%`}
               <button className="whatsapp-button">
                 <WhatsAppIcon className="whatsapp-icon" />
                 <span className="whatsapp-text">WhatsApp</span>
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="book-button-container">
