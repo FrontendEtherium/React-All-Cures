@@ -1,277 +1,272 @@
-
-@media (min-width: 992px){
+@media (min-width: 992px) {
   .navbar-expand-lg {
-      
-      padding: 0.5rem;
-  
+    padding: 0.5rem;
   }
-  }
-  .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
-    margin-top: 10px;
-  }
-  .css-1ald77x.Mui-focused {
-    margin-top: 10px;
-  }
-  
-  @media only screen and (max-width: 768px) {
-    .article-search#article-search {
-      margin-top: 3.6rem;
-      margin-bottom: 2rem;
-    }
-    .banner {
-      margin-top: 4.5rem;
-      height: 40vh;
-    }
-  }
-  .mb-25r{
-    margin-bottom:2.5rem;
+}
+.css-1jy569b-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
+  margin-top: 10px;
+}
+.css-1ald77x.Mui-focused {
+  margin-top: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+  .article-search#article-search {
+    margin-top: 3.6rem;
+    margin-bottom: 2rem;
   }
   .banner {
-    height: 49vh;
-    position: relative;
-    background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/assets/img/Banner1-Full.jpg") center;
-    animation: carousel 30s ease-in-out infinite;
-    opacity: 0.8;
+    margin-top: 4.5rem;
+    height: 40vh;
   }
-  
-  .primary-btn-color {
-    background-color: #00415e;
-  }
-  
-  @keyframes carousel {
-    0% {
-      background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-1000,f-webp/assets/img/Banner1-Full.jpg")
-        center center no-repeat;
-      background-size: cover;
-    }
-    25% {
-      background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-1000,f-webp/assets/img/Banner2.jpg") center
-        center no-repeat;
-      background-size: cover;
-    }
-    50% {
-      background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-1000,f-webp/assets/img/Banner3.jpg") center
-        center no-repeat;
-      background-size: cover;
-    }
-    100% {
-      background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-1000,f-webp/assets/img/Banner41.jpg") center
-        center no-repeat;
-      background-size: cover;
-    }
-  }
-  .banner .banner-title {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    flex-direction: column;
-    font-weight: bold;
-  
-    text-shadow: 2px 5px 5px black;
-  }
-  
-  .banner .banner-title h1 {
-    font-weight: bold;
-  }
-  
-  .trending-articles .card {
-    min-height: 8.5rem;
-  }
-  
-  
-  
-  .trending-articles #yoga {
-    background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/assets/img/yoga.jpg")
+}
+.mb-25r {
+  margin-bottom: 2.5rem;
+}
+.banner {
+  height: 49vh;
+  position: relative;
+  background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/assets/img/Banner1-Full.jpg")
+    center;
+  animation: carousel 30s ease-in-out infinite;
+  opacity: 0.8;
+}
+
+.primary-btn-color {
+  background-color: #00415e;
+}
+
+@keyframes carousel {
+  0% {
+    background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-1000,f-webp/assets/img/Banner1-Full.jpg")
       center center no-repeat;
     background-size: cover;
   }
-  .trending-articles #chinese {
-    background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/assets/img/chinese.jpg")
+  25% {
+    background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-1000,f-webp/assets/img/Banner2.jpg")
       center center no-repeat;
     background-size: cover;
   }
-  .trending-articles #ayurveda {
-    /* background: url("https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/ayurvedic.7f711065a91aa7a380d5.jpg") */
-    background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/assets/img/ayurvedic.jpg")
+  50% {
+    background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-1000,f-webp/assets/img/Banner3.jpg")
       center center no-repeat;
     background-size: cover;
   }
-  .trending-articles #homepathies {
-    background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/assets/img/Homepathy.jpg")
+  100% {
+    background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-1000,f-webp/assets/img/Banner41.jpg")
       center center no-repeat;
     background-size: cover;
   }
-  
-  .trending-articles #homeopathy {
-    background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/assets/img/homeopathy.jpg")
-    
-      center center no-repeat;
-    background-size: cover;
-  }
-  .trending-articles #naturopathy {
-    background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/assets/img/herbal-naturopathic-medicine.jpg")
-    
-      center center no-repeat;
-    background-size: cover;
-  }
-  
-  .trending-articles #unani {
-    background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/assets/img/unani.jpg")
-    
-      center center no-repeat;
-    background-size: cover;
-  }
-  
-  
-  
-  .trending-articles #arabic {
-    background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/assets/img/arabic.jpg")
-  
-      center center no-repeat;
-    background-size: cover;
-  }
-  
-  .trending-articles .col-4 {
-    width: 100%;
-  }
-  
-  .dropdown-toggle::after {
-    content: none;
-  }
-  
-  .filter-white {
-    filter: invert(99%) sepia(60%) saturate(1%) hue-rotate(291deg)
-      brightness(119%) contrast(91%);
-  }
-  /* .card-img{
-  } */
-  .card-img img {
-    width: 100%;
-    /* width: 350px; */
-    display: block;
-    max-width: 350px;
-    height: 250px;
-    /* vertical-align: middle; */
-  }
-  
-  .trending-section .comman-heading {
-    width: 11rem;
-  }
-  
-  .featured-articles .owl-prev {
-    position: absolute;
-    left: 0;
-    background: #00415e !important;
-    top: 8rem;
-  }
-  .nav-item.dropdown:hover .dropdown-menu {
-    display: block;
-  }
-  .featured-articles .owl-prev span {
-    padding: 0.55rem;
-    color: white;
-  }
-  
-  button.active {
-    background-color: #387a99;
-    color: #f4f4f4;
-  }
-  
-  #show-all-cures {
-    background-color: #00415e;
-    color: white;
-  }
-  
-  .pagination-preview {
-    margin: 0 1rem;
-  }
-  @media only screen and (max-width: 768px) {
-    .pagination-preview button:nth-child(n + 6) {
-      display: none;
-    }
-  
-    .pagination-preview button:last-child {
-      display: inline;
-    }
-  }
-  
-  
-  
-  
-  
-  .dropdown .newDropdown{
-       
-    /* margin-left:16px; */
-         margin-top:-15px;
-    margin-bottom:-5px;
-    /* margin-right:28px; */
-    left:-46px;
-  }
-  .dropdown-menu  .newDropdown-menu{
-    left:5px ;
-    top:40%;
-  }
-  
-  
-  
-  @media only screen and (min-width: 300px) and (max-width: 990px) {
-  
-  
-  .dropdown-item{
-  padding: .25rem .25rem;
-  padding-left:1rem !important;
-  }
-  
-  
-  .bg-light{
-  background-color: #fff !important;
-  max-width:fit-content  !important;
-  
-  }
-  .dropdown .newDropdown{
-  max-width:fit-content !important;
-  left:-10px;
-  
-  
-  
-  }
-  .dropdown-menu  .newDropdown-menu{
-  left:-5px ;
-  top:40%;
-  max-width:fit-content  !important;
-  
-  
-  }
-  .dropdown-menu{
-  max-width:fit-content  !important;
-  min-width: 8rem;
-  }
-  
-  .dropdown .drop_down_child {
-  
-  }
-  
-  .dropdown-menu .drop_down_child{
-  max-width: 5rem;
-  padding: .5rem 0;
-  transform: translateX(-100px);
-  }
-  .arrow{
-  margin-left:20px !important;
-  margin-top: 15px !important;
-  
-  }
-  
-  
-  .dropdown-menu .drop_down_child {
+}
+.banner .banner-title {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  flex-direction: column;
+  font-weight: bold;
+
+  text-shadow: 2px 5px 5px black;
+}
+
+.banner .banner-title h1 {
+  font-weight: bold;
+}
+
+.trending-articles .card {
+  min-height: 8.5rem;
+}
+
+.trending-articles #yoga {
+  background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/assets/img/yoga.jpg")
+    center center no-repeat;
+  background-size: cover;
+}
+.trending-articles #chinese {
+  background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/assets/img/chinese.jpg")
+    center center no-repeat;
+  background-size: cover;
+}
+.trending-articles #ayurveda {
+  /* background: url("https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-300,f-webp/static/media/ayurvedic.7f711065a91aa7a380d5.jpg") */
+  background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/assets/img/ayurvedic.jpg")
+    center center no-repeat;
+  background-size: cover;
+}
+.trending-articles #homepathies {
+  background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/assets/img/Homepathy.jpg")
+    center center no-repeat;
+  background-size: cover;
+}
+
+.trending-articles #homeopathy {
+  background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/assets/img/homeopathy.jpg")
+    center center no-repeat;
+  background-size: cover;
+}
+.trending-articles #naturopathy {
+  background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/assets/img/herbal-naturopathic-medicine.jpg")
+    center center no-repeat;
+  background-size: cover;
+}
+
+.trending-articles #unani {
+  background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/assets/img/unani.jpg")
+    center center no-repeat;
+  background-size: cover;
+}
+
+.trending-articles #arabic {
+  background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/assets/img/arabic.jpg")
+    center center no-repeat;
+  background-size: cover;
+}
+
+.trending-articles .col-4 {
+  width: 100%;
+}
+
+.dropdown-toggle::after {
+  content: none;
+}
+
+.filter-white {
+  filter: invert(99%) sepia(60%) saturate(1%) hue-rotate(291deg)
+    brightness(119%) contrast(91%);
+}
+/* .card-img{
+} */
+.card-img img {
+  width: 100%;
+  /* width: 350px; */
   display: block;
-  
-  
+  max-width: 350px;
+  height: 250px;
+  /* vertical-align: middle; */
+}
+
+.trending-section .comman-heading {
+  width: 11rem;
+}
+
+.featured-articles .owl-prev {
+  position: absolute;
+  left: 0;
+  background: #00415e !important;
+  top: 8rem;
+}
+.nav-item.dropdown:hover .dropdown-menu {
+  display: block;
+}
+.featured-articles .owl-prev span {
+  padding: 0.55rem;
+  color: white;
+}
+
+button.active {
+  background-color: #387a99;
+  color: #f4f4f4;
+}
+
+#show-all-cures {
+  background-color: #00415e;
+  color: white;
+}
+
+.pagination-preview {
+  margin: 0 1rem;
+}
+@media only screen and (max-width: 768px) {
+  .pagination-preview button:nth-child(n + 6) {
+    display: none;
   }
-  
-  
-  
+
+  .pagination-preview button:last-child {
+    display: inline;
   }
-  
+}
+
+.dropdown .newDropdown {
+  /* margin-left:16px; */
+  margin-top: -15px;
+  margin-bottom: -5px;
+  /* margin-right:28px; */
+  left: -46px;
+}
+.dropdown-menu .newDropdown-menu {
+  left: 5px;
+  top: 40%;
+}
+
+@media only screen and (min-width: 300px) and (max-width: 990px) {
+  .dropdown-item {
+    padding: 0.25rem 0.25rem;
+    padding-left: 1rem !important;
+  }
+
+  .bg-light {
+    background-color: #fff !important;
+    max-width: fit-content !important;
+  }
+  .dropdown .newDropdown {
+    max-width: fit-content !important;
+    left: -10px;
+  }
+  .dropdown-menu .newDropdown-menu {
+    left: -5px;
+    top: 40%;
+    max-width: fit-content !important;
+  }
+  .dropdown-menu {
+    max-width: fit-content !important;
+    min-width: 8rem;
+  }
+
+  .dropdown-menu .drop_down_child {
+    max-width: 5rem;
+    padding: 0.5rem 0;
+    transform: translateX(-100px);
+  }
+  .arrow {
+    margin-left: 20px !important;
+    margin-top: 15px !important;
+  }
+
+  .dropdown-menu .drop_down_child {
+    display: block;
+  }
+}
+.doctor-patient-banner-container {
+  text-align: center;
+  position: relative;
+}
+
+.doctor-patient-banner {
+  max-height: 380px;
+  object-fit: fill;
+  max-width: 100%;
+  width: 100%;
+}
+
+.doctor-patient-banner-btn {
+  position: absolute;
+  cursor: pointer;
+  background-color: #00415e;
+  bottom: 45px;
+  left: 68%;
+  border-radius: 30px;
+  border: 2px solid #fff;
+  font-size: 16px;
+}
+.doctor-patient-banner-btn:hover {
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .doctor-patient-banner-btn {
+    padding: 5px;
+    font-size: 8px ;
+    bottom: 20px;
+  }
+}

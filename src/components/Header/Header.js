@@ -11,14 +11,14 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { userAccess } from "../UserAccess";
 import { imgKitImagePath } from "../../image-path";
 import DoctorSearch from "./DoctorSearch";
-
-const Header = () => {
+import Test from "../LandingPage/test";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+const Header = ({showSearch = true}) => {
   const [isUnaniDropdownOpen, setIsUnaniDropdownOpen] = useState(false);
   const [article, setArticle] = useState("");
   const [diseaseTitle, setDiseaseTitle] = useState([]);
   const [modalShow, setModalShow] = useState(false);
-  console.log("header re rendered");
-  
+
   useEffect(() => {
     if (article) {
       axios
@@ -32,6 +32,8 @@ const Header = () => {
   const handleUnaniMouseLeave = () => setIsUnaniDropdownOpen(false);
 
   const logout = () => {
+    console.log("logout started");
+
     axios.defaults.withCredentials = true;
     axios
       .post(`${backendHost}/LogoutActionController`, {
@@ -39,7 +41,7 @@ const Header = () => {
       })
       .then(() => {
         Cookies.remove("uName");
-        setTimeout(() => window.location.reload(), 200);
+        setTimeout(() => window.location.reload(), 500);
       })
       .catch((err) => console.error("Error logging out", err));
   };
@@ -79,7 +81,10 @@ const Header = () => {
                   >
                     <span className="navbar-toggler-icon"></span>
                   </button>
-                  <div className="collapse navbar-collapse" id="navbarNavDropdown">
+                  <div
+                    className="collapse navbar-collapse"
+                    id="navbarNavDropdown"
+                  >
                     <ul className="navbar-nav">
                       <li className="nav-item">
                         <a className="nav-link" href="/">
@@ -98,14 +103,26 @@ const Header = () => {
                         >
                           Categories
                         </a>
-                        <div className="dropdown-menu" aria-labelledby="categoriesDropdown">
-                          <a className="dropdown-item" href="/searchcategory/disease/1">
+                        <div
+                          className="dropdown-menu"
+                          aria-labelledby="categoriesDropdown"
+                        >
+                          <a
+                            className="dropdown-item"
+                            href="/searchcategory/disease/1"
+                          >
                             Arthritis
                           </a>
-                          <a className="dropdown-item" href="/searchcategory/disease/74">
+                          <a
+                            className="dropdown-item"
+                            href="/searchcategory/disease/74"
+                          >
                             Diabetes
                           </a>
-                          <a className="dropdown-item" href="/searchcategory/disease/50">
+                          <a
+                            className="dropdown-item"
+                            href="/searchcategory/disease/50"
+                          >
                             Hypertension
                           </a>
                           <div className="dropdown-divider"></div>
@@ -126,47 +143,87 @@ const Header = () => {
                         >
                           Trending Cure
                         </a>
-                        <div className="dropdown-menu" aria-labelledby="trendingCuresDropdown">
-                          <a className="dropdown-item" href="/searchmedicine/medicinetype/1">
+                        <div
+                          className="dropdown-menu"
+                          aria-labelledby="trendingCuresDropdown"
+                        >
+                          <a
+                            className="dropdown-item"
+                            href="/searchmedicine/medicinetype/1"
+                          >
                             Ayurveda
-                          </a>
-                          <a className="dropdown-item" href="/searchmedicine/medicinetype/4">
-                            Chinese Medicine
                           </a>
                           <a
                             className="dropdown-item"
+                            href="/searchmedicine/medicinetype/4"
+                          >
+                            Chinese Medicine
+                          </a>
+                          <a
+                            class="dropdown-item"
                             href="/searchmedicine/medicinetype/12"
                             onMouseEnter={handleUnaniMouseEnter}
                             onMouseLeave={handleUnaniMouseLeave}
                           >
                             Arabic
-                            <ul
-                              className={`nav-item dropdown newDropdown ${isUnaniDropdownOpen ? "show" : ""}`}
+                            <li
+                              className="nav-item dropdown newDropdown"
                               onMouseEnter={handleUnaniMouseEnter}
                               onMouseLeave={handleUnaniMouseLeave}
                             >
-                              <li>
-                                <a
-                                  className="dropdown-item"
-                                  href="/searchmedicine/medicinetype/2"
+                              <a
+                                className="nav-link dropdown-toggle"
+                                href="#"
+                                id="unaniDropdownToggle"
+                                role="button"
+                                data-bs-toggle="dropdown"
+                              >
+                                <span
+                                  style={{
+                                    fontSize: "1rem",
+                                    color: " #212529",
+                                  }}
                                 >
-                                  Unani
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  className="dropdown-item"
-                                  href="/searchmedicine/medicinetype/3"
+                                  {" "}
+                                  <ArrowDropDownIcon />
+                                </span>
+                              </a>
+                              {isUnaniDropdownOpen && (
+                                <ul
+                                  className="dropdown-menu newDropdown-menu"
+                                  aria-labelledby="unaniDropdownToggle"
                                 >
-                                  Persian
-                                </a>
-                              </li>
-                            </ul>
+                                  <li>
+                                    <a
+                                      className="dropdown-item"
+                                      href="/searchmedicine/medicinetype/2"
+                                    >
+                                      {" "}
+                                      Unani
+                                    </a>
+                                  </li>
+                                  <li>
+                                    <a
+                                      className="dropdown-item"
+                                      href="/searchmedicine/medicinetype/3"
+                                    >
+                                      Persian
+                                    </a>
+                                  </li>
+                                </ul>
+                              )}
+                            </li>
                           </a>
-                          <a className="dropdown-item" href="/searchmedicine/medicinetype/6">
+                          <a
+                            className="dropdown-item"
+                            href="/searchmedicine/medicinetype/6"
+                          >
                             Japanese
                           </a>
-                          <a className="dropdown-item" href="/searchmedicine/medicinetype/5">
+                          <a
+                            className="dropdown-item"
+                            href="/searchmedicine/medicinetype/5"
+                          >
                             Scandinavian
                           </a>
                         </div>
@@ -190,7 +247,9 @@ const Header = () => {
                       value={article}
                       onChange={(event, newValue) => setArticle(newValue)}
                       inputValue={article}
-                      onInputChange={(event, newInputValue) => setArticle(newInputValue)}
+                      onInputChange={(event, newInputValue) =>
+                        setArticle(newInputValue)
+                      }
                       id="combo-box-demo"
                       options={article.length >= 1 ? diseaseTitle : []}
                       sx={{ width: 150 }}
@@ -205,7 +264,10 @@ const Header = () => {
                       id="searchHead"
                       type="submit"
                     >
-                      <i className="fas header-search fa-search" id="iconSearch"></i>
+                      <i
+                        className="fas header-search fa-search"
+                        id="iconSearch"
+                      ></i>
                     </button>
                   </div>
                 </div>
@@ -249,8 +311,9 @@ const Header = () => {
             </div>
           </div>
         </div>
+        <Test show={modalShow} onHide={() => setModalShow(false)} />
       </section>
-      <DoctorSearch />
+      {showSearch && <DoctorSearch />}
     </div>
   );
 };
@@ -300,10 +363,7 @@ const ToggleButton = ({ userAccess, setModalShow, logout }) => {
             </Dropdown.Item>
           )}
           <Dropdown.Item>
-            <button
-              className="btn text-dark text-capitalize"
-              onClick={logout}
-            >
+            <button className="btn text-dark text-capitalize" onClick={logout}>
               Logout
             </button>
           </Dropdown.Item>

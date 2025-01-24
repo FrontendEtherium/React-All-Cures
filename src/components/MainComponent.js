@@ -163,7 +163,7 @@ const Routes = (props) => {
         <Route exact path="/statusPayment" component={ResponseRedirect} />
 
         <Route exact path="/bookings" component={Bookings} />
-        <Route exact path="/docPatientConnect" component={DoctorConnect} />
+        <Route exact path="/doctor-connect" component={DoctorConnect} />
 
         {/* Health a to z Page */}
 
