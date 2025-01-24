@@ -1,0 +1,132 @@
+/* Main Layout */
+.doctor-connect-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.doctor-connect-content {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Banner */
+.doc-banner {
+  width: 75%;
+  height: 20rem;
+  object-fit: stretch;
+}
+
+@media (min-width: 768px) {
+  .doc-banner {
+    height: 20rem;
+  }
+}
+
+/* Text Section */
+.doc-text-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  width: 100%;
+  align-items: center;
+}
+
+.doc-text-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+.doc-text-item img {
+  margin-right: 0.25rem;
+}
+
+/* Grid Layout */
+.doc-grid {
+  grid-template-columns: 1fr; /* 2 columns for list, 1 column for search */
+  gap: 1.5rem;
+  padding: 1rem;
+  width: 100%;
+
+  padding: 10px;
+}
+
+@media (max-width: 768px) {
+  .doc-grid {
+    grid-template-columns: 1fr; /* Stack sections on smaller screens */
+  }
+  .doc-list-section {
+    margin: 0 !important; /* Remove or adjust margin for mobile */
+    gap: 1rem; /* Optionally reduce gap */
+    width: 100% !important;
+  }
+  .doc-banner {
+    width: 90%;
+    height: 15rem;
+  }
+}
+
+/* Doctor List Section */
+.doc-list-section {
+  grid-column: 1 / span 2; /* Spans 2 columns */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  align-self: center;
+  margin-right: 280px;
+  margin-left: 280px;
+}
+
+/* Search Section */
+.doc-search-section {
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.5rem;
+}
+
+/* Pagination */
+.pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.pagination-button {
+  min-height: 38px;
+  min-width: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+  background-color: #f3f4f6;
+  color: #1f2937;
+  cursor: pointer;
+  border: none;
+}
+
+.pagination-button:hover {
+  background-color: #e5e7eb;
+}
+
+.pagination-button:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.pagination-button.active {
+  background-color: #00415e;
+  color: #ffffff;
+  font-weight: bold;
+}

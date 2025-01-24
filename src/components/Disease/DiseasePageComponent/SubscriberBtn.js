@@ -77,7 +77,7 @@ const SubscriberBtn = () => {
       );
 
       setIsLoading(false);
-      console.log("response from subscriber", res.data);
+   
 
       if (res.data === 1) {
         Alert("You have successfully subscribed to our Newsletter.");

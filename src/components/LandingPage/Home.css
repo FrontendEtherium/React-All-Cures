@@ -1,10 +1,7 @@
-
-@media (min-width: 992px){
-.navbar-expand-lg {
-    
+@media (min-width: 992px) {
+  .navbar-expand-lg {
     padding: 0.5rem;
-
-}
+  }
 }
 .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
   margin-top: 10px;
@@ -23,13 +20,14 @@
     height: 40vh;
   }
 }
-.mb-25r{
-  margin-bottom:2.5rem;
+.mb-25r {
+  margin-bottom: 2.5rem;
 }
 .banner {
   height: 49vh;
   position: relative;
-  background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/assets/img/Banner1-Full.jpg") center;
+  background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/assets/img/Banner1-Full.jpg")
+    center;
   animation: carousel 30s ease-in-out infinite;
   opacity: 0.8;
 }
@@ -45,18 +43,18 @@
     background-size: cover;
   }
   25% {
-    background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-1000,f-webp/assets/img/Banner2.jpg") center
-      center no-repeat;
+    background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-1000,f-webp/assets/img/Banner2.jpg")
+      center center no-repeat;
     background-size: cover;
   }
   50% {
-    background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-1000,f-webp/assets/img/Banner3.jpg") center
-      center no-repeat;
+    background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-1000,f-webp/assets/img/Banner3.jpg")
+      center center no-repeat;
     background-size: cover;
   }
   100% {
-    background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-1000,f-webp/assets/img/Banner41.jpg") center
-      center no-repeat;
+    background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-1000,f-webp/assets/img/Banner41.jpg")
+      center center no-repeat;
     background-size: cover;
   }
 }
@@ -79,8 +77,6 @@
 .trending-articles .card {
   min-height: 8.5rem;
 }
-
-
 
 .trending-articles #yoga {
   background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/assets/img/yoga.jpg")
@@ -106,29 +102,23 @@
 
 .trending-articles #homeopathy {
   background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/assets/img/homeopathy.jpg")
-  
     center center no-repeat;
   background-size: cover;
 }
 .trending-articles #naturopathy {
   background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/assets/img/herbal-naturopathic-medicine.jpg")
-  
     center center no-repeat;
   background-size: cover;
 }
 
 .trending-articles #unani {
   background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/assets/img/unani.jpg")
-  
     center center no-repeat;
   background-size: cover;
 }
 
-
-
 .trending-articles #arabic {
   background: url("https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp/assets/img/arabic.jpg")
-
     center center no-repeat;
   background-size: cover;
 }
@@ -197,80 +187,86 @@ button.active {
   }
 }
 
-
-
-
-
-.dropdown .newDropdown{
-     
+.dropdown .newDropdown {
   /* margin-left:16px; */
-       margin-top:-15px;
-  margin-bottom:-5px;
+  margin-top: -15px;
+  margin-bottom: -5px;
   /* margin-right:28px; */
-  left:-46px;
+  left: -46px;
 }
-.dropdown-menu  .newDropdown-menu{
-  left:5px ;
-  top:40%;
+.dropdown-menu .newDropdown-menu {
+  left: 5px;
+  top: 40%;
 }
-
-
 
 @media only screen and (min-width: 300px) and (max-width: 990px) {
+  .dropdown-item {
+    padding: 0.25rem 0.25rem;
+    padding-left: 1rem !important;
+  }
 
+  .bg-light {
+    background-color: #fff !important;
+    max-width: fit-content !important;
+  }
+  .dropdown .newDropdown {
+    max-width: fit-content !important;
+    left: -10px;
+  }
+  .dropdown-menu .newDropdown-menu {
+    left: -5px;
+    top: 40%;
+    max-width: fit-content !important;
+  }
+  .dropdown-menu {
+    max-width: fit-content !important;
+    min-width: 8rem;
+  }
 
-.dropdown-item{
-padding: .25rem .25rem;
-padding-left:1rem !important;
+  .dropdown-menu .drop_down_child {
+    max-width: 5rem;
+    padding: 0.5rem 0;
+    transform: translateX(-100px);
+  }
+  .arrow {
+    margin-left: 20px !important;
+    margin-top: 15px !important;
+  }
+
+  .dropdown-menu .drop_down_child {
+    display: block;
+  }
+}
+.doctor-patient-banner-container {
+  text-align: center;
+  position: relative;
 }
 
-
-.bg-light{
-background-color: #fff !important;
-max-width:fit-content  !important;
-
-}
-.dropdown .newDropdown{
-max-width:fit-content !important;
-left:-10px;
-
-
-
-}
-.dropdown-menu  .newDropdown-menu{
-left:-5px ;
-top:40%;
-max-width:fit-content  !important;
-
-
-}
-.dropdown-menu{
-max-width:fit-content  !important;
-min-width: 8rem;
+.doctor-patient-banner {
+  max-height: 380px;
+  object-fit: fill;
+  max-width: 100%;
+  width: 100%;
 }
 
-.dropdown .drop_down_child {
-
+.doctor-patient-banner-btn {
+  position: absolute;
+  cursor: pointer;
+  background-color: #00415e;
+  bottom: 45px;
+  left: 68%;
+  border-radius: 30px;
+  border: 2px solid #fff;
+  font-size: 16px;
+}
+.doctor-patient-banner-btn:hover {
+  opacity: 0.7;
 }
 
-.dropdown-menu .drop_down_child{
-max-width: 5rem;
-padding: .5rem 0;
-transform: translateX(-100px);
-}
-.arrow{
-margin-left:20px !important;
-margin-top: 15px !important;
-
-}
-
-
-.dropdown-menu .drop_down_child {
-display: block;
-
-
-}
-
-
-
+@media (max-width: 768px) {
+  .doctor-patient-banner-btn {
+    padding: 5px;
+    font-size: 8px ;
+    bottom: 20px;
+  }
 }

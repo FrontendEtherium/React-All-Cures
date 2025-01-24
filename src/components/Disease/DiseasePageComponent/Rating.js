@@ -54,7 +54,7 @@ function Rating({ id }) {
   }, [articleId]);
 
   useEffect(() => {
-    console.log("rating use effect rendered");
+
     
     const getRate = async () => {
 

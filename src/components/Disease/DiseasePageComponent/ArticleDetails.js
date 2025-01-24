@@ -40,7 +40,7 @@ const ArticleDetails = React.memo(
           `${backendHost}/rating/target/${articleId}/targettype/2/avg`
         );
         const data = await response.json();
-        console.log("rating Value", data);
+
 
         setState((prev) => ({ ...prev, ratingValue: data }));
       } catch (error) {

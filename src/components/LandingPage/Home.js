@@ -685,18 +685,13 @@ class Home extends Component {
             </div>
           </div>
         </section> */}
-        <div style={{ textAlign: "center" }}>
+        <div className="doctor-patient-banner-container">
           <img
             src={`${imgKitImagePath}/assets/img/doctorconsult1.jpg`}
             alt="Doctor Patient Connect"
-            className="img-fluid rounded"
-            style={{
-              maxHeight: "380px",
-              objectFit: "fill",
-              maxWidth: "100%",
-              width: "100%",
-            }}
+            className="img-fluid rounded doctor-patient-banner "
           />
+          <button className="doctor-patient-banner-btn " onClick={()=>window.location.href="/doctor-connect"}>Consult Now</button>
         </div>
 
         <DoctorSearch />

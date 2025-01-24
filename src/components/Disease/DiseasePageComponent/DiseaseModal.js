@@ -31,7 +31,7 @@ const DiseaseModal = () => {
           nl_subscription_disease_id: "",
           nl_sub_type: 0,
           nl_subscription_cures_id: "",
-          country_code: phoneNumber.slice(0, phoneNumber.indexOf("-")),
+          country_code: phoneNumber.slice(1, 3),
         }
       );
 
