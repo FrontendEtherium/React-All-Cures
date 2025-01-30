@@ -158,50 +158,66 @@
   background: url("../../assets/img/bg_pattern.png") center/cover no-repeat;
   height: 350px;
 }
-
+/* Main container */
 .medicine-doc-container {
-  border: 2px solid black;
-  margin: 30px;
+  border: 2px solid #00415e;
+  border-radius: 12px;
+  margin: 30px auto;
   padding: 20px;
-  background-color: #ffffff;
+  background-color: #f8f9fa;
+  max-width: 1200px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Upper section: title & button */
 .medicine-doc-container-upper {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
+/* Title heading */
 .medicine-doc-container-upper-text-heading {
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #00415e;
+  text-align: left;
+  max-width: 600px;
+  margin-bottom: 10px;
 }
 
+/* Subtitle */
 .medicine-doc-container-upper-text-subHeading {
   font-size: 1rem;
   font-weight: 500;
+  color: #555;
+  max-width: 600px;
+  line-height: 1.5;
 }
 
+/* View All Types button */
 .medicine-doc-button {
-  background-color: #ffffff;
-  color: #00415e;
+  background-color: #00415e;
+  color: #ffffff;
   border: 2px solid #00415e;
   height: 50px;
-  width: 150px;
-  padding: 2px;
-  border-radius: 0px;
-  border-color: #00415e;
+  width: 170px;
+  padding: 8px;
+  border-radius: 8px;
   text-align: center;
-}
-
-.medicine-doc-button-heading {
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
 }
 
-.medicine-doc-button:hover{
-  background-color: #ccc;
+.medicine-doc-button:hover {
+  background-color: #022c42;
+  color: #ffffff;
 }
 
+/* Medicine types container */
 .medicine-types-container {
   display: flex;
   justify-content: center;
@@ -210,28 +226,97 @@
   margin-top: 2rem;
 }
 
+/* Medicine type card */
 .medicine-type-card {
- 
-  border-radius: 10px;
-
+  border: 2px solid #00415e;
+  border-radius: 12px;
+  background-color: #ffffff;
   text-align: center;
-  padding: 1rem;
+  padding: 1.2rem;
   width: 180px;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  cursor: pointer;
 }
 
 .medicine-type-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px);
+  box-shadow: 0 8px 15px rgba(0, 65, 94, 0.2);
 }
 
+/* Icon styling */
 .medicine-icon {
-  width: 60px;
-  height: 60px;
-  margin-bottom: 0.5rem;
+  font-size: 2.5rem; /* Increased size for better visibility */
+  color: #00415e;
+  margin-bottom: 0.8rem;
 }
 
+/* Title for medicine type */
 .medicine-type-title {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: bold;
   color: #00415e;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .medicine-doc-container-upper {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .medicine-doc-container-upper-text-heading,
+  .medicine-doc-container-upper-text-subHeading {
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .medicine-types-container {
+    gap: 1rem;
+  }
+
+  .medicine-type-card {
+    width: 160px;
+    padding: 1rem;
+  }
+
+  .medicine-icon {
+    font-size: 2rem;
+  }
+
+  .medicine-doc-button {
+    width: 150px;
+    height: 45px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .medicine-doc-container {
+    margin: 20px;
+    padding: 15px;
+  }
+
+  .medicine-doc-container-upper-text-heading {
+    font-size: 1.5rem;
+  }
+
+  .medicine-doc-container-upper-text-subHeading {
+    font-size: 0.9rem;
+  }
+
+  .medicine-types-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .medicine-type-card {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .medicine-icon {
+    font-size: 1.8rem;
+  }
 }
