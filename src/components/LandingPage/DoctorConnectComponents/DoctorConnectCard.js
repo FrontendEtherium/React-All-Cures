@@ -71,7 +71,7 @@ function DoctorConnectCard({ doc }) {
           <div className="doctor-details">
             <div className="doctor-name">
               Dr. {doc.firstName} {doc.lastName}{" "}
-              <VerifiedIcon color="success" style={{fontSize:"12px"}} />
+              <VerifiedIcon color="success" style={{ fontSize: "12px" }} />
             </div>
             <div className="doctor-specialty">{doc.medicineTypeName}</div>
             <div className="doctor-location">

@@ -87,6 +87,7 @@ import ResponsePage from "./Profile/ResponsePage.js";
 import PaymentRedirect from "./Profile/PaymentRedirect.js";
 import ResponseRedirect from "./Profile/ResponseRedirect.js";
 import DoctorConnect from "./LandingPage/DoctorConnect.js";
+import DoctorLandingPage from "./LandingPage/DoctorLandingPage.js";
 
 function Main(props) {
   const history = useHistory();
@@ -162,6 +163,7 @@ const Routes = (props) => {
         <Route exact path="/paymentRedirection" component={PaymentRedirect} />
         <Route exact path="/statusPayment" component={ResponseRedirect} />
         <Route exact path="/doctor-connect" component={DoctorConnect} />
+        <Route exact path="/doctor-main" component={ DoctorLandingPage}/>
 
         <Route exact path="/privacy" component={Privacy} />
 

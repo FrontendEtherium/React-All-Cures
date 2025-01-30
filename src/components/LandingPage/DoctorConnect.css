@@ -17,7 +17,7 @@
 .doc-banner {
   width: 75%;
   height: 20rem;
-  object-fit: stretch;
+  object-fit: cover;
 }
 
 @media (min-width: 768px) {
@@ -41,7 +41,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  font-size: 0.875rem;
+  font-size: 1rem;
   margin-top: 0.5rem;
 }
 
@@ -51,22 +51,21 @@
 
 /* Grid Layout */
 .doc-grid {
-  grid-template-columns: 1fr; /* 2 columns for list, 1 column for search */
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 1.5rem;
   padding: 1rem;
   width: 100%;
-
-  padding: 10px;
 }
 
 @media (max-width: 768px) {
   .doc-grid {
-    grid-template-columns: 1fr; /* Stack sections on smaller screens */
+    grid-template-columns: 1fr;
   }
   .doc-list-section {
-    margin: 0 !important; /* Remove or adjust margin for mobile */
-    gap: 1rem; /* Optionally reduce gap */
-    width: 100% !important;
+    margin: 0 auto;
+    gap: 1rem;
+    width: 100%;
   }
   .doc-banner {
     width: 90%;
@@ -76,14 +75,12 @@
 
 /* Doctor List Section */
 .doc-list-section {
-  grid-column: 1 / span 2; /* Spans 2 columns */
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-
   align-self: center;
-  margin-right: 280px;
-  margin-left: 280px;
 }
 
 /* Search Section */
@@ -108,7 +105,7 @@
   justify-content: center;
   align-items: center;
   padding: 0.5rem;
-  font-size: 0.875rem;
+  font-size: 1rem;
   border-radius: 0.5rem;
   background-color: #f3f4f6;
   color: #1f2937;
@@ -129,4 +126,112 @@
   background-color: #00415e;
   color: #ffffff;
   font-weight: bold;
+}
+
+.background-screen {
+  display: flex;
+  background: url("../../assets/img/svg/client-a.svg") center/cover no-repeat;
+  flex: 1 ;
+
+  width: 100%;
+  flex-direction: column;
+
+}
+
+.upper-section-container {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 50px;
+}
+
+.upper-section-container-text {
+  width: 35%;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #00415e;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+
+.upper-section-container-text-image {
+  width: 350px;
+  background: url("../../assets/img/bg_pattern.png") center/cover no-repeat;
+  height: 350px;
+}
+
+.medicine-doc-container {
+  border: 2px solid black;
+  margin: 30px;
+  padding: 20px;
+  background-color: #ffffff;
+}
+
+.medicine-doc-container-upper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.medicine-doc-container-upper-text-heading {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.medicine-doc-container-upper-text-subHeading {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.medicine-doc-button {
+  background-color: #ffffff;
+  color: #00415e;
+  border: 2px solid #00415e;
+  height: 50px;
+  width: 150px;
+  padding: 2px;
+  border-radius: 0px;
+  border-color: #00415e;
+  text-align: center;
+}
+
+.medicine-doc-button-heading {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.medicine-doc-button:hover{
+  background-color: #ccc;
+}
+
+.medicine-types-container {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.medicine-type-card {
+ 
+  border-radius: 10px;
+
+  text-align: center;
+  padding: 1rem;
+  width: 180px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.medicine-type-card:hover {
+  transform: translateY(-5px);
+}
+
+.medicine-icon {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 0.5rem;
+}
+
+.medicine-type-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #00415e;
 }
