@@ -8,6 +8,8 @@ import "./cookie.css";
 const App = () => {
   return (
     <div>
+
+    
       <Main />
       <div>
         <CookieConsent
