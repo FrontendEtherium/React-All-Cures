@@ -391,7 +391,7 @@ class Home extends Component {
               <div className="webAlign">
                 <div className="row d-flex">
                   <div className="header" style={{ width: "100%" }}>
-                    <div className=" logo mt-3 ml-4">
+                    <div className=" logo mt-1">
                       <Link to="/">
                         <img
                           src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/heart.png`}

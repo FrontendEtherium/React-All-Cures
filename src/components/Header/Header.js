@@ -13,7 +13,7 @@ import { imgKitImagePath } from "../../image-path";
 import DoctorSearch from "./DoctorSearch";
 import Test from "../LandingPage/test";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-const Header = ({showSearch = true}) => {
+const Header = ({ showSearch = true }) => {
   const [isUnaniDropdownOpen, setIsUnaniDropdownOpen] = useState(false);
   const [article, setArticle] = useState("");
   const [diseaseTitle, setDiseaseTitle] = useState([]);
@@ -58,7 +58,7 @@ const Header = ({showSearch = true}) => {
         <div className="webAlign">
           <div className="row d-flex">
             <div className="header" style={{ width: "100%" }}>
-              <div className="logo mt-3">
+              <div className="logo mt-1">
                 <Link to="/">
                   <img
                     src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/heart.png`}
