@@ -56,6 +56,7 @@ const AppointmentModal = ({
     // return isBooked || isUnavail;
   };
   useEffect(() => {
+    console.log("started")
     const fetchAppointmentDetails = () => {
       fetch(`${backendHost}/appointments/get/Slots/${docId}`)
         .then((res) => res.json())
