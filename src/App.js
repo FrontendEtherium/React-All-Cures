@@ -63,6 +63,7 @@ const App = () => {
             </a>
             .
           </div>
+          
         </CookieConsent>
       </div>
 
