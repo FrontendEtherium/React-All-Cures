@@ -20,6 +20,7 @@ import Rating from "./DiseasePageComponent/Rating.js";
 import ArticleComments from "./DiseasePageComponent/ArticleComments.js";
 import DiseaseModal from "./DiseasePageComponent/DiseaseModal.js";
 const Disease = () => {
+  
   const [state, setState] = useState({
     items: [],
     carouselItems: [],
