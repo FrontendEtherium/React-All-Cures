@@ -45,6 +45,9 @@ const AppointmentModal = ({
     setSelectedTimeSlot(time);
   };
 
+
+
+  
   const disableDate = (date) => {
     const currentDate = new Date();
     const isPastDate = date < currentDate;
