@@ -19,6 +19,7 @@ export default class App extends Component {
             currentPage: 0
             
         };
+        
         this.handlePageClick = this
             .handlePageClick
             .bind(this);
