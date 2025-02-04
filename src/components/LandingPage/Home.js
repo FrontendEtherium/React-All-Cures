@@ -371,6 +371,16 @@ class Home extends Component {
     }
   };
 
+  clickCounter = async () => {
+    console.log("counter Clicked");
+
+    try {
+      await axios.post(`${backendHost}/video/consult/counts`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   render() {
     return (
       <div>
@@ -691,7 +701,14 @@ class Home extends Component {
             alt="Doctor Patient Connect"
             className="img-fluid rounded doctor-patient-banner "
           />
-          <button className="doctor-patient-banner-btn " onClick={()=>window.location.href="/doctor-connect"}>Consult Now</button>
+          <button
+            className="doctor-patient-banner-btn "
+            onClick={() => (
+              (window.location.href = "/landing/doctor"), this.clickCounter()
+            )}
+          >
+            Consult Now
+          </button>
         </div>
 
         <DoctorSearch />

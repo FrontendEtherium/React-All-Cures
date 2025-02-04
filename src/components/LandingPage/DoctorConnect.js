@@ -9,6 +9,7 @@ import DoctorConnectCard from "./DoctorConnectComponents/DoctorConnectCard";
 import DoctorConnectSearch from "./DoctorConnectComponents/DoctorConnectSearch";
 import Footer from "../Footer/Footer";
 import "./DoctorConnect.css";
+import { imgKitImagePath } from "../../image-path";
 
 function DoctorConnect() {
   const [docList, setDocList] = useState([]);
@@ -64,7 +65,7 @@ function DoctorConnect() {
       <div className="doctor-connect-container">
         <div className="doctor-connect-content">
           <img
-            src={DocBanner}
+            src={`${imgKitImagePath}/assets/img/docchart.jpg`}
             alt="Doctor Connect Banner"
             className="doc-banner"
           />

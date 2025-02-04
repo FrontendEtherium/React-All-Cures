@@ -87,6 +87,7 @@ import ResponseRedirect from "./Profile/ResponseRedirect.js";
 import Bookings from "./Profile/Bookings.js";
 import DocPatientConnect from "./LandingPage/DocPatientConnect.js";
 import DoctorConnect from "./LandingPage/DoctorConnect.js";
+import DoctorLandingPage from "./LandingPage/DoctorLandingPage.js";
 
 function Main(props) {
   const history = useHistory();
@@ -164,6 +165,8 @@ const Routes = (props) => {
 
         <Route exact path="/bookings" component={Bookings} />
         <Route exact path="/doctor-connect" component={DoctorConnect} />
+
+        <Route exact path="/landing/doctor" component={DoctorLandingPage} />
 
         {/* Health a to z Page */}
 

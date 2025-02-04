@@ -14,9 +14,7 @@ const App = () => {
           style={{
             background: "#022a3c",
             width: "80%",
-
             borderRadius: "10px",
-
             position: "fixed",
             bottom: "20px",
             left: "50%",
@@ -63,7 +61,7 @@ const App = () => {
             </a>
             .
           </div>
-          
+
         </CookieConsent>
       </div>
 
