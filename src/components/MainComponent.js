@@ -85,7 +85,7 @@ import ResponsePage from "./Profile/ResponsePage.js";
 import PaymentRedirect from "./Profile/PaymentRedirect.js";
 import ResponseRedirect from "./Profile/ResponseRedirect.js";
 import Bookings from "./Profile/Bookings.js";
-import DocPatientConnect from "./LandingPage/DocPatientConnect.js";
+
 import DoctorConnect from "./LandingPage/DoctorConnect.js";
 import DoctorLandingPage from "./LandingPage/DoctorLandingPage.js";
 
