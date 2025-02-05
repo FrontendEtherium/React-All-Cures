@@ -25,7 +25,9 @@ function DoctorLandingPage() {
         </section>
 
         <DoctorByMedicineType />
+
         <ValuesSection />
+
         <section className="mb-64 mt-10 " style={{ height: "650px" }}>
           <div className="container" id="trends">
             <div className="row">
@@ -40,6 +42,7 @@ function DoctorLandingPage() {
             </div>
           </div>
         </section>
+        <section>{/* <ValuesSection /> */}</section>
       </main>
       <Footer />
     </>

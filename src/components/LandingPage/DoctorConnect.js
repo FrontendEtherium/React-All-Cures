@@ -14,7 +14,7 @@ import { imgKitImagePath } from "../../image-path";
 
 function DoctorConnect() {
   const [docList, setDocList] = useState([]);
-  const totalPages = 8;
+  const [totalPages,setTotalPages] = useState()
   const [currentPage, setCurrentPage] = useState(1);
   const history = useHistory(); // React Router v5
   const { search } = useLocation();
@@ -46,17 +46,12 @@ function DoctorConnect() {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        `${backendHost}/video/get/doctors/list?offset=${(currentPage - 1) * 10}`
+        `${backendHost}/video/get/doctors?offset=${
+          (currentPage - 1) * 10
+        }&medTypeID=${selectedSpeciality}`
       );
       const json = await response.json();
-      if (selectedSpeciality) {
-        const medTypeDoc = json.filter(
-          (item) => item.medicineTypeName === selectedSpeciality
-        );
-        setDocList(medTypeDoc);
-      } else {
-        setDocList(json);
-      }
+      setDocList(json);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -81,7 +76,6 @@ function DoctorConnect() {
   };
 
   const changeSpeciality = (item) => {
-    
     setSelectedSpeciality(item);
   };
 

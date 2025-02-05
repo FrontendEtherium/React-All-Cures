@@ -15,18 +15,20 @@ import {
 import "./DoctorConnectSearch.css";
 
 const fields = [
-  { title: "Ayurveda", icon: faLeaf },
-  { title: "Homeopathy", icon: faFlask },
-  { title: "Persian", icon: faMortarPestle },
-  { title: "Naturopathy", icon: faSpa },
-  { title: "Unani", icon: faCapsules },
-  { title: "Chinese", icon: faYinYang },
+  { value: 1, title: "Ayurveda", icon: faLeaf },
+  { value: 8, title: "Homeopathy", icon: faFlask },
+  { value: 3, title: "Persian", icon: faMortarPestle },
+  { value: 9, title: "Naturopathy", icon: faSpa },
+  { value: 2, title: "Unani", icon: faCapsules },
+  { value: 4, title: "Chinese", icon: faYinYang },
 ];
 
-function DoctorConnectSearch({ changeSpeciality,speciality }) {
+function DoctorConnectSearch({ changeSpeciality, speciality }) {
   const [searchName, setSearchName] = useState("");
   const [searchCity, setSearchCity] = useState("");
-  const [selectedSpeciality, setSelectedSpeciality] = useState(speciality || "");
+  const [selectedSpeciality, setSelectedSpeciality] = useState(
+    speciality || ""
+  );
 
   // Handle search by name
   const handleSearchByName = () => {
@@ -117,7 +119,7 @@ function DoctorConnectSearch({ changeSpeciality,speciality }) {
             >
               <option value="">Select a speciality</option>
               {fields.map((field) => (
-                <option key={field.title} value={field.title}>
+                <option key={field.title} value={field.value}>
                   {field.title}
                 </option>
               ))}

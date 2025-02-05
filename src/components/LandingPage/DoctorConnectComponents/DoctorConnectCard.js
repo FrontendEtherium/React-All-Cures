@@ -62,9 +62,7 @@ function DoctorConnectCard({ doc }) {
               alt={`Dr.${doc.firstName} ${doc.lastName}`}
               className="doctor-image"
             />
-            {/* <div className="doctor-verified-icon">
-              <VerifiedIcon color="success" fontSize="small" />
-            </div> */}
+        
           </div>
           <div className="doctor-details">
             <div className="doctor-name">

@@ -15,16 +15,18 @@
 
 /* Banner */
 .doc-banner {
-  width: 80%;
-  height: 20rem;
+  width: 100%;
+  height: auto;
   object-fit: contain;
 
 }
 
 @media (min-width: 768px) {
   .doc-banner {
-    height: 20rem;
-    object-fit: cover;
+    height: 23rem;
+    object-fit: contain;
+    border-radius: 2px;
+    
 
   }
 }
@@ -70,10 +72,8 @@
     gap: 1rem;
     width: 100%;
   }
-  .doc-banner {
-    width: 90%;
-    height: 15rem;
-  }
+ 
+
 }
 
 /* Doctor List Section */
