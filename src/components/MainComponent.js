@@ -166,7 +166,7 @@ const Routes = (props) => {
         <Route exact path="/bookings" component={Bookings} />
         <Route exact path="/doctor-connect" component={DoctorConnect} />
 
-        <Route exact path="/landing/doctor" component={DoctorLandingPage} />
+        <Route exact path="/landing-doctor" component={DoctorLandingPage} />
 
         {/* Health a to z Page */}
 

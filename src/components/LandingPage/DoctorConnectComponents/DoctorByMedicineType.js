@@ -32,12 +32,13 @@ function DoctorByMedicineType() {
             Consult Top Doctors Online for Any Health Concern
           </h2>
           <p className="medicine-doc-container-upper-text-subHeading">
-            Video and Chat consultations with verified doctors in all specialties
+            Video and Chat consultations with verified doctors in all
+            specialties
           </p>
         </div>
-        <button className="medicine-doc-button" aria-label="View all doctors">
+        {/* <button className="medicine-doc-button" aria-label="View all doctors">
           <span className="medicine-doc-button-heading">View all Types</span>
-        </button>
+        </button> */}
       </div>
 
       <div className="medicine-types-container">

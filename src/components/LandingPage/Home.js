@@ -704,7 +704,7 @@ class Home extends Component {
           <button
             className="doctor-patient-banner-btn "
             onClick={() => (
-              (window.location.href = "/landing/doctor"), this.clickCounter()
+              (window.location.href = "/landing-doctor"), this.clickCounter()
             )}
           >
             Consult Now

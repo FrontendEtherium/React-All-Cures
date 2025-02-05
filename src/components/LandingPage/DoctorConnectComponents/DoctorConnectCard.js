@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import VerifiedIcon from "@mui/icons-material/Verified";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import LocalPharmacyIcon from "@mui/icons-material/LocalPharmacy";
 import DummyDoc from "../../../assets/healthcare/img/images/defaultDoc1.png";
 import { userId } from "../../UserId";
@@ -71,7 +69,7 @@ function DoctorConnectCard({ doc }) {
           <div className="doctor-details">
             <div className="doctor-name">
               Dr. {doc.firstName} {doc.lastName}{" "}
-              <VerifiedIcon color="success" style={{fontSize:"12px"}} />
+              <VerifiedIcon color="success" style={{ fontSize: "12px" }} />
             </div>
             <div className="doctor-specialty">{doc.medicineTypeName}</div>
             <div className="doctor-location">
@@ -79,14 +77,14 @@ function DoctorConnectCard({ doc }) {
             </div>
             <div className="doctor-hospital">{doc.hospitalAffiliated}</div>
             <div className="doctor-separator"></div>
-            <div className="doctor-rating">
+            {/* <div className="doctor-rating">
               <ThumbUpIcon className="doctor-rating-icon" />
-              {`${(doc.ratingValueAverage / 5) * 100}%`}
+              {`${Math.ceil((doc.ratingValueAverage / 5)* 100) }%`}
               <button className="whatsapp-button">
                 <WhatsAppIcon className="whatsapp-icon" />
                 <span className="whatsapp-text">WhatsApp</span>
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="book-button-container">
