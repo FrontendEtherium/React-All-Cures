@@ -90,7 +90,7 @@ function DoctorConnect() {
       <div className="doctor-connect-container">
         <div className="doctor-connect-content">
           <img
-            src={`${imgKitImagePath}/assets/img/docchart.jpg`}
+            src={`${imgKitImagePath}/assets/img/docchartdp.jpg`}
             alt="Doctor Connect Banner"
             className="doc-banner"
           />
