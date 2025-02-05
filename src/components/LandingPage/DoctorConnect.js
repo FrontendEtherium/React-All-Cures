@@ -81,6 +81,7 @@ function DoctorConnect() {
   };
 
   const changeSpeciality = (item) => {
+    
     setSelectedSpeciality(item);
   };
 

@@ -145,18 +145,17 @@ class Home extends Component {
   }
 
   loadFloater = async () => {
-    // console.log("checkgin the api 123");
-    //    console.log('call floater')
+
     await axios
       .get(`${backendHost}/data/newsletter/get`)
       .then((res) => {
-        // console.log(res.data)
+
         this.setState({
           images: res.data,
         });
       })
       .catch((res) => null);
-    // console.log("1232121 testing");
+
   };
 
   floaterInterval = null;
@@ -189,8 +188,7 @@ class Home extends Component {
   }
 
   diseasePosts() {
-    // For specific cures like "/cures/diabetes"
-    console.log("not delayed");
+   
     fetch(`${backendHost}/isearch/${this.state.param.type}`)
       .then((res) => res.json())
       .then((json) => {
@@ -207,15 +205,14 @@ class Home extends Component {
       const response = await axios.get(
         `${backendHost}/sponsored/list/ads/url/1`
       );
-      console.log("response API call successful", response); // Check if this log is printed
+    
 
       if (response.data != "All Ads are Served") {
         const id = response.data.split("/")[3];
         const ids = id.match(/\d+/);
         const adsId = ids[0];
 
-        console.log(adsId);
-        console.log(id);
+     
 
         this.setState({
           adId: adsId,
@@ -294,7 +291,7 @@ class Home extends Component {
     });
 
   logout = async (e) => {
-    console.log("Logout started");
+
 
     fetch(`${backendHost}/LogoutActionController`, {
       method: "POST",
@@ -372,7 +369,7 @@ class Home extends Component {
   };
 
   clickCounter = async () => {
-    console.log("counter Clicked");
+
 
     try {
       await axios.post(`${backendHost}/video/consult/counts`);
