@@ -14,7 +14,7 @@ import { imgKitImagePath } from "../../image-path";
 
 function DoctorConnect() {
   const [docList, setDocList] = useState([]);
-  const [totalPages,setTotalPages] = useState()
+  const [totalPages, setTotalPages] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const history = useHistory(); // React Router v5
   const { search } = useLocation();
@@ -51,7 +51,8 @@ function DoctorConnect() {
         }&medTypeID=${selectedSpeciality}`
       );
       const json = await response.json();
-      setDocList(json);
+      setDocList(json.data);
+      setTotalPages(json.totalPagesCount.totalPages);
     } catch (error) {
       console.error("Error fetching data:", error);
     }

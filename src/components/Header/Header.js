@@ -349,6 +349,11 @@ const ToggleButton = ({ userAccess, setModalShow, logout }) => {
             </Link>
           </Dropdown.Item>
 
+          <Dropdown.Item>
+            <Link to="/bookings" className="text-dark btn">
+              My Bookings
+            </Link>
+          </Dropdown.Item>
           {userAccess >= 4 ? (
             <Dropdown.Item>
               <Link to="/dashboard" className="text-dark btn">

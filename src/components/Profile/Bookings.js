@@ -55,7 +55,7 @@ const Bookings = () => {
       }
     };
 
-    if (docID != 0) {
+    if (docID) {
       fetchDocData();
       console.log("doc details", docID);
     } else {
