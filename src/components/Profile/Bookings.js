@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"; 
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
@@ -21,17 +21,16 @@ const Bookings = () => {
   const [data, setData] = useState([]);
   const [docData, setDocData] = useState([]);
 
-  const docID= localStorage.getItem('doctorid')
+  const docID = localStorage.getItem("doctorid");
   // const docID = 14485
-
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${backendHost}/appointments/get/user/${userId}`); //change 87 to registration ID
-        // if (!response.ok) {
-        //   return;
-        // }
+        const response = await fetch(
+          `${backendHost}/appointments/get/user/${userId}`
+        ); //change 87 to registration ID
+
         const json = await response.json();
         setData(json);
         console.log(json);
@@ -42,7 +41,9 @@ const Bookings = () => {
 
     const fetchDocData = async () => {
       try {
-        const response = await fetch(`${backendHost}/appointments/get/${docID}`); 
+        const response = await fetch(
+          `${backendHost}/appointments/get/${docID}`
+        );
         // if (!response.ok) {
         //   return;
         // }
@@ -54,18 +55,13 @@ const Bookings = () => {
       }
     };
 
-    if(docID){
-      fetchDocData()
-      console.log("doc details",docID)
-    }
-
-    else{
+    if (docID != 0) {
+      fetchDocData();
+      console.log("doc details", docID);
+    } else {
       fetchData();
-      console.log("user details")
+      console.log("user details");
     }
-
-    
-    
   }, []);
 
   const handleChange = (event, newValue) => {
@@ -124,7 +120,7 @@ const Bookings = () => {
             </Tabs>
           </Box>
           <CustomTabPanel value={value} index={0}>
-          {data &&
+            {data &&
               data
                 .filter((d) => d.status == 0)
                 .map((filteredData) => (
@@ -166,7 +162,7 @@ const Bookings = () => {
                   </div>
                 ))}
 
-{docData &&
+            {docData &&
               docData
                 .filter((d) => d.status == 0)
                 .map((filteredData) => (
@@ -180,7 +176,7 @@ const Bookings = () => {
                               <p>
                                 {" "}
                                 <span className="fw-bold">
-                                 {filteredData.userName}{" "}
+                                  {filteredData.userName}{" "}
                                 </span>
                               </p>{" "}
                             </div>
@@ -207,7 +203,6 @@ const Bookings = () => {
                     </div>
                   </div>
                 ))}
-
           </CustomTabPanel>
           <CustomTabPanel value={value} index={1}>
             {data &&
@@ -252,8 +247,7 @@ const Bookings = () => {
                   </div>
                 ))}
 
-
-{docData &&
+            {docData &&
               docData
                 .filter((d) => d.status == 2)
                 .map((filteredData) => (
@@ -267,7 +261,7 @@ const Bookings = () => {
                               <p>
                                 {" "}
                                 <span className="fw-bold">
-                                 {filteredData.userName}{" "}
+                                  {filteredData.userName}{" "}
                                 </span>
                               </p>{" "}
                             </div>
@@ -294,7 +288,6 @@ const Bookings = () => {
                     </div>
                   </div>
                 ))}
-
           </CustomTabPanel>
         </Box>
       </div>

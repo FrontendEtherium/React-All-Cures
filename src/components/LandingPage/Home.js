@@ -15,7 +15,7 @@ import "./custom.css";
 import Carousel1 from "./Caousel1";
 import Carousel2 from "./Carousel2";
 // import CarouselReview from './CarouselReview';
-import { Dropdown } from "react-bootstrap";
+import { Carousel, Dropdown } from "react-bootstrap";
 import PhoneInput from "react-phone-number-input";
 import { isValidPhoneNumber } from "react-phone-number-input";
 
@@ -42,6 +42,10 @@ class Home extends Component {
     super(props);
     const params = props.match.params;
     this.state = {
+      carouselImages: [
+        `${imgKitImagePath}/assets/img/HomePage1.jpg`,
+        `${imgKitImagePath}/assets/img/HomePage2.jpg`,
+      ],
       images: [],
       currentIndex: 0,
       isUnaniDropdownOpen: false,
@@ -682,19 +686,30 @@ class Home extends Component {
           </div>
         </section> */}
         <div className="doctor-patient-banner-container">
-          <img
-            src={`${imgKitImagePath}/assets/img/doctorconsult1.jpg`}
-            alt="Doctor Patient Connect"
-            className="img-fluid rounded doctor-patient-banner "
-          />
-          <button
-            className="doctor-patient-banner-btn "
-            onClick={() => (
-              (window.location.href = "/landing-doctor"), this.clickCounter()
-            )}
-          >
-            Consult Now
-          </button>
+          <Carousel interval={4000} pause={false} indicators={true}>
+            {this.state.carouselImages.map((img, index) => (
+              <Carousel.Item key={index}>
+                <img
+                  src={img}
+                  alt={`Doctor Patient Connect ${index + 1}`}
+                  className="img-fluid rounded doctor-patient-banner"
+                />
+                {index + 1 === 2 && (
+                  <Carousel.Caption>
+                    <button
+                      className="doctor-patient-banner-btn"
+                      onClick={() => {
+                        window.location.href = "/landing-doctor";
+                        this.clickCounter();
+                      }}
+                    >
+                      Consult Now
+                    </button>
+                  </Carousel.Caption>
+                )}
+              </Carousel.Item>
+            ))}
+          </Carousel>
         </div>
 
         <DoctorSearch />
@@ -1005,6 +1020,11 @@ function ToggleButton(props) {
             <Dropdown.Item>
               <Link to="/chatlist" className="text-dark btn">
                 My Inbox
+              </Link>
+            </Dropdown.Item>
+            <Dropdown.Item>
+              <Link className="text-dark btn" to={`/bookings`}>
+                My Bookings
               </Link>
             </Dropdown.Item>
 
