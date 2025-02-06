@@ -145,17 +145,14 @@ class Home extends Component {
   }
 
   loadFloater = async () => {
-
     await axios
       .get(`${backendHost}/data/newsletter/get`)
       .then((res) => {
-
         this.setState({
           images: res.data,
         });
       })
       .catch((res) => null);
-
   };
 
   floaterInterval = null;
@@ -188,7 +185,6 @@ class Home extends Component {
   }
 
   diseasePosts() {
-   
     fetch(`${backendHost}/isearch/${this.state.param.type}`)
       .then((res) => res.json())
       .then((json) => {
@@ -205,14 +201,11 @@ class Home extends Component {
       const response = await axios.get(
         `${backendHost}/sponsored/list/ads/url/1`
       );
-    
 
       if (response.data != "All Ads are Served") {
         const id = response.data.split("/")[3];
         const ids = id.match(/\d+/);
         const adsId = ids[0];
-
-     
 
         this.setState({
           adId: adsId,
@@ -291,8 +284,6 @@ class Home extends Component {
     });
 
   logout = async (e) => {
-
-
     fetch(`${backendHost}/LogoutActionController`, {
       method: "POST",
       credentials: "include",
@@ -369,8 +360,6 @@ class Home extends Component {
   };
 
   clickCounter = async () => {
-
-
     try {
       await axios.post(`${backendHost}/video/consult/counts`);
     } catch (error) {
