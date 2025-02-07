@@ -9,6 +9,7 @@ import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core";
+import DoctorTrendingCuresCard from "./DoctorTrendingCuresCard";
 
 const options = {
   margin: 30,
@@ -44,18 +45,6 @@ const DoctorsArticles = (props) => {
   const [articleFilter, setArticleFilter] = useState(
     props.dcName ? props.dcName : "recent"
   );
-
-  function diseasePosts(type) {
-    // For specific blogs like "/blogs/diabetes"
-    // if(type){
-    fetch(`${backendHost}/isearch/${type}`)
-      .then((res) => res.json())
-      .then((json) => {
-        setLoaded(true);
-        setItems(json);
-      })
-      .catch((err) => null);
-  }
 
   function allPosts() {
     const headers = new Headers({
@@ -109,8 +98,6 @@ const DoctorsArticles = (props) => {
       <>
         <div className="container">
           <div className="row" marginBottom={10}>
-
-         
             <div className="main-hero" id="main-hero">
               <OwlCarousel
                 {...options}
@@ -159,7 +146,7 @@ const DoctorsArticles = (props) => {
                                 <div className="card-img">
                                   <img src={imageLoc} />
                                 </div>
-                                <div className="card-body">
+                                <div className="card-body-doc-article">
                                   <h6 className="pb-2 text-muted">
                                     {i.authors_name !== "All Cures Team" ? (
                                       <Link to={`/doctor/${i.docID}`}>
@@ -185,7 +172,7 @@ const DoctorsArticles = (props) => {
                                         ? content.map(
                                             (j, idx) =>
                                               idx < 1 && (
-                                                <CenterWell
+                                                <DoctorTrendingCuresCard
                                                   content={j.data.content}
                                                   type={j.type}
                                                   text={

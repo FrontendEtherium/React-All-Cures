@@ -1,42 +1,34 @@
 import React from "react";
 import "./ValuesSection.css";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHandsHelping, // Compassion
-  faStar, // Excellence
-  faBalanceScale, // Integrity
-  faHandHoldingHeart, // Respect
-  faUsers, // Teamwork
-} from "@fortawesome/free-solid-svg-icons";
+import Ayurveda from "../../../assets/icon/Ayurveda.png";
+import GlobalTeleConsult from "../../../assets/icon/GlobalTeleconsultation.png";
+import OnlineConsultation from "../../../assets/icon/OnlineConsultation.png";
+import TrustednVerified from "../../../assets/icon/TrustednVerified.png";
 
 const valuesData = [
   {
-    title: "Compassion",
+    title: "Global Teleconsultation",
+    description: "We continuously improve to deliver the highest quality care.",
+    icon: GlobalTeleConsult,
+  },
+  {
+    title: "Ayurveda, Unani & More",
     description:
       "We provide a warm, supportive environment to ease the stress of medical care.",
-    icon: faHandsHelping,
+    icon: Ayurveda,
   },
   {
-    title: "Excellence",
-    description: "We continuously improve to deliver the highest quality care.",
-    icon: faStar,
+    title: "Trusted & Verified Practitioners",
+    description: "We treat everyone with respect, dignity, and kindness.",
+    icon: TrustednVerified,
   },
+
   {
-    title: "Integrity",
+    title: "Easy Online Doctor Consultation",
     description:
       "We practice transparent, honest medicine that always puts patients first.",
-    icon: faBalanceScale,
-  },
-  {
-    title: "Respect",
-    description: "We treat everyone with respect, dignity, and kindness.",
-    icon: faHandHoldingHeart,
-  },
-  {
-    title: "Teamwork",
-    description: "We collaborate to deliver comprehensive and effective care.",
-    icon: faUsers,
+    icon: OnlineConsultation,
   },
 ];
 
@@ -48,14 +40,13 @@ const ValuesSection = () => {
         <div className="values-section__grid">
           {valuesData.map((value, index) => (
             <div key={index} className="values-section__card">
-              <FontAwesomeIcon
-                icon={value.icon}
-                className="values-section__icon"
+              {/* ✅ Fixed: Using img instead of FontAwesomeIcon */}
+              <img
+                src={value.icon}
+                alt={value.title}
+                className="values-section__image"
               />
-              <h3 className="values-section__card-title">{value.title}</h3>
-              <p className="values-section__card-description">
-                {value.description}
-              </p>
+              <div className="values-section__card-title">{value.title}</div>
             </div>
           ))}
         </div>

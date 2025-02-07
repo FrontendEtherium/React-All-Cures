@@ -51,6 +51,7 @@ function DoctorConnect() {
         }&medTypeID=${selectedSpeciality}`
       );
       const json = await response.json();
+      
       setDocList(json.data);
       setTotalPages(json.totalPagesCount.totalPages);
     } catch (error) {

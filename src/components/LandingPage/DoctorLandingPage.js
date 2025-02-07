@@ -32,12 +32,12 @@ function DoctorLandingPage() {
           <div className="container" id="trends">
             <div className="row">
               <div className="comman-heading">
-                <div className="h4">
+                <div className="h4 medicine-doc-container-upper-text-heading">
                   Read top articles from our health experts
                 </div>
               </div>
             </div>
-            <div className="row">
+            <div className="row mt-4" >
               <DoctorsArticles />
             </div>
           </div>

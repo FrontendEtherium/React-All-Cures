@@ -361,3 +361,10 @@
 .medicine-doc-button-heading{
   color: #ffffff ;
 }
+
+
+.card-body-doc-article{
+  background-color: transparent;
+  padding: 6px;
+
+}
