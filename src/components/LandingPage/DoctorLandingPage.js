@@ -42,7 +42,7 @@ function DoctorLandingPage() {
             </div>
           </div>
         </section>
-        <section>{/* <ValuesSection /> */}</section>
+     
       </main>
       <Footer />
     </>

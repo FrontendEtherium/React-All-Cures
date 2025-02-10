@@ -43,6 +43,7 @@ const Bookings = () => {
         console.error("Error fetching doctor appointments:", error);
       }
     };
+    console.log(docID);
 
     if (docID) {
       fetchDocData();
