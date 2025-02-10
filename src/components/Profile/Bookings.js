@@ -1,41 +1,34 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import { Link, useParams } from "react-router-dom";
-import { backendHost } from "../../api-config";
 import { useHistory } from "react-router-dom";
+import { backendHost } from "../../api-config";
 import { userId } from "../UserId";
-import { userAccess } from "../UserAccess";
-
-import { Container, Button } from "react-bootstrap";
+import { Box, Tab, Tabs, Typography } from "@mui/material";
 import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+
+import "./Bookings.css";
 
 const Bookings = () => {
   const history = useHistory();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
   const [data, setData] = useState([]);
   const [docData, setDocData] = useState([]);
 
+  // Retrieve doctor ID if logged in as doctor; else handle user
   const docID = localStorage.getItem("doctorid");
-  // const docID = 14485
 
+  // Fetch appointments
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
           `${backendHost}/appointments/get/user/${userId}`
-        ); //change 87 to registration ID
-
+        );
         const json = await response.json();
         setData(json);
-        console.log(json);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching user appointments:", error);
       }
     };
 
@@ -44,32 +37,27 @@ const Bookings = () => {
         const response = await fetch(
           `${backendHost}/appointments/get/${docID}`
         );
-        // if (!response.ok) {
-        //   return;
-        // }
         const json = await response.json();
         setDocData(json);
-        console.log(json);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching doctor appointments:", error);
       }
     };
 
     if (docID) {
       fetchDocData();
-      console.log("doc details", docID);
     } else {
       fetchData();
-      console.log("user details");
     }
-  }, []);
+  }, [docID]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  // Tabs utility for MUI
   function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
-
     return (
       <div
         role="tabpanel"
@@ -80,7 +68,7 @@ const Bookings = () => {
       >
         {value === index && (
           <Box sx={{ p: 3 }}>
-            <Typography>{children}</Typography>
+            <Typography component="div">{children}</Typography>
           </Box>
         )}
       </div>
@@ -100,12 +88,70 @@ const Bookings = () => {
     };
   }
 
+  // Reusable card for each appointment
+  const AppointmentCard = ({ appointment, isDoctor }) => {
+    // Decide how to display name:
+    //   if isDoctor => show userName
+    //   else => show doctorName
+    const displayName = isDoctor
+      ? appointment.userName
+      : `Dr. ${appointment.doctorName}`;
+    const { appointmentDate, startTime, endTime, status } = appointment;
+
+    // Optional: show a status text or badge
+    // 0 => Upcoming
+    // 2 => Completed
+    const statusText =
+      status === 0 ? "Upcoming" : status === 2 ? "Completed" : "Other";
+
+    return (
+      <div className="card shadow-sm booking-card">
+        <div className="card-body d-flex align-items-center">
+          <div className="avatar">
+            <i className="fas fa-user-md"></i>
+          </div>
+          <div className="booking-info">
+            <div className="d-flex justify-content-between align-items-center mb-1">
+              <h5 className="doctor-name">{displayName}</h5>
+              <span
+                className={`status-badge ${
+                  status === 0
+                    ? "status-upcoming"
+                    : status === 2
+                    ? "status-completed"
+                    : ""
+                }`}
+              >
+                {statusText}
+              </span>
+            </div>
+            <div className="time-slot mb-1">
+              <strong>Date:</strong> {appointmentDate}
+            </div>
+            <div className="time-slot">
+              <strong>Time:</strong> {startTime} - {endTime}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div>
       <Header history={history} />
-      <div className="d-flex justify-content-center mt-5">
-        <Box sx={{ width: { xs: "100%", md: "50%" } }}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+
+      <div className="bookings-page container">
+        {/* Tab Section */}
+        <Box sx={{ width: "100%", mt: 5 }}>
+          <Box
+            sx={{
+              borderBottom: 1,
+              borderColor: "divider",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
             <Tabs
               value={value}
               onChange={handleChange}
@@ -113,181 +159,55 @@ const Bookings = () => {
               variant="scrollable"
               scrollButtons
               allowScrollButtonsMobile
-              aria-label="scrollable force tabs example"
             >
               <Tab label="Upcoming Meetings" {...a11yProps(0)} />
               <Tab label="Completed Meetings" {...a11yProps(1)} />
             </Tabs>
           </Box>
+
+          {/* Upcoming */}
           <CustomTabPanel value={value} index={0}>
-            {data &&
-              data
-                .filter((d) => d.status == 0)
-                .map((filteredData) => (
-                  <div key={filteredData.id}>
-                    <div className="card shadow-sm mt-2 mb-4">
-                      <div className="card-body">
-                        <div className="d-flex align-items-center">
-                          <div className="mr-5">
-                            <div className="mb-2 bookings">
-                              {" "}
-                              <p>
-                                {" "}
-                                <span className="fw-bold">
-                                  Dr. {filteredData.doctorName}{" "}
-                                </span>
-                              </p>{" "}
-                            </div>
-                            <div className="mb-2 bookings">
-                              <p>
-                                {" "}
-                                Booking Date: {filteredData.appointmentDate}
-                              </p>{" "}
-                            </div>
-                            <div className="mb-2 bookings">
-                              {" "}
-                              <p>
-                                {" "}
-                                Booking Time: {filteredData.startTime} -{" "}
-                                {filteredData.endTime}
-                              </p>{" "}
-                            </div>
-                          </div>
-                          <div className="bookings-img text-center ml-auto">
-                            <i className="fas fa-user-md fa-6x"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-
-            {docData &&
-              docData
-                .filter((d) => d.status == 0)
-                .map((filteredData) => (
-                  <div key={filteredData.id}>
-                    <div className="card shadow-sm mt-2 mb-4">
-                      <div className="card-body">
-                        <div className="d-flex align-items-center">
-                          <div className="mr-5">
-                            <div className="mb-2 bookings">
-                              {" "}
-                              <p>
-                                {" "}
-                                <span className="fw-bold">
-                                  {filteredData.userName}{" "}
-                                </span>
-                              </p>{" "}
-                            </div>
-                            <div className="mb-2 bookings">
-                              <p>
-                                {" "}
-                                Booking Date: {filteredData.appointmentDate}
-                              </p>{" "}
-                            </div>
-                            <div className="mb-2 bookings">
-                              {" "}
-                              <p>
-                                {" "}
-                                Booking Time: {filteredData.startTime} -{" "}
-                                {filteredData.endTime}
-                              </p>{" "}
-                            </div>
-                          </div>
-                          <div className="bookings-img text-center ml-auto">
-                            <i className="fas fa-user-md fa-6x"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+            {/* If doc is logged in, show docData appointments, else show data */}
+            {docID
+              ? docData
+                  .filter((d) => d.status === 0)
+                  .map((appointment) => (
+                    <AppointmentCard
+                      key={appointment.id}
+                      appointment={appointment}
+                      isDoctor
+                    />
+                  ))
+              : data
+                  .filter((d) => d.status === 0)
+                  .map((appointment) => (
+                    <AppointmentCard
+                      key={appointment.id}
+                      appointment={appointment}
+                    />
+                  ))}
           </CustomTabPanel>
-          <CustomTabPanel value={value} index={1}>
-            {data &&
-              data
-                .filter((d) => d.status == 2)
-                .map((filteredData) => (
-                  <div key={filteredData.id}>
-                    <div className="card shadow-sm mt-2 mb-4">
-                      <div className="card-body">
-                        <div className="d-flex align-items-center">
-                          <div className="mr-5">
-                            <div className="mb-2 bookings">
-                              {" "}
-                              <p>
-                                {" "}
-                                <span className="fw-bold">
-                                  Dr. {filteredData.doctorName}{" "}
-                                </span>
-                              </p>{" "}
-                            </div>
-                            <div className="mb-2 bookings">
-                              <p>
-                                {" "}
-                                Booking Date: {filteredData.appointmentDate}
-                              </p>{" "}
-                            </div>
-                            <div className="mb-2 bookings">
-                              {" "}
-                              <p>
-                                {" "}
-                                Booking Time: {filteredData.startTime} -{" "}
-                                {filteredData.endTime}
-                              </p>{" "}
-                            </div>
-                          </div>
-                          <div className="bookings-img text-center ml-auto">
-                            <i className="fas fa-user-md fa-6x"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
 
-            {docData &&
-              docData
-                .filter((d) => d.status == 2)
-                .map((filteredData) => (
-                  <div key={filteredData.id}>
-                    <div className="card shadow-sm mt-2 mb-4">
-                      <div className="card-body">
-                        <div className="d-flex align-items-center">
-                          <div className="mr-5">
-                            <div className="mb-2 bookings">
-                              {" "}
-                              <p>
-                                {" "}
-                                <span className="fw-bold">
-                                  {filteredData.userName}{" "}
-                                </span>
-                              </p>{" "}
-                            </div>
-                            <div className="mb-2 bookings">
-                              <p>
-                                {" "}
-                                Booking Date: {filteredData.appointmentDate}
-                              </p>{" "}
-                            </div>
-                            <div className="mb-2 bookings">
-                              {" "}
-                              <p>
-                                {" "}
-                                Booking Time: {filteredData.startTime} -{" "}
-                                {filteredData.endTime}
-                              </p>{" "}
-                            </div>
-                          </div>
-                          <div className="bookings-img text-center ml-auto">
-                            <i className="fas fa-user-md fa-6x"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+          {/* Completed */}
+          <CustomTabPanel value={value} index={1}>
+            {docID
+              ? docData
+                  .filter((d) => d.status === 2)
+                  .map((appointment) => (
+                    <AppointmentCard
+                      key={appointment.id}
+                      appointment={appointment}
+                      isDoctor
+                    />
+                  ))
+              : data
+                  .filter((d) => d.status === 2)
+                  .map((appointment) => (
+                    <AppointmentCard
+                      key={appointment.id}
+                      appointment={appointment}
+                    />
+                  ))}
           </CustomTabPanel>
         </Box>
       </div>

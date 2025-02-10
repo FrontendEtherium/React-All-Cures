@@ -467,7 +467,7 @@ class Home extends Component {
                             <li class="nav-item dropdown ">
                               <a
                                 class="nav-link dropdown-toggle"
-                                href="#"
+                                href="#trends"
                                 id="trendingCuresDropdown"
                                 role="button"
                                 data-bs-toggle="dropdown"
@@ -689,11 +689,22 @@ class Home extends Component {
           <Carousel interval={4000} pause={false} indicators={true}>
             {this.state.carouselImages.map((img, index) => (
               <Carousel.Item key={index}>
-                <img
-                  src={img}
-                  alt={`Doctor Patient Connect ${index + 1}`}
-                  className="img-fluid rounded doctor-patient-banner"
-                />
+                {index + 1 === 2 ? (
+                  <img
+                    src={img}
+                    alt={`Doctor Patient Connect ${index + 1}`}
+                    className="img-fluid rounded doctor-patient-banner"
+                  />
+                ) : (
+                  <a href="#trends">
+                    <img
+                      src={img}
+                      alt={`Doctor Patient Connect ${index + 1}`}
+                      className="img-fluid rounded doctor-patient-banner"
+                    />
+                  </a>
+                )}
+
                 {index + 1 === 2 && (
                   <Carousel.Caption>
                     <button
