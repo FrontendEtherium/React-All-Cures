@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import VerifiedIcon from "@mui/icons-material/Verified";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import LocalPharmacyIcon from "@mui/icons-material/LocalPharmacy";
 import DummyDoc from "../../../assets/healthcare/img/images/defaultDoc1.png";
 import { userId } from "../../UserId";
@@ -64,9 +62,7 @@ function DoctorConnectCard({ doc }) {
               alt={`Dr.${doc.firstName} ${doc.lastName}`}
               className="doctor-image"
             />
-            {/* <div className="doctor-verified-icon">
-              <VerifiedIcon color="success" fontSize="small" />
-            </div> */}
+        
           </div>
           <div className="doctor-details">
             <div className="doctor-name">

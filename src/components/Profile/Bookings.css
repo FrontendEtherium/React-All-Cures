@@ -1,0 +1,87 @@
+/* Container spacing for the entire bookings page */
+.bookings-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px 15px;
+  }
+  
+  /* Customize the MUI Tabs for a clean, modern look */
+  .MuiTabs-flexContainer {
+    gap: 20px; /* Spacing between tabs */
+  }
+  
+  /* Card container styling */
+  .booking-card {
+    border: none;
+    margin-bottom: 1rem;
+    transition: box-shadow 0.2s ease-in-out;
+  }
+  
+  .booking-card:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Card body content */
+  .booking-card .card-body {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+  }
+  
+  /* Circle avatar placeholder with an icon */
+  .booking-card .avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: #eaeaea;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: #888;
+    margin-right: 16px;
+  }
+  
+  /* Main info container */
+  .booking-card .booking-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  /* Doctor or User Name */
+  .booking-card .doctor-name {
+    margin: 0;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  /* Date & Time styling */
+  .booking-card .time-slot {
+    color: #666;
+    font-size: 0.95rem;
+  }
+  
+  /* Status Badge */
+  .status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    border-radius: 12px;
+    margin-left: 10px;
+    font-weight: 500;
+  }
+  
+  /* Example color for 'Upcoming' */
+  .status-upcoming {
+    background-color: #ffe791;
+    color: #7d6000;
+  }
+  
+  /* Example color for 'Completed' */
+  .status-completed {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  

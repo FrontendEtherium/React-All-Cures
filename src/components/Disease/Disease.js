@@ -79,7 +79,9 @@ const Disease = () => {
         .then((res) => res.json())
         .then((json) => {
           const title = json.title;
-          canonicalLink.href = `${window.location.origin}/cure/${articleId}-${title.replace(/\s+/g, "-")}`;
+          canonicalLink.href = `${
+            window.location.origin
+          }/cure/${articleId}-${title.replace(/\s+/g, "-")}`;
           document.head.appendChild(canonicalLink);
         })
         .catch(() => {
@@ -172,7 +174,7 @@ const Disease = () => {
       console.error("Error fetching disease posts:", error);
     }
   };
- 
+
   const fetchData = async (parent_dc_id) => {
     try {
       const response = await axios.get(

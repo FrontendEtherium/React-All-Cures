@@ -3,11 +3,32 @@ import DocBelow from "../../../assets/img/docSearchBelow.png";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonIcon from "@mui/icons-material/Person";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faLeaf,
+  faFlask,
+  faMortarPestle,
+  faSpa,
+  faCapsules,
+  faYinYang,
+} from "@fortawesome/free-solid-svg-icons";
 import "./DoctorConnectSearch.css";
 
-function DoctorConnectSearch({ doctors }) {
+const fields = [
+  { value: 1, title: "Ayurveda", icon: faLeaf },
+  { value: 8, title: "Homeopathy", icon: faFlask },
+  { value: 3, title: "Persian", icon: faMortarPestle },
+  { value: 9, title: "Naturopathy", icon: faSpa },
+  { value: 2, title: "Unani", icon: faCapsules },
+  { value: 4, title: "Chinese", icon: faYinYang },
+];
+
+function DoctorConnectSearch({ changeSpeciality, speciality }) {
   const [searchName, setSearchName] = useState("");
   const [searchCity, setSearchCity] = useState("");
+  const [selectedSpeciality, setSelectedSpeciality] = useState(
+    speciality || ""
+  );
 
   // Handle search by name
   const handleSearchByName = () => {
@@ -19,23 +40,12 @@ function DoctorConnectSearch({ doctors }) {
     window.location.href = `/search/${searchCity}`;
   };
 
+  const handleSearchBySpeciality = () => {
+    window.location.href = `/searchSpeciality/${selectedSpeciality}`;
+  };
+
   return (
     <div className="search-container">
-      {/* Search Heading */}
-      <div className="search-heading">
-        {/* Text Section */}
-        <div className="search-text">
-          <p className="search-subtext">
-            Search from our wide range of <span> Doctors </span> across various
-            specialties and cities.
-          </p>
-        </div>
-
-        {/* Image Section */}
-        <img src={DocBelow} alt="Doctor" className="search-image" />
-      </div>
-
-      {/* Search Inputs */}
       <div className="search-input-group">
         {/* Search by Name */}
         <div>
@@ -84,6 +94,41 @@ function DoctorConnectSearch({ doctors }) {
               disabled={searchCity.length < 3}
               className={`input-button ${
                 searchCity.length >= 3
+                  ? "input-button--enabled"
+                  : "input-button--disabled"
+              }`}
+            >
+              <SearchIcon />
+            </button>
+          </div>
+        </div>
+
+        {/* Search by Speciality */}
+        <div>
+          <label className="search-input-label">
+            Filter Doctor by Speciality
+          </label>
+          <div className="input-wrapper">
+            <select
+              className="input-field"
+              value={selectedSpeciality}
+              onChange={(e) => (
+                changeSpeciality(e.target.value),
+                setSelectedSpeciality(e.target.value)
+              )}
+            >
+              <option value="">Select a speciality</option>
+              {fields.map((field) => (
+                <option key={field.title} value={field.value}>
+                  {field.title}
+                </option>
+              ))}
+            </select>
+            <button
+              onClick={handleSearchBySpeciality}
+              disabled={!selectedSpeciality}
+              className={`input-button ${
+                selectedSpeciality
                   ? "input-button--enabled"
                   : "input-button--disabled"
               }`}

@@ -1,83 +1,149 @@
+/* Define CSS Custom Properties for maintainability */
+:root {
+  --primary-color: #00415e;
+  --secondary-color: #023e8a;
+  --text-color: #5a5a5a;
+  --bg-color: #f9fafb;
+  --card-bg: #ffffff;
+  --card-shadow: rgba(0, 0, 0, 0.1);
+  --card-shadow-hover: rgba(0, 0, 0, 0.15);
+  --transition-duration: 0.3s;
+  --border-radius: 12px;
+  --padding-large: 2rem;
+  --padding-medium: 1.5rem;
+  --padding-small: 1rem;
+}
+
+/* ============================
+   Base Styles (Mobile-First)
+   ============================ */
+
 /* Overall Section */
 .values-section {
-    text-align: center;
-    padding: 3rem 2rem;
-    background-color: #f9fafb;
-  }
+  /* Keeping overall section padding as originally set.
+     You can adjust these values if you want a different mobile feel. */
+  padding: var(--padding-medium) var(--padding-small);
+}
+
+/* Container for centering content */
+.values-section__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--padding-small);
+  text-align: center;
+}
+
+/* Section Title (mobile default) */
+.values-section__title {
+  font-size: 1.25rem; /* Mobile: smallest size */
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Grid Layout for Cards */
+.values-section__grid {
+  display: flex;
+  flex-direction: row;
+
+  gap: 1.5rem;
+  flex-wrap: wrap;
+
+  justify-content: center;
+}
+
+/* Individual Value Cards (mobile default) */
+.values-section__card {
+  background: rgba(0, 65, 94);
+  border-radius: var(--border-radius);
+  padding: var(--padding-small); 
+  box-shadow: 0px 4px 12px var(--card-shadow);
+  transition: transform var(--transition-duration) ease,
+    box-shadow var(--transition-duration) ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-width: 80px;
+  width: 40%;
   
-  .values-title {
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: #00415e;
-    margin-bottom: 2rem;
+}
+
+.values-section__card:hover {
+  transform: translateY(-15px);
+  box-shadow: 0px 6px 16px var(--card-shadow-hover);
+}
+
+/* Icon Styling (mobile default) */
+.values-section__icon {
+  font-size: 1.5rem; /* Mobile: smaller icon */
+  color: var(--secondary-color);
+  margin-bottom: 1rem;
+}
+
+/* Card Title (mobile default) */
+.values-section__card-title {
+  font-size: 0.8rem; /* Mobile: smaller title text */
+  font-weight: 600;
+  color: #fff;
+  max-width: 80%;
+  text-align: center;
+  margin-top:  0.3rem;;
+}
+
+/* Card Description (mobile default) */
+.values-section__card-description {
+  font-size: 0.7rem; /* Mobile: slightly smaller description */
+  color: var(--text-color);
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* ==============================
+   Media Queries for Larger Devices
+   ============================== */
+
+/* For devices 481px and wider (Medium Devices) */
+@media (min-width: 481px) {
+  .values-section {
+    margin-top: 30px;
   }
-  
-  /* Grid Layout */
-  .values-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    justify-content: center;
-    max-width: 1200px;
-    margin: 0 auto;
+  .values-section__title {
+    font-size: 1.75rem;
   }
-  
-  /* Individual Value Cards */
-  .value-card {
-    background: white;
-    border-radius: 12px;
-    padding: 2rem;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+
+  .values-section__card {
+    padding: var(--padding-medium);
+    max-width: 40%;
   }
-  
-  .value-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* For devices 769px and wider (Desktop) */
+@media (min-width: 769px) {
+  .values-section__title {
+    font-size: 2rem;
   }
-  
-  /* Icons */
-  .value-icon {
-    width: 50px;
-    height: 50px;
-    margin-bottom: 1rem;
+
+  .values-section__card {
+    padding: var(--padding-large);
+    max-width: 20%;
   }
-  
-  /* Titles */
-  .value-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #023e8a;
-    margin-bottom: 0.5rem;
+
+  .values-section__card-title {
+    font-size: 0.8rem;
   }
-  
-  /* Descriptions */
-  .value-description {
+
+  .values-section__card-description {
     font-size: 1rem;
-    color: #5a5a5a;
-    line-height: 1.5;
   }
-  
-  /* Responsive Adjustments */
-  @media (max-width: 768px) {
-    .values-container {
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
-  
-    .value-card {
-      padding: 1.5rem;
-    }
-  
-    .value-title {
-      font-size: 1.3rem;
-    }
-  
-    .value-description {
-      font-size: 0.9rem;
-    }
+
+  .values-section__icon {
+    font-size: 3rem;
   }
-  
+}
+
+.values-section__image {
+  width: 2rem;
+  height: 2rem;
+}

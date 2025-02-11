@@ -15,14 +15,19 @@
 
 /* Banner */
 .doc-banner {
-  width: 75%;
-  height: 20rem;
-  object-fit: cover;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+
 }
 
 @media (min-width: 768px) {
   .doc-banner {
-    height: 20rem;
+    height: 23rem;
+    object-fit: contain;
+    border-radius: 2px;
+    
+
   }
 }
 
@@ -67,10 +72,8 @@
     gap: 1rem;
     width: 100%;
   }
-  .doc-banner {
-    width: 90%;
-    height: 15rem;
-  }
+ 
+
 }
 
 /* Doctor List Section */
@@ -88,6 +91,7 @@
   display: flex;
   flex-direction: column;
   border-radius: 0.5rem;
+  margin-top: 0.25rem;
 }
 
 /* Pagination */
@@ -131,11 +135,10 @@
 .background-screen {
   display: flex;
   background: url("../../assets/img/svg/client-a.svg") center/cover no-repeat;
-  flex: 1 ;
+  flex: 1;
 
   width: 100%;
   flex-direction: column;
-
 }
 
 .upper-section-container {
@@ -147,22 +150,46 @@
 .upper-section-container-text {
   width: 35%;
   font-size: 2.5rem;
-  font-weight: 800;
+  font-weight: 700;
   color: #00415e;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   text-align: center;
+  margin-top: 50px;
 }
 
+@media (max-width:768px){
+  .upper-section-container-text {
+    width: 35%;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #00415e;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    margin-top: 50px;
+  }
+ 
+}
 .upper-section-container-text-image {
   width: 350px;
   background: url("../../assets/img/bg_pattern.png") center/cover no-repeat;
   height: 350px;
 }
+
+@media (max-width:768px){
+  .upper-section-container-text-image {
+    width: 220px;
+    background: url("../../assets/img/bg_pattern.png") center/cover no-repeat;
+    height: 220px;
+  }
+}
 /* Main container */
 .medicine-doc-container {
+  display: flex;
   border: 2px solid #00415e;
   border-radius: 12px;
-  margin: 30px auto;
+  align-self: center;
+  margin-top: 60px;
+
   padding: 20px;
   background-color: #f8f9fa;
   max-width: 1200px;
@@ -272,7 +299,10 @@
 }
 
 @media (max-width: 768px) {
+
   .medicine-types-container {
+    flex-direction: column;
+    align-items: center;
     gap: 1rem;
   }
 
@@ -286,6 +316,7 @@
   }
 
   .medicine-doc-button {
+    display: none;
     width: 150px;
     height: 45px;
     font-size: 0.9rem;
@@ -294,29 +325,46 @@
 
 @media (max-width: 480px) {
   .medicine-doc-container {
-    margin: 20px;
+    margin-top: 50px;
     padding: 15px;
+    margin: 50px 20px;
+    flex-direction: column;
   }
 
   .medicine-doc-container-upper-text-heading {
-    font-size: 1.5rem;
+    font-size: 1rem;
   }
 
   .medicine-doc-container-upper-text-subHeading {
-    font-size: 0.9rem;
+    font-size: 0.7rem;
   }
 
   .medicine-types-container {
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
   }
 
   .medicine-type-card {
     width: 100%;
-    max-width: 300px;
+    max-width: 150px;
   }
 
   .medicine-icon {
-    font-size: 1.8rem;
+    font-size: 1.2rem;
   }
+  .medicine-type-title{
+    font-size: 0.8rem;
+    text-align: center;
+  }
+}
+
+.medicine-doc-button-heading{
+  color: #ffffff ;
+}
+
+
+.card-body-doc-article{
+  background-color: transparent;
+  padding: 6px;
+
 }

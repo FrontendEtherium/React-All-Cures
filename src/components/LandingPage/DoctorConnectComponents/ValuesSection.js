@@ -1,60 +1,55 @@
 import React from "react";
 import "./ValuesSection.css";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHandsHelping, // Compassion
-  faStar, // Excellence
-  faBalanceScale, // Integrity
-  faHandHoldingHeart, // Respect
-  faUsers, // Teamwork
-} from "@fortawesome/free-solid-svg-icons";
+import Ayurveda from "../../../assets/icon/Ayurveda.png";
+import GlobalTeleConsult from "../../../assets/icon/GlobalTeleconsultation.png";
+import OnlineConsultation from "../../../assets/icon/OnlineConsultation.png";
+import TrustednVerified from "../../../assets/icon/TrustednVerified.png";
 
 const valuesData = [
   {
-    title: "Compassion",
-    description:
-      "We understand that seeking medical care can be a stressful and emotional experience, and we strive to create a welcoming and supportive environment that puts our patients at ease.",
-    icon: faHandsHelping,
+    title: "Global Teleconsultation",
+    description: "We continuously improve to deliver the highest quality care.",
+    icon: GlobalTeleConsult,
   },
   {
-    title: "Excellence",
+    title: "Ayurveda, Unani & More",
     description:
-      "We are committed to providing excellent medical care and services to our patients. We believe in continuously improving our skills, knowledge, and resources to ensure that we deliver the highest quality care possible.",
-    icon: faStar,
+      "We provide a warm, supportive environment to ease the stress of medical care.",
+    icon: Ayurveda,
   },
   {
-    title: "Integrity",
-    description:
-      "We believe in practicing medicine with integrity and honesty. We are transparent in our communication and decision-making processes, always putting our patient’s interests first.",
-    icon: faBalanceScale,
+    title: "Trusted & Verified Practitioners",
+    description: "We treat everyone with respect, dignity, and kindness.",
+    icon: TrustednVerified,
   },
+
   {
-    title: "Respect",
+    title: "Easy Online Doctor Consultation",
     description:
-      "We treat all individuals with respect and dignity, regardless of their background, beliefs, or circumstances. We believe that every person deserves to be treated with compassion and kindness.",
-    icon: faHandHoldingHeart,
-  },
-  {
-    title: "Teamwork",
-    description:
-      "We believe in working collaboratively with our team members and healthcare professionals to provide comprehensive and effective care to our patients.",
-    icon: faUsers,
+      "We practice transparent, honest medicine that always puts patients first.",
+    icon: OnlineConsultation,
   },
 ];
 
 const ValuesSection = () => {
   return (
     <section className="values-section">
-      <h2 className="values-title">Our Values</h2>
-      <div className="values-container">
-        {valuesData.map((value, index) => (
-          <div key={index} className="value-card">
-            <FontAwesomeIcon icon={value.icon} />
-            <h3 className="value-title">{value.title}</h3>
-            <p className="value-description">{value.description}</p>
-          </div>
-        ))}
+      <div className="values-section__container">
+        <h2 className="values-section__title">Our Values</h2>
+        <div className="values-section__grid">
+          {valuesData.map((value, index) => (
+            <div key={index} className="values-section__card">
+              {/* ✅ Fixed: Using img instead of FontAwesomeIcon */}
+              <img
+                src={value.icon}
+                alt={value.title}
+                className="values-section__image"
+              />
+              <div className="values-section__card-title">{value.title}</div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
