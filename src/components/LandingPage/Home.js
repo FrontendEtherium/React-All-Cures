@@ -376,10 +376,12 @@ class Home extends Component {
   };
 
   clickCounter = async () => {
-    console.log("counter Clicked");
-
     try {
-      await axios.post(`${backendHost}/video/consult/counts`);
+      if (userId) {
+        await axios.post(`${backendHost}/video/consult/counts/${userId}`);
+      } else {
+        await axios.post(`${backendHost}/video/consult/counts/0`);
+      }
     } catch (error) {
       console.error(error);
     }
