@@ -14,15 +14,12 @@
   --padding-small: 1rem;
 }
 
-/* ============================
-   Base Styles (Mobile-First)
-   ============================ */
 
 /* Overall Section */
 .values-section {
   /* Keeping overall section padding as originally set.
      You can adjust these values if you want a different mobile feel. */
-  padding: var(--padding-medium) var(--padding-small);
+
 }
 
 /* Container for centering content */
