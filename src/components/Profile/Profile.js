@@ -507,6 +507,7 @@ class Profile extends Component {
   };
 
   showRating = (val) => {
+    console.log("Rating")
     if (document.getElementById("doctor-avg-rating")) {
       for (let i = 0; i < val; i++) {
         document
