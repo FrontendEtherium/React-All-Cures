@@ -11,6 +11,7 @@ import TopDoctor from "./DoctorConnectComponents/TopDoctor";
 // import DoctorCarousel from "./DoctorConnectComponents/DoctorAnimatedCarousel";
 
 import { imgKitImagePath } from "../../image-path";
+import DoctorCarousel from "./DoctorConnectComponents/DoctorAnimatedCarousel";
 function DoctorLandingPage() {
   return (
     <>
