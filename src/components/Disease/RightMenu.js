@@ -1,121 +1,91 @@
 import React, { useEffect, useState } from "react";
 import { Nav } from "react-bootstrap";
 import { slice } from "lodash";
-
 import { withRouter } from "react-router";
 import AllPost from "../BlogPage/Allpost";
 import "./style.css";
 import { Container } from "react-bootstrap";
 import { backendHost } from "../../api-config";
 import Heart from "../../assets/img/heart.png";
-import Image_1 from "../../assets/img/img_1.jpeg";
+import InlineVideoPlayer from "./DiseasePageComponent/Video";
+
 const Side = (props) => {
-  const [isloaded, setisLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
-  const [post, setPost] = useState([]);
-  const [isCompleted, setIsCompleted] = useState(false);
   const [index, setIndex] = useState(5);
-  const [initial, setInitial] = useState(5);
   const initialPosts = slice(items, 0, index);
 
-  function diseasePosts() {
-    // For specific blogs like "/blogs/diabetes"
+  const fetchDiseasePosts = () => {
     fetch(
-      `${backendHost}/isearch/limit/${props.dcName}?offset=0&limit=${initial}&&order=published_date:desc`
+      `${backendHost}/isearch/limit/${props.dcName}?offset=0&limit=${index}&&order=published_date:desc`
     )
       .then((res) => res.json())
       .then((json) => {
-        setInitial(initial + 5);
-        setisLoaded(true);
+        setIsLoaded(true);
         setItems(json);
-
-        // console.log("itemese",json)
+        setIndex(index + 5);
       })
-      .catch((err) => {
-        return;
-      });
-  }
+      .catch(() => {});
+  };
 
   useEffect(() => {
-    // allPosts()
-    diseasePosts();
+    fetchDiseasePosts();
   }, []);
-  // diseasePosts()
-  if (!isloaded) {
+
+  if (!isLoaded) {
     return (
-      <>
-        <Container className="my-5 loading">
-          <div className="h3 pb-3">
-            <u className="text-decoration-none">{props.dcName} Cures</u>
-          </div>
-          <div className="loader">
-            <img src={Heart} alt="All Cures Logo" id="heart" />
-          </div>
-        </Container>
-      </>
-    );
-  } else {
-    var id = props.id;
-    return (
-      <>
-        <Nav
-          className="col-xs-2  d-md-block sidebar"
-          activeKey="/home"
-          onSelect={(selectedKey) => alert(`selected ${selectedKey}`)}
-        >
-          <div className="sidebar-sticky"></div>
-
-          <Nav.Item className="set-width" id="dc-right-menu">
-            <div className="h4 pb-3">
-              <u className="text-decoration-none">{props.dcName} Cures</u>
-            </div>
-
-            <div className="d-flex justify-content-center d-lg-block">
-              <div className="d-flex justify-content-center mb-2">
-                <a href="https://uat.all-cures.com/searchmedicine/medicinetype/1">
-                  <img src={Image_1} style={{ height: "100%", width: "70%" }} />
-                </a>
-              </div>
-            </div>
-
-            {items
-              ? items.map((i, index) =>
-                  i.article_id != id ? (
-                    <AllPost
-                      docID={i.docID}
-                      key={i.article_id.toString()}
-                      id={i.article_id}
-                      title={i.title}
-                      f_title={i.friendly_name}
-                      // w_title = {i.window_title}
-                      type={i.type}
-                      // authorName={i.author_name}
-                      content={decodeURIComponent(i.content)}
-                      // type = {i.type}
-                      published_date={i.published_date}
-                      over_allrating={i.over_allrating}
-                      // country = {i.country_id}
-                      imgLocation={i.content_location}
-                      history={props.history}
-                    />
-                  ) : null
-                )
-              : null}
-
-            <div className="d-grid mt-3 mb-5 text-center">
-              <button
-                onClick={diseasePosts}
-                type="button"
-                className="btn btn-danger"
-              >
-                Load More
-              </button>
-            </div>
-          </Nav.Item>
-        </Nav>
-      </>
+      <Container className="my-5 loading">
+        <div className="h3 pb-3">
+          <u className="text-decoration-none">{props.dcName} Cures</u>
+        </div>
+        <div className="loader">
+          <img src={Heart} alt="All Cures Logo" id="heart" />
+        </div>
+      </Container>
     );
   }
+
+  return (
+    <Nav className="col-xs-2 d-md-block sidebar">
+      {/* Responsive Video Player */}
+      <div style={{ padding: "10px", textAlign: "center", width: "100%" }}>
+        <InlineVideoPlayer />
+      </div>
+
+      <div className="sidebar-sticky"></div>
+      <Nav.Item className="set-width" id="dc-right-menu">
+        <div className="h4 pb-3">
+          <u className="text-decoration-none">{props.dcName} Cures</u>
+        </div>
+
+        {items &&
+          items.map((i) =>
+            i.article_id !== props.id ? (
+              <AllPost
+                key={i.article_id}
+                docID={i.docID}
+                id={i.article_id}
+                title={i.title}
+                f_title={i.friendly_name}
+                type={i.type}
+                content={decodeURIComponent(i.content)}
+                published_date={i.published_date}
+                over_allrating={i.over_allrating}
+                imgLocation={i.content_location}
+                history={props.history}
+              />
+            ) : null
+          )}
+
+        <div className="d-grid mt-3 mb-5 text-center">
+          <button onClick={fetchDiseasePosts} className="btn btn-danger">
+            Load More
+          </button>
+        </div>
+      </Nav.Item>
+    </Nav>
+  );
 };
+
 const SidebarRight = withRouter(Side);
 export default SidebarRight;

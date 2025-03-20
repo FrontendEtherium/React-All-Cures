@@ -14,6 +14,8 @@ import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import { PreviewTab } from "../PreviewTab";
+import "./CarouselArticle.css";
+
 const options = {
   responsiveClass: true,
   nav: true,
@@ -42,7 +44,6 @@ function CarouselArticle({ diseaseConditionId, carouselItems, id }) {
   const [region, setRegion] = useState([]);
   const location = useLocation();
   console.log("carousel article re rendered");
-  
 
   // Fetch regions once when the component mounts
   useEffect(() => {
@@ -86,7 +87,10 @@ function CarouselArticle({ diseaseConditionId, carouselItems, id }) {
   return (
     <>
       <div className="px-2 py-2" style={{ backgroundColor: "#e9ecef" }}>
-        <div className="share-buttons-region ml-2" id="filter">
+        <div
+          className="share-buttons-region custom-share-buttons ml-2"
+          id="filter"
+        >
           <div
             className="d-flex justify-content-end margin-auto"
             id="article-acc-to-regions"
@@ -189,30 +193,33 @@ function CarouselArticle({ diseaseConditionId, carouselItems, id }) {
           </div>
         </div>
 
-        <div>
+        <div className="social-share-buttons">
           <FacebookShareButton
             url={encodeURI(`https://all-cures.com${location.pathname}`)}
-            quote={`All-Cures`}
-            hashtag={`#allCures`}
+            quote="All-Cures"
+            hashtag="#allCures"
             className="socialMediaButton"
           >
-            <FacebookIcon size={36} />
+            <FacebookIcon size={36} round />
           </FacebookShareButton>
+
           <TwitterShareButton
             url={encodeURI(`https://all-cures.com${location.pathname}`)}
-            title={`All-Cures`}
-            hashtag={`#allCures`}
+            title="All-Cures"
+            via="allCures"
+            hashtags={["allCures"]}
             className="socialMediaButton"
           >
-            <TwitterIcon size={36} />
+            <TwitterIcon size={36} round />
           </TwitterShareButton>
+
           <WhatsappShareButton
             url={encodeURI(`https://all-cures.com${location.pathname}`)}
-            title={`*All Cures }`}
+            title="All Cures"
             separator=": "
             className="socialMediaButton"
           >
-            <WhatsappIcon size={36} />
+            <WhatsappIcon size={36} round />
           </WhatsappShareButton>
         </div>
       </div>

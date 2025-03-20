@@ -9,6 +9,7 @@ import ArticleRating from "../../ArticleRating";
 import { backendHost } from "../../../api-config";
 import { userAccess } from "../../UserAccess";
 import { userId } from "../../UserId";
+import { useMediaQuery } from "@mui/material";
 
 const RatingButton = React.memo(
   ({ clicked, onClick, IconActive, IconInactive }) => (
@@ -35,7 +36,6 @@ function Rating({ id }) {
 
   const likeButton = useCallback(async () => {
     setState((prev) => ({ ...prev, likeClicked: true, dislikeClicked: false }));
-
     try {
       await axios.post(`${backendHost}/article/like/${articleId}`);
     } catch (error) {
@@ -45,7 +45,6 @@ function Rating({ id }) {
 
   const dislikeButton = useCallback(async () => {
     setState((prev) => ({ ...prev, likeClicked: false, dislikeClicked: true }));
-
     try {
       await axios.post(`${backendHost}/article/dislike/${articleId}`);
     } catch (error) {
@@ -55,9 +54,7 @@ function Rating({ id }) {
 
   useEffect(() => {
     console.log("rating use effect rendered");
-    
     const getRate = async () => {
-
       try {
         const response = await axios.get(
           `${backendHost}/rating/target/${articleId}/targettype/2?userid=${
@@ -72,20 +69,36 @@ function Rating({ id }) {
         console.error("Error fetching rate:", error);
       }
     };
-
     getRate();
   }, [articleId]);
 
+  // Detect mobile devices (viewport width <=600px)
+  const isMobile = useMediaQuery("(max-width:600px)");
+
   return (
-    <Row className="align-items-center justify-content-between mx-2">
-      <Col md={6}>
-        {userAccess ? (
+    <Row
+      className="align-items-center justify-content-between mx-2"
+      style={
+        isMobile ? { flexDirection: "column", alignItems: "flex-start" } : {}
+      }
+    >
+      <Col xs={12} md={6} className={isMobile ? "mb-3" : ""}>
+        {/* {userAccess ? (
           state.rating.length === 0 ? (
-            <span className="text-muted medium">
+            <span
+              className="text-muted"
+              style={{ fontSize: isMobile ? "0.8rem" : "1rem" }}
+            >
               You have not rated yet. Please rate.
             </span>
           ) : (
-            <p className="small font-weight-bold" style={{ color: "#00415e" }}>
+            <p
+              className="small font-weight-bold"
+              style={{
+                color: "#00415e",
+                fontSize: isMobile ? "0.8rem" : "1rem",
+              }}
+            >
               Your previous rating: {state.rating}{" "}
               <span className="icon-star-1"></span>
               <br />
@@ -93,14 +106,29 @@ function Rating({ id }) {
             </p>
           )
         ) : (
-          <div className="text-muted small">Rate here:</div>
+          <div
+            className="text-muted small"
+            style={{ fontSize: isMobile ? "0.8rem" : "1rem" }}
+          >
+            Rate here:
+          </div>
         )}
         <div id="docRate">
           <ArticleRating article_id={articleId} />
-        </div>
+        </div> */}
       </Col>
-      <Col md={6} className="d-flex align-items-center justify-content-end">
-        <span className="small text-muted">Was this article helpful?</span>
+      <Col
+        xs={12}
+        md={6}
+        className="d-flex align-items-center justify-content-end"
+        style={isMobile ? { justifyContent: "flex-start" } : {}}
+      >
+        <span
+          className="small text-muted"
+          style={{ fontSize: isMobile ? "0.8rem" : "1rem" }}
+        >
+          Was this article helpful?
+        </span>
         <RatingButton
           clicked={state.likeClicked}
           onClick={likeButton}

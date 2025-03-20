@@ -20,8 +20,8 @@ const ArticleDetails = React.memo(
     publishedDate,
     id,
   }) => {
-    console.log("article details poage re rendered");
-    
+    // console.log("article details poage re rendered");
+
     const [state, setState] = useState({
       showSource: false,
       favourite: [],
@@ -40,6 +40,7 @@ const ArticleDetails = React.memo(
           `${backendHost}/rating/target/${articleId}/targettype/2/avg`
         );
         const data = await response.json();
+
         setState((prev) => ({ ...prev, ratingValue: data }));
       } catch (error) {
         console.error("Error fetching rating:", error);
@@ -63,7 +64,7 @@ const ArticleDetails = React.memo(
             {title}
           </h1>
 
-          {state.ratingValue && (
+          {state.ratingValue !== 0 && (
             <div className="average-rating mb-4 ml-3 mt-2" id="avg-rating">
               {[...Array(5)].map((_, index) => (
                 <span key={index} className="fa fa-star opacity-7"></span>

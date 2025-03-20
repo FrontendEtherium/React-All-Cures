@@ -1,5 +1,6 @@
 import React from "react";
 import parse from "html-react-parser";
+import InlineVideoPlayer from "./DiseasePageComponent/Video";
 
 const CenterWell = ({
   pageTitle,
@@ -102,6 +103,7 @@ const CenterWell = ({
                       frameborder="0"
                     ></iframe>
                   </div>
+
                   <div className="text-center">
                     <i>{caption}</i>
                   </div>

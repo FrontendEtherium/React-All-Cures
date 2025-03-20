@@ -1,0 +1,20 @@
+@media (max-width: 768px) {
+    /* Adjust the overall container */
+    .custom-share-buttons {
+      font-size: 10px; /* Overall smaller text */
+      padding: 4px;
+    }
+  
+    /* If you want to adjust the button styles, you can either remove inline styles
+       and move them to CSS or override them here using !important if needed */
+    .custom-share-buttons .btn {
+      font-size: 10px !important;
+      padding: 4px 8px !important;
+    }
+  
+    /* Optionally adjust icons if needed */
+    .custom-share-buttons i {
+      font-size: 12px !important;
+    }
+  }
+  

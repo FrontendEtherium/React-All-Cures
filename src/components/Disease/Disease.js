@@ -19,8 +19,10 @@ import Breadcrumbs from "./DiseasePageComponent/Breadcrumbs";
 import Rating from "./DiseasePageComponent/Rating.js";
 import ArticleComments from "./DiseasePageComponent/ArticleComments.js";
 import DiseaseModal from "./DiseasePageComponent/DiseaseModal.js";
+import { userId } from "../UserId.js";
+import VideoPopover from "./DiseasePageComponent/VideoPopover.js";
+import InlineVideoPlayer from "./DiseasePageComponent/Video.js";
 const Disease = () => {
-  
   const [state, setState] = useState({
     items: [],
     carouselItems: [],
@@ -48,6 +50,7 @@ const Disease = () => {
   // console.log("component rendered");
   // const MarkdownPreview = lazy(() => import("./MarkdownPreview.js"));
   const { id } = useParams();
+  const location = useLocation();
   const history = useHistory();
   const containerRef = useRef(null);
   const [parsedContent, setParsedContent] = useState();
@@ -59,12 +62,47 @@ const Disease = () => {
         adSpacRef.current.scrollIntoView({ behavior: "smooth" });
       }
     }, 500);
+    const isMobileView = window.innerWidth <= 768;
+    window.scrollTo({
+      top: isMobileView ? 650 : 0,
+      behavior: "smooth",
+    });
+
+    const canonicalLink = document.createElement("link");
+    canonicalLink.rel = "canonical";
+
+    const currentURL = window.location.href.toLowerCase();
+    const canonicalURL = currentURL.replace(/(https?:\/\/)?www\./, "$1");
+
+    if (canonicalURL.match(/\/cure\/\d+/)) {
+      const articleId = id.split("-")[0];
+      fetch(`${backendHost}/article/${articleId}`, {
+        method: "GET",
+        headers,
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          const title = json.title;
+          canonicalLink.href = `${
+            window.location.origin
+          }/cure/${articleId}-${title.replace(/\s+/g, "-")}`;
+          document.head.appendChild(canonicalLink);
+        })
+        .catch(() => {
+          canonicalLink.href = canonicalURL;
+          document.head.appendChild(canonicalLink);
+        });
+    } else {
+      canonicalLink.href = canonicalURL;
+      document.head.appendChild(canonicalLink);
+    }
   }, [id]);
 
   const handleClick = (ad) => {
     // console.log('Image clicked!',ad);
     axios.put(`${backendHost}/sponsored/ads/clicks/${ad}`);
   };
+
   const fetchBlog = async () => {
     const articleId = id.split("-")[0];
 
@@ -163,6 +201,24 @@ const Disease = () => {
       setState((prev) => ({ ...prev, ads: newResponse }));
     } catch (error) {
       setState((prev) => ({ ...prev, error: error.message }));
+    }
+  };
+  useEffect(() => {
+    pageLoading();
+  }, []);
+
+  const pageLoading = async () => {
+    const articleId = id.split("-")[0];
+    if (location.search.includes("whatsapp")) {
+      await axios.post(
+        `${backendHost}/article/${articleId}/${
+          userId ? userId : 0
+        }/jsession/whatsapp`
+      );
+    } else {
+      await axios.post(
+        `${backendHost}/article/${articleId}/${userId ? userId : 0}/jsession/NA`
+      );
     }
   };
 
@@ -301,6 +357,7 @@ const Disease = () => {
               carouselItems={state.carouselItems}
               id={id}
             />
+
             <Rating id={id} />
             <ArticleDetails
               title={state.items.title}
@@ -341,14 +398,13 @@ const Disease = () => {
       </Row>
       <DiseaseModal />
       <SubscriberBtn />
+      <div id="video-popover">
+        <VideoPopover />
+      </div>
 
       <Footer />
     </div>
   );
 };
 
-// Disease.whyDidYouRender = {
-//   logOnDifferentValues: true,
-//   customName: "Article",
-// };
 export default Disease;

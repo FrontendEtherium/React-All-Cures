@@ -1,0 +1,13 @@
+@media (max-width: 768px) {
+  .custom-breadcrumb .breadcrumb-item,
+  .custom-breadcrumb .breadcrumb-item a {
+    font-size: 12px; /* Adjust the font size as needed */
+  }
+}
+
+@media (max-width: 768px) {
+  body ol.breadcrumb.custom-breadcrumb {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
