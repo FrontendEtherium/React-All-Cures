@@ -7,8 +7,6 @@ import { Link } from "react-router-dom";
 import A from "./Health A To Z/A";
 
 function Disease() {
-    console.log("d");
-    
   return (
     <div>
       <Header />
