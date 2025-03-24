@@ -57,8 +57,11 @@ const Disease = () => {
   const [diseaseConditionId, setDiseaseConditionId] = useState();
   const [videoURL, setVideoURL] = useState();
   useEffect(() => {
-    fetchBlog();
-    fetchVideoURL();
+    const loadData = async () => {
+      await fetchBlog();
+      await fetchVideoURL();
+    };
+    loadData();
 
     setTimeout(() => {
       if (adSpacRef.current) {
@@ -371,7 +374,6 @@ const Disease = () => {
               id={id}
             />
 
-        
             <ArticleDetails
               title={state.items.title}
               parsedContent={parsedContent}
@@ -384,7 +386,7 @@ const Disease = () => {
               publishedDate={state.items.published_date}
               id={id}
             />
-                <Rating id={id} />
+            <Rating id={id} />
           </div>
           <div className="ml-3 mt-3">
             <button className="btn  btn-primary" onClick={handleSource}>
