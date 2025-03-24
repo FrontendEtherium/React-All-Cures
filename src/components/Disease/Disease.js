@@ -371,7 +371,7 @@ const Disease = () => {
               id={id}
             />
 
-            <Rating id={id} />
+        
             <ArticleDetails
               title={state.items.title}
               parsedContent={parsedContent}
@@ -384,6 +384,7 @@ const Disease = () => {
               publishedDate={state.items.published_date}
               id={id}
             />
+                <Rating id={id} />
           </div>
           <div className="ml-3 mt-3">
             <button className="btn  btn-primary" onClick={handleSource}>
