@@ -18,12 +18,11 @@ const CustomBreadcrumbs = ({
     <Breadcrumbs
       aria-label="breadcrumb"
       sx={{
-        mb: isPhone ? 0 : 0,               // Adjust bottom margin for phone vs desktop
-        p: isPhone ? "8px" : "16px",        // Proper padding for phone vs desktop
+        mb: isPhone ? 0 : 0, // Adjust bottom margin for phone vs desktop
+        p: isPhone ? "8px" : "16px", // Proper padding for phone vs desktop
         fontSize: isPhone ? "0.8rem" : "1rem", // Responsive font size
-        backgroundColor: "#f0f0f0",         // Updated background color
-        borderRadius: "4px",               // Optional: add border radius for smoother edges
-
+        backgroundColor: "#f0f0f0", // Updated background color
+        borderRadius: "4px", // Optional: add border radius for smoother edges
       }}
     >
       <Link

@@ -7,7 +7,7 @@ import FullscreenIcon from "@mui/icons-material/Fullscreen";
 import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
 import { useTheme, useMediaQuery } from "@mui/material";
 import "./Video.css";
-const InlineVideoPlayer = () => {
+const InlineVideoPlayer = ({ videoURL }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [containerWidth, setContainerWidth] = useState(300);
@@ -99,7 +99,7 @@ const InlineVideoPlayer = () => {
       {/* Video Wrapper */}
       <div style={{ width: "100%", height: "100%", overflow: "hidden" }}>
         <ReactPlayer
-          url={localVideo}
+          url={videoURL}
           playing
           loop
           controls
@@ -148,8 +148,8 @@ const InlineVideoPlayer = () => {
             className="buttonVideo"
             onClick={() => alert("Redirecting to consultation page...")}
           >
-            <span class="buttonVideo-content"> 
-            {/* <Link to={`/doctor/${regDocPatId}`}>Consult Now</Link> */}
+            <span class="buttonVideo-content">
+              {/* <Link to={`/doctor/${regDocPatId}`}>Consult Now</Link> */}
             </span>
           </button>
         </div>

@@ -49,7 +49,7 @@ const Side = (props) => {
     <Nav className="col-xs-2 d-md-block sidebar">
       {/* Responsive Video Player */}
       <div style={{ padding: "10px", textAlign: "center", width: "100%" }}>
-        <InlineVideoPlayer />
+        {props.videoURL && <InlineVideoPlayer videoURL={props.videoURL} />}
       </div>
 
       <div className="sidebar-sticky"></div>

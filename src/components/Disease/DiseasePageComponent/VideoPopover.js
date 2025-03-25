@@ -7,7 +7,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
 import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
 
-const VideoPopover = () => {
+const VideoPopover = ({ videoURL }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
 
@@ -75,7 +75,7 @@ const VideoPopover = () => {
       </div>
       <div style={{ width: "100%", height: "100%", overflow: "hidden" }}>
         <ReactPlayer
-          url={"https://www.youtube.com/shorts/yZZb0NL8eQs"}
+          url={videoURL}
           playing
           loop
           controls

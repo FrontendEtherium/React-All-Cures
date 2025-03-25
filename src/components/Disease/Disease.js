@@ -55,8 +55,11 @@ const Disease = () => {
   const containerRef = useRef(null);
   const [parsedContent, setParsedContent] = useState();
   const [diseaseConditionId, setDiseaseConditionId] = useState();
+  const [videoURL, setVideoURL] = useState();
   useEffect(() => {
     fetchBlog();
+    fetchVideoURL();
+
     setTimeout(() => {
       if (adSpacRef.current) {
         adSpacRef.current.scrollIntoView({ behavior: "smooth" });
@@ -97,6 +100,16 @@ const Disease = () => {
       document.head.appendChild(canonicalLink);
     }
   }, [id]);
+  const fetchVideoURL = async () => {
+    try {
+      const { data } = await axios.get(
+        `${backendHost}/doctors/${state.items.reg_doc_pat_id}/url`
+      );
+      setVideoURL(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleClick = (ad) => {
     // console.log('Image clicked!',ad);
@@ -393,13 +406,14 @@ const Disease = () => {
             history={history}
             dcName={state.items.dc_name}
             id={state.items.article_id}
+            videoURL={videoURL}
           />
         </Col>
       </Row>
       <DiseaseModal />
       <SubscriberBtn />
       <div id="video-popover">
-        <VideoPopover />
+        {videoURL && <VideoPopover videoURL={videoURL} />}
       </div>
 
       <Footer />
