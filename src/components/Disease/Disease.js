@@ -315,6 +315,7 @@ const Disease = () => {
             .replace("json", "png")
             .split("/webapps/")[1]
         }
+        publishedDate={state.items.published_date}
       />
       <div className="ad-spac" ref={adSpacRef}>
         <button
