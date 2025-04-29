@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import DocBelow from "../../../assets/img/docSearchBelow.png";
+// src/components/DoctorConnect/DoctorConnectComponents/DoctorConnectSearch.js
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonIcon from "@mui/icons-material/Person";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faLeaf,
   faFlask,
@@ -14,34 +14,35 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./DoctorConnectSearch.css";
 
-const fields = [
-  { value: 1, title: "Ayurveda", icon: faLeaf },
-  { value: 8, title: "Homeopathy", icon: faFlask },
-  { value: 3, title: "Persian", icon: faMortarPestle },
-  { value: 9, title: "Naturopathy", icon: faSpa },
-  { value: 2, title: "Unani", icon: faCapsules },
-  { value: 4, title: "Chinese", icon: faYinYang },
+const SPECIALITIES = [
+  { slug: "ayurveda",    title: "Ayurveda",    icon: faLeaf },
+  { slug: "homeopathy",  title: "Homeopathy",  icon: faFlask },
+  { slug: "persian",     title: "Persian",     icon: faMortarPestle },
+  { slug: "naturopathy", title: "Naturopathy", icon: faSpa },
+  { slug: "unani",       title: "Unani",       icon: faCapsules },
+  { slug: "chinese",     title: "Chinese",     icon: faYinYang },
 ];
 
-function DoctorConnectSearch({ changeSpeciality, speciality }) {
-  const [searchName, setSearchName] = useState("");
-  const [searchCity, setSearchCity] = useState("");
-  const [selectedSpeciality, setSelectedSpeciality] = useState(
-    speciality || ""
-  );
+function DoctorConnectSearch({ speciality, changeSpeciality }) {
+  const history = useHistory();
+  const [searchName, setSearchName]     = useState("");
+  const [searchCity, setSearchCity]     = useState("");
+  const [selectedSpec, setSelectedSpec] = useState(speciality || "");
 
-  // Handle search by name
-  const handleSearchByName = () => {
-    window.location.href = `/searchName/${searchName}`;
+  // sync if parent resets
+  useEffect(() => {
+    setSelectedSpec(speciality || "");
+  }, [speciality]);
+
+  // handlers
+  const goToNameSearch = () => {
+    const q = searchName.trim();
+    if (q.length >= 3) history.push(`/searchName/${encodeURIComponent(q)}`);
   };
 
-  // Handle search by city
-  const handleSearchByCity = () => {
-    window.location.href = `/search/${searchCity}`;
-  };
-
-  const handleSearchBySpeciality = () => {
-    window.location.href = `/searchSpeciality/${selectedSpeciality}`;
+  const goToCitySearch = () => {
+    const c = searchCity.trim();
+    if (c.length >= 3) history.push(`/searchCity/${encodeURIComponent(c)}`);
   };
 
   return (
@@ -51,9 +52,7 @@ function DoctorConnectSearch({ changeSpeciality, speciality }) {
         <div>
           <label className="search-input-label">Search Doctor By Name</label>
           <div className="input-wrapper">
-            <div className="input-icon">
-              <PersonIcon />
-            </div>
+            <PersonIcon className="input-icon" />
             <input
               type="text"
               placeholder="Enter doctor's name"
@@ -62,10 +61,10 @@ function DoctorConnectSearch({ changeSpeciality, speciality }) {
               className="input-field"
             />
             <button
-              onClick={handleSearchByName}
-              disabled={searchName.length < 3}
+              onClick={goToNameSearch}
+              disabled={searchName.trim().length < 3}
               className={`input-button ${
-                searchName.length >= 3
+                searchName.trim().length >= 3
                   ? "input-button--enabled"
                   : "input-button--disabled"
               }`}
@@ -79,9 +78,7 @@ function DoctorConnectSearch({ changeSpeciality, speciality }) {
         <div>
           <label className="search-input-label">Search Doctor By City</label>
           <div className="input-wrapper">
-            <div className="input-icon">
-              <LocationOnIcon />
-            </div>
+            <LocationOnIcon className="input-icon" />
             <input
               type="text"
               placeholder="Enter city name"
@@ -90,10 +87,10 @@ function DoctorConnectSearch({ changeSpeciality, speciality }) {
               className="input-field"
             />
             <button
-              onClick={handleSearchByCity}
-              disabled={searchCity.length < 3}
+              onClick={goToCitySearch}
+              disabled={searchCity.trim().length < 3}
               className={`input-button ${
-                searchCity.length >= 3
+                searchCity.trim().length >= 3
                   ? "input-button--enabled"
                   : "input-button--disabled"
               }`}
@@ -103,7 +100,7 @@ function DoctorConnectSearch({ changeSpeciality, speciality }) {
           </div>
         </div>
 
-        {/* Search by Speciality */}
+        {/* Filter by Speciality */}
         <div>
           <label className="search-input-label">
             Filter Doctor by Speciality
@@ -111,30 +108,21 @@ function DoctorConnectSearch({ changeSpeciality, speciality }) {
           <div className="input-wrapper">
             <select
               className="input-field"
-              value={selectedSpeciality}
-              onChange={(e) => (
-                changeSpeciality(e.target.value),
-                setSelectedSpeciality(e.target.value)
-              )}
+              value={selectedSpec}
+              onChange={(e) => {
+                const slug = e.target.value;
+                setSelectedSpec(slug);
+                // update URL & trigger fetch in parent
+                changeSpeciality(slug);
+              }}
             >
-              <option value="">Select a speciality</option>
-              {fields.map((field) => (
-                <option key={field.title} value={field.value}>
-                  {field.title}
+              <option value="">All Specialities</option>
+              {SPECIALITIES.map((spec) => (
+                <option key={spec.slug} value={spec.slug}>
+                  {spec.title}
                 </option>
               ))}
             </select>
-            <button
-              onClick={handleSearchBySpeciality}
-              disabled={!selectedSpeciality}
-              className={`input-button ${
-                selectedSpeciality
-                  ? "input-button--enabled"
-                  : "input-button--disabled"
-              }`}
-            >
-              <SearchIcon />
-            </button>
           </div>
         </div>
       </div>

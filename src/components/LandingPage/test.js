@@ -20,15 +20,11 @@ import "./test.css";
 import ErrorBoundary from "../ErrorBoundary";
 
 const Test = (props) => {
-  // Sign in form's states
-
   const [click, setClick] = useState(true);
   const [email, setEmail] = useState("");
   const [rememberMe, setRememberMe] = useState("off");
   const [signInpassword, setPass] = useState("");
   const [buttonClick, setClicked] = useState("");
-
-  // Sign up form's states
 
   const [firstName, setFname] = useState("");
   const [lastName, setLname] = useState("");
@@ -36,7 +32,6 @@ const Test = (props) => {
     firstPassword: "",
     secondPassword: "",
   });
-  const [terms, setTerms] = useState("");
   const [userType, setUserType] = useState("other");
   const [buttonSignUpClick, setSignUpClicked] = useState("");
   const [number, setMname] = useState("");
@@ -83,9 +78,9 @@ const Test = (props) => {
         .then((response) => {
           if (response.data === "Email Address already Exists in the System") {
             // setExists(true);
-            setTimeout(() => {
-              setSignUpClicked(3);
-            }, 5000);
+            // setTimeout(() => {
+            //   setSignUpClicked(3);
+            // }, 5000);
             document.getElementById("signup-msg").innerText =
               "Email already exists!";
           }
@@ -149,6 +144,8 @@ const Test = (props) => {
       )
       .then((response) => {
         if (response.data.registration_id) {
+          console.log("response login", response.data);
+
           Cookies.set("uName", response.data.first_name, { expires: 365 });
           localStorage.setItem("doctorid", response.data.docID);
           localStorage.setItem("token", response.data.value);
@@ -198,14 +195,7 @@ const Test = (props) => {
                   <form className="sign" onSubmit={SignUpForm}>
                     <div className="h2 py-0 my-1">Create Account</div>
                     <span>or use your email for registration</span>
-                    {/* <GoogleLogin
-        clientId="529398297055-37e0rfns77ig0nih2moffq1pdp533329.apps.googleusercontent.com"
-        buttonText="Register"
-        onSuccess={responseGoogle}
-        onFailure={responseGoogle}
-        cookiePolicy={'single_host_origin'}
-        className="text-dark"
-      /> */}
+
                     {parseInt(buttonSignUpClick) === 1 ? (
                       <div
                         id="signup-msg"

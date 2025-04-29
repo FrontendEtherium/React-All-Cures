@@ -262,11 +262,23 @@ button.active {
 .doctor-patient-banner-btn:hover {
   opacity: 0.7;
 }
-
+.landing-page__title {
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.4;
+  color: #000;
+  margin-bottom: 1rem;
+}
+@media (min-width: 768px) {
+  .trending-cures__title {
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
+}
 @media (max-width: 768px) {
   .doctor-patient-banner-btn {
     padding: 5px;
-    font-size: 8px ;
+    font-size: 8px;
     bottom: 20px;
   }
 }

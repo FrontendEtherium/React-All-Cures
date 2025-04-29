@@ -1852,10 +1852,10 @@ button:active {
 button:focus {
   outline: none;
 }
-button.ghost {
+/* button.ghost {
   background-color: transparent;
   border-color: #ffffff;
-}
+} */
 input {
   background-color: #eee;
   border: none;
@@ -1945,8 +1945,8 @@ input {
   transform: translateX(-100%);
 }
 .overlay {
-  background: #ff416c;
-  background: linear-gradient(to right, #ff4b2b, #ff416c);
+  /* background: #ff416c;
+  background: linear-gradient(to right, #ff4b2b, #ff416c); */
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0 0;
@@ -2902,7 +2902,7 @@ font-weight: 600;
 }
 .MuiAutocomplete-hasPopupIcon.css-16awh2u-MuiAutocomplete-root .MuiOutlinedInput-root, .MuiAutocomplete-hasClearIcon.css-16awh2u-MuiAutocomplete-root .MuiOutlinedInput-root{margin-bottom:7px;}
 .css-wb57ya-MuiFormControl-root-MuiTextField-root{
-  height:56px;
+ 
 }
 .articlesub{
   width:800px;

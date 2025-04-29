@@ -1,0 +1,115 @@
+.our-expert__title {
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.4;
+  color: #000;
+  margin-bottom: 1rem;
+}
+
+.our-expert_card {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+}
+.our-expert_card_container {
+  background-color: #f3f3f3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.our-expert_image {
+  height: 90px;
+  width: 96px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.our-expert_heading {
+  font-size: 0.575rem;
+  color: #00415e;
+  margin-top: 5px;
+  text-align: center;
+  font-weight: 600;
+}
+.our-expert_sub_heading {
+  color: #000;
+  font-size: 0.5rem;
+  font-weight: 600;
+  text-align: center;
+}
+.our-expert__button {
+  font-size: 0.5rem;
+  background-color: #00415e;
+  padding: 8px;
+  border-radius: 6px;
+  color: #fff;
+}
+@media (min-width: 768px) {
+  .our-expert_card {
+    gap: 15px;
+  }
+  .our-expert_card_container {
+    padding: 15px;
+  }
+  .our-expert__title {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+  .our-expert_image {
+    border-radius: 8px;
+    text-align: center;
+  }
+  .our-expert_heading {
+    font-size: 0.9rem;
+    color: #00415e;
+    margin-top: 5px;
+    text-align: center;
+    font-weight: 600;
+  }
+  .our-expert_sub_heading {
+    font-size: 0.8rem;
+    margin-top: 6px;
+  }
+  .our-expert__button {
+    font-size: 0.6rem;
+    margin-top: 10px;
+    color: white;
+  }
+}
+.our-expert_card_container {
+  padding: 10px; /* Add padding to avoid cards touching */
+  text-align: center;
+}
+
+.our-expert_image {
+  width: 100%;
+  height: 230px;
+  object-fit: fill; /* Ensure images scale nicely */
+}
+
+.slick-slide {
+  padding: 0px; /* Space between slides */
+}
+
+.slick-dots {
+  margin-top: 20px; /* Space for navigation dots */
+}
+.slick-prev {
+  left: -3% !important;
+  z-index: 1;
+  color: #00415e !important;
+}
+.slick-next {
+  right: -3% !important;
+  z-index: 1;
+  color: #00415e !important;
+}
+.slick-prev:before {
+  color: #00415e !important;
+}
+.slick-next:before {
+  color: #00415e !important;
+}

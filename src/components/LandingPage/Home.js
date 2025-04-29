@@ -16,7 +16,6 @@ import Carousel2 from "./Carousel2";
 import ArticlePreview from "./ArticlePreview";
 import TrendingArticles from "./TrendingArticles";
 import FeaturedArticles from "./FeaturedArticles";
-import Test from "./test";
 
 import { imgKitImagePath } from "../../image-path";
 import { backendHost } from "../../api-config";
@@ -31,7 +30,16 @@ import "../../assets/healthcare/icomoon/style.css";
 import "./custom.css";
 import "./Home.css";
 import "react-phone-number-input/style.css";
+import SubscriberComponent from "./HomeComponents/SubscriberComponent";
+import ExpertAdviceComponent from "./HomeComponents/ExpertAdviceComponent";
+import TrendingSearches from "./HomeComponents/TrendingSearches";
 
+import TrustPartnerSection from "./HomeComponents/TrustPartnerSection";
+import FeaturedBlogs from "./HomeComponents/FeaturedBlogs";
+import TrendingCures from "./HomeComponents/TrendingCures";
+import OurExpert from "./HomeComponents/OurExpert";
+import UpdatedHeader from "../Header/Header";
+import DoctorCures from "./HomeComponents/DoctorCures";
 function Home(props) {
   // State declarations
   const [carouselImages] = useState([
@@ -292,9 +300,7 @@ function Home(props) {
       })
       .catch(() => {});
 
-    // Call fetchData on mount
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -322,278 +328,8 @@ function Home(props) {
           <div className="timer"></div>
         </div>
       )}
-      <div className="profilePage">
-        <div className="">
-          <section className=" zIndex-2">
-            <div className="webAlign">
-              <div className="row d-flex">
-                <div className="header" style={{ width: "100%" }}>
-                  <div className=" logo mt-1">
-                    <Link to="/">
-                      <img
-                        src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/heart.png`}
-                        alt="All Cures Logo"
-                      />
-                      <span>All Cures</span>
-                    </Link>
-                  </div>
 
-                  <div className="fgrow">
-                    <nav className="navbar navbar-expand-lg navbar-light bg-light newHeader">
-                      <button
-                        className="navbar-toggler"
-                        type="button"
-                        data-toggle="collapse"
-                        data-target="#navbarNavDropdown"
-                        aria-controls="navbarNavDropdown"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
-                      >
-                        <span className="navbar-toggler-icon"></span>
-                      </button>
-                      <div
-                        className="collapse navbar-collapse"
-                        id="navbarNavDropdown"
-                      >
-                        <ul className="navbar-nav">
-                          <li className="nav-item">
-                            <a className="nav-link" href="/">
-                              Home
-                            </a>
-                          </li>
-                          <li className="nav-item dropdown">
-                            <a
-                              className="nav-link dropdown-toggle"
-                              href="#"
-                              id="categoriesDropdown"
-                              role="button"
-                              data-bs-toggle="dropdown"
-                              aria-haspopup="true"
-                              aria-expanded="false"
-                            >
-                              Categories
-                            </a>
-                            <div
-                              className="dropdown-menu"
-                              aria-labelledby="categoriesDropdown"
-                            >
-                              <a
-                                className="dropdown-item"
-                                href="/searchcategory/disease/1"
-                              >
-                                Arthritis
-                              </a>
-                              <a
-                                className="dropdown-item"
-                                href="/searchcategory/disease/74"
-                              >
-                                Diabetes
-                              </a>
-                              <a
-                                className="dropdown-item"
-                                href="/searchcategory/disease/50"
-                              >
-                                Hypertension
-                              </a>
-                              <div className="dropdown-divider"></div>
-                              <a className="dropdown-item" href="/allcategory">
-                                View More
-                              </a>
-                            </div>
-                          </li>
-                          <li className="nav-item dropdown ">
-                            <a
-                              className="nav-link dropdown-toggle"
-                              href="#trends"
-                              id="trendingCuresDropdown"
-                              role="button"
-                              data-bs-toggle="dropdown"
-                              aria-haspopup="true"
-                              aria-expanded="false"
-                            >
-                              Trending Cures
-                            </a>
-                            <div
-                              className="dropdown-menu"
-                              aria-labelledby="trendingCuresDropdown"
-                            >
-                              <a
-                                className="dropdown-item"
-                                href="/searchmedicine/medicinetype/1"
-                              >
-                                Ayurveda
-                              </a>
-                              <a
-                                className="dropdown-item"
-                                href="/searchmedicine/medicinetype/4"
-                              >
-                                Chinese Medicine
-                              </a>
-                              <a
-                                className="dropdown-item"
-                                href="/searchmedicine/medicinetype/12"
-                                onMouseEnter={handleUnaniMouseEnter}
-                                onMouseLeave={handleUnaniMouseLeave}
-                              >
-                                Arabic
-                                <li
-                                  className="nav-item dropdown newDropdown"
-                                  onMouseEnter={handleUnaniMouseEnter}
-                                  onMouseLeave={handleUnaniMouseLeave}
-                                >
-                                  <a
-                                    className="nav-link dropdown-toggle"
-                                    href="#"
-                                    id="unaniDropdownToggle"
-                                    role="button"
-                                    data-bs-toggle="dropdown"
-                                  >
-                                    <span
-                                      style={{
-                                        fontSize: "1rem",
-                                        color: "#212529",
-                                      }}
-                                    >
-                                      <ArrowDropDownIcon />
-                                    </span>
-                                  </a>
-                                  {isUnaniDropdownOpen && (
-                                    <ul
-                                      className="dropdown-menu newDropdown-menu"
-                                      aria-labelledby="unaniDropdownToggle"
-                                    >
-                                      <li>
-                                        <a
-                                          className="dropdown-item"
-                                          href="/searchmedicine/medicinetype/2"
-                                        >
-                                          Unani
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <a
-                                          className="dropdown-item"
-                                          href="/searchmedicine/medicinetype/3"
-                                        >
-                                          Persian
-                                        </a>
-                                      </li>
-                                    </ul>
-                                  )}
-                                </li>
-                              </a>
-                              <a
-                                className="dropdown-item"
-                                href="/searchmedicine/medicinetype/6"
-                              >
-                                Japanese
-                              </a>
-                              <a
-                                className="dropdown-item"
-                                href="/searchmedicine/medicinetype/5"
-                              >
-                                Scandinavian
-                              </a>
-                            </div>
-                          </li>
-                          <li className="nav-item">
-                            <a className="nav-link" href="/AboutUs">
-                              About Us
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </nav>
-                  </div>
-                  <form
-                    onSubmit={articleSearch}
-                    className="searchHeader"
-                    id="searchArticle"
-                  >
-                    <div className="col-md-12 row">
-                      <div className="col-md-10 p-0">
-                        <Autocomplete
-                          className="bg-white color-black"
-                          freeSolo
-                          value={article}
-                          onChange={(event, newValue) => {
-                            setArticle(newValue);
-                          }}
-                          inputValue={article || ""}
-                          onInputChange={(event, newInputValue) => {
-                            setArticle(newInputValue);
-                          }}
-                          id="combo-box-demo"
-                          options={
-                            article && article.length >= 1 ? diseaseTitle : []
-                          }
-                          sx={{ width: 170 }}
-                          renderInput={(params) => (
-                            <TextField {...params} label="Search Cures" />
-                          )}
-                        />
-                      </div>
-                      <div className="col-md-2 p-0 mainBtn">
-                        <button
-                          className="btn search-main-btns color-white"
-                          id="searchHead"
-                          type="submit"
-                        >
-                          <i
-                            className="fas header-search fa-search"
-                            id="iconSearch"
-                          ></i>
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-
-                  <div className="loginSign d-flex">
-                    {userAccess ? (
-                      <Link
-                        className="btn mr-2 primary-btn-color loginSignbtn color-blue-dark"
-                        id="Article"
-                        to="/article"
-                      >
-                        <img
-                          src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/edit_black_48dp.svg`}
-                          alt="create cures"
-                          className="filter-white"
-                          height="30px"
-                        />
-                      </Link>
-                    ) : (
-                      <button
-                        className="btn mr-2 primary-btn-color loginSignbtn color-blue-dark"
-                        id="Article"
-                        onClick={() => setModalShow(true)}
-                      >
-                        <img
-                          src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/edit_black_48dp.svg`}
-                          alt="create cures"
-                          className="filter-white"
-                          height="30px"
-                        />
-                      </button>
-                    )}
-                    <ToggleButton
-                      userName={Cookies.get("uName")}
-                      setModalShow={setModalShow}
-                      userAccess={userAccess}
-                      logout={logout}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <Test
-              show={modalShow}
-              path={path}
-              onHide={() => setModalShow(false)}
-            />
-          </section>
-        </div>
-      </div>
+      <UpdatedHeader />
       <div className="doctor-patient-banner-container">
         <Carousel interval={4000} pause={false} indicators={true}>
           {carouselImages.map((img, index) => (
@@ -618,7 +354,7 @@ function Home(props) {
                   <button
                     className="doctor-patient-banner-btn"
                     onClick={() => {
-                      window.location.href = "/landing-doctor";
+                      window.location.href = "/doctor";
                       clickCounter();
                     }}
                   >
@@ -631,50 +367,6 @@ function Home(props) {
         </Carousel>
       </div>
 
-      <DoctorSearch />
-      <section className="tabslider clerfix">
-        <div className="container">
-          <div className="row">
-            <div className="tab-nav">
-              <div
-                className="comman-heading"
-                itemscope
-                itemtype="http://all-cures.com/Product"
-              >
-                <h1 style={{ display: "none" }}>
-                  All Cures is a product developed, managed and owned by
-                  Etherium Technologies. Our mission is to make it simple and
-                  convenient for users to get information on Cures from anywhere
-                  in the world. Our belief is that your wellness is your
-                  well-being. We are passionate about giving our users the
-                  unique experience that is both fulfilling and wholesome.
-                </h1>
-                <h2 style={{ display: "none" }}>
-                  Ayurveda, Homeopathy, Chinese Medicine, Persian, Unani
-                </h2>
-                <div className="h4 mt-4" itemprop="Category">
-                  Choose by Diseases
-                </div>
-              </div>
-            </div>
-            <Carousel1 city={searchParams.city} />
-          </div>
-        </div>
-      </section>
-
-      <section className="mb-5 mt-2">
-        <div className="container">
-          <div className="row">
-            <div className="comman-heading">
-              <div className="h4">Featured Cures</div>
-            </div>
-          </div>
-          <div className="row">
-            <FeaturedArticles />
-          </div>
-        </div>
-      </section>
-
       {ads && ads !== "https://all-cures.com:444All Ads are Served" && (
         <div className="container d-flex justify-content-center">
           <img
@@ -686,213 +378,17 @@ function Home(props) {
           />
         </div>
       )}
+      <TrendingSearches />
+      <FeaturedBlogs />
+      <TrendingCures />
+      <DoctorCures />
 
-      <section className="mb-5 mt-2">
-        <div className="container" id="trends">
-          <div className="row">
-            <div className="comman-heading">
-              <div className="h4">Trending Cures</div>
-            </div>
-          </div>
-          <div className="row">
-            <TrendingArticles />
-          </div>
-        </div>
-      </section>
-
-      <section className="trending-section">
-        <ArticlePreview articleFilter={articleFilter} />
-      </section>
-
-      <section className="specialists mt-3">
-        <div className="container">
-          <div className="row">
-            <div className="comman-heading">
-              <div className="h4 mt-4">Choose by Doctors</div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="nav-btn prev-slide"></div>
-            <div className="nav-btn next-slide"></div>
-            <Carousel2 />
-          </div>
-        </div>
-      </section>
-
-      <div>
-        <button
-          id="mobile-subscribe-fixed-btn"
-          className="btn newsletter-icon rounded subscribe-btn newsletter_float"
-          data-toggle="modal"
-          data-target=".bd-example-modal-lg"
-          onClick={floaterShow}
-        >
-          Subscribe
-        </button>
-        <Link to="/feedback">
-          <button
-            id="mobile-feedback-fixed-btn"
-            className="btn newsletter-icon rounded subscribe-btn newsletter_float"
-          >
-            Feedback
-          </button>
-        </Link>
-      </div>
-      <div
-        className="modal fade bd-example-modal-lg mt-5"
-        role="dialog"
-        aria-labelledby="myLargeModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-lg">
-          <div className="modal-content">
-            <div className="modal-header">
-              <button
-                type="button"
-                onClick={handleModalClose}
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <section className="appStore">
-              <div className="container">
-                <div className="row">
-                  <div
-                    className="appStoreBg clearfix"
-                    style={{ display: "flex", width: "100%", flexWrap: "wrap" }}
-                  >
-                    <div className="col-md-6 col-sm-6 col-sx-12">
-                      <div className="innerapp">
-                        <div className="doc-img ">
-                          {images.length > 0 ? (
-                            <img
-                              src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-300,f-webp${images[currentIndex]}`}
-                              alt="doct"
-                              style={{ maxHeight: "400px", width: "405px" }}
-                            />
-                          ) : (
-                            <img
-                              src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/doct.png`}
-                              alt="doctor"
-                              style={{ maxHeight: "400px", width: "397px" }}
-                            />
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-6 col-sm-6 col-sx-12 bg-white subs-hero-2">
-                      <div className="subscribe">
-                        <h1 className="text-dark">All Cures</h1>
-                        <div className="h5">
-                          Sign up for our free <span>All Cures</span> Daily
-                          Newsletter
-                        </div>
-                        <br />
-                        <div className="h5">
-                          Get <span>doctor-approved</span> health tips, news,
-                          and more
-                        </div>
-                        <div className="form-group relative">
-                          <div className="aaa">
-                            <PhoneInput
-                              placeholder="Enter phone number"
-                              value={value}
-                              defaultCountry="IN"
-                              onChange={(newValue) => setValue(newValue)}
-                            />
-                          </div>
-                          <div>
-                            <button
-                              className="bcolor rounded py-2"
-                              onClick={postSubscribtion}
-                            >
-                              Submit
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
-        </div>
-      </div>
+      <TrustPartnerSection />
+      <OurExpert />
+      <ExpertAdviceComponent />
+      <SubscriberComponent />
       <Footer />
     </div>
-  );
-}
-
-function ToggleButton(props) {
-  if (props.userAccess) {
-    return (
-      <Dropdown>
-        <Dropdown.Toggle className="header-drop text-capitalize" id="drop-down">
-          <img
-            className="filter-white"
-            src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/account_circle_black_48dp.svg`}
-            height="30px"
-            alt="account"
-          />
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-          <Dropdown.Item>
-            <Link className="text-dark btn" to={`/user/profile`}>
-              Profile
-            </Link>
-          </Dropdown.Item>
-          <Dropdown.Item>
-            <Link to="/editSubscribe" className="text-dark btn">
-              Edit Subscription
-            </Link>
-          </Dropdown.Item>
-          <Dropdown.Item>
-            <Link to="/chatlist" className="text-dark btn">
-              My Inbox
-            </Link>
-          </Dropdown.Item>
-          <Dropdown.Item>
-            <Link className="text-dark btn" to={`/bookings`}>
-              My Bookings
-            </Link>
-          </Dropdown.Item>
-          {props.userAccess >= 4 ? (
-            <Dropdown.Item>
-              <Link to="/dashboard" className="text-dark btn">
-                Dashboard
-              </Link>
-            </Dropdown.Item>
-          ) : (
-            <Dropdown.Item>
-              <Link to="/my-cures" className="text-dark btn">
-                My Favourite Cures
-              </Link>
-            </Dropdown.Item>
-          )}
-          <Dropdown.Item>
-            <button
-              className="btn text-dark text-capitalize"
-              onClick={props.logout}
-            >
-              Logout
-            </button>
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-    );
-  }
-  return (
-    <button
-      className="btn primary-btn-color text-light loginSignbtn color-blue-darks"
-      style={{ width: "10rem" }}
-      onClick={() => props.setModalShow(true)}
-    >
-      Sign in/Sign up
-    </button>
   );
 }
 

@@ -5,7 +5,8 @@ import './assets/healthcare/css/mobile.css'
 import reportWebVitals from './reportWebVitals';
 import "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/free-solid-svg-icons";
-import "@fortawesome/free-brands-svg-icons";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import { hydrate, render } from "react-dom";
  
 const rootElement = document.getElementById("root");

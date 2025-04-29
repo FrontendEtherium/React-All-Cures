@@ -1,0 +1,65 @@
+/* Mobile-first */
+
+.ts-wrapper {
+  padding: 1rem;
+  max-width: 100%;
+}
+
+.ts-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.ts-list {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 1rem;
+  justify-content: space-around;
+
+  /* hide scrollbar in IE, Edge */
+  -ms-overflow-style: none;
+  /* hide scrollbar in Firefox */
+  scrollbar-width: none;
+}
+
+.ts-list::-webkit-scrollbar {
+  display: none;
+}
+.ts-pill {
+  flex: 0 0 auto;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.675rem;
+  white-space: nowrap;
+  background-color: #fff;
+  border: 2px solid transparent;
+  border-radius: 9999px;
+  color: #0a2f5a;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+  background: linear-gradient(white, white) padding-box,
+    linear-gradient(to bottom, #00415e, rgb(17, 16, 17)) border-box;
+}
+
+.ts-pill:hover,
+.ts-pill:focus {
+  background-color: #0a2f5a;
+  color: #fff;
+  outline: none;
+}
+
+/* Tablet and up */
+@media (min-width: 576px) {
+  .ts-wrapper {
+    padding: 2rem;
+  }
+  .ts-title {
+    font-size: 1.5rem;
+  }
+  .ts-pill {
+    font-size: 1rem;
+    padding: 0.6rem 1.2rem;
+  }
+}

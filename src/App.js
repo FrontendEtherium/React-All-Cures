@@ -2,7 +2,7 @@ import React from "react";
 import Main from "./components/MainComponent";
 import CookieConsent from "react-cookie-consent";
 import AppBanner from "./components/LandingPage/AppBanner";
-import { Link } from "react-router-dom";
+
 import "./cookie.css";
 
 const App = () => {
