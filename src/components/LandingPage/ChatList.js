@@ -1,246 +1,226 @@
-import React, { useState, useEffect,useRef } from 'react'; 
-import axios from 'axios';
-import { backendHost } from '../../api-config'
+import React, { useState, useEffect, useRef } from "react";
+import axios from "axios";
+import { backendHost } from "../../api-config";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import { userId } from '../UserId';
-import moment from 'moment/moment';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faInbox } from '@fortawesome/free-solid-svg-icons';
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import ChatWindow from '../Profile/ChatWindow';
-import { userAccess } from '../UserAccess';
+import { userId } from "../UserId";
+import dayjs from "dayjs";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInbox, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import ChatWindow from "../Profile/ChatWindow";
+import { userAccess } from "../UserAccess";
 
-
-
-
-import './ChatList.css';
-
+import "./ChatList.css";
 
 export default function App(usr_id) {
   const [chatList, setChatList] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null);
   const [alert, setAlert] = useState();
   const [chats, setChats] = useState([]);
-  const [first,setFirst]=useState([])
-  const [last,setLast]=useState([])
-  const [header,setHeader]=useState(false)
+  const [first, setFirst] = useState([]);
+  const [last, setLast] = useState([]);
+  const [header, setHeader] = useState(false);
   const [socket, setSocket] = useState(null);
-  const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState([]);
-  const fromId = userId;
-  const [toId,setToId]=useState()
-  const [showChatWindow, setShowChatWindow] = useState(false);
-  const chatRef=useRef(null)
-  const [chatId, setChatId] = useState(null);
+  const [message, setMessage] = useState("");
   const [newMessage, setNewMessage] = useState(false);
-  
-  const docID= localStorage.getItem('doctorid')
+
+  const fromId = userId;
+  const [toId, setToId] = useState();
+  const [showChatWindow, setShowChatWindow] = useState(false);
+  const chatRef = useRef(null);
+  const [chatId, setChatId] = useState(null);
+
+  const docID = localStorage.getItem("doctorid");
 
   useEffect(() => {
-    // axios.get(`${backendHost}/chat/list/${userId}`)
-    axios.get(`${backendHost}/chat/list/${docID==0?userId:docID}`)
-      .then(response => {
-        console.log(response.data)
+    axios
+      .get(`${backendHost}/chat/list/${docID == 0 ? userId : docID}`)
+      .then((response) => {
         setChatList(response.data);
       })
-      .catch(error => {
-        console.log(error);
-      });
-      // scrollToBottom();
-      console.log(chats)
+      .catch(console.error);
   }, [userId]);
 
-  useEffect(
-    ()=>{
-      scrollToBottom()
-    }
-  )
+  useEffect(() => {
+    scrollToBottom();
+  });
 
   const checkChat = (getId) => {
-    // Close the previous WebSocket connection if it exists
-  
-
-    
-
-console.log('getid->',getId)
-
- console.log("doctorid",docID)
-  
     axios
-      .get(`${backendHost}/chat/${userAccess != 1 ? userId : getId}/${userAccess != 1 ? getId :docID}`)
-      // .get(`${backendHost}/chat/148/14485`)
-      // .get(`${backendHost}/chat/3/14485`)
+      .get(
+        `${backendHost}/chat/${userAccess != 1 ? userId : getId}/${
+          userAccess != 1 ? getId : docID
+        }`
+      )
       .then((res) => {
         setChatId(res.data[0].Chat_id);
         setToId(getId);
         setChats(res.data);
         startWebSocket(res.data[0].Chat_id);
-        // Create a new WebSocket connection
-        console.log('got chat id',(res.data[0].Chat_id))
-      
       })
-      .catch((err) => err);
+      .catch(console.error);
   };
-  
- const sendMessage = (e) => {
+
+  const sendMessage = (e) => {
     e.preventDefault();
     const newChat = {
       Message: message,
-      From_id: docID == 0 ? userId : docID  // This line was changed
+      From_id: docID == 0 ? userId : docID,
     };
     setNewMessage(true);
-    setChats(prevMessages => [...prevMessages, newChat]);
-    const toid = toId;
+    setChats((prev) => [...prev, newChat]);
+
     const chatId = chats[0].Chat_id;
-    const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: false });
-    const newMessage = `${newChat.From_id}:${toid}:${chatId}:${message}`;  // This line was changed
-    console.log(newMessage);
-  
+    const newMessage = `${newChat.From_id}:${toId}:${chatId}:${message}`;
     socket.send(newMessage);
-    setMessage('');
+    setMessage("");
     scrollToBottom();
   };
-  
-    const startWebSocket = (getChatId) => {
-      // Close the previous WebSocket connection if it exists
-      if (socket && socket.readyState === WebSocket.OPEN) {
-        socket.close();
-      }
-  
-      // Set up WebSocket connection
-      const ws = new WebSocket("wss://uat.all-cures.com:8000");
-  
-      ws.onopen = () => {
-        console.log("Connected to the Chat Server->",getChatId);
-        ws.send(`{"Room_No":"${getChatId}"}`);
-      };
-  
-      ws.onmessage = (event) => {
-        console.log(event);
-        const from = event.data.split(":")[0];
-        const receivedMessage = event.data.split(":").pop();
-        const newChat = {
-          Message: receivedMessage,
-          From_id: from,
-        };
-        console.log("Message", from);
-        setChats((prevMessages) => [...prevMessages, newChat]);
-      };
-  
-      ws.onclose = function (event) {
-        if (event.wasClean) {
-          console.log(
-            `[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`
-          );
-        } else {
-          console.log("[close] Connection died");
-        }
-      };
-  
-      setSocket(ws);
+
+  const startWebSocket = (getChatId) => {
+    if (socket && socket.readyState === WebSocket.OPEN) {
+      socket.close();
+    }
+
+    const ws = new WebSocket("wss://uat.all-cures.com:8000");
+
+    ws.onopen = () => {
+      ws.send(`{"Room_No":"${getChatId}"}`);
     };
-  
-    const handleClick = (chat) => {
-  checkChat(chat.userID)
-  
-      setSelectedChat(chat.userID);
-      setFirst(chat.first_name);
-      setLast(chat.last_name);
-      setHeader(true);
-    
-      setToId(chat.User);
-  
-    
+
+    ws.onmessage = (event) => {
+      const [from, ...rest] = event.data.split(":");
+      const receivedMessage = rest.join(":");
+      const newChat = { Message: receivedMessage, From_id: from };
+      setChats((prev) => [...prev, newChat]);
     };
+
+    ws.onclose = (event) => {
+      console.log(
+        event.wasClean
+          ? `[close] code=${event.code} reason=${event.reason}`
+          : "[close] Connection died"
+      );
+    };
+
+    setSocket(ws);
+  };
+
+  const handleClick = (chat) => {
+    checkChat(chat.User);
+    setSelectedChat(chat.User);
+    setFirst(chat.first_name);
+    setLast(chat.last_name);
+    setHeader(true);
+  };
 
   const scrollToBottom = () => {
-    chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    if (chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    }
   };
+
   return (
     <>
+      <Header />
+      <div className="p-4">
+        <div className="border">
+          <div className="container">
+            <div className="chat">
+              <div className="message-header">
+                <FontAwesomeIcon icon={faInbox} size="3x" />
+                <div className="header-info">
+                  <h3 style={{ color: "#00415e", marginLeft: 20 }}>Inbox</h3>
+                </div>
+              </div>
 
-    <Header/>
-    <div className='p-4'>
-     <div className='border'>
-    <div className="container">
-         <div className="chat">
-         <div className='message-header'>
-         <FontAwesomeIcon icon={faInbox} size={'3x'} />
-   
-   
-           <div className='header-info'>
-         
-         <h3 style={{color:'#00415e',marginLeft:20}}>Inbox</h3>
-           </div>
-         </div>
-   
-        <div className="chat-list">
-         {chatList.map(users => (
-           <div key={users.User}  onClick={() => handleClick(users)} className={`chat-item ${selectedChat === users.User ? 'selected-chat' : ''}`} >
-              <FontAwesomeIcon icon={faUserCircle} size={'3x'} />
-             <div className="chat-info" style={{marginLeft:20}} >
-               <h3 >{users.first_name} {users.last_name}</h3>
-               <p>{users.Message}</p>
-             </div>
-             <div className="chat-time">{moment(users.Time).format('h:mm A')}</div>
-           </div>
-         ))}
-       </div>
-   
-   
-         </div>
-   
-         <div className="message">
-   
-         <div className='message-header' style={{display:header?' flex':'none'}} >
-         <FontAwesomeIcon icon={faUserCircle} size={'3x'} />
-           <div className='header-info'>
-   <h3 style={{color:'#00415e',marginLeft:20}} >{first} {last}</h3>
-           </div>
-         </div>
-   
-         <div className="message-list" ref={chatRef}>
-         {chats.map((message, index) => {
-           const isSender = message.From_id === userId;
-           const messageClass = isSender ? 'sender-message' : 'receiver-message';
-   
-           return (
-             <div key={index} className={`message-item ${messageClass}`} >
-               <p className="message-text" style={{color:message.From_id===userId?'#fff':'#000'}}>{message.Message}
-               
-               <span className="message-time"  style={{color:message.From_id===userId?'#fff':'#000'}}>{moment(message.Time).format('h:mm A')}</span>
-   
-               </p>          </div>
-           );
-         })}
-   
-   
-   
-   
-       </div>
-   
-      
-         
-       <div className='message-footer' style={{display:header?'flex':'none'}}  >
-            <form onSubmit={sendMessage}>
-              <input type='text' placeholder='Type a message' value={message} onChange={(e) => setMessage(e.target.value)}  />
-              <button type='submit' >send message</button>
-            </form>
-    
+              <div className="chat-list">
+                {chatList.map((user) => (
+                  <div
+                    key={user.User}
+                    onClick={() => handleClick(user)}
+                    className={`chat-item ${
+                      selectedChat === user.User ? "selected-chat" : ""
+                    }`}
+                  >
+                    <FontAwesomeIcon icon={faUserCircle} size="3x" />
+                    <div className="chat-info" style={{ marginLeft: 20 }}>
+                      <h3>
+                        {user.first_name} {user.last_name}
+                      </h3>
+                      <p>{user.Message}</p>
+                    </div>
+                    <div className="chat-time">
+                      {dayjs(user.Time).format("h:mm A")}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="message">
+              <div
+                className="message-header"
+                style={{ display: header ? "flex" : "none" }}
+              >
+                <FontAwesomeIcon icon={faUserCircle} size="3x" />
+                <div className="header-info">
+                  <h3 style={{ color: "#00415e", marginLeft: 20 }}>
+                    {first} {last}
+                  </h3>
+                </div>
+              </div>
+
+              <div className="message-list" ref={chatRef}>
+                {chats.map((msg, i) => {
+                  const isSender = msg.From_id === userId;
+                  return (
+                    <div
+                      key={i}
+                      className={`message-item ${
+                        isSender ? "sender-message" : "receiver-message"
+                      }`}
+                    >
+                      <p
+                        className="message-text"
+                        style={{
+                          color: isSender ? "#fff" : "#000",
+                        }}
+                      >
+                        {msg.Message}
+                        <span
+                          className="message-time"
+                          style={{
+                            color: isSender ? "#fff" : "#000",
+                          }}
+                        >
+                          {dayjs(msg.Time).format("h:mm A")}
+                        </span>
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div
+                className="message-footer"
+                style={{ display: header ? "flex" : "none" }}
+              >
+                <form onSubmit={sendMessage}>
+                  <input
+                    type="text"
+                    placeholder="Type a message"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                  />
+                  <button type="submit">Send Message</button>
+                </form>
+              </div>
+            </div>
           </div>
-     
-   
-         </div>
-   
-   
-   
-       </div>
-       </div>
-       </div>
-        <Footer/>
-       </>
-     );
-   
-
+        </div>
+      </div>
+      <Footer />
+    </>
+  );
 }

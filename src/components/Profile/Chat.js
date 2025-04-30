@@ -4,7 +4,7 @@ import { Alert, Button, Form, Modal } from "react-bootstrap";
 import ChatWindow from "./ChatWindow";
 import axios from "axios";
 import { userId } from "../UserId";
-import moment from "moment/moment";
+import dayjs from "dayjs";
 
 import "./ChatPopup.css";
 
@@ -23,251 +23,177 @@ function ChatButton(props) {
   const [toId, setToId] = useState(null);
   const [chatId, setChatId] = useState(null);
   const [newMessage, setNewMessage] = useState(false);
-
+  const [isOpen, setIsOpen] = useState(false);
 
   const checkChat = () => {
-    // Close the previous WebSocket connection if it exists
-  
-
-    
-
-console.log('getid->',userId)
-  
-  
-      axios.get(`${backendHost}/chat/${userId}/${props.docid}`)
-
+    axios
+      .get(`${backendHost}/chat/${userId}/${props.docid}`)
       .then((res) => {
-        const chatId = res.data[0].Chat_id;
-        console.log("chatid",chatId)
+        const fetchedChatId = res.data[0].Chat_id;
 
-      // Chat doesn't exist, initiate chat using favouriteForm
-      
-      if(chatId == null){
-        favouriteForm()
-      }
-
-
-        if (chatId != null) {
-          setChatId(res.data[0].Chat_id);
-          setAlert("Chat already exists");
-          setChats(res.data);
-
-          // Create a new WebSocket connection
-        const ws = new WebSocket("wss://uat.all-cures.com:8000");
-        ws.onopen = () => {
-          console.log("Connected to the Chat Server");
-          ws.send(`{"Room_No":"${res.data[0].Chat_id}"}`);
-        };
-        ws.onmessage = (event) => {
-          console.log(event);
-          const from = event.data.split(":")[0];
-          const receivedMessage = event.data.split(":").pop();
-          const newChat = {
-            Message: receivedMessage,
-            From_id: from,
-          };
-          console.log("Message", from);
-          setChats((prevMessages) => [...prevMessages, newChat]);
-        };
-  
-        ws.onclose = function (event) {
-          if (event.wasClean) {
-            console.log(
-              `[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`
-            );
-          } else {
-            console.log("[close] Connection died");
-          }
-        };
-  
-        setSocket(ws);
+        if (fetchedChatId == null) {
+          favouriteForm();
+          return;
         }
 
-       
+        setChatId(fetchedChatId);
+        setAlert("Chat already exists");
+        setChats(res.data);
+
+        const ws = new WebSocket("wss://uat.all-cures.com:8000");
+        ws.onopen = () => {
+          ws.send(`{"Room_No":"${fetchedChatId}"}`);
+        };
+        ws.onmessage = (event) => {
+          const [from, ...rest] = event.data.split(":");
+          const receivedMessage = rest.join(":");
+          setChats((prev) => [
+            ...prev,
+            { Message: receivedMessage, From_id: from },
+          ]);
+        };
+        ws.onclose = (event) => {
+          console.log(
+            event.wasClean
+              ? `[close] code=${event.code} reason=${event.reason}`
+              : "[close] Connection died"
+          );
+        };
+        setSocket(ws);
       })
-      .catch((err) => err);
+      .catch(console.error);
   };
 
-  
-
   const startWebSocket = (getChatId) => {
-    // Close the previous WebSocket connection if it exists
     if (socket && socket.readyState === WebSocket.OPEN) {
       socket.close();
     }
-
-    // Set up WebSocket connection
     const ws = new WebSocket("wss://uat.all-cures.com:8000");
-
     ws.onopen = () => {
-      console.log("Connected to the Chat Server->");
-      console.log("get chat id",getChatId)
       ws.send(`{"Room_No":"${getChatId}"}`);
     };
-
     ws.onmessage = (event) => {
-      console.log('event');
-      const from = event.data.split(":")[0];
-      const receivedMessage = event.data.split(":").pop();
-      const newChat = {
-        Message: receivedMessage,
-        From_id: from,
-      };
-      console.log("Message", from);
-      setChats((prevMessages) => [...prevMessages, newChat]);
+      const [from, ...rest] = event.data.split(":");
+      const receivedMessage = rest.join(":");
+      setChats((prev) => [
+        ...prev,
+        { Message: receivedMessage, From_id: from },
+      ]);
     };
-
-    ws.onclose = function (event) {
-      if (event.wasClean) {
-        console.log(
-          `[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`
-        );
-      } else {
-        console.log("[close] Connection died");
-      }
+    ws.onclose = (event) => {
+      console.log(
+        event.wasClean
+          ? `[close] code=${event.code} reason=${event.reason}`
+          : "[close] Connection died"
+      );
     };
-
     setSocket(ws);
   };
-  const handleKeyDown = (e) => {
-    console.log("key pressed")
-    if (e.key === "Enter") {
-      sendMessage(e);
-    }
-   
-  };
-
-  
 
   const favouriteForm = () => {
     axios
       .post(`${backendHost}/chat/start/${userId}/${props.docid}`)
       .then((res) => {
-        console.log(res.data)
-        setChatId(res.data[0].Chat_id);
+        const newChatId = res.data[0].Chat_id;
+        setChatId(newChatId);
         setToId(props.docid);
         setChats([]);
-        startWebSocket(res.data[0].Chat_id);     
+        startWebSocket(newChatId);
       })
-      .catch((err) => console.log(err));
+      .catch(console.error);
   };
-  const [isOpen, setIsOpen] = useState(false);
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") sendMessage(e);
+  };
 
   const toggleChatBox = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((open) => !open);
   };
 
   const scrollToBottom = () => {
-    chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    if (chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    }
   };
 
   const sendMessage = (e) => {
     e.preventDefault();
-
-    console.log(chatId)
     if (socket && socket.readyState === WebSocket.OPEN) {
-      const newChat = {
-        Message: message,
-        From_id: userId,
-      };
-      setNewMessage(true);
-      setChats((prevMessages) => [...prevMessages, newChat]);
-      const toId = props.docid;
-      const ChatId = chatId;
-      const newMessage = `${fromId}:${toId}:${ChatId}:${message}`;
-      console.log(newMessage);
-      socket.send(newMessage);
+      const newChat = { Message: message, From_id: userId };
+      setChats((prev) => [...prev, newChat]);
+      const newMessageStr = `${fromId}:${props.docid}:${chatId}:${message}`;
+      socket.send(newMessageStr);
       setMessage("");
     } else {
       console.log("WebSocket connection not available.");
-    
-     
-    
     }
   };
 
-  
-  
   useEffect(() => {
     scrollToBottom();
   }, [chats]);
 
-  
-  
-
-  
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    if(isOpen)
-    {
-      console.log('checkchat')
-  checkChat()
-    }
-    
-  
- 
- 
+    if (isOpen) checkChat();
   };
-  
+
   return (
     <div>
       <form onSubmit={handleSubmit} className="favouriteForm">
         <div className={`chat-box-container ${isOpen ? "open" : ""}`}>
           <button
+            type="button"
             className="toggle-button"
             onClick={toggleChatBox}
-            style={{ marginTop: -290, width:400 }}
+            style={{ marginTop: -290, width: 400 }}
           >
-           <div className="d-flex align-items-center">
-              <div className="mr-2">
-            {props.imageURL &&
-             <img
-             src={props.imageURL}
-             alt="Chat Icon"
-             style={{ width: "20px", marginRight: "10px" }}
-           />}
-           {
-            props.dummy &&
-            <div  style={{ width: "20px",fontSize:"5px", marginRight: "10px" }}>
-               <i class="fas fa-user-md fa-6x"></i>
-            </div>
-           }
-           </div>
-            <div style={{ fontSize: "16px", fontWeight: "bold" }}>
-              {" "}
-              {items.prefix} {items.firstName} {items.middleName}{" "}
-              {items.lastName}
-            </div>
+            <div className="d-flex align-items-center">
+              {props.imageURL && (
+                <img
+                  src={props.imageURL}
+                  alt="Chat Icon"
+                  style={{ width: 20, marginRight: 10 }}
+                />
+              )}
+              {props.dummy && (
+                <div style={{ width: 20, fontSize: 5, marginRight: 10 }}>
+                  <i className="fas fa-user-md fa-6x" />
+                </div>
+              )}
+              <div style={{ fontSize: 16, fontWeight: "bold" }}>
+                {items.prefix} {items.firstName} {items.middleName}{" "}
+                {items.lastName}
               </div>
+            </div>
           </button>
-          <div className="chat-box">
-            <div className="chat-list" ref={chatRef} style={{flex:1,overflowY:'auto'}} >
-              {chats.map((message, index) => {
-                const isSender = message.From_id === userId;
-                const messageClass = isSender
-                  ? "sender-message"
-                  : "receiver-message";
 
+          <div className="chat-box">
+            <div
+              className="chat-list"
+              ref={chatRef}
+              style={{ flex: 1, overflowY: "auto" }}
+            >
+              {chats.map((msg, idx) => {
+                const isSender = msg.From_id === userId;
                 return (
                   <div
-                    key={index}
-                    className={`message-item ${messageClass}`}
+                    key={idx}
+                    className={`message-item ${
+                      isSender ? "sender-message" : "receiver-message"
+                    }`}
                   >
                     <p
                       className="message-text"
-                      style={{
-                        color: message.From_id === userId ? "#fff" : "#000",
-                      }}
+                      style={{ color: isSender ? "#fff" : "#000" }}
                     >
-                      {message.Message}
+                      {msg.Message}
                       <span
                         className="message-time"
-                        style={{
-                          color: message.From_id === userId ? "#fff" : "#000",
-                        }}
+                        style={{ color: isSender ? "#fff" : "#000" }}
                       >
-                        {moment(message.Time).format("h:mm A")}
+                        {dayjs(msg.Time).format("h:mm A")}
                       </span>
                     </p>
                   </div>
@@ -294,4 +220,3 @@ console.log('getid->',userId)
 }
 
 export default ChatButton;
-
