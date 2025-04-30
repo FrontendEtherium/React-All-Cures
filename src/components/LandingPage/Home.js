@@ -6,7 +6,7 @@ import { imgKitImagePath } from "../../image-path";
 import { backendHost } from "../../api-config";
 import { userId } from "../UserId";
 
-import UpdatedHeader from "../Header/Header";
+import Header from "../Header/Header";
 import TrendingSearches from "./HomeComponents/TrendingSearches";
 import FeaturedBlogs from "./HomeComponents/FeaturedBlogs";
 import TrendingCures from "./HomeComponents/TrendingCures";
@@ -34,28 +34,28 @@ function Home() {
   const [ads, setAds] = useState("");
   const [adId, setAdId] = useState("");
 
-  useEffect(() => {
-    const fetchAds = async () => {
-      try {
-        const response = await axios.get(
-          `${backendHost}/sponsored/list/ads/url/1`
-        );
-        if (response.data !== "All Ads are Served") {
-          const idSegment = response.data.split("/")[3];
-          const match = idSegment.match(/\d+/);
-          if (match) setAdId(match[0]);
-        }
-        setAds(`https://all-cures.com:444${response.data}`);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchAds();
-  }, []);
+  // useEffect(() => {
+  //   const fetchAds = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `${backendHost}/sponsored/list/ads/url/1`
+  //       );
+  //       if (response.data !== "All Ads are Served") {
+  //         const idSegment = response.data.split("/")[3];
+  //         const match = idSegment.match(/\d+/);
+  //         if (match) setAdId(match[0]);
+  //       }
+  //       setAds(`https://all-cures.com:444${response.data}`);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   fetchAds();
+  // }, []);
 
-  const handleAdClick = () => {
-    axios.put(`${backendHost}/sponsored/ads/clicks/${adId}`);
-  };
+  // const handleAdClick = () => {
+  //   axios.put(`${backendHost}/sponsored/ads/clicks/${adId}`);
+  // };
 
   const clickCounter = async () => {
     try {
@@ -68,7 +68,7 @@ function Home() {
 
   return (
     <div>
-      <UpdatedHeader />
+      <Header />
 
       <div className="doctor-patient-banner-container">
         <Carousel interval={4000} pause={false} indicators>
@@ -108,7 +108,7 @@ function Home() {
         </Carousel>
       </div>
 
-      {ads && ads !== "https://all-cures.com:444All Ads are Served" && (
+      {/* {ads && ads !== "https://all-cures.com:444All Ads are Served" && (
         <div className="container d-flex justify-content-center">
           <img
             id="left-menu-ad"
@@ -118,7 +118,7 @@ function Home() {
             onClick={handleAdClick}
           />
         </div>
-      )}
+      )} */}
 
       <TrendingSearches />
       <FeaturedBlogs />

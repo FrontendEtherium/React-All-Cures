@@ -111,7 +111,7 @@ export default function UpdatedHeader() {
         <div className="nav-center">
           <Link to="/" aria-label="Home">
             <img
-              src={`${imgKitImagePath}/tr:w-50,f-webp/assets/img/heart.png`}
+              src={`${imgKitImagePath}/tr:w-60,f-webp/assets/img/heart.png`}
               alt="All Cures logo"
               className="logo"
             />
