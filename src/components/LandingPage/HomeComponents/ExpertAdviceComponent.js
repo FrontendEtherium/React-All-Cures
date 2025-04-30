@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react";
 
 function ExpertAdviceComponent() {
   return (
-    <div>ExpertAdviceComponent</div>
-  )
+    <section className="container">
+      <h1 className="landing-page__title">Expert Advice in 60 Seconds</h1>
+    </section>
+  );
 }
 
-export default ExpertAdviceComponent
+export default ExpertAdviceComponent;

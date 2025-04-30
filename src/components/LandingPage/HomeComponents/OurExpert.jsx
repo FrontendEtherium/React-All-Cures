@@ -67,7 +67,7 @@ function OurExpert() {
 
   return (
     <div className="container">
-      <h1 className="our-expert__title">Meet Our Experts</h1>
+      <h1 className="landing-page__title">Meet Our Experts</h1>
       <Slider {...carouselSettings}>
         {docData.map((doc) => (
           <div key={doc.map.docID} className="our-expert_card_container">
