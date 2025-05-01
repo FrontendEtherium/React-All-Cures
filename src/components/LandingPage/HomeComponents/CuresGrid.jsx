@@ -64,10 +64,6 @@ const CuresGrid = () => {
               }`
             : "https://ik.imagekit.io/qi0xxmh2w/productimages/tr:h-400,w-600,f-webp/cures_articleimages//299/default.png";
 
-          const preview =
-            contentObj.blocks[0]?.data?.text.slice(0, 60) ||
-            "No preview available.";
-
           return (
             <div
               key={item.article_id}
@@ -81,8 +77,8 @@ const CuresGrid = () => {
                 className="cures-grid__link"
               >
                 <div className="cures-grid__overlay">
-                  <h2 className="cures-grid__headline">{item.title}</h2>
-                  <p className="cures-grid__paragraph">{preview}…</p>
+                  {/* <h2 className="cures-grid__headline">{item.title}</h2> */}
+
                   <span className="cures-grid__cta">Read more →</span>
                 </div>
               </Link>
@@ -90,8 +86,7 @@ const CuresGrid = () => {
           );
         })}
       </div>
-
-      <div className="cures-see-all">See all &gt;</div>
+      {isMobile && <div className="cures-see-all">See all &gt;</div>}
     </section>
   );
 };

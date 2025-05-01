@@ -39,7 +39,7 @@ const TrustPartnerSection = () => (
     className="trust-partner container"
     aria-labelledby="trust-partner-title"
   >
-    <h2 id="trust-partner-title" className="trust-partner__heading">
+    <h2  className="landing-page__title">
       Why all-cures.com Is Your Trusted Partner in Holistic Health
     </h2>
     <div

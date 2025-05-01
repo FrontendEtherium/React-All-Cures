@@ -19,6 +19,10 @@
   flex-shrink: 0;
   gap: 0.75rem;
   padding: 10px; /* Add padding for spacing between slides */
+  flex-direction: column;
+}
+.doctor-cures__docName{
+  font-size: 0.565rem;
 }
 
 /* Thumbnail */
@@ -39,10 +43,14 @@
 
 /* Headline */
 .doctor-cures__headline {
-  font-size: 1rem;
+  font-size: 0.75rem;
   margin: 0 0 0.25rem;
   color: #000;
   font-weight: 600;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 150px;
 }
 .doctor-cures_docImg {
   position: absolute; /* take it out of the flow */
@@ -51,18 +59,18 @@
   width: 50px;
   height: 50px;
   border-radius: 50%; /* round */
-  border: 2px solid #fff; /* white ring */
+  border: 3px solid #fff; /* white ring */
   object-fit: cover;
   z-index: 2;
 }
 .doctor-cures_articleImg {
-  object-fit: cover;
+  object-fit: contain;
   width: 100%;
   height: 100%;
 }
 /* Preview text */
 .doctor-cures__paragraph {
-  font-size: 0.875rem;
+  font-size: 0.625rem;
   color: #828282;
   line-height: 1.5;
   margin: 0;
@@ -114,7 +122,11 @@
 .prev-arrow {
   left: -50px; /* Position outside carousel */
 }
-
+.doctor-cures__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
 /* Desktop: card layout */
 @media (min-width: 768px) {
   .doctor-cures__item {
@@ -139,6 +151,10 @@
   .doctor-cures__headline {
     margin-top: 5px;
     font-size: 1.125rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width:500px
   }
 
   .doctor-cures__paragraph {

@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Carousel } from "react-bootstrap";
-
 import { imgKitImagePath } from "../../image-path";
-import { backendHost } from "../../api-config";
-import { userId } from "../UserId";
-
 import Header from "../Header/Header";
 import TrendingSearches from "./HomeComponents/TrendingSearches";
 import FeaturedBlogs from "./HomeComponents/FeaturedBlogs";
@@ -24,15 +18,11 @@ import "../../assets/healthcare/css/animate.css";
 import "../../assets/healthcare/icomoon/style.css";
 import "./custom.css";
 import "./Home.css";
+import HomePageCarousel from "./HomeComponents/HomePageCarousel";
 
 function Home() {
-  const carouselImages = [
-    `${imgKitImagePath}/assets/img/HomePage1.jpg`,
-    `${imgKitImagePath}/assets/img/HomePage2.jpg`,
-  ];
-
-  const [ads, setAds] = useState("");
-  const [adId, setAdId] = useState("");
+  // const [ads, setAds] = useState("");
+  // const [adId, setAdId] = useState("");
 
   // useEffect(() => {
   //   const fetchAds = async () => {
@@ -56,57 +46,19 @@ function Home() {
   // const handleAdClick = () => {
   //   axios.put(`${backendHost}/sponsored/ads/clicks/${adId}`);
   // };
-
-  const clickCounter = async () => {
-    try {
-      const uid = userId || 0;
-      await axios.post(`${backendHost}/video/consult/counts/${uid}`);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <div>
       <Header />
-
-      <div className="doctor-patient-banner-container">
-        <Carousel interval={4000} pause={false} indicators>
-          {carouselImages.map((img, idx) => (
-            <Carousel.Item key={idx}>
-              {idx === 1 ? (
-                <img
-                  src={img}
-                  alt={`Banner ${idx + 1}`}
-                  className="img-fluid rounded doctor-patient-banner"
-                />
-              ) : (
-                <a href="#trends">
-                  <img
-                    src={img}
-                    alt={`Banner ${idx + 1}`}
-                    className="img-fluid rounded doctor-patient-banner"
-                  />
-                </a>
-              )}
-
-              {idx === 1 && (
-                <Carousel.Caption>
-                  <button
-                    className="doctor-patient-banner-btn"
-                    onClick={() => {
-                      window.location.href = "/doctor";
-                      clickCounter();
-                    }}
-                  >
-                    Consult Now
-                  </button>
-                </Carousel.Caption>
-              )}
-            </Carousel.Item>
-          ))}
-        </Carousel>
-      </div>
+      <HomePageCarousel />
 
       {/* {ads && ads !== "https://all-cures.com:444All Ads are Served" && (
         <div className="container d-flex justify-content-center">
@@ -120,24 +72,24 @@ function Home() {
         </div>
       )} */}
 
-      <TrendingSearches />
-      <FeaturedBlogs />
+      <TrendingSearches isMobile={isMobile} />
+      <FeaturedBlogs isMobile={isMobile} />
 
-      <div className="container">
+      <div className="">
         <img
           src={`${imgKitImagePath}/assets/img/bannersdestop-mobiles-06.jpg`}
           alt="Promo Banner"
-          className="container"
+          className="promo-banner"
         />
       </div>
 
-      <TrendingCures />
+      <TrendingCures isMobile={isMobile} />
 
-      <div className="container">
+      <div className="">
         <img
           src={`${imgKitImagePath}/assets/img/bannersdestopmobiles-01.jpg`}
           alt="Promo Banner"
-          className="container"
+          className="promo-banner"
         />
       </div>
 
@@ -145,13 +97,13 @@ function Home() {
       <TrustPartnerSection />
       <CuresGrid />
       <OurExpert />
-      <ExpertAdviceComponent />
+      {/* <ExpertAdviceComponent /> */}
 
-      <div className="container">
+      <div>
         <img
           src={`${imgKitImagePath}/assets/img/bannersdestopmobiles-01.jpg`}
           alt="Promo Banner"
-          className="container"
+          className="promo-banner"
         />
       </div>
 

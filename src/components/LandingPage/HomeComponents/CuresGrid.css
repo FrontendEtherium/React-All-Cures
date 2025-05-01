@@ -11,7 +11,7 @@
 .cures-grid__grid {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
-  grid-template-rows: repeat(2, 200px);
+  grid-template-rows: repeat(2, 190px);
   gap: 1rem;
 }
 
@@ -36,10 +36,87 @@
   grid-column: 3 / 4;
   grid-row: 2 / 3;
 }
+
+/* Card Base */
+.cures-grid__item {
+  position: relative;
+  /* background-size: cover; */ /* REMOVE or comment out this line */
+  background-size: cover; /* ADD this line */
+  background-repeat: no-repeat; /* ADD this line */
+  background-position: center; /* Keep this to center the contained image */
+  background-color: #222; /* ADD a background color for empty areas (adjust color as needed) */
+  border-radius: 0.5rem;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+.cures-grid__item:hover {
+  transform: translateY(-4px);
+}
+
+/* Link resets */
+.cures-grid__link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Dark overlay gradient + padding */
+.cures-grid__overlay {
+  position: absolute;
+  /* Ensure overlay covers the entire box, even the empty parts */
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85),
+    rgba(0, 0, 0, 0.2),
+    transparent
+  ); /* Adjusted gradient slightly */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%; /* Ensure overlay takes full height */
+}
+
+/* Text Styles */
+.cures-grid__headline {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+  color: #fff;
+}
+.cures-grid__paragraph {
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  color: #ddd;
+}
+.cures-grid__cta {
+  font-weight: 500;
+  font-size: 1rem;
+  color: #fff;
+  text-align: right;
+}
+
+/* “See all” link */
+.cures-see-all {
+  margin-top: 1rem;
+  text-align: right;
+
+  color: #007bff;
+  cursor: pointer;
+}
+.cures-grid__item {
+  background-size: cover;
+}
+
 @media (max-width: 767px) {
   .cures-grid__grid {
     grid-template-columns: 2fr 1fr;
-    grid-template-rows: repeat(2, 200px);
+    grid-template-rows: repeat(2, 100px);
   }
 
   /* Big card spans both rows in col 1 */
@@ -64,65 +141,11 @@
   .cures-grid__item:nth-child(n + 4) {
     display: none;
   }
-}
-/* Card Base */
-.cures-grid__item {
-  position: relative;
-  background-size: cover;
-  background-position: center;
-  border-radius: 0.5rem;
-  overflow: hidden;
-  transition: transform 0.2s ease;
-}
-.cures-grid__item:hover {
-  transform: translateY(-4px);
-}
+  .cures-grid__cta {
+    font-size: 0.675rem;
+  }
 
-/* Link resets */
-.cures-grid__link {
-  display: block;
-  width: 100%;
-  height: 100%;
-  text-decoration: none;
-  color: inherit;
-}
-
-/* Dark overlay gradient + padding */
-.cures-grid__overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 1rem;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  height: 100%;
-}
-
-/* Text Styles */
-.cures-grid__headline {
-  margin: 0 0 0.5rem;
-  font-size: 1.25rem;
-  color: #fff;
-}
-.cures-grid__paragraph {
-  margin: 0 0 1rem;
-  font-size: 0.9rem;
-  color: #ddd;
-}
-.cures-grid__cta {
-  font-weight: bold;
-  font-size: 0.95rem;
-  color: #fff;
-}
-
-/* “See all” link */
-.cures-see-all {
-  margin-top: 1rem;
-  text-align: center;
-  font-weight: 600;
-  color: #007bff;
-  cursor: pointer;
+  .cures-grid__item {
+    background-size: cover;
+  }
 }

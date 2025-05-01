@@ -199,69 +199,6 @@ button.active {
   top: 40%;
 }
 
-@media only screen and (min-width: 300px) and (max-width: 990px) {
-  .dropdown-item {
-    padding: 0.25rem 0.25rem;
-    padding-left: 1rem !important;
-  }
-
-  .bg-light {
-    background-color: #fff !important;
-    max-width: fit-content !important;
-  }
-  .dropdown .newDropdown {
-    max-width: fit-content !important;
-    left: -10px;
-  }
-  .dropdown-menu .newDropdown-menu {
-    left: -5px;
-    top: 40%;
-    max-width: fit-content !important;
-  }
-  .dropdown-menu {
-    max-width: fit-content !important;
-    min-width: 8rem;
-  }
-
-  .dropdown-menu .drop_down_child {
-    max-width: 5rem;
-    padding: 0.5rem 0;
-    transform: translateX(-100px);
-  }
-  .arrow {
-    margin-left: 20px !important;
-    margin-top: 15px !important;
-  }
-
-  .dropdown-menu .drop_down_child {
-    display: block;
-  }
-}
-.doctor-patient-banner-container {
-  text-align: center;
-  position: relative;
-}
-
-.doctor-patient-banner {
-  max-height: 380px;
-  object-fit: contain;
-  max-width: 100%;
-  width: 100%;
-}
-
-.doctor-patient-banner-btn {
-  position: absolute;
-  cursor: pointer;
-  background-color: #00415e;
-  bottom: 45px;
-  left: 68%;
-  border-radius: 30px;
-  border: 2px solid #fff;
-  font-size: 16px;
-}
-.doctor-patient-banner-btn:hover {
-  opacity: 0.7;
-}
 .landing-page__title {
   font-weight: 700;
   font-size: 1.25rem;
@@ -269,16 +206,19 @@ button.active {
   color: #000;
   margin-bottom: 1rem;
 }
+.promo-banner {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  height: auto;
+}
+
 @media (min-width: 768px) {
-  .trending-cures__title {
+  .promo-banner {
+    max-width: 1300px;
+  }
+  .landing-page__title {
     font-size: 2rem;
     margin-bottom: 15px;
-  }
-}
-@media (max-width: 768px) {
-  .doctor-patient-banner-btn {
-    padding: 5px;
-    font-size: 8px;
-    bottom: 20px;
   }
 }

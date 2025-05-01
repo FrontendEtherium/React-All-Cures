@@ -35,21 +35,17 @@ const PrevArrow = (props) => {
   );
 };
 
-function FeaturedBlogs() {
+function FeaturedBlogs({ isMobile }) {
   const [items, setItems] = useState([]);
   const [loaded, setLoaded] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
 
   const carouselSettings = {
     infinite: true, // Loop through slides
-    speed: 500, // Transition speed
+
     slidesToShow: 4, // Number of cards to show at once
     slidesToScroll: 1, // Number of cards to scroll
-    autoplay: true, // Auto-scroll
-    autoplaySpeed: 3000, // Auto-scroll interval
-
-    pauseOnFocus: true,
-
+    autoplay: false, // Auto-scroll
     responsive: [
       {
         breakpoint: 1024, // Adjust for tablets
@@ -82,14 +78,6 @@ function FeaturedBlogs() {
       }
     };
     getPost();
-  }, []);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   if (!loaded) {

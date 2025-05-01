@@ -43,7 +43,7 @@
 
 /* Headline */
 .featured-blogs__headline {
-  font-size: 1rem;
+  font-size: 0.875rem;
   margin: 0 0 0.25rem;
   color: #000;
   font-weight: 600;
@@ -51,7 +51,7 @@
 
 /* Preview text */
 .featured-blogs__paragraph {
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   color: #828282;
   line-height: 1.5;
   margin: 0;
@@ -126,7 +126,7 @@
 
   .featured-blogs__headline {
     margin-top: 5px;
-    font-size: 1.125rem;
+    font-size: 1rem;
   }
 
   .featured-blogs__paragraph {

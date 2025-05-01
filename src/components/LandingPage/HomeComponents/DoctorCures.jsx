@@ -47,10 +47,6 @@ function DoctorCures() {
     slidesToShow: 4, // Number of cards to show at once
     slidesToScroll: 1, // Number of cards to scroll
     autoplay: false, // Auto-scroll
-    autoplaySpeed: 3000, // Auto-scroll interval
-
-    pauseOnFocus: true,
-
     responsive: [
       {
         breakpoint: 1024, // Adjust for tablets
@@ -101,7 +97,7 @@ function DoctorCures() {
     );
   }
 
-  const displayItems = isMobile ? items.slice(0, 3) : items;
+  const displayItems = isMobile ? items.slice(0, 4) : items;
 
   return (
     <section className="container">
@@ -135,7 +131,12 @@ function DoctorCures() {
             return (
               <div key={item.id} className="doctor-cures__item">
                 <div className="doctor-cures__image">
-                  <img src={imageLoc} alt={item.title} loading="lazy" className="doctor-cures_articleImg" />
+                  <img
+                    src={imageLoc}
+                    alt={item.title}
+                    loading="lazy"
+                    className="doctor-cures_articleImg"
+                  />
 
                   <img
                     src={` ${imgKitImagePath}${item.image_location}`}
@@ -155,7 +156,7 @@ function DoctorCures() {
           })}
         </Slider>
       ) : (
-        <>
+        <div className="doctor-cures__grid">
           {displayItems.map((item) => {
             let contentObj;
             try {
@@ -170,7 +171,7 @@ function DoctorCures() {
               imgLoc.includes("cures_articleimages") &&
               imgLoc.endsWith(".json");
             const imageLoc = hasCustom
-              ? `https://ik.imagekit.io/qi0xxmh2w/productimages/tr:h-250,w-300,f-webp/${
+              ? `https://ik.imagekit.io/qi0xxmh2w/productimages/tr:h-110,w-170,f-webp/${
                   imgLoc.replace("json", "png").split("/webapps/")[1]
                 }`
               : "https://ik.imagekit.io/qi0xxmh2w/productimages/tr:h-250,w-300,f-webp/cures_articleimages//299/default.png";
@@ -193,13 +194,14 @@ function DoctorCures() {
                 <Link to={`/cure/${item.article_id}-${item.title}`}>
                   <div className="doctor-cures__content">
                     <h2 className="doctor-cures__headline">{item.title}</h2>
+                    <h6 className="doctor-cures__docName">{item.authors_name}</h6>
                     <p className="doctor-cures__paragraph">{previewText}...</p>
                   </div>
                 </Link>
               </div>
             );
           })}
-        </>
+        </div>
       )}
 
       <div className="doctor-cures__all">See all {">"} </div>

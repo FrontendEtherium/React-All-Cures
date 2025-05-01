@@ -46,7 +46,7 @@
 .ts-pill:hover,
 .ts-pill:focus {
   background-color: #0a2f5a;
-  color: #fff;
+  color: #000;
   outline: none;
 }
 

@@ -9,10 +9,10 @@ import Slider from "react-slick"; // Import react-slick
 // Slick carousel settings
 const carouselSettings = {
   infinite: true, // Loop through slides
-  speed: 500, // Transition speed
-  slidesToShow: 4, // Number of cards to show at once
+  speed: 700, // Transition speed
+  slidesToShow: 5, // Number of cards to show at once
   slidesToScroll: 1, // Number of cards to scroll
-  autoplay: true, // Auto-scroll
+  autoplay: false, // Auto-scroll
   autoplaySpeed: 3000, // Auto-scroll interval
   arrows: true,
   pauseOnFocus: true,
@@ -28,7 +28,7 @@ const carouselSettings = {
     {
       breakpoint: 600, // Adjust for mobile
       settings: {
-        slidesToShow: 2,
+        slidesToShow: 3,
         slidesToScroll: 1,
       },
     },
@@ -74,11 +74,11 @@ function OurExpert() {
             <Link
               to={`/doctor/${doc.map.docID}-${doc.map.firstName}-${doc.map.lastName}`}
               className=""
-              id="visitDoc"
+              id=""
             >
               {doc.map.imgLoc ? (
                 <img
-                  src={`https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-150,h-200,f-webp${doc.map.imgLoc}`}
+                  src={`https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-190,h-250,f-webp${doc.map.imgLoc}`}
                   className="our-expert_image"
                   loading="lazy"
                   alt={`${doc.map?.prefix} ${doc.map.firstName} ${doc.map.lastName}`}

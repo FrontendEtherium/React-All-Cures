@@ -111,7 +111,7 @@ export default function UpdatedHeader() {
         <div className="nav-center">
           <Link to="/" aria-label="Home">
             <img
-              src={`${imgKitImagePath}/tr:w-60,f-webp/assets/img/heart.png`}
+              src={`${imgKitImagePath}/tr:w-90,f-webp/assets/img/heart.png`}
               alt="All Cures logo"
               className="logo"
             />
@@ -135,6 +135,8 @@ export default function UpdatedHeader() {
                 inputValue={article}
                 onInputChange={(_, v) => setArticle(v)}
                 options={article.length >= 1 ? diseaseTitle : []}
+                sx={{ width: 100 }}
+                lg={{ width: 150 }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -144,14 +146,19 @@ export default function UpdatedHeader() {
                   />
                 )}
               />
+              <button
+                className="btn search-main-btns color-white"
+                id="searchHead"
+                type="submit"
+              >
+                <i className="fas header-search fa-search" id="iconSearch"></i>
+              </button>
             </form>
           </li>
-          <div>
-            {console.log("userAccess", userAccess)}
+          <div className="nav-left-btn">
             {userAccess ? (
               <Link
                 className="btn mr-2 primary-btn-color loginSignbtn color-blue-dark"
-                id="Article"
                 to="/article"
               >
                 <img
@@ -187,7 +194,6 @@ export default function UpdatedHeader() {
         </ul>
       </nav>
 
-      {/* MOBILE OVERLAY */}
       {mobileMenuOpen && (
         <div className="mobile-nav-overlay">
           <ul className="mobile-nav">
@@ -217,7 +223,6 @@ export default function UpdatedHeader() {
       )}
 
       <Test show={modalShow} onHide={() => setModalShow(false)} />
-      <div className="background_header_logo "></div>
     </>
   );
 }
@@ -280,15 +285,7 @@ function ToggleButton(props) {
       </Dropdown>
     );
   }
-  return (
-    <button
-      className="btn primary-btn-color text-light loginSignbtn color-blue-darks"
-      style={{ width: "10rem" }}
-      onClick={() => props.setModalShow(true)}
-    >
-      Sign in/Sign up
-    </button>
-  );
+  
 }
 const logout = async () => {
   axios.defaults.withCredentials = true;
