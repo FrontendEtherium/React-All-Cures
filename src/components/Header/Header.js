@@ -285,7 +285,7 @@ function ToggleButton(props) {
       </Dropdown>
     );
   }
-  
+  return <></>;
 }
 const logout = async () => {
   axios.defaults.withCredentials = true;
