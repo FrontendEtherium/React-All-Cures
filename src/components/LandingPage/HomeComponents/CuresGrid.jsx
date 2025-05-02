@@ -86,7 +86,7 @@ const CuresGrid = () => {
           );
         })}
       </div>
-      {isMobile && <div className="cures-see-all">See all &gt;</div>}
+      <div className="cures-see-all">See all &gt;</div>
     </section>
   );
 };
