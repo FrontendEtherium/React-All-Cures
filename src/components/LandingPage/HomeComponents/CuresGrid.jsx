@@ -77,7 +77,7 @@ const CuresGrid = () => {
                 className="cures-grid__link"
               >
                 <div className="cures-grid__overlay">
-                  {/* <h2 className="cures-grid__headline">{item.title}</h2> */}
+                  <h2 className="cures-grid__headline">{item.title}</h2>
 
                   <span className="cures-grid__cta">Read more →</span>
                 </div>

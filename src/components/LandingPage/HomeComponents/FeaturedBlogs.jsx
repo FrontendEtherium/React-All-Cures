@@ -4,41 +4,12 @@ import headers from "../../../api-fetch";
 import axios from "axios";
 import Heart from "../../../assets/img/heart.png";
 import "./FeaturedBlogs.css";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
-// Custom Arrow Components
-const NextArrow = (props) => {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={`${className} custom-arrow next-arrow`}
-      style={{ ...style, display: "block" }}
-      onClick={onClick}
-    >
-      <ChevronRightIcon fontSize="large" />
-    </div>
-  );
-};
-
-const PrevArrow = (props) => {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={`${className} custom-arrow prev-arrow`}
-      style={{ ...style, display: "block" }}
-      onClick={onClick}
-    >
-      <ChevronLeftIcon fontSize="large" />
-    </div>
-  );
-};
 
 function FeaturedBlogs({ isMobile }) {
   const [items, setItems] = useState([]);
   const [loaded, setLoaded] = useState(false);
-
 
   const carouselSettings = {
     infinite: true, // Loop through slides
@@ -181,7 +152,7 @@ function FeaturedBlogs({ isMobile }) {
         </>
       )}
 
-      <div className="featured-blogs__all">See all {">"} </div>
+<div className="featured-blogs__all">See all {">"} </div>
     </section>
   );
 }

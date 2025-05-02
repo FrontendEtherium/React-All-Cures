@@ -35,7 +35,7 @@ const carouselSettings = {
   ],
 };
 
-function OurExpert() {
+function OurExpert({isMobile}) {
   const [docData, setDocData] = useState([]);
   const [loaded, setLoaded] = useState(false);
 

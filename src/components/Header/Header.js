@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { imgKitImagePath } from "../../image-path";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,6 +17,7 @@ import Cookies from "js-cookie";
 import { Dropdown } from "react-bootstrap";
 import "./header.css";
 import { userAccess } from "../UserAccess";
+import { useHistory } from "react-router-dom";
 const NAV_ITEMS = [
   { to: "/", label: "Home" },
   { to: "/AboutUs", label: "About Us" },
@@ -41,6 +42,7 @@ export default function UpdatedHeader() {
   const [article, setArticle] = useState("");
   const [diseaseTitle, setDiseaseTitle] = useState([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const history = useHistory();
   useEffect(() => {
     axios
       .get(`${backendHost}/isearch/combo/${article}`)
@@ -48,10 +50,13 @@ export default function UpdatedHeader() {
       .catch((err) => console.error("Error fetching disease titles", err));
   }, [article]);
 
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    window.location.href = article ? `/searchcures/${article}` : `/searchcures`;
-  };
+  const handleSearchSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      history.push(article ? `/searchcures/${article}` : `/searchcures`);
+    },
+    [article, history]
+  );
 
   return (
     <>
@@ -178,7 +183,7 @@ export default function UpdatedHeader() {
                   <FontAwesomeIcon
                     icon={faUser}
                     className="user-icon"
-                    color="green"
+                    color="white"
                   />
                   Login
                 </button>
@@ -227,7 +232,7 @@ export default function UpdatedHeader() {
   );
 }
 
-function ToggleButton(props) {
+const ToggleButton = React.memo(function ToggleButton(props) {
   if (props.userAccess) {
     return (
       <Dropdown>
@@ -286,7 +291,7 @@ function ToggleButton(props) {
     );
   }
   return <></>;
-}
+});
 const logout = async () => {
   axios.defaults.withCredentials = true;
   Cookies.remove("uName");

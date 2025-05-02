@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { imgKitImagePath } from "../../image-path";
 import Header from "../Header/Header";
-import TrendingSearches from "./HomeComponents/TrendingSearches";
+
 import FeaturedBlogs from "./HomeComponents/FeaturedBlogs";
 import TrendingCures from "./HomeComponents/TrendingCures";
 import DoctorCures from "./HomeComponents/DoctorCures";
@@ -19,6 +19,7 @@ import "../../assets/healthcare/icomoon/style.css";
 import "./custom.css";
 import "./Home.css";
 import HomePageCarousel from "./HomeComponents/HomePageCarousel";
+import TrendingSearches from "./HomeComponents/TrendingSearches";
 
 function Home() {
   // const [ads, setAds] = useState("");
@@ -85,6 +86,11 @@ function Home() {
 
       <TrendingCures isMobile={isMobile} />
 
+    
+
+      <DoctorCures isMobile={isMobile} />
+      <TrustPartnerSection />
+      <CuresGrid />
       <div className="">
         <img
           src={`${imgKitImagePath}/assets/img/bannersdestopmobiles-01.jpg`}
@@ -92,12 +98,8 @@ function Home() {
           className="promo-banner"
         />
       </div>
-
-      <DoctorCures />
-      <TrustPartnerSection />
-      <CuresGrid />
-      <OurExpert />
-      {/* <ExpertAdviceComponent /> */}
+      <OurExpert isMobile={isMobile} />
+      <ExpertAdviceComponent />
 
       <div>
         <img
