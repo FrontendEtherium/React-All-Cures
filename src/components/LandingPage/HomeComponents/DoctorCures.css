@@ -21,8 +21,9 @@
   padding: 10px; /* Add padding for spacing between slides */
   flex-direction: column;
 }
-.doctor-cures__docName{
-  font-size: 0.565rem;
+.doctor-cures__docName {
+  font-size: 0.75rem;
+  margin-top: 2px;
 }
 
 /* Thumbnail */
@@ -44,7 +45,8 @@
 /* Headline */
 .doctor-cures__headline {
   font-size: 0.75rem;
-  margin: 0 0 0.25rem;
+  margin-top: 10px;
+
   color: #000;
   font-weight: 600;
   text-overflow: ellipsis;
@@ -70,7 +72,7 @@
 }
 /* Preview text */
 .doctor-cures__paragraph {
-  font-size: 0.625rem;
+  font-size: 0.75rem;
   color: #828282;
   line-height: 1.5;
   margin: 0;
@@ -150,16 +152,16 @@
 
   .doctor-cures__headline {
     margin-top: 5px;
-    font-size: 1.125rem;
+    font-size: 1rem;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    max-width:500px
+    max-width: 500px;
   }
 
   .doctor-cures__paragraph {
-    font-size: 1rem;
-    margin-top: 2px;
+    font-size: 0.95rem;
+    margin-top: 4px;
   }
 
   .doctor-cures__title {

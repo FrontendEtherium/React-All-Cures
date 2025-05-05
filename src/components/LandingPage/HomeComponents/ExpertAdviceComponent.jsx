@@ -19,7 +19,6 @@ export default function ExpertAdviceComponent() {
             <div className="expert-advice__wrapper">
               <ReactPlayer
                 url={url}
-                
                 muted
                 loop={false}
                 controls

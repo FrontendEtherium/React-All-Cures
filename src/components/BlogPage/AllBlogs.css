@@ -1,0 +1,208 @@
+.allblogs {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Section titles */
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 1.5rem 1rem 0.75rem;
+}
+
+/* Recent Cures grid */
+.recent-cures .recent-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  padding: 0 1rem;
+}
+.recent-item.main {
+  grid-column: 1 / -1;
+}
+@media (min-width: 768px) {
+  .recent-cures .recent-grid {
+    grid-template-columns: 2fr repeat(2, 1fr);
+    grid-template-areas:
+      "main sec1 sec2"
+      "main sec3 sec4";
+    grid-auto-rows: 200px;
+  }
+  .recent-item.main {
+    grid-area: main;
+  }
+  .recent-item.sec1 {
+    grid-area: sec1;
+  }
+  .recent-item.sec2 {
+    grid-area: sec2;
+  }
+  .recent-item.sec3 {
+    grid-area: sec3;
+  }
+  .recent-item.sec4 {
+    grid-area: sec4;
+  }
+}
+
+.recent-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+}
+.recent-item__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.recent-item__info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  padding: 1rem;
+}
+.recent-item__meta {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+.recent-item__title {
+  margin: 0.25rem 0;
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+.recent-item__preview {
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* Cure grid */
+.cure-grid__list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  padding: 0 1rem;
+}
+@media (min-width: 768px) {
+  .cure-grid__list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.cure-card {
+  text-decoration: none;
+  color: inherit;
+}
+.cure-card__image img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.cure-card__info {
+  padding: 0.5rem 0;
+}
+.cure-card__title {
+  font-size: 1rem;
+  margin: 0.25rem 0;
+  font-weight: 500;
+}
+.cure-card__preview {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  padding: 0 1rem;
+}
+.pag-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  color: #007bff;
+}
+.pag-btn.current {
+  font-weight: bold;
+  text-decoration: underline;
+}
+.pag-ellipsis {
+  font-size: 1rem;
+}
+
+/* Experts section */
+.experts {
+  margin-top: 2rem;
+  padding-bottom: 2rem;
+}
+.experts__mobile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  padding: 0 1rem;
+}
+.experts__desktop-slider {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .experts__mobile-grid {
+    display: none;
+  }
+  .experts__desktop-slider {
+    display: block;
+    padding: 0 1rem;
+  }
+}
+.expert-card {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.expert-card__image {
+  position: relative;
+}
+.expert-card__main-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.expert-card__avatar {
+  position: absolute;
+  bottom: -16px;
+  left: 1rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+.expert-card__info {
+  padding: 1.5rem 1rem 1rem;
+}
+.expert-card__title {
+  font-size: 1rem;
+  margin: 0;
+  font-weight: 500;
+}
+.expert-card__author {
+  font-size: 0.85rem;
+  color: #888;
+  margin: 0.25rem 0;
+}
+.expert-card__preview {
+  font-size: 0.85rem;
+  color: #555;
+  margin-top: 0.5rem;
+}

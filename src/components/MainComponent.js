@@ -88,6 +88,7 @@ import Bookings from "./Profile/Bookings.js";
 
 import DoctorConnect from "./LandingPage/DoctorConnect.js";
 import DoctorLandingPage from "./LandingPage/DoctorLandingPage.js";
+import AllBlogs from "./BlogPage/AllBlogs.js";
 
 function Main(props) {
   const history = useHistory();
@@ -171,6 +172,7 @@ const Routes = (props) => {
         />
 
         <Route exact path="/doctor" component={DoctorLandingPage} />
+        <Route exact path="/all-cures" component={AllBlogs} />
 
         {/* Health a to z Page */}
 

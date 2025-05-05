@@ -3,7 +3,6 @@ import { imgKitImagePath } from "../../image-path";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faSearch,
   faUser,
   faBars,
   faTimes,
@@ -33,7 +32,7 @@ const NAV_ITEMS = [
       { to: "/doctor-connect/persian", label: "Persian" },
     ],
   },
-  { to: "/blogs", label: "Cures" },
+  { to: "/all-cures", label: "Cures" },
 ];
 
 export default function UpdatedHeader() {

@@ -27,8 +27,8 @@
 
 .expert-advice__wrapper {
   position: relative;
-  width: 100%;
- 
+  width: 80%;
+
   overflow: hidden;
   border-radius: 8px;
   background: #000;
@@ -55,6 +55,9 @@
 @media (min-width: 768px) {
   .expert-advice__item {
     width: 33.3333%;
+  }
+  .expert-advice__wrapper{
+    height: 450px;
   }
 }
 

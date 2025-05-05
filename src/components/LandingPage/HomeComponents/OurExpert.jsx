@@ -5,6 +5,8 @@ import "./OurExpert.css";
 import { Link } from "react-router-dom";
 import Heart from "../../../assets/img/heart.png";
 import Slider from "react-slick"; // Import react-slick
+import { userAccess } from "../../UserAccess";
+import Test from "../test";
 
 // Slick carousel settings
 const carouselSettings = {
@@ -35,9 +37,10 @@ const carouselSettings = {
   ],
 };
 
-function OurExpert({isMobile}) {
+function OurExpert({ isMobile }) {
   const [docData, setDocData] = useState([]);
   const [loaded, setLoaded] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
 
   useEffect(() => {
     const fetchDoctor = async () => {
@@ -64,41 +67,58 @@ function OurExpert({isMobile}) {
       </div>
     );
   }
-
+  const handleBookAppointment = (videoService, docID) => {
+    if (!userAccess) {
+      setModalShow(true);
+    }
+    if (videoService === 1) {
+    }
+  };
   return (
-    <div className="container">
-      <h1 className="landing-page__title">Meet Our Experts</h1>
-      <Slider {...carouselSettings}>
-        {docData.map((doc) => (
-          <div key={doc.map.docID} className="our-expert_card_container">
-            <Link
-              to={`/doctor/${doc.map.docID}-${doc.map.firstName}-${doc.map.lastName}`}
-              className=""
-              id=""
-            >
-              {doc.map.imgLoc ? (
-                <img
-                  src={`https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-190,h-250,f-webp${doc.map.imgLoc}`}
-                  className="our-expert_image"
-                  loading="lazy"
-                  alt={`${doc.map?.prefix} ${doc.map.firstName} ${doc.map.lastName}`}
-                />
-              ) : (
-                <div className="our-expert_image"></div>
-              )}
-              <h2 className="our-expert_heading">
-                {doc.map?.prefix} {doc.map.firstName} {doc.map.lastName}
-              </h2>
-              <h5 className="our-expert_sub_heading">
-                {doc.map?.medicineType} {doc.map?.hospitalAffliated}{" "}
-                {doc.map?.state}
-              </h5>
-            </Link>
-            <div className="our-expert__button">Book an appointment</div>
-          </div>
-        ))}
-      </Slider>
-    </div>
+    <>
+      <div className="container">
+        <h1 className="landing-page__title">Meet Our Experts</h1>
+        <Slider {...carouselSettings}>
+          {docData.map((doc) => (
+            <div key={doc.map.docID} className="our-expert_card_container">
+              <Link
+                to={`/doctor/${doc.map.docID}-${doc.map.firstName}-${doc.map.lastName}`}
+                className=""
+                id=""
+              >
+                {doc.map.imgLoc ? (
+                  <img
+                    src={`https://ik.imagekit.io/qi0xxmh2w/productimages/tr:w-190,h-250,f-webp${doc.map.imgLoc}`}
+                    className="our-expert_image"
+                    loading="lazy"
+                    alt={`${doc.map?.prefix} ${doc.map.firstName} ${doc.map.lastName}`}
+                  />
+                ) : (
+                  <div className="our-expert_image"></div>
+                )}
+                <h2 className="our-expert_heading">
+                  {doc.map?.prefix} {doc.map.firstName} {doc.map.lastName}
+                </h2>
+                <h5 className="our-expert_sub_heading">
+                  {doc.map?.medicineType} {doc.map?.hospitalAffliated}{" "}
+                  {doc.map?.state} {doc.map?.degDesc}
+                </h5>
+
+                <div
+                  className="our-expert__button"
+                  onClick={() =>
+                    handleBookAppointment(doc.map?.videoService, doc.map?.docID)
+                  }
+                >
+                  Book an appointment
+                </div>
+              </Link>
+            </div>
+          ))}
+        </Slider>
+      </div>
+      <Test show={modalShow} onHide={() => setModalShow(false)} />
+    </>
   );
 }
 

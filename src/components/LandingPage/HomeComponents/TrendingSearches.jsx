@@ -2,42 +2,23 @@ import React, { useEffect, useState } from "react";
 import "./TrendingSearches.css";
 import axios from "axios";
 import { backendHost } from "../../../api-config";
+import { Link } from "react-router-dom";
 
-const defaultItems = [
-  "H5N1 Bird Flu",
-  "Pneumonia",
-  "Diabetes",
-  "Milia",
-  "Measles",
-  "Tuberculosis",
-  "Seasonal Flu",
-  "Influenza",
-];
-
-export default function TrendingSearches({ items = defaultItems, onSelect }) {
-  
-  const [trending, setTrending] = useState(items);
+export default function TrendingSearches({ items, onSelect }) {
+  const [trending, setTrending] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    let isMounted = true; // to avoid state updates after unmount
+    let isMounted = true;
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(
+        const { data } = await axios.get(
           `${backendHost}/data/all/trending/categories`
         );
-        if (!isMounted) return;
 
-        // assume API returns [{ category: "X" }, …]
-        if (Array.isArray(response.data)) {
-          const categories = response.data.map((item) => item.category);
-          setTrending(categories);
-        } else {
-
-          console.warn("Unexpected data shape:", response.data);
-        }
+        setTrending(data);
       } catch (err) {
         console.error("Error loading trending categories:", err);
         if (isMounted) setError(err);
@@ -51,7 +32,7 @@ export default function TrendingSearches({ items = defaultItems, onSelect }) {
     return () => {
       isMounted = false;
     };
-  }, []); // ← empty deps: run once on mount
+  }, []);
 
   if (error) {
     return (
@@ -70,14 +51,16 @@ export default function TrendingSearches({ items = defaultItems, onSelect }) {
           <p className="ts-loading">Loading…</p>
         ) : (
           trending.map((category) => (
-            <button
-              key={category}
-              type="button"
-              className="ts-pill"
-              onClick={() => onSelect?.(category)}
-            >
-              {category}
-            </button>
+            <Link to={`/searchcategory/disease/${category.dc_id}`}>
+              <button
+                key={category}
+                type="button"
+                className="ts-pill"
+                onClick={() => onSelect?.(category)}
+              >
+                {category.category}
+              </button>
+            </Link>
           ))
         )}
       </div>

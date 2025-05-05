@@ -147,7 +147,9 @@ function DoctorCures() {
                 <Link to={`/cure/${item.article_id}-${item.title}`}>
                   <div className="doctor-cures__content">
                     <h2 className="doctor-cures__headline">{item.title}</h2>
-                    <h6>{item.authors_name}</h6>
+                    <h2 className="doctor-cures__docName">
+                      {item.authors_name}
+                    </h2>
                     <p className="doctor-cures__paragraph">{previewText}...</p>
                   </div>
                 </Link>
@@ -194,7 +196,9 @@ function DoctorCures() {
                 <Link to={`/cure/${item.article_id}-${item.title}`}>
                   <div className="doctor-cures__content">
                     <h2 className="doctor-cures__headline">{item.title}</h2>
-                    <h6 className="doctor-cures__docName">{item.authors_name}</h6>
+                    <h6 className="doctor-cures__docName">
+                      {item.authors_name}
+                    </h6>
                     <p className="doctor-cures__paragraph">{previewText}...</p>
                   </div>
                 </Link>
