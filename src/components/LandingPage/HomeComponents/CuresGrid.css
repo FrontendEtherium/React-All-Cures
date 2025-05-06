@@ -41,10 +41,10 @@
 .cures-grid__item {
   position: relative;
   /* background-size: cover; */ /* REMOVE or comment out this line */
-  background-size: cover; /* ADD this line */
-  background-repeat: no-repeat; /* ADD this line */
-  background-position: center; /* Keep this to center the contained image */
-  background-color: #222; /* ADD a background color for empty areas (adjust color as needed) */
+  background-size: cover;
+  background-repeat: no-repeat; 
+  background-position: center; 
+  background-color: #222;
   border-radius: 0.5rem;
   overflow: hidden;
   transition: transform 0.2s ease;
