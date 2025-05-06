@@ -86,7 +86,9 @@ const CuresGrid = () => {
           );
         })}
       </div>
-      <div className="cures-see-all">See all &gt;</div>
+      <Link to="allcures">
+        <div className="featured-blogs__all">See all {">"} </div>
+      </Link>
     </section>
   );
 };

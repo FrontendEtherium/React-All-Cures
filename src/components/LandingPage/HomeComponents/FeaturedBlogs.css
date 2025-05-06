@@ -50,7 +50,8 @@
   margin-top: 10px;
   text-overflow: ellipsis;
   overflow: hidden;
-  white-space: nowrap;
+  white-space: wrap;
+  
 }
 
 /* Preview text */
@@ -60,6 +61,7 @@
   line-height: 1.5;
   margin: 0;
   align-self: baseline;
+  max-width: 200px;
 }
 
 /* “See All” link */
@@ -131,11 +133,15 @@
 
   .featured-blogs__headline {
     font-size: 1rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 
   .featured-blogs__paragraph {
     font-size: 1rem;
     margin-top: 2px;
+    max-width: 300px;
   }
 
   .featured-blogs__title {

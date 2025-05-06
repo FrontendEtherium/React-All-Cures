@@ -12,7 +12,7 @@ function FeaturedBlogs({ isMobile }) {
   const [loaded, setLoaded] = useState(false);
 
   const carouselSettings = {
-    infinite: true, 
+    infinite: true,
 
     slidesToShow: 4,
     slidesToScroll: 1,
@@ -87,7 +87,7 @@ function FeaturedBlogs({ isMobile }) {
 
             // Preview text
             const previewText =
-              contentObj?.blocks?.[0]?.data?.text?.slice(0, 50) ||
+              contentObj?.blocks?.[0]?.data?.text?.slice(0, 58) ||
               "No preview available.";
 
             return (
@@ -151,8 +151,9 @@ function FeaturedBlogs({ isMobile }) {
           })}
         </>
       )}
-
-<div className="featured-blogs__all">See all {">"} </div>
+      <Link to="allcures">
+        <div className="featured-blogs__all">See all {">"} </div>
+      </Link>
     </section>
   );
 }

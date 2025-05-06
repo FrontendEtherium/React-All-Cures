@@ -177,7 +177,7 @@
   border: none;
   cursor: pointer;
   padding: 0.25rem 0.5rem;
-  color: #007bff;
+  color: #00415e;
 }
 .pag-btn.current {
   font-weight: bold;
@@ -301,4 +301,23 @@
 
 .slick-dots li{
   margin:0px !important
+}
+
+.experts__pagination {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.experts__pagination button {
+  background: none;
+  border: none;
+  color: #1d428a;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.experts__pagination button:disabled {
+  opacity: 0.5;
+  cursor: default;
 }

@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { imgKitImagePath } from "../../image-path";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import debounce from "lodash.debounce";
 import { backendHost } from "../../api-config";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
@@ -38,11 +39,28 @@ export default function UpdatedHeader() {
   const [diseaseTitle, setDiseaseTitle] = useState([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const history = useHistory();
+  const navItems = useMemo(() => NAV_ITEMS, []);
+
+  const fetchTitles = useCallback(
+    debounce((query) => {
+      if (query.length < 2) {
+        setDiseaseTitle([]);
+        return;
+      }
+
+      axios
+        .get(`${backendHost}/isearch/combo/${query}`)
+        .then((res) => {
+          setDiseaseTitle(res.data);
+        })
+        .catch((err) => {
+          console.error("Error fetching disease titles", err);
+        });
+    }, 300),
+    []
+  );
   useEffect(() => {
-    axios
-      .get(`${backendHost}/isearch/combo/${article}`)
-      .then((res) => setDiseaseTitle(res.data))
-      .catch((err) => console.error("Error fetching disease titles", err));
+    fetchTitles(article);
   }, [article]);
 
   const handleSearchSubmit = useCallback(
@@ -60,12 +78,14 @@ export default function UpdatedHeader() {
           className="mobile-toggle"
           onClick={() => setMobileMenuOpen((v) => !v)}
           aria-label="Toggle menu"
+          aria-controls="mobile-nav"
+          aria-expanded={mobileMenuOpen}
         >
           <FontAwesomeIcon icon={mobileMenuOpen ? faTimes : faBars} size="lg" />
         </button>
 
         <ul className="nav-links nav-left">
-          {NAV_ITEMS.map((item, idx) => (
+          {navItems.map((item, idx) => (
             <li
               key={item.label}
               className={`nav-item${item.children ? " dropdown" : ""}`}
@@ -112,6 +132,7 @@ export default function UpdatedHeader() {
           <Link to="/" aria-label="Home">
             <img
               src={`${imgKitImagePath}/tr:w-90,f-webp/assets/img/heart.png`}
+              rel="preload"
               alt="All Cures logo"
               className="logo"
             />
@@ -134,15 +155,15 @@ export default function UpdatedHeader() {
                 onChange={(_, v) => setArticle(v || "")}
                 inputValue={article}
                 onInputChange={(_, v) => setArticle(v)}
-                options={article.length >= 1 ? diseaseTitle : []}
-                sx={{ width: 100 }}
-                lg={{ width: 150 }}
+                options={article.length >= 2 ? diseaseTitle : []}
+                sx={{ width: { xs: 100, lg: 150 } }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
                     placeholder="Search Cures"
                     variant="standard"
                     className="text-input"
+                    aria-label="Search Cures"
                   />
                 )}
               />
@@ -150,6 +171,7 @@ export default function UpdatedHeader() {
                 className="btn search-main-btns color-white"
                 id="searchHead"
                 type="submit"
+                aria-label="Submit search"
               >
                 <i className="fas header-search fa-search" id="iconSearch"></i>
               </button>

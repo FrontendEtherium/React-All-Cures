@@ -84,7 +84,7 @@ function CureGrid({ items, isMobile, onNext, onPrev, hasPrev }) {
             : `https://ik.imagekit.io/qi0xxmh2w/productimages/tr:h-400,w-600,f-webp/cures_articleimages//299/default.png`;
 
           return (
-            <div lassName="curesGrid__container">
+            <div className="curesGrid__container">
               <div
                 style={{ backgroundImage: `url(${bgImage})` }}
                 className="curesGrid__image"
@@ -136,14 +136,6 @@ function CureGrid({ items, isMobile, onNext, onPrev, hasPrev }) {
           Next →
         </span>
       </div>
-      {/* <div className="pagination">
-        <button className="pag-btn prev">← Previous</button>
-        <button className="pag-btn current">1</button>
-        <button className="pag-btn">2</button>
-        <button className="pag-btn">3</button>
-        <span className="pag-ellipsis">…</span>
-        <button className="pag-btn next">Next →</button>
-      </div> */}
     </section>
   );
 }
@@ -195,36 +187,69 @@ function ExpertCard({ item }) {
   );
 }
 
-function Experts({ experts }) {
+function Experts({
+  experts,
+  isMobile,
+  expertPage,
+  onPrevExpert,
+  onNextExpert,
+  hasPrevExpert,
+  hasNextExpert,
+}) {
+  const desktopSettings = {
+    infinite: false,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    arrows: true,
+    dots: true,
+    responsive: [
+      { breakpoint: 1200, settings: { slidesToShow: 3 } },
+      { breakpoint: 992, settings: { slidesToShow: 2 } },
+    ],
+  };
+
+  const pageSize = 4;
+  const start = expertPage * pageSize;
+  const mobileSlice = experts.slice(start, start + pageSize);
+
   return (
     <section className="experts container">
       <h2 className="landing-page__title">Hear from Our Experts</h2>
 
-      {/* Mobile static grid */}
-      <div className="experts__mobile-grid">
-        {experts.slice(0, 4).map((e) => (
-          <ExpertCard key={e.id} item={e} />
-        ))}
-      </div>
-
-      {/* Desktop carousel */}
-      <div className="experts__desktop-slider">
-        <Slider
-          infinite={false}
-          slidesToShow={4}
-          slidesToScroll={1}
-          arrows
-          dots={true}
-          responsive={[
-            { breakpoint: 1200, settings: { slidesToShow: 3 } },
-            { breakpoint: 992, settings: { slidesToShow: 2 } },
-          ]}
-        >
-          {experts.map((e) => (
-            <ExpertCard key={e.id} item={e} />
-          ))}
-        </Slider>
-      </div>
+      {isMobile ? (
+        <>
+          <div className="experts__mobile-grid">
+            {mobileSlice.map((e) => (
+              <ExpertCard key={e.id} item={e} />
+            ))}
+          </div>
+          <div className="experts__pagination">
+            <button
+              onClick={onPrevExpert}
+              disabled={!hasPrevExpert}
+              className="cure-grid__prev"
+            >
+              ← Previous
+            </button>
+            <button
+              onClick={onNextExpert}
+              disabled={!hasNextExpert}
+              className="cure-grid__next"
+              style={{ cursor: "pointer" }}
+            >
+              Next →
+            </button>
+          </div>
+        </>
+      ) : (
+        <div className="experts__desktop-slider">
+          <Slider {...desktopSettings}>
+            {experts.map((e) => (
+              <ExpertCard key={e.id} item={e} />
+            ))}
+          </Slider>
+        </div>
+      )}
     </section>
   );
 }
@@ -235,7 +260,10 @@ export default function AllBlogs() {
   const [loaded, setLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [offset, setOffset] = useState(0);
-  const limit = isMobile ? 6 : 12;
+  const [expertPage, setExpertPage] = useState(0);
+  const expertPageSize = 4;
+  const totalExpertPages = Math.ceil(experts.length / expertPageSize);
+  const limit = isMobile ? 7 : 12;
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -275,7 +303,11 @@ export default function AllBlogs() {
   }, [offset, isMobile]);
   const handleNext = () => setOffset((prev) => prev + limit);
   const handlePrev = () => setOffset((prev) => Math.max(prev - limit, 0));
-
+  const handleNextExpert = () =>
+    setExpertPage((p) => Math.min(p + 1, totalExpertPages - 1));
+  const handlePrevExpert = () => setExpertPage((p) => Math.max(p - 1, 0));
+  const hasPrevExpert = expertPage > 0;
+  const hasNextExpert = expertPage < totalExpertPages - 1;
   return (
     <div className="">
       <UpdatedHeader />
@@ -296,7 +328,15 @@ export default function AllBlogs() {
               className="promo-banner"
             />
           </div>
-          <Experts experts={experts} />
+          <Experts
+            experts={experts}
+            isMobile={isMobile}
+            expertPage={expertPage}
+            onNextExpert={handleNextExpert}
+            onPrevExpert={handlePrevExpert}
+            hasPrevExpert={hasPrevExpert}
+            hasNextExpert={hasNextExpert}
+          />
           <SubscriberComponent />
         </>
       ) : (

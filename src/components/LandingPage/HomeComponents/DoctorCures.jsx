@@ -208,7 +208,9 @@ function DoctorCures() {
         </div>
       )}
 
-      <div className="doctor-cures__all">See all {">"} </div>
+      <Link to="allcures">
+        <div className="featured-blogs__all">See all {">"} </div>
+      </Link>
     </section>
   );
 }
