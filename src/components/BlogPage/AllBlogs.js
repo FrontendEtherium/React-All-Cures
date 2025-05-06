@@ -10,17 +10,6 @@ import SubscriberComponent from "../LandingPage/HomeComponents/SubscriberCompone
 import Footer from "../Footer/Footer";
 import { imgKitImagePath } from "../../image-path";
 import Heart from "../../assets/img/heart.png";
-// Helper: build image URL
-const buildImage = (item, height = 250, width = 300) => {
-  const imgLoc = item.content_location || "";
-  const isCustom =
-    imgLoc.includes("cures_articleimages") && imgLoc.endsWith(".json");
-  if (isCustom) {
-    const path = imgLoc.replace("json", "png").split("/webapps/")[1];
-    return `https://ik.imagekit.io/qi0xxmh2w/productimages/tr:h-${height},w-${width},f-webp/${path}`;
-  }
-  return `https://ik.imagekit.io/qi0xxmh2w/productimages/tr:h-${height},w-${width},f-webp/cures_articleimages//299/default.png`;
-};
 
 // Helper: extract preview text
 const getPreview = (raw) => {
@@ -78,7 +67,7 @@ function RecentCures({ items }) {
   );
 }
 
-function CureGrid({ items, isMobile }) {
+function CureGrid({ items, isMobile, onNext, onPrev, hasPrev }) {
   const displayItem = isMobile ? items.slice(0, 6) : items;
   return (
     <section className="cure-grid container">
@@ -119,6 +108,33 @@ function CureGrid({ items, isMobile }) {
             </div>
           );
         })}
+      </div>
+      <div
+        className="cure-grid__pagination"
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "1rem",
+        }}
+      >
+        {hasPrev ? (
+          <span
+            className="cure-grid__prev"
+            style={{ cursor: "pointer" }}
+            onClick={onPrev}
+          >
+            ← Previous
+          </span>
+        ) : (
+          <span /> // empty to keep spacing
+        )}
+        <span
+          className="cure-grid__next"
+          style={{ cursor: "pointer" }}
+          onClick={onNext}
+        >
+          Next →
+        </span>
       </div>
       {/* <div className="pagination">
         <button className="pag-btn prev">← Previous</button>
@@ -198,7 +214,7 @@ function Experts({ experts }) {
           slidesToShow={4}
           slidesToScroll={1}
           arrows
-          dots={false}
+          dots={true}
           responsive={[
             { breakpoint: 1200, settings: { slidesToShow: 3 } },
             { breakpoint: 992, settings: { slidesToShow: 2 } },
@@ -218,6 +234,8 @@ export default function AllBlogs() {
   const [experts, setExperts] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [offset, setOffset] = useState(0);
+  const limit = isMobile ? 6 : 12;
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -233,11 +251,11 @@ export default function AllBlogs() {
     async function fetchArticles() {
       try {
         const [curesRes, expertsRes] = await Promise.all([
-          axios.get(`${backendHost}/article/allkv?limit=12`, {
-            headers,
-            signal,
-          }),
-          axios.get(`${backendHost}/article/allkvfeatured`, {
+          axios.get(
+            `${backendHost}/article/allkv?limit=${limit}&offset=${offset}`,
+            { headers, signal }
+          ),
+          axios.get(`${backendHost}/article/allkvfeatured?limit=24`, {
             headers,
             signal,
           }),
@@ -247,18 +265,16 @@ export default function AllBlogs() {
         setExperts(expertsRes.data);
         setLoaded(true);
       } catch (err) {
-        // ignore abort errors
         if (axios.isCancel(err) || err.name === "CanceledError") return;
         console.error("Failed to fetch articles:", err);
       }
     }
 
     fetchArticles();
-
-    return () => {
-      controller.abort();
-    };
-  }, []);
+    return () => controller.abort();
+  }, [offset, isMobile]);
+  const handleNext = () => setOffset((prev) => prev + limit);
+  const handlePrev = () => setOffset((prev) => Math.max(prev - limit, 0));
 
   return (
     <div className="">
@@ -266,7 +282,13 @@ export default function AllBlogs() {
       {loaded ? (
         <>
           <RecentCures items={items} isMobile={isMobile} />
-          <CureGrid items={items} isMobile={isMobile} />
+          <CureGrid
+            items={items}
+            isMobile={isMobile}
+            onNext={handleNext}
+            onPrev={handlePrev}
+            hasPrev={offset > 0}
+          />
           <div>
             <img
               src={`${imgKitImagePath}/assets/img/bannersdestopmobiles-01.jpg`}

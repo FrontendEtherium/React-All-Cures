@@ -297,3 +297,8 @@
     font-size: 0.75rem;
   }
 }
+
+
+.slick-dots li{
+  margin:0px !important
+}

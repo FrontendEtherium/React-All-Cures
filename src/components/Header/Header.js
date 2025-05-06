@@ -2,11 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { imgKitImagePath } from "../../image-path";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUser,
-  faBars,
-  faTimes,
-} from "@fortawesome/free-solid-svg-icons";
+import { faUser, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { backendHost } from "../../api-config";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -32,7 +28,7 @@ const NAV_ITEMS = [
       { to: "/doctor-connect/persian", label: "Persian" },
     ],
   },
-  { to: "/all-cures", label: "Cures" },
+  { to: "/allcures", label: "Cures" },
 ];
 
 export default function UpdatedHeader() {

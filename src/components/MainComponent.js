@@ -172,7 +172,7 @@ const Routes = (props) => {
         />
 
         <Route exact path="/doctor" component={DoctorLandingPage} />
-        <Route exact path="/all-cures" component={AllBlogs} />
+        <Route exact path="/allcures" component={AllBlogs} />
 
         {/* Health a to z Page */}
 

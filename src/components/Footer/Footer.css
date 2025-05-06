@@ -1,15 +1,17 @@
-/* ---------- Top section ---------- */
+/* src/components/Footer.css */
+
+/* ── Top section common styles ── */
 .footer-top {
   background-color: #1d428a;
+}
+.footer-top {
   padding: 60px 0;
 }
-
-/* Logo */
-.footer-top .brand-icon {
+.footer-brand .brand-icon {
   width: 40px;
   margin-right: 8px;
 }
-.footer-top .brand-text {
+.footer-brand .brand-text {
   font-size: 18px;
   font-weight: bold;
   color: #fff;
@@ -28,11 +30,18 @@
   color: #c3d8fd;
 }
 
+/* “Quick Links” heading */
+.quick-links-heading {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 12px;
+}
+
 /* Download heading */
 .download-heading {
   font-size: 16px;
   font-weight: 500;
-  margin-bottom: 12px;
   color: #fff;
 }
 
@@ -53,7 +62,7 @@
   opacity: 0.7;
 }
 
-/* ---------- Bottom section ---------- */
+/* ── Bottom section ── */
 .footer-bottom {
   background-color: #e1e1e1;
   padding: 20px 0;
@@ -64,14 +73,26 @@
   line-height: 1.5;
 }
 
-/* ---------- Responsive tweaks ---------- */
-@media (max-width: 767.98px) {
-  /* Center every column on mobile */
-  .footer-top .row > [class*="col-"] {
-    text-align: center !important;
-  }
-  /* Reduce top padding on very small */
+/* ── Responsive tweaks ── */
+@media (max-width: 991.98px) {
+  /* reduce top padding on mobile */
   .footer-top {
     padding: 40px 0;
   }
+  /* centre text in left mobile col */
+  .footer-mobile-left {
+    text-align: center;
+  }
+  /* tighten up link spacing on mobile */
+  .footer-mobile-left .footer-links li,
+  .footer-mobile-right .footer-links li {
+    margin-bottom: 6px;
+  }
 }
+
+@media (max-width: 512px) {
+  .app-badges .badge-img {
+    width: 100px;
+  }
+}
+
