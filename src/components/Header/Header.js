@@ -91,156 +91,164 @@ export default function UpdatedHeader() {
 
   return (
     <>
-      <nav className="nav container" style={{ paddingTop: "0px" }}>
-        <button
-          className="mobile-toggle"
-          onClick={() => setMobileMenuOpen((v) => !v)}
-          aria-label="Toggle menu"
-          aria-controls="mobile-nav"
-          aria-expanded={mobileMenuOpen}
-        >
-          <FontAwesomeIcon icon={mobileMenuOpen ? faTimes : faBars} size="lg" />
-        </button>
+      <div className="nav-container">
+        <nav className="nav " style={{ paddingTop: "0px" }}>
+          <button
+            className="mobile-toggle"
+            onClick={() => setMobileMenuOpen((v) => !v)}
+            aria-label="Toggle menu"
+            aria-controls="mobile-nav"
+            aria-expanded={mobileMenuOpen}
+          >
+            <FontAwesomeIcon
+              icon={mobileMenuOpen ? faTimes : faBars}
+              size="lg"
+            />
+          </button>
 
-        <ul className="nav-links nav-left">
-          {NAV_ITEMS_DESKTOP.map((item, idx) => (
-            <li
-              key={item.label}
-              className={`nav-item${item.children ? " dropdown" : ""}`}
-              onMouseEnter={() => item.children && setOpenIndex(idx)}
-              onMouseLeave={() => item.children && setOpenIndex(null)}
-            >
-              {item.to ? (
-                <Link to={item.to} className="nav-link">
-                  {item.label}
+          <ul className="nav-links nav-left">
+            {NAV_ITEMS_DESKTOP.map((item, idx) => (
+              <li
+                key={item.label}
+                className={`nav-item${item.children ? " dropdown" : ""}`}
+                onMouseEnter={() => item.children && setOpenIndex(idx)}
+                onMouseLeave={() => item.children && setOpenIndex(null)}
+              >
+                {item.to ? (
+                  <Link to={item.to} className="nav-link">
+                    {item.label}
+                  </Link>
+                ) : (
+                  <button
+                    className="nav-link dropdown-toggle"
+                    aria-haspopup
+                    aria-expanded={openIndex === idx}
+                    style={idx === 3 ? { background: "none" } : undefined}
+                    onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
+                  >
+                    {item.label}
+                  </button>
+                )}
+                {item.children && (
+                  <ul
+                    className="dropdown-menu"
+                    style={{
+                      display: openIndex === idx ? "block" : "none",
+                    }}
+                  >
+                    {item.children.map((sub) => (
+                      <li key={sub.label}>
+                        <Link to={sub.to} className="dropdown-item">
+                          {sub.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
+          </ul>
+
+          {/* CENTER LOGO */}
+          <div className="nav-center">
+            <Link to="/" aria-label="Home">
+              <div className="logo-container">
+                <img
+                  src={`${imgKitImagePath}/tr:w-80,f-webp/assets/img/heart.png`}
+                  rel="preload"
+                  alt="All Cures logo"
+                  className="logo"
+                />
+              </div>
+            </Link>
+          </div>
+
+          {/* RIGHT (desktop) */}
+          <ul className="nav-links nav-right">
+            <li className="nav-item nav-left">
+              <Link to="/AboutUs" className="nav-link">
+                Contact Us
+              </Link>
+            </li>
+
+            <li className="nav-item search-wrapper">
+              <form onSubmit={handleSearchSubmit} className="search-form">
+                <Autocomplete
+                  freeSolo
+                  value={article}
+                  onChange={(_, v) => setArticle(v || "")}
+                  inputValue={article}
+                  onInputChange={(_, v) => setArticle(v)}
+                  options={article.length >= 2 ? diseaseTitle : []}
+                  sx={{ width: { xs: 80, s: 100, m: 120, lg: 150 } }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      placeholder="Search Cures"
+                      variant="standard"
+                      className="text-input"
+                      aria-label="Search Cures"
+                    />
+                  )}
+                />
+                <button
+                  className="btn search-main-btns color-white"
+                  id="searchHead"
+                  type="submit"
+                  aria-label="Submit search"
+                >
+                  <i
+                    className="fas header-search fa-search"
+                    id="iconSearch"
+                  ></i>
+                </button>
+              </form>
+            </li>
+            <div className="nav-left-btn">
+              {userAccess ? (
+                <Link
+                  className="btn mr-2 primary-btn-color loginSignbtn color-blue-dark createcure"
+                  to="/article"
+                >
+                  <img
+                    src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/edit_black_48dp.svg`}
+                    alt="create cures"
+                    className="filter-white"
+                    height="30px"
+                  />
                 </Link>
               ) : (
-                <button
-                  className="nav-link dropdown-toggle"
-                  aria-haspopup
-                  aria-expanded={openIndex === idx}
-                  style={idx === 3 ? { background: "none" } : undefined}
-                  onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
-                >
-                  {item.label}
-                </button>
-              )}
-              {item.children && (
-                <ul
-                  className="dropdown-menu"
-                  style={{
-                    display: openIndex === idx ? "block" : "none",
-                  }}
-                >
-                  {item.children.map((sub) => (
-                    <li key={sub.label}>
-                      <Link to={sub.to} className="dropdown-item">
-                        {sub.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
-        </ul>
-
-        {/* CENTER LOGO */}
-        <div className="nav-center">
-          <Link to="/" aria-label="Home">
-            <div className="logo-container">
-              <img
-                src={`${imgKitImagePath}/tr:w-80,f-webp/assets/img/heart.png`}
-                rel="preload"
-                alt="All Cures logo"
-                className="logo"
-              />
-            </div>
-          </Link>
-        </div>
-
-        {/* RIGHT (desktop) */}
-        <ul className="nav-links nav-right">
-          <li className="nav-item nav-left">
-            <Link to="/AboutUs" className="nav-link">
-              Contact Us
-            </Link>
-          </li>
-
-          <li className="nav-item search-wrapper">
-            <form onSubmit={handleSearchSubmit} className="search-form">
-              <Autocomplete
-                freeSolo
-                value={article}
-                onChange={(_, v) => setArticle(v || "")}
-                inputValue={article}
-                onInputChange={(_, v) => setArticle(v)}
-                options={article.length >= 2 ? diseaseTitle : []}
-                sx={{ width: { xs: 80, s: 100, m: 120, lg: 150 } }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    placeholder="Search Cures"
-                    variant="standard"
-                    className="text-input"
-                    aria-label="Search Cures"
-                  />
-                )}
-              />
-              <button
-                className="btn search-main-btns color-white"
-                id="searchHead"
-                type="submit"
-                aria-label="Submit search"
-              >
-                <i className="fas header-search fa-search" id="iconSearch"></i>
-              </button>
-            </form>
-          </li>
-          <div className="nav-left-btn">
-            {userAccess ? (
-              <Link
-                className="btn mr-2 primary-btn-color loginSignbtn color-blue-dark createcure"
-                to="/article"
-              >
-                <img
-                  src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/edit_black_48dp.svg`}
-                  alt="create cures"
-                  className="filter-white"
-                  height="30px"
-                />
-              </Link>
-            ) : (
-              <li className="nav-item">
-                <button
-                  className="login-btn"
-                  aria-label="Log in"
-                  onClick={() => setModalShow(true)}
-                >
-                  {/* <FontAwesomeIcon
+                <li className="nav-item">
+                  <button
+                    className="login-btn"
+                    aria-label="Log in"
+                    onClick={() => setModalShow(true)}
+                  >
+                    {/* <FontAwesomeIcon
                     icon={faUser}
                     className="user-icon"
                     color="white"
                   />
                   Login */}
-                  <img
-                    className="filter-white"
-                    src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/account_circle_black_48dp.svg`}
-                    height="30px"
-                    alt="account"
-                  />
-                </button>
-              </li>
-            )}
-            <ToggleButton
-              userName={Cookies.get("uName")}
-              setModalShow={setModalShow}
-              userAccess={userAccess}
-              logout={logout}
-            />
-          </div>
-        </ul>
-      </nav>
+                    <img
+                      className="filter-white"
+                      src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/account_circle_black_48dp.svg`}
+                      height="30px"
+                      alt="account"
+                    />
+                  </button>
+                </li>
+              )}
+              <ToggleButton
+                userName={Cookies.get("uName")}
+                setModalShow={setModalShow}
+                userAccess={userAccess}
+                logout={logout}
+              />
+            </div>
+          </ul>
+        </nav>
+      </div>
 
       {mobileMenuOpen && (
         <div className="mobile-nav-overlay">
