@@ -26,6 +26,10 @@
   flex-direction: column;
   align-items: center; /* center all children */
   text-align: center;
+  height: 205px;
+}
+.user-icon {
+  font-size: 6.5rem;
 }
 
 .our-expert_image {
@@ -89,11 +93,15 @@
     margin-bottom: 1.5rem;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   }
+  .user-icon {
+    font-size: 14rem;
+  }
 
   .our-expert_card_container {
     width: 30%; /* three per row approximation */
-    max-width: 200px;
+    max-width: 220px;
     padding: 1.25rem;
+    height: 380px;
   }
 
   .our-expert_image {
@@ -119,7 +127,6 @@
 
 @media (min-width: 1024px) {
   .our-expert_card_container {
-  
     max-width: 220px;
   }
 }
@@ -140,4 +147,15 @@
 }
 .slick-next:before {
   color: #00415e !important;
+}
+
+.fallback-icon {
+  width: 180px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  color: #777;
 }

@@ -91,7 +91,7 @@ export default function UpdatedHeader() {
 
   return (
     <>
-      <nav className="nav container">
+      <nav className="nav container" style={{ paddingTop: "0px" }}>
         <button
           className="mobile-toggle"
           onClick={() => setMobileMenuOpen((v) => !v)}

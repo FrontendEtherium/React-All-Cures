@@ -10,9 +10,9 @@ import { ReactComponent as AccessIcon } from "../../../assets/icon/accessible-24
 const FEATURES = [
   {
     Icon: PersonalizedIcon,
-    title: "Personalized Care",
+    title: "Personalized Care For You",
     description:
-      "Expert advice tailored to you through seamless online consultations.",
+      "Expert advice tailored to you through online consultations.",
   },
   {
     Icon: ExpertsIcon,

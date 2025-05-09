@@ -7,7 +7,8 @@ import Heart from "../../../assets/img/heart.png";
 import Slider from "react-slick"; // Import react-slick
 import { userAccess } from "../../UserAccess";
 import Test from "../test";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserMd } from "@fortawesome/free-solid-svg-icons";
 // Slick carousel settings
 const carouselSettings = {
   infinite: true, // Loop through slides
@@ -87,22 +88,38 @@ function OurExpert({ isMobile }) {
               >
                 {doc.map.imgLoc ? (
                   <img
-                    src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-180,h-220,f-webp${doc.map.imgLoc}`}
+                    src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-180,h-220,f-webp${doc.map?.imgLoc}`}
                     className="our-expert_image"
                     loading="lazy"
                     alt={`${doc.map?.prefix} ${doc.map.firstName} ${doc.map.lastName}`}
                   />
                 ) : (
-                  <div className="our-expert_image"></div>
+                  <div
+                    className="our-expert_image"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faUserMd} size="7x" />
+                  </div>
                 )}
                 <h2 className="our-expert_heading">
                   {doc.map?.prefix} {doc.map.firstName} {doc.map.lastName}
                 </h2>
                 <h5 className="our-expert_sub_heading">
-                  {doc.map?.medicineType}{doc.map?.hospitalAffliated}
-               
+                  {doc.map?.medicineType}
+                  {doc.map?.hospitalAffliated}
                 </h5>
-                <h5  className="our-expert_sub_heading1 ">   {`${doc.map?.degDesc}`}</h5>
+                {doc.map?.degDesc ? (
+                  <h5 className="our-expert_sub_heading1 ">
+                    {" "}
+                    {`${doc.map?.degDesc}`}
+                  </h5>
+                ) : (
+                  <h5 className="our-expert_sub_heading1 ">-</h5>
+                )}
 
                 <div
                   className="our-expert__button"

@@ -6,6 +6,8 @@
   align-items: center;
   max-height: 100px;
   z-index: 1;
+  max-width: 1300px;
+  justify-self: center;
 }
 
 .nav-links {

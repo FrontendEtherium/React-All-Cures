@@ -101,7 +101,7 @@ function Home() {
 
       <div>
         <img
-          src={`${imgKitImagePath}/assets/img/bannersdestopmobiles-01.jpg`}
+          src={`${imgKitImagePath}/assets/img/Resizedbannermobdesk2.jpg`}
           alt="Promo Banner"
           className="promo-banner"
         />
