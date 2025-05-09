@@ -1,0 +1,40 @@
+.trending-cures__slider {
+  padding: 0 10px;
+}
+
+.trending-cures__card {
+  padding: 10px;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.trending-cures__image {
+  height: 85px;
+  width: 85px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.trending-cures__heading {
+  text-align: center;
+  color: #000;
+  font-size: 0.625rem;
+  font-weight: 500;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+@media (min-width: 768px) {
+  .trending-cures__image {
+    height: 150px;
+    width: 150px;
+    border-radius: 75px;
+  }
+
+  .trending-cures__heading {
+    font-size: 1.25rem;
+    margin-top: 6px;
+  }
+}

@@ -1,0 +1,32 @@
+.doctor-patient-banner-container {
+  text-align: center;
+  position: relative;
+}
+
+.doctor-patient-banner {
+  max-height: 380px;
+
+  width: 1300px;
+}
+
+.doctor-patient-banner-btn {
+  position: absolute;
+  cursor: pointer;
+  background-color: #00415e;
+  bottom: 45px;
+  left: 68%;
+  border-radius: 30px;
+  border: 2px solid #fff;
+  font-size: 16px;
+}
+.doctor-patient-banner-btn:hover {
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .doctor-patient-banner-btn {
+    padding: 5px;
+    font-size: 8px;
+    bottom: 20px;
+  }
+}

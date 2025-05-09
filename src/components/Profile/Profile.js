@@ -5,7 +5,7 @@ import Rating from "../StarRating";
 import Doct from "../../assets/img/doct.png";
 import "../../assets/healthcare/css/main.css";
 import "../../assets/healthcare/css/responsive.css";
-import "../../assets/healthcare/css/animate.css";
+
 import "../../assets/healthcare/icomoon/style.css";
 import { Container, Button } from "react-bootstrap";
 import axios from "axios";
