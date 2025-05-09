@@ -149,7 +149,7 @@ export default function AllBlogs() {
       <UpdatedHeader />
       {loaded ? (
         <>
-          <div style={{ marginTop: "100px" }}></div>
+          {/* <div style={{ marginTop: "100px" }}></div> */}
           <CuresGrid title={"Recent Cures"} blogPage={true} />
           <div className="">
             <img
