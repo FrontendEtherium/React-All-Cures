@@ -4,7 +4,6 @@ import axios from "axios";
 import { backendHost } from "../../api-config";
 import headers from "../../api-fetch";
 import { Link } from "react-router-dom";
-import Slider from "react-slick";
 import "./AllBlogs.css";
 import SubscriberComponent from "../LandingPage/HomeComponents/SubscriberComponent";
 import Footer from "../Footer/Footer";

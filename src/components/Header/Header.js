@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { imgKitImagePath } from "../../image-path";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
@@ -15,7 +15,6 @@ import "./header.css";
 import { userAccess } from "../UserAccess";
 import { useHistory } from "react-router-dom";
 const NAV_ITEMS = [
-  { to: "/", label: "Home" },
   { to: "/AboutUs", label: "About Us" },
   { to: "/doctor", label: "Consult Now" },
   {
@@ -51,13 +50,69 @@ const NAV_ITEMS_DESKTOP = [
 ];
 
 export default function UpdatedHeader() {
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
   const [openIndex, setOpenIndex] = useState(null);
   const [modalShow, setModalShow] = useState(false);
   const [article, setArticle] = useState("");
   const [diseaseTitle, setDiseaseTitle] = useState([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSubmenu, setActiveSubmenu] = useState(null);
+  const [headerOpacity, setHeaderOpacity] = useState(1);
   const history = useHistory();
   const navItems = useMemo(() => NAV_ITEMS, []);
+
+  // Add scroll handler
+  useEffect(() => {
+    const handleScroll = () => {
+      if (isHomePage) {
+        const scrollPosition = window.scrollY;
+        // Calculate opacity based on scroll position
+        // Start fading after 100px scroll, complete fade at 300px
+
+        setHeaderOpacity(1);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isHomePage]);
+
+  const handleCloseMenu = (e) => {
+    if (e) {
+      e.stopPropagation();
+    }
+    setMobileMenuOpen(false);
+    setActiveSubmenu(null);
+  };
+
+  const toggleMenu = (e) => {
+    if (e) {
+      e.stopPropagation();
+    }
+    setMobileMenuOpen(!mobileMenuOpen);
+    if (mobileMenuOpen) {
+      setActiveSubmenu(null);
+    }
+  };
+
+  // Add click outside handler
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        mobileMenuOpen &&
+        !event.target.closest(".mobile-nav") &&
+        !event.target.closest(".mobile-toggle")
+      ) {
+        handleCloseMenu();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [mobileMenuOpen]);
 
   const fetchTitles = useCallback(
     debounce((query) => {
@@ -91,11 +146,17 @@ export default function UpdatedHeader() {
 
   return (
     <>
-      <div className="nav-container">
-        <nav className="nav " style={{ paddingTop: "0px" }}>
+      <div
+        className={`nav-container ${isHomePage ? "fixed-header" : ""}`}
+        style={{
+          opacity: isHomePage ? headerOpacity : 1,
+          transition: "opacity 0.3s ease-in-out",
+        }}
+      >
+        <nav className="nav" style={{ paddingTop: "0px" }}>
           <button
             className="mobile-toggle"
-            onClick={() => setMobileMenuOpen((v) => !v)}
+            onClick={toggleMenu}
             aria-label="Toggle menu"
             aria-controls="mobile-nav"
             aria-expanded={mobileMenuOpen}
@@ -149,7 +210,6 @@ export default function UpdatedHeader() {
             ))}
           </ul>
 
-          {/* CENTER LOGO */}
           <div className="nav-center">
             <Link to="/" aria-label="Home">
               <div className="logo-container">
@@ -163,7 +223,6 @@ export default function UpdatedHeader() {
             </Link>
           </div>
 
-          {/* RIGHT (desktop) */}
           <ul className="nav-links nav-right">
             <li className="nav-item nav-left">
               <Link to="/AboutUs" className="nav-link">
@@ -253,18 +312,32 @@ export default function UpdatedHeader() {
       {mobileMenuOpen && (
         <div className="mobile-nav-overlay">
           <ul className="mobile-nav">
-            {NAV_ITEMS.map((item) => (
-              <li key={item.label} onClick={() => setMobileMenuOpen(false)}>
+            {NAV_ITEMS.map((item, index) => (
+              <li
+                key={item.label}
+                className={activeSubmenu === index ? "active" : ""}
+              >
                 {item.to ? (
-                  <Link to={item.to}>{item.label}</Link>
+                  <Link to={item.to} onClick={handleCloseMenu}>
+                    {item.label}
+                  </Link>
                 ) : (
-                  <span>{item.label}</span>
+                  <span
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveSubmenu(activeSubmenu === index ? null : index);
+                    }}
+                  >
+                    {item.label}
+                  </span>
                 )}
                 {item.children && (
                   <ul className="mobile-submenu">
                     {item.children.map((sub) => (
                       <li key={sub.label}>
-                        <Link to={sub.to}>{sub.label}</Link>
+                        <Link to={sub.to} onClick={handleCloseMenu}>
+                          {sub.label}
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -272,7 +345,9 @@ export default function UpdatedHeader() {
               </li>
             ))}
             <li>
-              <Link to="/AboutUs">Contact Us</Link>
+              <Link to="/AboutUs" onClick={handleCloseMenu}>
+                Contact Us
+              </Link>
             </li>
           </ul>
         </div>

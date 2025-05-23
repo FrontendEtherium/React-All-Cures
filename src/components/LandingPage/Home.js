@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { imgKitImagePath } from "../../image-path";
 import Header from "../Header/Header";
-
+import { Link, useLocation } from "react-router-dom";
 import FeaturedBlogs from "./HomeComponents/FeaturedBlogs";
 import TrendingCures from "./HomeComponents/TrendingCures";
 import DoctorCures from "./HomeComponents/DoctorCures";
@@ -56,59 +56,57 @@ function Home() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    // Add home-page class to body when component mounts
+    document.body.classList.add("home-page");
+
+    // Remove home-page class when component unmounts
+    return () => {
+      document.body.classList.remove("home-page");
+    };
+  }, []);
+
   return (
     <div>
       <Header />
-      <HomePageCarousel />
+      <div className="main-content">
+        <HomePageCarousel />
+        <TrendingSearches isMobile={isMobile} />
+        <FeaturedBlogs isMobile={isMobile} />
 
-      {/* {ads && ads !== "https://all-cures.com:444All Ads are Served" && (
-        <div className="container d-flex justify-content-center">
+        <Link to="/doctor">
           <img
-            id="left-menu-ad"
-            className="mb-5 ml-1"
-            src={ads}
-            alt="Advertisement"
-            onClick={handleAdClick}
+            src={`${imgKitImagePath}/assets/img/bannersdestop-mobiles-06.jpg`}
+            alt="Promo Banner"
+            className="promo-banner"
           />
-        </div>
-      )} */}
+        </Link>
 
-      <TrendingSearches isMobile={isMobile} />
-      <FeaturedBlogs isMobile={isMobile} />
+        <TrendingCures isMobile={isMobile} />
+        <DoctorCures isMobile={isMobile} />
+        <TrustPartnerSection />
+        <CuresGrid />
+        <Link to="/doctor">
+          <img
+            src={`${imgKitImagePath}/assets/img/bannersdestopmobiles-01.jpg`}
+            alt="Promo Banner"
+            className="promo-banner"
+          />
+        </Link>
+        <OurExpert isMobile={isMobile} />
+        <ExpertAdviceComponent />
 
-      <div className="">
-        <img
-          src={`${imgKitImagePath}/assets/img/bannersdestop-mobiles-06.jpg`}
-          alt="Promo Banner"
-          className="promo-banner"
-        />
+        <Link to="/doctor">
+          <img
+            src={`${imgKitImagePath}/assets/img/Resizedbannermobdesk2.jpg`}
+            alt="Promo Banner"
+            className="promo-banner"
+          />
+        </Link>
+
+        <SubscriberComponent />
+        <Footer />
       </div>
-
-      <TrendingCures isMobile={isMobile} />
-
-      <DoctorCures isMobile={isMobile} />
-      <TrustPartnerSection />
-      <CuresGrid />
-      <div className="">
-        <img
-          src={`${imgKitImagePath}/assets/img/bannersdestopmobiles-01.jpg`}
-          alt="Promo Banner"
-          className="promo-banner"
-        />
-      </div>
-      <OurExpert isMobile={isMobile} />
-      <ExpertAdviceComponent />
-
-      <div>
-        <img
-          src={`${imgKitImagePath}/assets/img/Resizedbannermobdesk2.jpg`}
-          alt="Promo Banner"
-          className="promo-banner"
-        />
-      </div>
-
-      <SubscriberComponent />
-      <Footer />
     </div>
   );
 }

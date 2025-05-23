@@ -63,7 +63,7 @@ function FeaturedBlogs({ isMobile }) {
 
   return (
     <section className="container">
-      <h1 className="landing-page__title">Featured Blogs</h1>
+      <h1 className="landing-page__title">Featured Cures</h1>
       {!isMobile ? (
         <Slider {...carouselSettings}>
           {displayItems.map((item) => {
@@ -80,10 +80,10 @@ function FeaturedBlogs({ isMobile }) {
               imgLoc.includes("cures_articleimages") &&
               imgLoc.endsWith(".json");
             const imageLoc = hasCustom
-              ? `${imageUrl}/tr:w-280,h-180,f-webp/${
+              ? `${imageUrl}/tr:w-275,h-220,f-webp/${
                   imgLoc.replace("json", "png").split("/webapps/")[1]
                 }`
-              : "https://ik.imagekit.io/hg4fpytvry/product-images/tr:h-180,w-280,f-webp/cures_articleimages//299/default.png";
+              : "https://ik.imagekit.io/hg4fpytvry/product-images/tr:h-220,w-275,f-webp/cures_articleimages//299/default.png";
 
             // Preview text
             const previewText =
@@ -123,7 +123,7 @@ function FeaturedBlogs({ isMobile }) {
               imgLoc.includes("cures_articleimages") &&
               imgLoc.endsWith(".json");
             const imageLoc = hasCustom
-              ? `${imagePath}${
+              ? `${imageUrl}/tr:w-275,h-220,f-webp/${
                   imgLoc.replace("json", "png").split("/webapps/")[1]
                 }`
               : "https://ik.imagekit.io/hg4fpytvry/product-images/tr:h-250,w-300,f-webp/cures_articleimages//299/default.png";

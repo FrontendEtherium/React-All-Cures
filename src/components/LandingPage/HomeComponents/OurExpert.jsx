@@ -1,86 +1,121 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+  Suspense,
+} from "react";
 import { backendHost } from "../../../api-config";
 import axios from "axios";
 import "./OurExpert.css";
 import { Link } from "react-router-dom";
 import Heart from "../../../assets/img/heart.png";
-import Slider from "react-slick"; // Import react-slick
+import Slider from "react-slick";
 import { userAccess } from "../../UserAccess";
 import Test from "../test";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserMd } from "@fortawesome/free-solid-svg-icons";
-// Slick carousel settings
-const carouselSettings = {
-  infinite: true, // Loop through slides
-  speed: 700, // Transition speed
-  slidesToShow: 5, // Number of cards to show at once
-  slidesToScroll: 1, // Number of cards to scroll
-  autoplay: false, // Auto-scroll
-  autoplaySpeed: 3000, // Auto-scroll interval
-  arrows: true,
-  pauseOnFocus: true,
+import { imageUrl } from "../../../image-path";
 
-  responsive: [
-    {
-      breakpoint: 1024, // Adjust for smaller screens
-      settings: {
-        slidesToShow: 3,
-        slidesToScroll: 1,
-      },
-    },
-    {
-      breakpoint: 600, // Adjust for mobile
-      settings: {
-        slidesToShow: 3,
-        slidesToScroll: 1,
-      },
-    },
-  ],
-};
-
-function OurExpert({ isMobile }) {
+const OurExpert = React.memo(({ isMobile }) => {
   const [docData, setDocData] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [modalShow, setModalShow] = useState(false);
+  const [error, setError] = useState(null);
+
+  // Memoize carousel settings inside the component
+  const carouselSettings = useMemo(
+    () => ({
+      infinite: true,
+      speed: 700,
+      slidesToShow: 5,
+      slidesToScroll: 1,
+      autoplay: false,
+      autoplaySpeed: 4000,
+      arrows: true,
+      pauseOnFocus: true,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 4,
+            slidesToScroll: 1,
+          },
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1,
+          },
+        },
+      ],
+    }),
+    []
+  );
 
   useEffect(() => {
+    let isMounted = true;
+    const controller = new AbortController();
+
     const fetchDoctor = async () => {
       try {
         const { data } = await axios.get(
-          `${backendHost}/SearchActionController?cmd=getResults&FeaturedDoctors=901,903,905,872,907,923,873,894,885,874,941`
+          `${backendHost}/SearchActionController?cmd=getResults&FeaturedDoctors=901,903,905,872,907,923,873,894,885,874,941`,
+          { signal: controller.signal }
         );
-
-        setDocData(data.map.DoctorDetails.myArrayList);
-        setLoaded(true);
+        if (isMounted) {
+          setDocData(data.map.DoctorDetails.myArrayList);
+          setLoaded(true);
+        }
       } catch (error) {
-        console.error(error);
+        if (error.name !== "CanceledError" && isMounted) {
+          console.error(error);
+          setError(error);
+        }
       }
     };
 
     fetchDoctor();
+
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
   }, []);
 
-  if (!loaded) {
-    return (
-      <div className="loader my-4">
-        <img src={Heart} alt="All Cures Logo" id="heart" />
-      </div>
-    );
-  }
-  const handleBookAppointment = (videoService, docID) => {
+  const handleBookAppointment = useCallback((videoService, docID) => {
     if (!userAccess) {
       setModalShow(true);
     }
     if (videoService === 1) {
+      // Handle video service
     }
-  };
+  }, []);
+
+  if (error) {
+    return (
+      <section className="container" aria-label="Error loading experts">
+        <p>Unable to load experts. Please try again later.</p>
+      </section>
+    );
+  }
+
+  if (!loaded) {
+    return (
+      <section className="loader my-4" aria-label="Loading experts">
+        <img src={Heart} alt="All Cures Logo" id="heart" />
+      </section>
+    );
+  }
+
   return (
-    <>
-      <div className="container">
-        <h1 className="landing-page__title">Meet Our Experts</h1>
+    <section className="container" aria-label="Our Medical Experts">
+      <h1 className="landing-page__title">Meet Our Experts</h1>
+      <Suspense fallback={<div>Loading experts...</div>}>
         <Slider {...carouselSettings}>
           {docData.map((doc) => (
-            <div key={doc.map.docID} className="our-expert_card_container">
+            <article key={doc.map.docID} className="our-expert_card_container">
               <Link
                 to={`/doctor/${doc.map.docID}-${doc.map.firstName}-${doc.map.lastName}`}
                 className=""
@@ -88,10 +123,15 @@ function OurExpert({ isMobile }) {
               >
                 {doc.map.imgLoc ? (
                   <img
-                    src={`https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-180,h-220,f-webp${doc.map?.imgLoc}`}
+                    src={`${imageUrl}/tr:h-220,w-180,f-webp${doc.map?.imgLoc}`}
                     className="our-expert_image"
                     loading="lazy"
-                    alt={`${doc.map?.prefix} ${doc.map.firstName} ${doc.map.lastName}`}
+                    alt={`${doc.map?.prefix} ${doc.map.firstName} ${doc.map.lastName} - ${doc.map?.medicineType}`}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = ""; // Clear src to prevent infinite loop
+                
+                    }}
                   />
                 ) : (
                   <div
@@ -101,6 +141,8 @@ function OurExpert({ isMobile }) {
                       alignItems: "center",
                       justifyContent: "center",
                     }}
+                    role="img"
+                    aria-label={`${doc.map?.prefix} ${doc.map.firstName} ${doc.map.lastName} profile picture`}
                   >
                     <FontAwesomeIcon icon={faUserMd} size="7x" />
                   </div>
@@ -108,17 +150,16 @@ function OurExpert({ isMobile }) {
                 <h2 className="our-expert_heading">
                   {doc.map?.prefix} {doc.map.firstName} {doc.map.lastName}
                 </h2>
-                <h5 className="our-expert_sub_heading">
+                <h3 className="our-expert_sub_heading">
                   {doc.map?.medicineType}
                   {doc.map?.hospitalAffliated}
-                </h5>
+                </h3>
                 {doc.map?.degDesc ? (
-                  <h5 className="our-expert_sub_heading1 ">
-                    {" "}
-                    {`${doc.map?.degDesc}`}
-                  </h5>
+                  <h4 className="our-expert_sub_heading1">
+                    {doc.map?.degDesc}
+                  </h4>
                 ) : (
-                  <h5 className="our-expert_sub_heading1 ">-</h5>
+                  <h4 className="our-expert_sub_heading1">-</h4>
                 )}
 
                 <div
@@ -126,17 +167,30 @@ function OurExpert({ isMobile }) {
                   onClick={() =>
                     handleBookAppointment(doc.map?.videoService, doc.map?.docID)
                   }
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Book appointment with ${doc.map.firstName} ${doc.map.lastName}`}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      handleBookAppointment(
+                        doc.map?.videoService,
+                        doc.map?.docID
+                      );
+                    }
+                  }}
                 >
                   Book an appointment
                 </div>
               </Link>
-            </div>
+            </article>
           ))}
         </Slider>
-      </div>
+      </Suspense>
       <Test show={modalShow} onHide={() => setModalShow(false)} />
-    </>
+    </section>
   );
-}
+});
+
+OurExpert.displayName = "OurExpert";
 
 export default OurExpert;

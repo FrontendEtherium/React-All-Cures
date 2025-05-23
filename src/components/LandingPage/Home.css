@@ -202,10 +202,10 @@ button.active {
 .landing-page__title {
   font-weight: 700;
   font-size: 1.25rem;
-  line-height: 1.4;
+
   color: #000;
   margin-bottom: 0.5rem;
-  margin-top: 0.5rem;
+
 }
 .promo-banner {
   display: block;
@@ -214,6 +214,8 @@ button.active {
   height: 92px;
   padding-top: 10px;
   padding-bottom: 10px;
+
+  
 }
 
 @media (min-width: 768px) {

@@ -1,7 +1,6 @@
 import React from "react";
 import Header from "../Header/Header";
 import "./DoctorConnect.css";
-import Medicine from "../../assets/img/doctorLandingMain.png";
 
 import ValuesSection from "./DoctorConnectComponents/ValuesSection";
 import Footer from "../Footer/Footer";

@@ -11,8 +11,7 @@ const FEATURES = [
   {
     Icon: PersonalizedIcon,
     title: "Personalized Care For You",
-    description:
-      "Expert advice tailored to you through online consultations.",
+    description: "Expert advice tailored to you through online consultations.",
   },
   {
     Icon: ExpertsIcon,
@@ -22,14 +21,12 @@ const FEATURES = [
   {
     Icon: TeleconIcon,
     title: "Rooted in Science & Tradition",
-    description:
-      "Blending ancient healing with modern care.",
+    description: "Blending ancient healing with modern care.",
   },
   {
     Icon: AccessIcon,
     title: "Doctor-Led Wellness Journeys",
-    description:
-      "Certified experts guide your personalized path to healing.",
+    description: "Certified experts guide your personalized path to healing.",
   },
 ];
 
@@ -42,21 +39,33 @@ const TrustPartnerSection = () => (
       Why all-cures.com Is Your Trusted Partner in Holistic Health
     </h2>
     <div
-      style={{
-        backgroundColor: "#f8f9fd",
-        padding: "15px",
-        borderRadius: "12px",
-      }}
+      style={
+        {
+          // backgroundColor: "#f8f9fd",
+          // borderRadius: "12px",
+        }
+      }
     >
       <div className="trust-partner__grid">
         {FEATURES.map(({ Icon, title, description }) => (
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div
+            key={title}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              backgroundColor: "#f8f9fd",
+              padding: "8px",
+              borderRadius: "12px",
+              paddingTop: "10px",
+              paddingBottom: "10px",
+            }}
+          >
             <Icon
               className="trust-partner__icon"
               aria-hidden="true"
               focusable="false"
             />
-            <article key={title} className="trust-partner__card">
+            <article className="trust-partner__card">
               <h3 className="trust-partner__card-title">{title}</h3>
               <p className="trust-partner__card-desc">{description}</p>
             </article>
@@ -64,7 +73,7 @@ const TrustPartnerSection = () => (
         ))}
       </div>
       <p className="trust-partner__footer">
-        For years, we’ve been a trusted holistic health platform, blending
+        For years, we've been a trusted holistic health platform, blending
         alternative medicine with expert care for your well-being.
       </p>
     </div>

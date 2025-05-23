@@ -6,6 +6,18 @@
   text-align: center;
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .subscriber-text {
   font-size: 0.625rem;
   margin-bottom: 1rem;
@@ -22,7 +34,7 @@
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 0.5rem;
+  
 }
 
 .subscriber-input {
@@ -52,6 +64,11 @@
 
 .subscriber-policy {
   font-size: 0.575rem;
+  color: #000;
+  text-align: center;
+}
+.subscriber-policy-footer {
+  font-size: 0.575rem;
   color: #666;
   text-align: center;
 }
@@ -67,8 +84,6 @@
   .subscriber-text {
     font-size: 1rem;
     max-width: 600px;
-    
-
   }
 
   .subscriber-button {
@@ -85,9 +100,24 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    align-items: center;
+   
   }
   .subscriber-policy {
-    font-size: 0.775rem;
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: #000;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+    padding-left: 10px;
+    max-width: 500px;
+  }
+  .subscriber-policy-footer {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: #000;
   }
 }
 

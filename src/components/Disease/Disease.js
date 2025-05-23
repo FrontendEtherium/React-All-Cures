@@ -352,10 +352,11 @@ const Disease = () => {
               </div>
             ) : (
               <button
-                className="btn pl-4 mt-5"
+                className="btn pl-4"
                 id="left-menu-ad"
                 data-toggle="modal"
                 data-target=".bd-example-modal-lg"
+                style={{marginTop:"100px"}}
               >
                 <img
                   className="pl-4"

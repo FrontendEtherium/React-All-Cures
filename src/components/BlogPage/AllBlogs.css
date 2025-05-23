@@ -33,7 +33,7 @@
   background: linear-gradient(
     to top,
     rgba(0, 0, 0, 0.85),
-    rgba(0, 0, 0, 0.2),
+    rgba(0, 0, 0, 0.5),
     transparent
   );
   border-radius: 5px;
@@ -162,10 +162,11 @@
   background: linear-gradient(
     to top,
     rgba(0, 0, 0, 0.85),
-    rgba(0, 0, 0, 0.6),
+    rgba(0, 0, 0, 0.7),
     transparent
   );
   width: 100%;
+  padding-top: 20px;
 }
 .cure-card__title {
   font-size: 0.625rem;
@@ -189,6 +190,9 @@
   }
   .cure-card__title {
     font-size: 1rem;
+  }
+  .cure-card__info {
+    padding-top: 50px;
   }
 }
 

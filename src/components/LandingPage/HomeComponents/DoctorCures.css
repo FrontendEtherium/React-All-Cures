@@ -17,8 +17,8 @@
   display: flex;
   align-items: flex-start;
   flex-shrink: 0;
-  gap: 0.75rem;
-  padding: 10px; /* Add padding for spacing between slides */
+  gap: 0.25rem;
+
   flex-direction: column;
 }
 .doctor-cures__docName {
@@ -30,7 +30,7 @@
 .doctor-cures__image {
   position: relative;
   flex-shrink: 0;
-  width: 170px;
+  width: 90%;
   height: 120px;
   overflow: hidden;
   border-radius: 8px;
@@ -76,9 +76,10 @@
   color: #828282;
   line-height: 1.5;
   margin: 0;
+  max-width: 150px;
 }
 
-/* “See All” link */
+/* "See All" link */
 .doctor-cures__all {
   text-align: right;
   margin-top: 1rem;
@@ -128,6 +129,8 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
+  row-gap: 0.5rem;
+  justify-content: space-between
 }
 /* Desktop: card layout */
 @media (min-width: 768px) {
@@ -136,12 +139,12 @@
     border-radius: 8px;
     background: #fff;
     width: 300px;
-    padding-bottom: 10px;
+
   }
 
   .doctor-cures__image {
-    width: 295px;
-    height: 195px;
+    width: 275px;
+    height: 220px;
     border-radius: 8px 8px;
     object-fit: cover;
   }
@@ -156,12 +159,13 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    max-width: 500px;
+    max-width: 275px;
   }
 
   .doctor-cures__paragraph {
     font-size: 0.95rem;
     margin-top: 4px;
+    max-width: 275px;
   }
 
   .doctor-cures__title {
