@@ -11,6 +11,7 @@ import { imageUrl, imgKitImagePath } from "../../image-path";
 import Heart from "../../assets/img/heart.png";
 import CuresGrid from "../LandingPage/HomeComponents/CuresGrid";
 import DoctorCures from "../LandingPage/HomeComponents/DoctorCures";
+import { Helmet } from "react-helmet";
 
 function CureGrid({ items, isMobile, onNext, onPrev, hasPrev }) {
   const displayItem = isMobile ? items.slice(0, 6) : items;
@@ -84,6 +85,7 @@ function CureGrid({ items, isMobile, onNext, onPrev, hasPrev }) {
     </section>
   );
 }
+
 function formatDate(dateString) {
   const d = new Date(dateString);
   return d.toLocaleDateString(undefined, {
@@ -103,6 +105,7 @@ export default function AllBlogs() {
   const expertPageSize = 4;
   const totalExpertPages = Math.ceil(experts.length / expertPageSize);
   const limit = isMobile ? 7 : 12;
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -140,23 +143,45 @@ export default function AllBlogs() {
     fetchArticles();
     return () => controller.abort();
   }, [offset, isMobile]);
+
   const handleNext = () => setOffset((prev) => prev + limit);
   const handlePrev = () => setOffset((prev) => Math.max(prev - limit, 0));
 
   return (
-    <div className="">
+    <div className="all-blogs-page">
+      <Helmet>
+        <title>All Cures - Health and Wellness Articles</title>
+        <meta
+          name="description"
+          content="Discover expert-written health and wellness articles, cures, and medical advice from qualified healthcare professionals."
+        />
+        <meta
+          name="keywords"
+          content="health articles, wellness, medical advice, cures, healthcare"
+        />
+        <meta
+          property="og:title"
+          content="All Cures - Health and Wellness Articles"
+        />
+        <meta
+          property="og:description"
+          content="Discover expert-written health and wellness articles, cures, and medical advice from qualified healthcare professionals."
+        />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href={window.location.href} />
+      </Helmet>
       <UpdatedHeader />
       {loaded ? (
-        <>
-          {/* <div style={{ marginTop: "100px" }}></div> */}
+        <main>
           <CuresGrid title={"Recent Cures"} blogPage={true} />
-          <div className="">
+          <Link to="/doctor" aria-label="Visit doctor section">
             <img
               src={`${imgKitImagePath}/assets/img/bannersdestop-mobiles-06.jpg`}
-              alt="Promo Banner"
+              alt="Promo Banner - Find a Doctor"
               className="promo-banner"
+              loading="lazy"
             />
-          </div>
+          </Link>
           <CureGrid
             items={items}
             isMobile={isMobile}
@@ -164,22 +189,22 @@ export default function AllBlogs() {
             onPrev={handlePrev}
             hasPrev={offset > 0}
           />
-          <div>
+          <Link to="/doctor" aria-label="Visit doctor section">
             <img
               src={`${imgKitImagePath}/assets/img/bannersdestopmobiles-01.jpg`}
-              alt="Promo Banner"
+              alt="Promo Banner - Doctor Services"
               className="promo-banner"
+              loading="lazy"
             />
-          </div>
+          </Link>
           <DoctorCures blogPage={true} />
           <SubscriberComponent />
-        </>
+        </main>
       ) : (
-        <div className="loader my-4">
+        <div className="loader my-4" role="status" aria-label="Loading content">
           <img src={Heart} alt="All Cures Logo" id="heart" />
         </div>
       )}
-
       <Footer />
     </div>
   );

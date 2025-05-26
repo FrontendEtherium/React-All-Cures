@@ -9,6 +9,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import YouTubeIcon from "@mui/icons-material/YouTube";
+import CopyrightIcon from "@mui/icons-material/Copyright";
 import WhiteHeart from "../../assets/icon/whiteheart.svg";
 
 const CuresData = [
@@ -209,7 +210,8 @@ const Footer = () => (
           >
             <p>
               All rights reserved. Copyright
-              <i className="far fa-copyright fa-1x"></i>2022{" "}
+              <CopyrightIcon style={{ fontSize: "1rem", margin: "0 2px" }} />
+              2022
               <a href="https://etheriumtech.com" rel="noopener noreferrer">
                 Etherium Technologies
               </a>
@@ -283,15 +285,15 @@ const Footer = () => (
             <div className="col-4 footer-mobile-right">
               <ul className="list-unstyled footer-links mb-3">
                 <li>
-                  <Link
-                    to="/privacy-policy"
-                    aria-label="Read our privacy policy"
-                  >
+                  <Link to="/privacy" aria-label="Read our privacy policy">
                     Privacy Policy
                   </Link>
                 </li>
                 <li>
-                  <Link to="/terms" aria-label="Read our terms and conditions">
+                  <Link
+                    to="/privacy"
+                    aria-label="Read our terms and conditions"
+                  >
                     Terms &amp; Conditions
                   </Link>
                 </li>

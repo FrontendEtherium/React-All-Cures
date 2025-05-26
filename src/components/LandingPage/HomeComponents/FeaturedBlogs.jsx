@@ -108,7 +108,7 @@ function FeaturedBlogs({ isMobile }) {
           })}
         </Slider>
       ) : (
-        <>
+        <div style={{display:"flex",flexDirection:"column",gap:"10px"}}> 
           {displayItems.map((item) => {
             let contentObj;
             try {
@@ -149,7 +149,7 @@ function FeaturedBlogs({ isMobile }) {
               </div>
             );
           })}
-        </>
+        </div>
       )}
       <Link to="allcures">
         <div className="featured-blogs__all">See all {">"} </div>

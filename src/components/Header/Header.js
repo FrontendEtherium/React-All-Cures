@@ -2,7 +2,12 @@ import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { imgKitImagePath } from "../../image-path";
 import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import {
+  faUser,
+  faBars,
+  faTimes,
+  faSearch,
+} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import debounce from "lodash.debounce";
 import { backendHost } from "../../api-config";
@@ -136,13 +141,11 @@ export default function UpdatedHeader() {
     fetchTitles(article);
   }, [article]);
 
-  const handleSearchSubmit = useCallback(
-    (e) => {
-      e.preventDefault();
-      history.push(article ? `/searchcures/${article}` : `/searchcures`);
-    },
-    [article, history]
-  );
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    const path = article ? `/searchcures/${article}` : `/searchcures`;
+    window.location.href = path;
+  };
 
   return (
     <>
@@ -235,11 +238,25 @@ export default function UpdatedHeader() {
                 <Autocomplete
                   freeSolo
                   value={article}
-                  onChange={(_, v) => setArticle(v || "")}
+                  onChange={(_, v) => {
+                    setArticle(v || "");
+                    if (v) {
+                      window.location.href = `/searchcures/${v}`;
+                    }
+                  }}
                   inputValue={article}
                   onInputChange={(_, v) => setArticle(v)}
                   options={article.length >= 2 ? diseaseTitle : []}
-                  sx={{ width: { xs: 80, s: 100, m: 120, lg: 150 } }}
+                  sx={{
+                    width: { xs: 80, s: 100, m: 120, lg: 150 },
+                    "& .MuiAutocomplete-listbox": {
+                      fontSize: { xs: "0.875rem", sm: "1rem" },
+                      maxHeight: "200px",
+                    },
+                    "& .MuiAutocomplete-option": {
+                      padding: { xs: "4px 8px", sm: "8px 16px" },
+                    },
+                  }}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -251,15 +268,11 @@ export default function UpdatedHeader() {
                   )}
                 />
                 <button
-                  className="btn search-main-btns color-white"
-                  id="searchHead"
                   type="submit"
-                  aria-label="Submit search"
+                  className="search-button"
+                  aria-label="Search"
                 >
-                  <i
-                    className="fas header-search fa-search"
-                    id="iconSearch"
-                  ></i>
+                  <FontAwesomeIcon icon={faSearch} />
                 </button>
               </form>
             </li>

@@ -57,6 +57,9 @@
 .search-form {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  position: relative;
 }
 .nav-right {
   display: flex;
@@ -224,6 +227,34 @@
   }
   .createcure {
     display: none;
+  }
+  .search-button {
+    padding: 4px;
+    min-width: 28px;
+    min-height: 28px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .search-button svg {
+    width: 1rem;
+    height: 1rem;
+  }
+  .search-form {
+    width: 100%;
+  }
+
+  .MuiAutocomplete-popper {
+    min-width: 180px !important;
+    max-width: 85vw !important;
+  }
+
+  .MuiAutocomplete-listbox {
+    padding: 4px !important;
+  }
+
+  .MuiAutocomplete-option {
+    min-height: 32px !important;
   }
 }
 
@@ -439,7 +470,6 @@ body {
   width: 100%;
 }
 
-
 .header-wrapper {
   position: fixed;
   top: 0;
@@ -467,4 +497,35 @@ body {
 /* Add padding to body only when on home page */
 body.home-page {
   padding-top: 80px;
+}
+
+.search-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #00415e;
+  transition: color 0.2s ease;
+  min-width: 32px;
+  min-height: 32px;
+  width: 32px;
+  height: 32px;
+}
+
+.search-button:hover {
+  color: #002c3e;
+}
+
+.search-button svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+/* Styles for the autocomplete dropdown */
+.MuiAutocomplete-popper {
+  min-width: 200px !important;
+  max-width: 90vw !important;
 }

@@ -24,27 +24,27 @@ const HomePageCarousel = memo(() => {
   const carouselImages = {
     desktop: [
       {
-        src: `${imageUrl}/assets/img/HomePage1.jpg`,
+        src: `${imageUrl}/tr:w-1300,h-380,f-webp/assets/img/desktop-banner002.jpg`,
         alt: "Healthcare Banner 1 - Find the best doctors near you",
         title: "Healthcare Services Banner",
       },
       {
-        src: `${imageUrl}/assets/img/HomePage2.jpg`,
+        src: `${imageUrl}/tr:w-1300,h-380,f-webp/assets/img/desktop-banner001.jpg`,
         alt: "Healthcare Banner 2 - Book online doctor consultation",
         title: "Online Doctor Consultation",
       },
     ],
-    mobile: [
+    mobile: [ {
+      src:`${imageUrl}/tr:f-webp/assets/img/Mobile-banner003.jpg`,
+      alt: "Mobile Healthcare Banner 2",
+      title: "Mobile Doctor Consultation",
+    },
       {
-        src: mobileImage1,
+        src: `${imageUrl}/tr:f-webp/assets/img/Mobile-banner004.jpg`,
         alt: "Mobile Healthcare Banner 1",
         title: "Mobile Healthcare Services",
       },
-      {
-        src: mobileImage2,
-        alt: "Mobile Healthcare Banner 2",
-        title: "Mobile Doctor Consultation",
-      },
+      
     ],
   };
 
