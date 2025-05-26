@@ -80,7 +80,7 @@ export default class AboutUs extends Component{
 }
 }
 function ToggleButton(props) {
-    
+    let [modalShow, setModalShow] = useState(false);  
         return(
           <>
            <div className='container mb-30' style={{fontSize:'.9rem', marginTop:'6rem'}}>As a customer of AllCures, you have the ability to delete your profile.
