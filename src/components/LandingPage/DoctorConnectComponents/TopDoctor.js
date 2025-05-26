@@ -44,7 +44,7 @@ function TopDoctor() {
     <>
       {" "}
       <div className="container">
-        <h2 className="values-section__title">Top Doctors</h2>
+        <h2>Top Doctors</h2>
 
         <div className="grid">
           {doctors.map((doctor) => (

@@ -9,11 +9,6 @@ import { userId } from "../UserId";
 import { userAccess } from "../UserAccess";
 
 import { Container, Button } from "react-bootstrap";
-import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
 import dayjs from "dayjs";
 
 import { subDays, isBefore, addDays } from "date-fns";
@@ -98,9 +93,9 @@ class DocPatientConnect extends Component {
       searchQuery: "",
       showAlert: false,
       appointmentAlert: false,
-      signInAlert:false,
+      signInAlert: false,
       signInAlertDocId: null,
-      amount:null
+      amount: null,
     };
   }
 
@@ -237,10 +232,10 @@ class DocPatientConnect extends Component {
 
   handleProfileClick = () => {
     // Close the modal programmatically
-    const modalElement = document.getElementById('exampleModalCenter');
+    const modalElement = document.getElementById("exampleModalCenter");
     const modalInstance = new window.bootstrap.Modal(modalElement);
     modalInstance.hide();
-  
+
     // Navigate to the doctor's profile
     const { docId } = this.state;
     window.location.href = `/doctor/${docId}`;
@@ -268,14 +263,11 @@ class DocPatientConnect extends Component {
       this.setState({ docId: id }, resolve);
     });
 
+    this.fetchAvailStatus(this.state.docId);
+    this.fetchAppointmentDetails(this.state.docId);
 
-     this.fetchAvailStatus(this.state.docId);
-     this.fetchAppointmentDetails(this.state.docId);
-
-     axios
-     .post(`${backendHost}/video/post/leads?userID=${userId}&docID=${id}`)
-
-  }
+    axios.post(`${backendHost}/video/post/leads?userID=${userId}&docID=${id}`);
+  };
   handleSearchInputChange = (event) => {
     this.setState({
       searchQuery: event.target.value,
@@ -319,7 +311,7 @@ class DocPatientConnect extends Component {
     fetch(`${backendHost}/appointments/get/Slots/14485`)
       .then((res) => res.json())
       .then((json) => {
-        console.log('response amount',json.amount)
+        console.log("response amount", json.amount);
 
         // Extract the totalDates from the JSON response
         const totalDates = json.totalDates;
@@ -345,7 +337,7 @@ class DocPatientConnect extends Component {
         // Set the state of unbookedSlots using the extracted unbooked slots
         this.setState({
           unbookedSlots: unbookedSlots,
-          amount: json.amount
+          amount: json.amount,
         });
       });
   };
@@ -359,14 +351,15 @@ class DocPatientConnect extends Component {
   };
 
   handleSignInAlert = (docID) => {
-    this.setState({ 
+    this.setState({
       signInAlertDocId: docID,
-    signInAlert:true });
-    setTimeout(()=>{
+      signInAlert: true,
+    });
+    setTimeout(() => {
       this.setState({
-        signInAlert:false
-      })
-    },5000)
+        signInAlert: false,
+      });
+    }, 5000);
   };
 
   fetchAvailStatus = (id) => {
@@ -579,14 +572,17 @@ class DocPatientConnect extends Component {
                     className="card shadow-sm mt-2 mb-4 docPatientCard"
                   >
                     <div className="card-body">
-
-                    {(this.state.signInAlert && this.state.signInAlertDocId === d.docID ) &&
-                            <div  className="" style={{width:"50%"}}>
-                            <Alert variant="warning" className="h6 mx-3 text-center">
+                      {this.state.signInAlert &&
+                        this.state.signInAlertDocId === d.docID && (
+                          <div className="" style={{ width: "50%" }}>
+                            <Alert
+                              variant="warning"
+                              className="h6 mx-3 text-center"
+                            >
                               Sign in first to book an Appointment!!!
                             </Alert>
-                            </div>
-                            }
+                          </div>
+                        )}
                       <div className="d-flex align-items-center">
                         <div className="mr-5">
                           <div className="mb-2 bookings">
@@ -604,14 +600,11 @@ class DocPatientConnect extends Component {
                               <button
                                 type="button"
                                 className="btn btn-primary bg-dark"
-                                onClick={() => this.handleSignInAlert(d.docID)
-                                }
+                                onClick={() => this.handleSignInAlert(d.docID)}
                               >
                                 Schedule
                               </button>
                             )}
-
-                          
 
                             {/* <Test
                               show={this.state.modalShow}
@@ -696,13 +689,13 @@ class DocPatientConnect extends Component {
                                       </Link>
                                     </button> */}
 
-<button
-                type="button"
-                className="btn btn-primary"
-                onClick={this.handleProfileClick}
-              >
-                Go to Doctor's Profile
-              </button>
+                                    <button
+                                      type="button"
+                                      className="btn btn-primary"
+                                      onClick={this.handleProfileClick}
+                                    >
+                                      Go to Doctor's Profile
+                                    </button>
                                   </div>
                                 </div>
                               </div>
@@ -921,12 +914,13 @@ class DocPatientConnect extends Component {
                                 </div>
 
                                 <div>
-
                                   {this.state.amount && (
-                                     <p
-                                     className="ml-4 my-2"
-                                     style={{ fontSize: "18px" }}
-                                   >Consultation Fee: Rs {this.state.amount} </p>
+                                    <p
+                                      className="ml-4 my-2"
+                                      style={{ fontSize: "18px" }}
+                                    >
+                                      Consultation Fee: Rs {this.state.amount}{" "}
+                                    </p>
                                   )}
                                   {this.state.selectedDate && (
                                     <p
@@ -989,8 +983,6 @@ class DocPatientConnect extends Component {
                 </div>
               );
             })}
-
-
 
           <Footer />
         </div>

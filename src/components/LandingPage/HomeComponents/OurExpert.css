@@ -26,6 +26,10 @@
   flex-direction: column;
   align-items: center; /* center all children */
   text-align: center;
+  height: 215px;
+}
+.user-icon {
+  font-size: 6.5rem;
 }
 
 .our-expert_image {
@@ -35,7 +39,7 @@
   object-fit: cover;
   border-radius: 8px;
   margin-bottom: 0.75rem; /* space below image */
-  max-height: 100px;
+  max-height: 120px;
 }
 
 .our-expert_heading {
@@ -43,13 +47,23 @@
   color: #00415e;
   margin: 0.5rem 0 0.25rem;
   font-weight: 600;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .our-expert_sub_heading {
   color: #000;
   font-size: 0.375rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.25rem;
   font-weight: 600;
+}
+.our-expert_sub_heading1 {
+  color: #000;
+  font-size: 0.475rem;
+
+  font-weight: 600;
+  margin-bottom: 5px;
 }
 
 .our-expert__button {
@@ -68,6 +82,9 @@
     width: 45%; /* two per row approximation */
     max-width: 180px;
   }
+  .our-expert_sub_heading1 {
+    font-size: 0.675rem;
+  }
 }
 
 @media (min-width: 768px) {
@@ -76,17 +93,22 @@
     margin-bottom: 1.5rem;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   }
+  .user-icon {
+    font-size: 14rem;
+  }
 
   .our-expert_card_container {
     width: 30%; /* three per row approximation */
-    max-width: 200px;
+    max-width: 220px;
     padding: 1.25rem;
+    height: 380px;
   }
 
   .our-expert_image {
-    max-width: 180px;
-    height: 180px;
+    max-width: 220px;
+    height: 220px;
     max-height: 250px;
+    width: 180px;
   }
 
   .our-expert_heading {
@@ -105,23 +127,35 @@
 
 @media (min-width: 1024px) {
   .our-expert_card_container {
-    width: 20%; /* five per row approximation */
     max-width: 220px;
   }
 }
 .slick-prev {
-  left: -3% !important;
+  left: -2% !important;
   z-index: 1;
   color: #00415e !important;
+  transform: none !important;
 }
 .slick-next {
-  right: -3% !important;
+  right: -2% !important;
   z-index: 1;
   color: #00415e !important;
+  transform: none !important;
 }
 .slick-prev:before {
   color: #00415e !important;
 }
 .slick-next:before {
   color: #00415e !important;
+}
+
+.fallback-icon {
+  width: 180px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  color: #777;
 }

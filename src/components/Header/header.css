@@ -1,13 +1,22 @@
 .nav {
+  /* keep it full-width but constrain its max-width */
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto; /* this centers it horizontally */
+
   display: grid;
   grid-template-columns: 2fr 1fr 2fr;
-  position: relative;
   background-color: #fff;
   align-items: center;
-  max-height: 100px;
-  z-index: 9999;
+  max-height: 80px;
 }
-
+.nav-container {
+  width: 100%;
+  height: 80px;
+  background-color: #fff;
+  position: relative;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 .nav-links {
   list-style: none;
   margin: 0;
@@ -16,7 +25,10 @@
   font-weight: 700;
   font-size: 0.825rem;
 }
-
+.user-icon {
+  margin-right: 6px;
+  font-size: 1rem;
+}
 .nav-item {
   position: relative;
 }
@@ -39,12 +51,15 @@
 }
 
 .logo {
-  height: 90px;
-  width: 90px;
+  height: 60px;
+  width: 60px;
 }
 .search-form {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  position: relative;
 }
 .nav-right {
   display: flex;
@@ -68,8 +83,8 @@
 .login-btn {
   background-color: #00415e;
   color: #fff;
-  border-radius: 5px;
-  padding: 8px 12px;
+  border-radius: 50%;
+  padding: 8px 8px;
   gap: 6px;
 }
 
@@ -90,7 +105,13 @@
   float: right;
   list-style: none;
 }
-
+.logo-container {
+  height: 80px;
+  width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .dropdown-toggle {
   border: none;
   cursor: pointer;
@@ -148,8 +169,8 @@
     grid-template-columns: 1fr 1fr 1fr;
   }
   .logo {
-    height: 90px;
-    width: 90px;
+    height: 65px;
+    width: 65px;
   }
   .nav-right {
     gap: 16px;
@@ -166,6 +187,10 @@
   .nav-link {
     font-size: 13px;
   }
+  .logo-container {
+    height: 70px;
+    width: 70px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -181,12 +206,55 @@
     padding: 8px;
   }
   .login-btn {
-    font-size: 0.625rem;
+    font-size: 0.525rem;
+    display: flex;
+    gap: 0px;
+
+    align-items: center;
+    margin-left: 8px;
+  }
+  .user-icon {
+    font-size: 0.525rem;
   }
   .nav-right {
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-end;
     gap: 10px;
+  }
+  .header-drop {
+    height: 15px;
+    width: 15px;
+  }
+  .createcure {
+    display: none;
+  }
+  .search-button {
+    padding: 4px;
+    min-width: 28px;
+    min-height: 28px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .search-button svg {
+    width: 1rem;
+    height: 1rem;
+  }
+  .search-form {
+    width: 100%;
+  }
+
+  .MuiAutocomplete-popper {
+    min-width: 180px !important;
+    max-width: 85vw !important;
+  }
+
+  .MuiAutocomplete-listbox {
+    padding: 4px !important;
+  }
+
+  .MuiAutocomplete-option {
+    min-height: 32px !important;
   }
 }
 
@@ -201,14 +269,15 @@
     font-size: 14px;
   }
   .nav-right {
-    gap: 8px;
+    gap: 2px;
   }
-  .search-wrapper {
+
+  .createcure {
     display: none;
   }
   .logo {
-    height: 80px;
-    width: 80px;
+    height: 40px;
+    width: 40px;
   }
 }
 
@@ -224,41 +293,116 @@
 
 .mobile-nav-overlay {
   position: fixed;
-  top: 0;
+  top: 80px;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.5);
   z-index: 1000;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
+  transition: background-color 0.3s ease;
 }
 
 .mobile-nav {
   list-style: none;
-  padding: 2rem;
+  padding: 1rem;
   background: #fff;
-  border-radius: 8px;
-  width: 80%;
+  width: 60%;
   max-width: 300px;
+  height: auto;
+  max-height: calc(100vh - 80px);
+  margin: 0;
+  overflow-y: auto;
+  transform: translateX(0);
+  transition: transform 0.3s ease;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 8px 0;
+  position: relative;
+  z-index: 1001;
 }
 
-.mobile-nav li {
-  margin: 1rem 0;
+.mobile-toggle {
+  z-index: 1002;
+  position: relative;
+}
+
+.mobile-nav-overlay.closing .mobile-nav {
+  transform: translateX(-100%);
 }
 
 .mobile-nav a,
 .mobile-nav span {
   color: #00415e;
-  font-size: 1.25rem;
+  font-size: 1rem;
   text-decoration: none;
+  display: block;
+  padding: 6px 0;
+  position: relative;
+  transition: color 0.2s ease;
+  cursor: pointer;
+}
+
+.mobile-nav a:active,
+.mobile-nav span:active {
+  background-color: rgba(0, 65, 94, 0.05);
+}
+
+.mobile-nav a::after,
+.mobile-nav span::after {
+  content: "›";
+  position: absolute;
+  right: 0;
+  font-size: 1.2rem;
+  color: #00415e;
+  opacity: 0.7;
+  transition: transform 0.2s ease;
+}
+
+.mobile-nav li.active span::after {
+  content: "▼";
+  font-size: 0.9rem;
+  transform: none;
+}
+
+.mobile-nav a:hover::after,
+.mobile-nav span:hover::after {
+  transform: translateX(3px);
+}
+
+.mobile-nav li.active span:hover::after {
+  transform: none;
 }
 
 .mobile-submenu {
   list-style: none;
   padding-left: 1rem;
   margin-top: 0.5rem;
+  border-left: 2px solid #00415e;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.mobile-nav li.active .mobile-submenu {
+  max-height: 500px;
+}
+
+.mobile-submenu a {
+  font-size: 0.9rem;
+  color: #00415e;
+  opacity: 0.9;
+  padding: 8px 0;
+}
+
+.mobile-submenu a::after {
+  content: "›";
+  position: absolute;
+  right: 0;
+  font-size: 1.1rem;
+  color: #00415e;
+  opacity: 0.7;
 }
 
 .text-input {
@@ -290,11 +434,6 @@
   color: #fff;
 }
 
-.user-icon {
-  margin-right: 6px;
-  font-size: 1rem;
-}
-
 .header-drop {
   background-color: #00415e;
   color: white;
@@ -313,4 +452,80 @@
 .nav-left-btn {
   display: flex;
   flex-direction: row;
+}
+
+.btn-article-search {
+  background-color: #00415e;
+}
+
+/* Add padding to body to prevent content from hiding behind fixed header */
+body {
+  padding-top: 80px; /* Same as header height */
+}
+
+/* Add a wrapper for the main content */
+.main-content-wrapper {
+  margin-top: 80px; /* Same as header height */
+  position: relative;
+  width: 100%;
+}
+
+.header-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 80px;
+  z-index: 1000;
+}
+
+/* Add spacing for content below header */
+body {
+  padding-top: 80px;
+}
+
+/* Fixed header styles for home page only */
+.fixed-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+/* Add padding to body only when on home page */
+body.home-page {
+  padding-top: 80px;
+}
+
+.search-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #00415e;
+  transition: color 0.2s ease;
+  min-width: 32px;
+  min-height: 32px;
+  width: 32px;
+  height: 32px;
+}
+
+.search-button:hover {
+  color: #002c3e;
+}
+
+.search-button svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+/* Styles for the autocomplete dropdown */
+.MuiAutocomplete-popper {
+  min-width: 200px !important;
+  max-width: 90vw !important;
 }

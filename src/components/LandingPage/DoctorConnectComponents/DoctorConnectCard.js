@@ -12,7 +12,7 @@ import "./DoctorConnectCard.css";
 import { imgKitImagePath } from "../../../image-path";
 import { Link } from "react-router-dom";
 function DoctorConnectCard({ doc }) {
-  const imgLoc =  DummyDoc;
+  const imgLoc = doc.imgLoc ? `${imgKitImagePath}/${doc.imgLoc}` : DummyDoc;
   const [showAppointmentModal, setShowAppointmentModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [notAvailable, setNotAvailable] = useState(false);

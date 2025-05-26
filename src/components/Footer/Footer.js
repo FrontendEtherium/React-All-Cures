@@ -5,141 +5,182 @@ import GooglePlay from "../../assets/icon/googleplay.png";
 import AppStore from "../../assets/icon/appstore.png";
 import { imgKitImagePath } from "../../image-path";
 import "./Footer.css";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import YouTubeIcon from "@mui/icons-material/YouTube";
+import CopyrightIcon from "@mui/icons-material/Copyright";
+import WhiteHeart from "../../assets/icon/whiteheart.svg";
+
+const CuresData = [
+  { title: "Ayurveda", medicineType: 1, img: "ayurveda04.png" },
+  { title: "Chinese", medicineType: 4, img: "Chinese04.png" },
+  { title: "Homeopathy", medicineType: 8, img: "Homopathy04.png" },
+  { title: "Unani", medicineType: 2, img: "Unani04.png" },
+  { title: "Japanese", medicineType: 6, img: "Japanese04.png" },
+  { title: "Naturopathy", medicineType: 9, img: "Naturpathy04.png" },
+];
+
+// Social media data moved outside component
+const socialMediaLinks = [
+  {
+    href: "https://www.facebook.com/allcuresinfo",
+    icon: <FacebookIcon style={{ color: "#fff" }} />,
+    label: "Facebook",
+  },
+  {
+    href: "https://www.linkedin.com/company/etherium-technologies/",
+    icon: <LinkedInIcon style={{ color: "#fff" }} />,
+    label: "LinkedIn",
+  },
+  {
+    href: "https://www.youtube.com/@all-cures",
+    icon: <YouTubeIcon style={{ color: "#fff" }} />,
+    label: "YouTube",
+  },
+  {
+    href: "https://www.instagram.com/allcuresinfo/",
+    icon: <InstagramIcon style={{ color: "#fff" }} />,
+    label: "Instagram",
+  },
+];
 
 const Footer = () => (
   <>
-    {/* ── DESKTOP FOOTER (>=992px) ── */}
-    <footer className="d-none d-lg-block">
+    <footer
+      className="d-none d-lg-block"
+      role="contentinfo"
+      aria-label="Main footer"
+    >
       {/* Top blue section */}
       <div className="footer-top text-white">
         <div className="container">
-          <div className="row">
+          <div className="row" style={{ justifyContent: "space-between" }}>
             {/* 1) Logo */}
-            <div className="col-lg-2 mb-4 footer-brand">
+            <div className="col-lg-2 footer-brand">
               <a
                 href="/"
                 className="d-flex align-items-center justify-content-start"
+                style={{ flexDirection: "column" }}
+                aria-label="All Cures Home"
               >
                 <img
-                  src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/heart.png`}
+                  src={WhiteHeart}
+                  style={{
+                    height: "70px",
+                    width: "70px",
+                    marginBottom: "10px",
+                    marginTop: "10px",
+                  }}
                   alt="All Cures Logo"
-                  className="brand-icon"
+                  loading="lazy"
                 />
                 <span className="brand-text">ALL CURES</span>
               </a>
             </div>
 
             {/* 2) About Us */}
-            <div className="col-lg-2 mb-4">
+            <div className="col-lg-2">
               <ul className="list-unstyled footer-links">
                 <li>
-                  <Link to="/about">About Us</Link>
+                  <Link to="/AboutUs" aria-label="Learn more about All Cures">
+                    About Us
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/contact">Contact Us</Link>
+                  <Link to="/AboutUs" aria-label="Contact All Cures team">
+                    Contact Us
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/cures">Cures</Link>
+                  <Link to="/allcures" aria-label="Explore all cures">
+                    Cures
+                  </Link>
                 </li>
               </ul>
             </div>
 
             {/* 3) Ayurveda… */}
-            <div className="col-lg-2 mb-4">
+            <div className="col-lg-2">
               <ul className="list-unstyled footer-links">
-                <li>
-                  <Link to="/ayurveda">Ayurveda</Link>
-                </li>
-                <li>
-                  <Link to="/unani">Unani</Link>
-                </li>
-                <li>
-                  <Link to="/homeopathy">Homeopathy</Link>
-                </li>
-                <li>
-                  <Link to="/naturopathy">Naturopathy</Link>
-                </li>
-                <li>
-                  <Link to="/tcm">TCM</Link>
-                </li>
+                {CuresData.map((cure) => (
+                  <li key={cure.medicineType}>
+                    <Link
+                      to={`/searchmedicine/${cure.title.toLowerCase()}-cures`}
+                      aria-label={`Explore ${cure.title} treatments`}
+                    >
+                      <div style={{ color: "white" }}>{cure.title}</div>
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 
             {/* 4) Privacy & Feedback */}
-            <div className="col-lg-2 mb-4">
+            <div className="col-lg-2">
               <ul className="list-unstyled footer-links">
                 <li>
-                  <Link to="/privacy-policy">Privacy Policy</Link>
+                  <Link to="/privacy" aria-label="Read our privacy policy">
+                    Privacy Policy
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/terms">Terms &amp; Conditions</Link>
+                  <Link
+                    to="/privacy"
+                    aria-label="Read our terms and conditions"
+                  >
+                    Terms &amp; Conditions
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/newsletter">Subscribe to our Newsletter</Link>
-                </li>
-                <li>
-                  <Link to="/feedback">Share your Feedback</Link>
+                  <Link to="/feedback" aria-label="Share your feedback with us">
+                    Share your Feedback
+                  </Link>
                 </li>
               </ul>
             </div>
 
             {/* 5) Downloads + Social */}
-            <div className="col-lg-4 text-left">
+            <div className="col-lg-2">
               <p className="download-heading">Download the All-Cures App:</p>
               <div className="app-badges mb-3">
                 <a
                   href="https://play.google.com/store/apps/details?id=com.allcures"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
+                  aria-label="Download All Cures from Google Play Store"
                 >
                   <img
                     src={GooglePlay}
                     alt="Get it on Google Play"
                     className="badge-img"
+                    loading="lazy"
                   />
                 </a>
                 <a
                   href="https://apps.apple.com/in/app/all-cures/id1659590351"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
+                  aria-label="Download All Cures from Apple App Store"
                 >
                   <img
                     src={AppStore}
                     alt="Download on the App Store"
                     className="badge-img"
+                    loading="lazy"
                   />
                 </a>
               </div>
               <ul className="list-inline social-icons mb-0">
-                {[
-                  {
-                    href: "https://www.facebook.com/All-Cures-100610265834385",
-                    img: "facebook.svg",
-                    alt: "Facebook",
-                  },
-                  {
-                    href: "https://www.linkedin.com/company/etherium-technologies/",
-                    img: "linkedin.svg",
-                    alt: "LinkedIn",
-                  },
-                  {
-                    href: "https://www.youtube.com/channel/UCxxxx",
-                    img: "youtube.svg",
-                    alt: "YouTube",
-                  },
-                  {
-                    href: "https://www.instagram.com/allcuresinfo/",
-                    img: "instagram.svg",
-                    alt: "Instagram",
-                  },
-                ].map((s, i) => (
-                  <li key={i} className="list-inline-item mx-1">
-                    <a href={s.href} target="_blank" rel="noreferrer">
-                      <img
-                        src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/${s.img}`}
-                        alt={s.alt}
-                        className="social-icon"
-                      />
+                {socialMediaLinks.map((item, i) => (
+                  <li key={i} className="list-inline-item mx-2">
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Follow us on ${item.label}`}
+                    >
+                      {item.icon}
                     </a>
                   </li>
                 ))}
@@ -160,25 +201,51 @@ const Footer = () => (
             regarding a medical condition. The website should not be used as a
             source for treatment of any medical condition.
           </p>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-around",
+              fontSize: "12px",
+            }}
+          >
+            <p>
+              All rights reserved. Copyright
+              <CopyrightIcon style={{ fontSize: "1rem", margin: "0 2px" }} />
+              2022
+              <a href="https://etheriumtech.com" rel="noopener noreferrer">
+                Etherium Technologies
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </footer>
 
     {/* ── MOBILE FOOTER (<992px) ── */}
-    <footer className="d-block d-lg-none">
+    <footer
+      className="d-block d-lg-none"
+      role="contentinfo"
+      aria-label="Mobile footer"
+    >
       {/* Top blue section */}
       <div className="footer-top text-white">
         <div className="container">
           <div className="row">
             {/* left col */}
             <div className="col-4 text-center footer-mobile-left">
-              <a href="/" className="d-block mb-3">
+              <a href="/" className="d-block mb-3" aria-label="All Cures Home">
                 <img
-                  src={`${imgKitImagePath}/tr:w-40,f-webp/assets/img/heart.png`}
+                  src={WhiteHeart}
+                  style={{
+                    height: "50px",
+                    width: "50px",
+                    marginBottom: "10px",
+                    marginTop: "10px",
+                  }}
                   alt="All Cures Logo"
-                  className="brand-icon"
+                  loading="lazy"
                 />
-                <div className="brand-text">All-cures</div>
+                <div className="brand-text">All CURES</div>
               </a>
             </div>
 
@@ -187,46 +254,61 @@ const Footer = () => (
               <h5 className="quick-links-heading">Quick Links</h5>
               <ul className="list-unstyled footer-links mb-3">
                 <li>
-                  <Link to="/about">About Us</Link>
+                  <Link to="/AboutUs" aria-label="Learn more about All Cures">
+                    About Us
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/contact">Contact Us</Link>
+                  <Link to="/AboutUs" aria-label="Contact All Cures team">
+                    Contact Us
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/cures">Cures</Link>
+                  <Link to="/cures" aria-label="Explore all cures">
+                    Cures
+                  </Link>
                 </li>
               </ul>
               <ul className="list-unstyled footer-links">
-                <li>
-                  <Link to="/ayurveda">Ayurveda</Link>
-                </li>
-                <li>
-                  <Link to="/unani">Unani</Link>
-                </li>
-                <li>
-                  <Link to="/homeopathy">Homeopathy</Link>
-                </li>
-                <li>
-                  <Link to="/naturopathy">Naturopathy</Link>
-                </li>
-                <li>
-                  <Link to="/tcm">TCM</Link>
-                </li>
+                {CuresData.map((cure) => (
+                  <li key={cure.medicineType}>
+                    <Link
+                      to={`/searchmedicine/${cure.title.toLowerCase()}-cures`}
+                      aria-label={`Explore ${cure.title} treatments`}
+                    >
+                      <div style={{ color: "white" }}>{cure.title}</div>
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
             <div className="col-4 footer-mobile-right">
               <ul className="list-unstyled footer-links mb-3">
                 <li>
-                  <Link to="/privacy-policy">Privacy Policy</Link>
+                  <Link to="/privacy" aria-label="Read our privacy policy">
+                    Privacy Policy
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/terms">Terms &amp; Conditions</Link>
+                  <Link
+                    to="/privacy"
+                    aria-label="Read our terms and conditions"
+                  >
+                    Terms &amp; Conditions
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/newsletter">Subscribe to our Newsletter</Link>
+                  <Link
+                    to="/newsletter"
+                    aria-label="Subscribe to our newsletter"
+                  >
+                    Subscribe to our Newsletter
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/feedback">Share your Feedback</Link>
+                  <Link to="/feedback" aria-label="Share your feedback with us">
+                    Share your Feedback
+                  </Link>
                 </li>
               </ul>
 
@@ -237,55 +319,30 @@ const Footer = () => (
                 <a
                   href="https://play.google.com/store/apps/details?id=com.allcures"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
+                  aria-label="Download All Cures from Google Play Store"
                 >
                   <img
                     src={GooglePlay}
                     alt="Get it on Google Play"
                     className="badge-img"
+                    loading="lazy"
                   />
                 </a>
                 <a
                   href="https://apps.apple.com/in/app/all-cures/id1659590351"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
+                  aria-label="Download All Cures from Apple App Store"
                 >
                   <img
                     src={AppStore}
                     alt="Download on the App Store"
                     className="badge-img"
+                    loading="lazy"
                   />
                 </a>
               </div>
-              <ul className="list-inline social-icons mb-0">
-                {["facebook", "linkedin", "youtube", "instagram"].map(
-                  (name, i) => (
-                    <li key={i} className="list-inline-item mx-1">
-                      <a
-                        href={
-                          {
-                            facebook:
-                              "https://www.facebook.com/All-Cures-100610265834385",
-                            linkedin:
-                              "https://www.linkedin.com/company/etherium-technologies/",
-                            youtube: "https://www.youtube.com/channel/UCxxxx",
-                            instagram:
-                              "https://www.instagram.com/allcuresinfo/",
-                          }[name]
-                        }
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <img
-                          src={`${imgKitImagePath}/tr:w-300,f-webp/assets/img/${name}.svg`}
-                          alt={name}
-                          className="social-icon"
-                        />
-                      </a>
-                    </li>
-                  )
-                )}
-              </ul>
             </div>
           </div>
         </div>

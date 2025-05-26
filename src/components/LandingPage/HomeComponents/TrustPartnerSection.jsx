@@ -10,27 +10,23 @@ import { ReactComponent as AccessIcon } from "../../../assets/icon/accessible-24
 const FEATURES = [
   {
     Icon: PersonalizedIcon,
-    title: "Personalized Care",
-    description:
-      "Get expert healthcare advice tailored to your needs with seamless Online Doctor Consultation.",
+    title: "Personalized Care For You",
+    description: "Expert advice tailored to you through online consultations.",
   },
   {
     Icon: ExpertsIcon,
-    title: "Trusted Experts",
-    description:
-      "Rely on certified professionals specializing in Ayurveda, Unani & natural healing.",
+    title: "Trusted Natural Cure Experts",
+    description: "Certified in global traditional medicine systems.",
   },
   {
     Icon: TeleconIcon,
-    title: "Global Teleconsultation",
-    description:
-      "See what our satisfied customers have to say about their journey to better health with All-Cures.",
+    title: "Rooted in Science & Tradition",
+    description: "Blending ancient healing with modern care.",
   },
   {
     Icon: AccessIcon,
-    title: "Accessible 24×7",
-    description:
-      "Access holistic wellness without financial stress—our services are designed to be affordable and convenient.",
+    title: "Doctor-Led Wellness Journeys",
+    description: "Certified experts guide your personalized path to healing.",
   },
 ];
 
@@ -39,25 +35,37 @@ const TrustPartnerSection = () => (
     className="trust-partner container"
     aria-labelledby="trust-partner-title"
   >
-    <h2  className="landing-page__title">
+    <h2 className="landing-page__title">
       Why all-cures.com Is Your Trusted Partner in Holistic Health
     </h2>
     <div
-      style={{
-        backgroundColor: "#f8f9fd",
-        padding: "15px",
-        borderRadius: "12px",
-      }}
+      style={
+        {
+          // backgroundColor: "#f8f9fd",
+          // borderRadius: "12px",
+        }
+      }
     >
       <div className="trust-partner__grid">
         {FEATURES.map(({ Icon, title, description }) => (
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div
+            key={title}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              backgroundColor: "#f8f9fd",
+              padding: "8px",
+              borderRadius: "12px",
+              paddingTop: "10px",
+              paddingBottom: "10px",
+            }}
+          >
             <Icon
               className="trust-partner__icon"
               aria-hidden="true"
               focusable="false"
             />
-            <article key={title} className="trust-partner__card">
+            <article className="trust-partner__card">
               <h3 className="trust-partner__card-title">{title}</h3>
               <p className="trust-partner__card-desc">{description}</p>
             </article>
@@ -65,7 +73,7 @@ const TrustPartnerSection = () => (
         ))}
       </div>
       <p className="trust-partner__footer">
-        For years, we’ve been a trusted holistic health platform, blending
+        For years, we've been a trusted holistic health platform, blending
         alternative medicine with expert care for your well-being.
       </p>
     </div>

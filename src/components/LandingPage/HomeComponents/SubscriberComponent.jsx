@@ -11,7 +11,8 @@ function SubscriberComponent({ disease = [], cures = [] }) {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState({ show: false, msg: "" });
 
-  const handleSubscribe = () => {
+  const handleSubscribe = (e) => {
+    e.preventDefault();
     if (!isValidPhoneNumber(value)) {
       setAlert({ show: true, msg: "Please enter a valid phone number!" });
       setTimeout(() => setAlert({ show: false, msg: "" }), 5000);
@@ -21,8 +22,8 @@ function SubscriberComponent({ disease = [], cures = [] }) {
 
     // Parse phone number using libphonenumber-js
     const phoneNumber = parsePhoneNumber(value);
-    const countryCode = phoneNumber.countryCallingCode; // e.g., "91" for India
-    const number = phoneNumber.nationalNumber; // e.g., "9876543210"
+    const countryCode = phoneNumber.countryCallingCode;
+    const number = phoneNumber.nationalNumber;
 
     axios
       .post(`${backendHost}/users/subscribe/${number}`, {
@@ -47,34 +48,45 @@ function SubscriberComponent({ disease = [], cures = [] }) {
   };
 
   return (
-    <div className="container">
-      {alert.show && <div className="subscriber-alert">{alert.msg}</div>}
+    <section className="container" aria-label="Newsletter subscription">
+      {alert.show && (
+        <div className="subscriber-alert" role="alert" aria-live="polite">
+          {alert.msg}
+        </div>
+      )}
       <div className="subscriber-upper">
-        <div className="subscriber-text">
+        <p className="subscriber-policy">
           Sign up to receive the latest health updates, prevention tips and a
           weekly digest delivered straight to your inbox!
-        </div>
-        <div className="subscriber-form">
+        </p>
+        <form className="subscriber-form" onSubmit={handleSubscribe}>
+          <label htmlFor="phone-input" className="visually-hidden">
+            Phone Number
+          </label>
           <PhoneInput
+            id="phone-input"
             className="subscriber-input"
             placeholder="Enter your phone number"
             value={value}
             defaultCountry="IN"
             onChange={setValue}
+            aria-label="Phone number"
+            aria-required="true"
           />
           <button
+            type="submit"
             className="subscriber-button"
-            onClick={handleSubscribe}
             disabled={loading}
+            aria-label={loading ? "Subscribing..." : "Subscribe to newsletter"}
           >
             {loading ? "Subscribing..." : "Subscribe"}
           </button>
-        </div>
+        </form>
       </div>
-      <div className="subscriber-policy">
+      <p className="subscriber-policy-footer">
         By signing up, you agree to the terms of use and privacy policy*
-      </div>
-    </div>
+      </p>
+    </section>
   );
 }
 

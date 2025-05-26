@@ -6,6 +6,7 @@ import Heart from "../../../assets/img/heart.png";
 import "./FeaturedBlogs.css";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
+import { imagePath, imageUrl } from "../../../image-path";
 
 function FeaturedBlogs({ isMobile }) {
   const [items, setItems] = useState([]);
@@ -38,10 +39,9 @@ function FeaturedBlogs({ isMobile }) {
   useEffect(() => {
     const getPost = async () => {
       try {
-        const { data } = await axios.get(
-          `${backendHost}/article/allkv?limit=9`,
-          { headers }
-        );
+        const { data } = await axios.get(`${backendHost}/article/allkv/DC`, {
+          headers,
+        });
         setItems(data);
         setLoaded(true);
       } catch (error) {
@@ -63,7 +63,7 @@ function FeaturedBlogs({ isMobile }) {
 
   return (
     <section className="container">
-      <h1 className="landing-page__title">Featured Blogs</h1>
+      <h1 className="landing-page__title">Featured Cures</h1>
       {!isMobile ? (
         <Slider {...carouselSettings}>
           {displayItems.map((item) => {
@@ -80,10 +80,10 @@ function FeaturedBlogs({ isMobile }) {
               imgLoc.includes("cures_articleimages") &&
               imgLoc.endsWith(".json");
             const imageLoc = hasCustom
-              ? `https://ik.imagekit.io/qi0xxmh2w/productimages/tr:h-250,w-300,f-webp/${
+              ? `${imageUrl}/tr:w-275,h-220,f-webp/${
                   imgLoc.replace("json", "png").split("/webapps/")[1]
                 }`
-              : "https://ik.imagekit.io/qi0xxmh2w/productimages/tr:h-250,w-300,f-webp/cures_articleimages//299/default.png";
+              : "https://ik.imagekit.io/hg4fpytvry/product-images/tr:h-220,w-275,f-webp/cures_articleimages//299/default.png";
 
             // Preview text
             const previewText =
@@ -108,7 +108,7 @@ function FeaturedBlogs({ isMobile }) {
           })}
         </Slider>
       ) : (
-        <>
+        <div style={{display:"flex",flexDirection:"column",gap:"10px"}}> 
           {displayItems.map((item) => {
             let contentObj;
             try {
@@ -123,10 +123,10 @@ function FeaturedBlogs({ isMobile }) {
               imgLoc.includes("cures_articleimages") &&
               imgLoc.endsWith(".json");
             const imageLoc = hasCustom
-              ? `https://ik.imagekit.io/qi0xxmh2w/productimages/tr:h-250,w-300,f-webp/${
+              ? `${imageUrl}/tr:w-275,h-220,f-webp/${
                   imgLoc.replace("json", "png").split("/webapps/")[1]
                 }`
-              : "https://ik.imagekit.io/qi0xxmh2w/productimages/tr:h-250,w-300,f-webp/cures_articleimages//299/default.png";
+              : "https://ik.imagekit.io/hg4fpytvry/product-images/tr:h-250,w-300,f-webp/cures_articleimages//299/default.png";
 
             // Preview text
             const previewText =
@@ -149,7 +149,7 @@ function FeaturedBlogs({ isMobile }) {
               </div>
             );
           })}
-        </>
+        </div>
       )}
       <Link to="allcures">
         <div className="featured-blogs__all">See all {">"} </div>

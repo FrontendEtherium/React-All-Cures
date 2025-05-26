@@ -9,35 +9,10 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
 import "./DoctorCures.css";
-import { imgKitImagePath } from "../../../image-path";
-// Custom Arrow Components
-const NextArrow = (props) => {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={`${className} custom-arrow next-arrow`}
-      style={{ ...style, display: "block" }}
-      onClick={onClick}
-    >
-      <ChevronRightIcon fontSize="large" />
-    </div>
-  );
-};
+import { imageUrl, imgKitImagePath } from "../../../image-path";
 
-const PrevArrow = (props) => {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={`${className} custom-arrow prev-arrow`}
-      style={{ ...style, display: "block" }}
-      onClick={onClick}
-    >
-      <ChevronLeftIcon fontSize="large" />
-    </div>
-  );
-};
 
-function DoctorCures() {
+function DoctorCures({ blogPage }) {
   const [items, setItems] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -118,10 +93,10 @@ function DoctorCures() {
               imgLoc.includes("cures_articleimages") &&
               imgLoc.endsWith(".json");
             const imageLoc = hasCustom
-              ? `https://ik.imagekit.io/qi0xxmh2w/productimages/tr:h-250,w-300,f-webp/${
+              ? `${imageUrl}/tr:h-220,w-275,f-webp/${
                   imgLoc.replace("json", "png").split("/webapps/")[1]
                 }`
-              : "https://ik.imagekit.io/qi0xxmh2w/productimages/tr:h-250,w-300,f-webp/cures_articleimages//299/default.png";
+              : "https://ik.imagekit.io/hg4fpytvry/product-images/tr:h-250,w-300,f-webp/cures_articleimages//299/default.png";
 
             // Preview text
             const previewText =
@@ -173,20 +148,20 @@ function DoctorCures() {
               imgLoc.includes("cures_articleimages") &&
               imgLoc.endsWith(".json");
             const imageLoc = hasCustom
-              ? `https://ik.imagekit.io/qi0xxmh2w/productimages/tr:h-110,w-170,f-webp/${
+              ? `https://ik.imagekit.io/hg4fpytvry/product-images/tr:h-160,w-200,f-webp/${
                   imgLoc.replace("json", "png").split("/webapps/")[1]
                 }`
-              : "https://ik.imagekit.io/qi0xxmh2w/productimages/tr:h-250,w-300,f-webp/cures_articleimages//299/default.png";
+              : "https://ik.imagekit.io/hg4fpytvry/product-images/tr:h-250,w-300,f-webp/cures_articleimages//299/default.png";
 
             // Preview text
             const previewText =
-              contentObj?.blocks?.[0]?.data?.text?.slice(0, 50) ||
+              contentObj?.blocks?.[0]?.data?.text?.slice(0, 40) ||
               "No preview available.";
 
             return (
               <div key={item.id} className="doctor-cures__item">
                 <div className="doctor-cures__image">
-                  <img src={imageLoc} alt={item.title} loading="lazy" />
+                  <img src={imageLoc} alt={item.title} loading="lazy" style={{width: "100%"}} />
                   <img
                     src={` ${imgKitImagePath}${item.image_location}`}
                     alt="Doctor"
@@ -208,9 +183,13 @@ function DoctorCures() {
         </div>
       )}
 
-      <Link to="allcures">
-        <div className="featured-blogs__all">See all {">"} </div>
-      </Link>
+      {blogPage ? (
+        ""
+      ) : (
+        <Link to="allcures">
+          <div className="featured-blogs__all">See all {">"} </div>
+        </Link>
+      )}
     </section>
   );
 }
