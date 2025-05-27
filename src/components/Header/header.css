@@ -496,7 +496,7 @@ body {
 
 /* Add padding to body only when on home page */
 body.home-page {
-
+  padding-top: 80px;
 }
 
 .search-button {
