@@ -250,10 +250,16 @@ const Blogpage = (props) => {
         <div className="container cures-search my-4">
           {props.match.params.type ? (
             <>
-              <h1 className="h3 text-capitalize text-center font-weight-bold ">
+              <h1
+                className="h3 text-capitalize text-center font-weight-bold"
+                style={{ fontSize: "clamp(1.25rem, 4vw, 1.75rem)" }}
+              >
                 Cures Related to "{props.match.params.type.toLowerCase()}"
               </h1>
-              <h2 className="text-center h5 mb-4">
+              <h2
+                className="text-center h5 mb-4"
+                style={{ fontSize: "clamp(0.875rem, 3vw, 1.25rem)" }}
+              >
                 Explore Proven Natural Remedies from Trusted Healing Systems
               </h2>
               <nav aria-label="breadcrumb">

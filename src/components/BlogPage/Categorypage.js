@@ -166,10 +166,16 @@ const Categorypage = (props) => {
         {/* Breadcrumb */}
 
         {/* Headings */}
-        <h1 className="h3 text-center font-weight-bold">
+        <h1
+          className="h3 text-center font-weight-bold"
+          style={{ fontSize: "clamp(1.25rem, 4vw, 1.75rem)" }}
+        >
           Cures related to "{getDiseaseName()}"
         </h1>
-        <h2 className="h5 text-center text-muted ">
+        <h2
+          className="h5 text-center text-muted"
+          style={{ fontSize: "clamp(0.875rem, 3vw, 1.25rem)" }}
+        >
           Explore Proven Natural Remedies from Trusted Healing Systems
         </h2>
         <nav aria-label="breadcrumb mb-4">
