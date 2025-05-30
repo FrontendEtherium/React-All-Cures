@@ -1,110 +1,112 @@
-import React, { memo, lazy, Suspense } from "react";
-import "./TrendingCures.css";
-import { imgKitImagePath } from "../../../image-path";
+import React, { useEffect, useState, useCallback, memo } from "react";
+import "./TrendingSearches.css";
+import axios from "axios";
+import { backendHost } from "../../../api-config";
 import { Link } from "react-router-dom";
 
-// Dynamically import Slider to reduce initial bundle size
-const Slider = lazy(() => import("react-slick"));
+const TrendingSearches = memo(({ items, onSelect }) => {
+  const [trending, setTrending] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-
-
-const CuresData = [
-  { title: "Ayurveda", medicineType: 1, img: "ayurveda04.png" },
-  { title: "Chinese", medicineType: 4, img: "Chinese04.png" },
-  { title: "Homeopathy", medicineType: 8, img: "Homopathy04.png" },
-  { title: "Unani", medicineType: 2, img: "Unani04.png" },
-  { title: "Japanese", medicineType: 6, img: "Japanese04.png" },
-  { title: "Naturopathy", medicineType: 9, img: "Naturpathy04.png" },
-];
-
-const sliderSettings = {
-  dots: false,
-  infinite: true,
-  speed: 400,
-  slidesToShow: 6,
-  slidesToScroll: 1,
-  arrows: true,
-  lazyLoad: "ondemand",
-  swipeToSlide: true,
-  touchThreshold: 10,
-  responsive: [
-    {
-      breakpoint: 1024,
-      settings: {
-        slidesToShow: 6,
-      },
-    },
-    {
-      breakpoint: 768,
-      settings: {
-        slidesToShow: 5,
-      },
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        slidesToShow: 4,
-      },
-    },
-  ],
-};
-
-// Preload images
-const preloadImages = () => {
-  CuresData.forEach((cure) => {
-    const img = new Image();
-    img.src = `${imgKitImagePath}/assets/img/${cure.img}`;
-  });
-};
-
-const TrendingCures = memo(() => {
-  React.useEffect(() => {
-    preloadImages();
+  const fetchTrendingCategories = useCallback(async () => {
+    setLoading(true);
+    try {
+      const { data } = await axios.get(
+        `${backendHost}/data/all/trending/categories`,
+        {
+          headers: {
+            "Cache-Control": "max-age=300", // Cache for 5 minutes
+          },
+        }
+      );
+      setTrending(data);
+    } catch (err) {
+      console.error("Error loading trending categories:", err);
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  return (
-    <section className="container" role="region" aria-label="Trending Cures">
-      <h1 className="landing-page__title">Trending Cures</h1>
-      <Suspense
-        fallback={<div className="trending-cures__loading">Loading...</div>}
+  useEffect(() => {
+    let isMounted = true;
+    const controller = new AbortController();
+
+    (async () => {
+      try {
+        await fetchTrendingCategories();
+      } catch (err) {
+        if (isMounted) {
+          setError(err);
+        }
+      }
+    })();
+
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
+  }, [fetchTrendingCategories]);
+
+  const createDiseaseSlug = (category) => {
+    return `${category.dc_id}-${category.category
+      .toLowerCase()
+      .replace(/\s+/g, "-")}`;
+  };
+
+  if (error) {
+    return (
+      <section
+        className="container trending-searches"
+        aria-labelledby="trending-title"
       >
-        <Slider
-          {...sliderSettings}
-          className="trending-cures__slider"
-          aria-label="Trending cures carousel"
-        >
-          {CuresData.map((cure) => (
-            <div
-              key={cure.medicineType}
-              className="trending-cures__card"
-              role="article"
+        <h2 id="trending-title" className="landing-page__title">
+          Trending Searches
+        </h2>
+        <p className="ts-error" role="alert">
+          Failed to load trending searches.
+        </p>
+      </section>
+    );
+  }
+
+  return (
+    <section
+      className="container trending-searches"
+      aria-labelledby="trending-title"
+    >
+      <h2 id="trending-title" className="landing-page__title">
+        Trending Searches
+      </h2>
+      <div className="ts-list" role="list">
+        {loading ? (
+          <p className="ts-loading" aria-live="polite">
+            Loading trending searches...
+          </p>
+        ) : (
+          trending.map((category) => (
+            <Link
+              to={`/searchcategory/disease/${createDiseaseSlug(category)}`}
+              key={category.dc_id}
+              className="ts-link"
             >
-              <Link
-                to={`/searchmedicine/${cure.title.toLowerCase()}-cures`}
-                aria-label={`View ${cure.title} medicines`}
+              <button
+                type="button"
+                className="ts-pill"
+                onClick={() => onSelect?.(category)}
+                aria-label={`Search ${category.category} diseases`}
               >
-                <img
-                  loading="lazy"
-                  width="85"
-                  height="85"
-                  src={`${imgKitImagePath}/assets/img/${cure.img}`}
-                  alt={`${cure.title} medicine type - Traditional healing system`}
-                  className="trending-cures__image"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = `${imgKitImagePath}/assets/img/placeholder.png`;
-                  }}
-                />
-                <div className="trending-cures__heading">{cure.title}</div>
-              </Link>
-            </div>
-          ))}
-        </Slider>
-      </Suspense>
+                {category.category}
+              </button>
+            </Link>
+          ))
+        )}
+      </div>
     </section>
   );
 });
 
-TrendingCures.displayName = "TrendingCures";
+TrendingSearches.displayName = "TrendingSearches";
 
-export default TrendingCures;
+export default TrendingSearches;
