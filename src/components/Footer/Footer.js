@@ -109,6 +109,7 @@ const Footer = () => (
                       color: "#fff",
                       fontSize: "12px",
                       lineHeight: "1.4",
+             
                     }}
                   >
                     Etherium Technologies Private Limited,
@@ -274,9 +275,10 @@ const Footer = () => (
               <div
                 style={{
                   color: "#fff",
-                  fontSize: "10px",
+                  fontSize: "9px",
                   lineHeight: "1.3",
                   marginTop: "10px",
+                  textAlign: "left",
                 }}
               >
                 Etherium Technologies Private Limited,
