@@ -284,7 +284,7 @@ const Routes = (props) => {
         <Route exact path="/searchmedicine" component={Medicinepage} />
 
         <Route
-          path="/searchmedicine/medicinetype/:medicine_type"
+          path="/searchmedicine/medicinetype/:medicineType"
           component={Medicinepage}
         />
 
