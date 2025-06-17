@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import ReactPlayer from "react-player";
-import localVideo from "../../../assets/docVideo.mp4"; // Adjust the path to your local video
+
 import { Link } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import FullscreenIcon from "@mui/icons-material/Fullscreen";

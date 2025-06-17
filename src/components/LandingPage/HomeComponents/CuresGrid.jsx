@@ -107,6 +107,12 @@ const CuresGrid = memo(({ title = "Cures", blogPage }) => {
                     }`
                 : "https://ik.imagekit.io/qi0xxmh2w/productimages/tr:h-100,w-300,f-webp/cures_articleimages//299/default.png";
 
+              // Format title for URL
+              const articleTitle = item.title.replace(
+                new RegExp(" ", "g"),
+                "-"
+              );
+
               return (
                 <div
                   key={item.article_id}
@@ -114,9 +120,7 @@ const CuresGrid = memo(({ title = "Cures", blogPage }) => {
                   style={{ backgroundImage: `url(${imageLoc})` }}
                 >
                   <Link
-                    to={`/cure/${item.article_id}-${encodeURIComponent(
-                      item.title
-                    )}`}
+                    to={`/cure/${item.article_id}-${articleTitle}`}
                     className="cures-grid__link"
                     aria-label={`Read article: ${item.title}`}
                   >

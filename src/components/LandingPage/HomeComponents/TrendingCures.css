@@ -1,95 +1,65 @@
-.ts-list {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 0.75rem;
-
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE/Edge */
-
-  /* Optimize paint/composite */
-  transform: translateZ(0);
+.trending-cures__slider {
+  padding: 0 10px;
   will-change: transform;
-  backface-visibility: hidden;
 }
 
-.ts-list::-webkit-scrollbar {
-  display: none;
-}
-
-.ts-link {
-  text-decoration: none;
-  flex: 0 0 auto;
-}
-
-.ts-pill {
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
-  white-space: nowrap;
-  background-color: #fff;
-  border: 2px solid transparent;
-  border-radius: 9999px;
-  color: #0a2f5a;
-  cursor: pointer;
-
-  /* Optimize transitions */
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-    background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-    color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-
-  background: linear-gradient(white, white) padding-box,
-    linear-gradient(to bottom, #00415e, rgb(17, 16, 17)) border-box;
-
-  /* Hardware acceleration */
+.trending-cures__card {
+  padding-left: 10px;
+  padding-right : 10px;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   transform: translateZ(0);
   backface-visibility: hidden;
 }
 
-.ts-pill:hover,
-.ts-pill:focus {
-  background-color: #0a2f5a;
-
-  transform: translateY(-1px);
-  outline: none;
+.trending-cures__image {
+  height: 85px;
+  width: 85px;
+  border-radius: 50%;
+  object-fit: cover;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
-.ts-pill:active {
-  transform: translateY(0);
-}
-
-.ts-error {
-  color: #dc3545;
+.trending-cures__heading {
   text-align: center;
-  padding: 1rem;
+  color: #000;
+  font-size: 0.625rem;
+  font-weight: 500;
+  margin-top: 3px;
+
 }
 
-.ts-loading {
-  color: #6c757d;
-  text-align: center;
-  padding: 1rem;
+.trending-cures__loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  font-size: 1rem;
+  color: #666;
 }
 
-/* Tablet and up */
 @media (min-width: 768px) {
-  .ts-list {
-    gap: 1rem;
+  .trending-cures__image {
+    height: 150px;
+    width: 150px;
+    border-radius: 75px;
   }
 
-  .ts-pill {
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
+  .trending-cures__heading {
+    font-size: 1.25rem;
+    margin-top: 6px;
   }
 }
 
-/* Reduce motion */
-@media (prefers-reduced-motion: reduce) {
-  .ts-list {
-    scroll-behavior: auto;
-  }
+/* Optimize animations */
+.trending-cures__slider .slick-slide {
+  transition: transform 0.3s ease-out;
+  will-change: transform;
+}
 
-  .ts-pill {
-    transition: none;
-  }
+.trending-cures__slider .slick-track {
+  will-change: transform;
 }

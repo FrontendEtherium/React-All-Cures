@@ -21,6 +21,12 @@ const CuresData = [
   { title: "Naturopathy", medicineType: 9, img: "Naturpathy04.png" },
 ];
 
+// Helper function to create SEO-friendly URL slug
+const createUrlSlug = (medicineType, title) => {
+  const titleSlug = title.toLowerCase().replace(/\s+/g, "-");
+  return `${medicineType}-${titleSlug}`;
+};
+
 // Social media data moved outside component
 const socialMediaLinks = [
   {
@@ -97,12 +103,13 @@ const Footer = () => (
                     Cures
                   </Link>
                 </li>
-                <li className="mt-3">
+                {/* <li className="mt-3">
                   <div
                     style={{
                       color: "#fff",
                       fontSize: "12px",
                       lineHeight: "1.4",
+             
                     }}
                   >
                     Etherium Technologies Private Limited,
@@ -111,7 +118,7 @@ const Footer = () => (
                     <br />
                     Jammu, Jammu and Kashmir 180020
                   </div>
-                </li>
+                </li> */}
               </ul>
             </div>
 
@@ -121,7 +128,10 @@ const Footer = () => (
                 {CuresData.map((cure) => (
                   <li key={cure.medicineType}>
                     <Link
-                      to={`/searchmedicine/medicinetype/${cure.medicineType}`}
+                      to={`/searchmedicine/medicinetype/${createUrlSlug(
+                        cure.medicineType,
+                        cure.title
+                      )}`}
                       aria-label={`Explore ${cure.title} treatments`}
                     >
                       <div style={{ color: "white" }}>{cure.title}</div>
@@ -247,8 +257,8 @@ const Footer = () => (
         <div className="container">
           <div className="row">
             {/* left col */}
-            <div className="col-4 text-center footer-mobile-left">
-              <a href="/" className="d-block mb-3" aria-label="All Cures Home">
+            <div className="col-4 text-center footer-mobile-left ml-4">
+              <a href="/" className="d-flex flex-column mb-3" aria-label="All Cures Home">
                 <img
                   src={WhiteHeart}
                   style={{
@@ -260,14 +270,15 @@ const Footer = () => (
                   alt="All Cures Logo"
                   loading="lazy"
                 />
-                <div className="brand-text">All CURES</div>
+                <div className="text-left brand-text">All CURES</div>
               </a>
-              <div
+              {/* <div
                 style={{
                   color: "#fff",
-                  fontSize: "10px",
+                  fontSize: "9px",
                   lineHeight: "1.3",
                   marginTop: "10px",
+                  textAlign: "left",
                 }}
               >
                 Etherium Technologies Private Limited,
@@ -275,7 +286,7 @@ const Footer = () => (
                 92/6, Trikuta Nagar,
                 <br />
                 Jammu, Jammu and Kashmir 180020
-              </div>
+              </div> */}
             </div>
 
             {/* right col */}
@@ -302,7 +313,10 @@ const Footer = () => (
                 {CuresData.map((cure) => (
                   <li key={cure.medicineType}>
                     <Link
-                      to={`/searchmedicine/${cure.title.toLowerCase()}-cures`}
+                      to={`/searchmedicine/medicinetype/${createUrlSlug(
+                        cure.medicineType,
+                        cure.title
+                      )}`}
                       aria-label={`Explore ${cure.title} treatments`}
                     >
                       <div style={{ color: "white" }}>{cure.title}</div>
