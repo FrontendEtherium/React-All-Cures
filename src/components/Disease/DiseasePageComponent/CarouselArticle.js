@@ -156,7 +156,7 @@ function CarouselArticle({ diseaseConditionId, carouselItems, id }) {
                           }}
                         >
                           <Link
-                            to={`/cure/${j.article_id}`}
+                            to={`/cure/${j.article_id}-${j.title.replace(/\s+/g, "-")}`}
                             className="d-flex justify-content-between align-items-center mr-2 w-100"
                             style={{
                               textDecoration: "none",
