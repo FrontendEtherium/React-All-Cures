@@ -25,7 +25,6 @@ import { imagePath } from "../../image-path";
 import Chat from "./Chat";
 import { Tabs, Tab } from "react-bootstrap";
 
-
 import dayjs from "dayjs";
 
 import DailyIframe from "@daily-co/daily-js";
@@ -225,7 +224,7 @@ class Profile extends Component {
         const redirectURL =
           "https://uat.all-cures.com/paymentRedirection" +
           `?encRequest=${responseObject.encRequest}` +
-          `&accessCode=AVWN42KL59BP42NWPB`;
+          `&accessCode=AVNH05LB56CF25HNFC`;
 
         window.location.href = redirectURL;
       });
@@ -507,7 +506,7 @@ class Profile extends Component {
   };
 
   showRating = (val) => {
-    console.log("Rating")
+    console.log("Rating");
     if (document.getElementById("doctor-avg-rating")) {
       for (let i = 0; i < val; i++) {
         document
@@ -832,12 +831,11 @@ class Profile extends Component {
                               {items.primarySpl}
                             </div>
                             <div className="h5 ">{items.experience}</div>
-                  
-                              <div className="h5 text-capitalize">
-                                <i class="fas fa-hospital pr-1"></i>
-                                {items.hospitalAffiliated} {items.country}
-                              </div>
-                        
+
+                            <div className="h5 text-capitalize">
+                              <i class="fas fa-hospital pr-1"></i>
+                              {items.hospitalAffiliated} {items.country}
+                            </div>
 
                             <div></div>
                           </div>

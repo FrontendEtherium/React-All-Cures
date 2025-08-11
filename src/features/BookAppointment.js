@@ -124,7 +124,7 @@ const AppointmentModal = ({
       localStorage.setItem("encKey", responseObject.encRequest);
       localStorage.setItem("apiResponse", JSON.stringify(response.data));
 
-      const redirectURL = `https://uat.all-cures.com/paymentRedirection?encRequest=${responseObject.encRequest}&accessCode=AVWN42KL59BP42NWPB`;
+      const redirectURL = `https://uat.all-cures.com/paymentRedirection?encRequest=${responseObject.encRequest}&accessCode=AVNH05LB56CF25HNFC`;
       window.location.href = redirectURL;
     } catch (error) {
       console.error("Error while booking appointment:", error);

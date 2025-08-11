@@ -144,7 +144,7 @@ class DocPatientConnect extends Component {
           const redirectURL =
             "https://uat.all-cures.com/paymentRedirection" +
             `?encRequest=${responseObject.encRequest}` +
-            `&accessCode=AVWN42KL59BP42NWPB`; // Your accessCode here
+            `&accessCode=AVNH05LB56CF25HNFC`; // Your accessCode here
 
           // Redirecting to the URL
           window.location.href = redirectURL;
@@ -186,7 +186,7 @@ class DocPatientConnect extends Component {
         // accessCodeInput.setAttribute('type', 'hidden');
         // accessCodeInput.setAttribute('name', 'access_code');
         // accessCodeInput.setAttribute('value', 'AVNH05LB56CF25HNFC');
-        // // accessCodeInput.setAttribute('value', 'AVWN42KL59BP42NWPB');
+        // // accessCodeInput.setAttribute('value', 'AVNH05LB56CF25HNFC');
 
         // // Append input fields to the form
         // form.appendChild(encRequestInput);
