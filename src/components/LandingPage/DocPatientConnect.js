@@ -142,7 +142,7 @@ class DocPatientConnect extends Component {
           }, 6000);
         } else {
           const redirectURL =
-            "https://www.all-cures.com/paymentRedirection" +
+            "https://uat.all-cures.com/paymentRedirection" +
             `?encRequest=${responseObject.encRequest}` +
             `&accessCode=AVWN42KL59BP42NWPB`; // Your accessCode here
 
