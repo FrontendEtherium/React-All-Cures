@@ -223,7 +223,7 @@ class Profile extends Component {
         localStorage.setItem("apiResponse", JSON.stringify(res.data));
 
         const redirectURL =
-          "https://www.all-cures.com/paymentRedirection" +
+          "https://uat.all-cures.com/paymentRedirection" +
           `?encRequest=${responseObject.encRequest}` +
           `&accessCode=AVWN42KL59BP42NWPB`;
 
