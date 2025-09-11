@@ -303,6 +303,7 @@ const AppointmentModal = ({ show, onHide, alertBooking, docId }) => {
     },
     [highlightedDays, unavailableDates]
   );
+  const [currency, setCurrency] = useState("₹");
 
   const fetchAppointmentDetails = useCallback(
     async (date) => {
@@ -320,6 +321,7 @@ const AppointmentModal = ({ show, onHide, alertBooking, docId }) => {
         }
 
         const json = await response.json();
+        setCurrency(json.currency_symbol);
 
         const highlightedDate = json.completelyBookedDates || [];
         setHighlightedDays(highlightedDate);
@@ -817,7 +819,7 @@ const AppointmentModal = ({ show, onHide, alertBooking, docId }) => {
                               className="font-weight-bold appointment-summary-fee"
                               style={{ fontSize: "1.1rem", color: "#f57c00" }}
                             >
-                              ₹{amount}
+                              {currency}{amount}
                             </div>
                           </div>
                         </div>
