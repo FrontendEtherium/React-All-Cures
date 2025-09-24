@@ -20,7 +20,7 @@ import "./custom.css";
 import "./Home.css";
 import HomePageCarousel from "./HomeComponents/HomePageCarousel";
 import TrendingSearches from "./HomeComponents/TrendingSearches";
-
+import allcuresbanner from "../../../src/assets/img/allcuresbanner.jpeg";
 function Home() {
   // const [ads, setAds] = useState("");
   // const [adId, setAdId] = useState("");
@@ -71,7 +71,13 @@ function Home() {
       <Header />
       <div className="main-content">
         <HomePageCarousel />
+
         <TrendingSearches isMobile={isMobile} />
+        <img
+          src={allcuresbanner}
+          alt="Health banner"
+          className="promo-banner-health"
+        />
         <FeaturedBlogs isMobile={isMobile} />
 
         <Link to="/doctor">
@@ -85,7 +91,13 @@ function Home() {
         <TrendingCures isMobile={isMobile} />
         <DoctorCures isMobile={isMobile} />
         <TrustPartnerSection />
+        <img
+          src={allcuresbanner}
+          alt="Health banner"
+          className="promo-banner-health"
+        />
         <CuresGrid />
+    
         <Link to="/doctor">
           <img
             src={`${imgKitImagePath}/assets/img/bannersdestopmobiles-01.jpg`}
