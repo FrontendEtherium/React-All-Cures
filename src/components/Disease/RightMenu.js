@@ -8,7 +8,7 @@ import { Container } from "react-bootstrap";
 import { backendHost } from "../../api-config";
 import Heart from "../../assets/img/heart.png";
 import InlineVideoPlayer from "./DiseasePageComponent/Video";
-
+import BannerRajma from "../../../src/assets/img/allcuresrajma.jpeg";
 const Side = (props) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
@@ -47,6 +47,11 @@ const Side = (props) => {
 
   return (
     <Nav className="col-xs-2 d-md-block sidebar">
+      <img
+        src={BannerRajma}
+        alt="affilate-banner"
+        style={{ width: "300px", height: "250px" }}
+      />
       {/* Responsive Video Player */}
       <div style={{ padding: "10px", textAlign: "center", width: "100%" }}>
         {props.videoURL && <InlineVideoPlayer videoURL={props.videoURL} />}
