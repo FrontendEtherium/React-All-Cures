@@ -73,11 +73,13 @@ function Home() {
         <HomePageCarousel />
 
         <TrendingSearches isMobile={isMobile} />
-        <img
-          src={allcuresbanner}
-          alt="Health banner"
-          className="promo-banner-health"
-        />
+        <a href="https://www.all-cures.com/">
+          <img
+            src={allcuresbanner}
+            alt="Health banner"
+            className="promo-banner-health"
+          />
+        </a>
         <FeaturedBlogs isMobile={isMobile} />
 
         <Link to="/doctor">
@@ -91,13 +93,15 @@ function Home() {
         <TrendingCures isMobile={isMobile} />
         <DoctorCures isMobile={isMobile} />
         <TrustPartnerSection />
-        <img
-          src={allcuresbanner}
-          alt="Health banner"
-          className="promo-banner-health"
-        />
+        <a href="https://www.all-cures.com/">
+          <img
+            src={allcuresbanner}
+            alt="Health banner"
+            className="promo-banner-health"
+          />
+        </a>
         <CuresGrid />
-    
+
         <Link to="/doctor">
           <img
             src={`${imgKitImagePath}/assets/img/bannersdestopmobiles-01.jpg`}

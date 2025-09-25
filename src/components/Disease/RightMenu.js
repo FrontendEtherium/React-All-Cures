@@ -47,11 +47,13 @@ const Side = (props) => {
 
   return (
     <Nav className="col-xs-2 d-md-block sidebar">
-      <img
-        src={BannerRajma}
-        alt="affilate-banner"
-        style={{ width: "300px", height: "250px" }}
-      />
+      <a href="https://www.all-cures.com/">
+        <img
+          src={BannerRajma}
+          alt="affilate-banner"
+          style={{ width: "300px", height: "250px" }}
+        />
+      </a>
       {/* Responsive Video Player */}
       <div style={{ padding: "10px", textAlign: "center", width: "100%" }}>
         {props.videoURL && <InlineVideoPlayer videoURL={props.videoURL} />}
