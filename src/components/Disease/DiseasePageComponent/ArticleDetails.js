@@ -6,6 +6,7 @@ import Favourite from "../../favourite";
 import Favourites from "../../UpdateFavourite";
 import { backendHost } from "../../../api-config";
 import { userId } from "../../UserId";
+import allcuresbanner from "../../../assets/img/allcuresbanner.jpeg";
 const ArticleDetails = React.memo(
   ({
     title,
@@ -74,36 +75,59 @@ const ArticleDetails = React.memo(
         </div>
 
         <div id="article-main-content">
-          {parsedContent.blocks?.map((block, idx) => {
-            const fileUrl = block.data.file?.url || null;
-            const imageUrl = fileUrl
-              ? `https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-1000,f-webp/cures_articleimages/${fileUrl.replace(
-                  /^.*[\\/]/,
-                  ""
-                )}`
-              : null;
+          {(() => {
+            const elements = [];
+            let paragraphCounter = 0;
+            parsedContent.blocks?.forEach((block, idx) => {
+              const fileUrl = block.data.file?.url || null;
+              const imageUrl = fileUrl
+                ? `https://ik.imagekit.io/hg4fpytvry/product-images/tr:w-1000,f-webp/cures_articleimages/${fileUrl.replace(
+                    /^.*[\\/]/,
+                    ""
+                  )}`
+                : null;
 
-            return (
-              <CenterWell
-                key={idx}
-                pageTitle={title}
-                level={block.data.level}
-                content={block.data.content}
-                type={block.type}
-                text={block.data.text}
-                title={block.data.title}
-                message={block.data.message}
-                source={block.data.source}
-                embed={block.data.embed}
-                caption={block.data.caption}
-                alignment={block.data.alignment}
-                imageUrl={imageUrl}
-                link={block.data.link}
-                url={block.data.url}
-                item={block.data.items}
-              />
-            );
-          })}
+              elements.push(
+                <CenterWell
+                  key={`block-${idx}`}
+                  pageTitle={title}
+                  level={block.data.level}
+                  content={block.data.content}
+                  type={block.type}
+                  text={block.data.text}
+                  title={block.data.title}
+                  message={block.data.message}
+                  source={block.data.source}
+                  embed={block.data.embed}
+                  caption={block.data.caption}
+                  alignment={block.data.alignment}
+                  imageUrl={imageUrl}
+                  link={block.data.link}
+                  url={block.data.url}
+                  item={block.data.items}
+                />
+              );
+
+              if (block.type === "paragraph") {
+                paragraphCounter += 1;
+                if (paragraphCounter === 5) {
+                  elements.push(
+                    <a
+                      key={`banner-after-first-paragraph`}
+                      href="https://www.all-cures.com/"
+                    >
+                      <img
+                        src={allcuresbanner}
+                        alt="Health banner"
+                        className="promo-banner-health"
+                      />
+                    </a>
+                  );
+                }
+              }
+            });
+            return elements;
+          })()}
 
           {carouselItems?.length > 0 && (
             <div className="d-flex justify-content-center mt-2 mb-2">
