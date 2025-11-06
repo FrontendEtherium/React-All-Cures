@@ -57,6 +57,57 @@ const medicalStyles = `
     border-left: 4px solid #1976d2;
   }
   
+  .phone-input {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 3rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    background-color: #ffffff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .phone-input:focus-within {
+    border-color: #00415e;
+    box-shadow: 0 0 0 0.2rem rgba(0, 65, 94, 0.15);
+  }
+  
+  .phone-input .PhoneInputCountry {
+    display: flex;
+    align-items: center;
+    padding: 0 0.65rem;
+    border-right: 1px solid #e2e6ea;
+    background-color: transparent;
+  }
+  
+  .phone-input .PhoneInputCountrySelect {
+    color: #00415e;
+    font-weight: 600;
+  }
+  
+  .phone-input .PhoneInputCountrySelect:focus {
+    outline: none;
+  }
+  
+  .phone-input .PhoneInputInput {
+    flex: 1;
+    border: none;
+    padding: 0.65rem 0.85rem;
+    font-size: 1rem;
+    height: 100%;
+    color: #212529;
+    background: transparent;
+  }
+  
+  .phone-input .PhoneInputInput:focus {
+    outline: none;
+  }
+  
+  .phone-input .PhoneInputInput::placeholder {
+    color: #9aa0a6;
+  }
+  
   /* Mobile Responsive Styles */
   @media (max-width: 768px) {
     .appointment-modal-dialog {
@@ -1138,8 +1189,14 @@ const AppointmentModal = ({ show, onHide, alertBooking, docId }) => {
                             defaultCountry="IN"
                             value={phone}
                             onChange={setPhone}
-                            className="form-control"
-                            placeholder="Mobile number"
+                            countryCallingCodeEditable={false}
+                            inputProps={{
+                              name: "phone",
+                              autoComplete: "tel",
+                              required: true,
+                            }}
+                            className="phone-input"
+                            placeholder="Enter mobile number"
                           />
                         </div>
                       </div>
