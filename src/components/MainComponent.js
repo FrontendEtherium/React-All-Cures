@@ -89,6 +89,7 @@ import Bookings from "./Profile/Bookings.js";
 import DoctorConnect from "./LandingPage/DoctorConnect.js";
 import DoctorLandingPage from "./LandingPage/DoctorLandingPage.js";
 import AllBlogs from "./BlogPage/AllBlogs.js";
+import BookingSuccessful from "./BookingSuccessful.js";
 
 function Main(props) {
   const history = useHistory();
@@ -298,7 +299,7 @@ const Routes = (props) => {
         {/* <Route auth={Auth.auth} exact path="/cure/:cureType/:id" component={Disease}/> */}
 
         <Route auth={Auth.auth} exact path="/cure/:id" component={Disease} />
-
+    <Route exact path="/booking-successful" component={BookingSuccessful} />
         {/* Doctor profile page */}
         <Route auth={Auth.auth} exact path="/doctor/:id" component={Profile} />
         <Route exact path="/profile/:id/edit" component={LoginInfo} />

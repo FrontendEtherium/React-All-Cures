@@ -3,7 +3,6 @@ import VerifiedIcon from "@mui/icons-material/Verified";
 import LocalPharmacyIcon from "@mui/icons-material/LocalPharmacy";
 import DummyDoc from "../../../assets/healthcare/img/images/defaultDoc1.png";
 import { userId } from "../../UserId";
-import AppointmentModal from "../../../features/BookAppointment";
 import Test from "../test";
 import { userAccess } from "../../UserAccess";
 import axios from "axios";
@@ -11,9 +10,9 @@ import { backendHost } from "../../../api-config";
 import "./DoctorConnectCard.css";
 import { imgKitImagePath } from "../../../image-path";
 import { Link } from "react-router-dom";
-function DoctorConnectCard({ doc }) {
+
+function DoctorConnectCard({ doc, onConsult }) {
   const imgLoc = doc.imgLoc ? `${imgKitImagePath}/${doc.imgLoc}` : DummyDoc;
-  const [showAppointmentModal, setShowAppointmentModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [notAvailable, setNotAvailable] = useState(false);
 
@@ -30,11 +29,9 @@ function DoctorConnectCard({ doc }) {
 
   const consult = () => {
     if (doc.videoService === 1) {
-      if (userAccess && userId) {
-        setShowAppointmentModal(true);
-      } else {
-        setShowModal(true);
-      }
+    
+        onConsult(doc.docID);
+     
     } else {
       DoctorNotAvailable();
     }
@@ -57,7 +54,6 @@ function DoctorConnectCard({ doc }) {
       <div className="doctor-card">
         <Link
           to={`/doctor/${doc.docID}-${doc.firstName}-${doc.lastName}`}
-        
           id="profile"
         >
           <div className="doctor-card-main">
@@ -79,14 +75,6 @@ function DoctorConnectCard({ doc }) {
               </div>
               <div className="doctor-hospital">{doc.hospitalAffiliated}</div>
               <div className="doctor-separator"></div>
-              {/* <div className="doctor-rating">
-              <ThumbUpIcon className="doctor-rating-icon" />
-              {`${Math.ceil((doc.ratingValueAverage / 5)* 100) }%`}
-              <button className="whatsapp-button">
-                <WhatsAppIcon className="whatsapp-icon" />
-                <span className="whatsapp-text">WhatsApp</span>
-              </button>
-            </div> */}
             </div>
           </div>
         </Link>
@@ -96,7 +84,7 @@ function DoctorConnectCard({ doc }) {
           )}
           <button className="book-button" onClick={consult}>
             <LocalPharmacyIcon className="book-button-icon" />
-            Consult Now
+            Consult
           </button>
         </div>
       </div>
@@ -121,7 +109,7 @@ function DoctorConnectCard({ doc }) {
                 working to update the availability status.
               </p>
               <p>
-                Meanwhile, you can explore the doctor’s profile to read
+                Meanwhile, you can explore the doctor's profile to read
                 articles, view their qualifications, and learn more about their
                 expertise.
               </p>
@@ -143,14 +131,6 @@ function DoctorConnectCard({ doc }) {
             </div>
           </div>
         </div>
-      )}
-      {showAppointmentModal && (
-        <AppointmentModal
-          show={showAppointmentModal}
-          onHide={() => setShowAppointmentModal(false)}
-          docId={doc.docID}
-          userId={userId}
-        />
       )}
     </>
   );

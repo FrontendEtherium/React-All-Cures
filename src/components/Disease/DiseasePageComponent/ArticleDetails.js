@@ -110,7 +110,7 @@ const ArticleDetails = React.memo(
 
               if (block.type === "paragraph") {
                 paragraphCounter += 1;
-                if (paragraphCounter === 3) {
+                if (paragraphCounter === 2) {
                   elements.push(
                     <a
                       key={`banner-after-first-paragraph`}

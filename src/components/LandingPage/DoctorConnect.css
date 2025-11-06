@@ -18,7 +18,6 @@
   width: 100%;
   height: auto;
   object-fit: contain;
-
 }
 
 @media (min-width: 768px) {
@@ -26,8 +25,6 @@
     height: 23rem;
     object-fit: contain;
     border-radius: 2px;
-    
-
   }
 }
 
@@ -45,9 +42,8 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem 1rem;
+  padding: 0.25rem;
   font-size: 1rem;
-  margin-top: 0.5rem;
 }
 
 .doc-text-item img {
@@ -72,8 +68,6 @@
     gap: 1rem;
     width: 100%;
   }
- 
-
 }
 
 /* Doctor List Section */
@@ -134,7 +128,7 @@
 
 .background-screen {
   display: flex;
-  
+
   flex: 1;
 
   width: 100%;
@@ -157,7 +151,7 @@
   margin-top: 50px;
 }
 
-@media (max-width:768px){
+@media (max-width: 768px) {
   .upper-section-container-text {
     width: 35%;
     font-size: 1.25rem;
@@ -167,18 +161,17 @@
     text-align: center;
     margin-top: 50px;
   }
- 
 }
 .upper-section-container-text-image {
   width: 350px;
-  background: url("../../assets/img/bg_pattern.png") center/cover no-repeat;
+
   height: 350px;
 }
 
-@media (max-width:768px){
+@media (max-width: 768px) {
   .upper-section-container-text-image {
     width: 220px;
-    background: url("../../assets/img/bg_pattern.png") center/cover no-repeat;
+
     height: 220px;
   }
 }
@@ -299,7 +292,6 @@
 }
 
 @media (max-width: 768px) {
-
   .medicine-types-container {
     flex-direction: column;
     align-items: center;
@@ -352,19 +344,57 @@
   .medicine-icon {
     font-size: 1.2rem;
   }
-  .medicine-type-title{
+  .medicine-type-title {
     font-size: 0.8rem;
     text-align: center;
   }
 }
 
-.medicine-doc-button-heading{
-  color: #ffffff ;
+.medicine-doc-button-heading {
+  color: #ffffff;
 }
 
-
-.card-body-doc-article{
+.card-body-doc-article {
   background-color: transparent;
   padding: 6px;
+}
 
+.doctor-landing-page {
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Ensure modal appears above all content */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background: white;
+  padding: 5px;
+  border-radius: 8px;
+
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+@media (min-width: 768px) {
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+  }
 }
