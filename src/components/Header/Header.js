@@ -8,6 +8,7 @@ import {
   faTimes,
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import axios from "axios";
 import debounce from "lodash.debounce";
 import { backendHost } from "../../api-config";
@@ -54,6 +55,10 @@ const NAV_ITEMS_DESKTOP = [
   { to: "/allcures", label: "Cures" },
 ];
 
+const WHATSAPP_NUMBER = "918825024304";
+const WHATSAPP_MESSAGE = encodeURIComponent("I need consultation");
+const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
+
 export default function UpdatedHeader() {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
@@ -64,8 +69,7 @@ export default function UpdatedHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
   const [headerOpacity, setHeaderOpacity] = useState(1);
-  const history = useHistory();
-  const navItems = useMemo(() => NAV_ITEMS, []);
+
 
   // Add scroll handler
   useEffect(() => {
@@ -232,6 +236,17 @@ export default function UpdatedHeader() {
                 Contact Us
               </Link>
             </li>
+            <li className="nav-links nav-right mobile-only">
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="whatsapp-link"
+                aria-label="Chat with All Cures on WhatsApp"
+              >
+                <WhatsAppIcon fontSize="small" />
+              </a>
+            </li>
 
             <li className="nav-item search-wrapper">
               <form onSubmit={handleSearchSubmit} className="search-form">
@@ -360,6 +375,18 @@ export default function UpdatedHeader() {
             <li>
               <Link to="/AboutUs" onClick={handleCloseMenu}>
                 Contact Us
+              </Link>
+            </li>
+            <li style={{gap: "8px"}} className="mobile-whatsapp">
+              <Link
+                to={{ pathname: WHATSAPP_URL }}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Chat with All Cures on WhatsApp"
+                onClick={handleCloseMenu}
+              >
+                <WhatsAppIcon fontSize="small" />
+                WhatsApp
               </Link>
             </li>
           </ul>

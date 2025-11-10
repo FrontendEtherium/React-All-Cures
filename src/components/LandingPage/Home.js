@@ -112,13 +112,7 @@ function Home() {
         <OurExpert isMobile={isMobile} />
         <ExpertAdviceComponent />
 
-        <Link to="/doctor">
-          <img
-            src={`${imgKitImagePath}/assets/img/Resizedbannermobdesk2.jpg`}
-            alt="Promo Banner"
-            className="promo-banner"
-          />
-        </Link>
+      
 
         <SubscriberComponent />
         <Footer />

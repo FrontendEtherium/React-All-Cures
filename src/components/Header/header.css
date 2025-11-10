@@ -197,6 +197,9 @@
   .nav-left {
     display: none;
   }
+  .mobile-only {
+    display: flex;
+  }
   .mobile-toggle {
     display: inline-flex;
     background: none;
@@ -452,6 +455,50 @@
 .nav-left-btn {
   display: flex;
   flex-direction: row;
+}
+
+.mobile-only {
+  display: none;
+}
+
+.whatsapp-link {
+  color: #25d366;
+  border: 2px solid #25d366;
+  border-radius: 999px;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.whatsapp-link:hover {
+  background-color: #25d366;
+  color: #fff;
+}
+
+.mobile-whatsapp a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  color: #00415e;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 6px 0;
+  position: relative;
+}
+
+.mobile-nav .mobile-whatsapp a::after {
+  display: none !important;
+}
+
+.mobile-whatsapp a span {
+  font-size: 1rem;
+}
+
+.mobile-whatsapp svg {
+  color: #25d366;
 }
 
 .btn-article-search {
