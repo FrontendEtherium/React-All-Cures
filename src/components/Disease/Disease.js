@@ -63,7 +63,9 @@ const Disease = () => {
   const getCanonicalUrl = () => {
     if (state.items && state.items.title) {
       const articleId = id.split("-")[0];
-      return createCanonicalUrl(articleId, state.items.title);
+      let url = createArticlePath(articleId, state.items.title);
+      console.log("url", url);
+      return url
     }
     // Fallback to current URL if article data not loaded yet
     const currentURL = window.location.href;
