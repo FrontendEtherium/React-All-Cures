@@ -302,7 +302,7 @@ const Disease = () => {
   return (
     <div>
       <Header history={history} />
-      {/* <HelmetMetaData
+      <HelmetMetaData
         title={state.items.title}
         description={
           parsedContent?.blocks?.[0]?.data?.text || state.items.title
@@ -316,7 +316,7 @@ const Disease = () => {
         }
         publishedDate={state.items.published_date}
         canonicalUrl={getCanonicalUrl()}
-      /> */}
+      />
       <div className="ad-spac" ref={adSpacRef}>
         <button
           className="btn"
