@@ -101,6 +101,69 @@
 .search-wrapper:focus-within {
   border-bottom-color: #00415e;
 }
+
+.doc-search-modern {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 1.25rem;
+  box-shadow: 0 20px 45px -30px rgba(15, 23, 42, 0.45);
+}
+
+.doc-search-field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 0.35rem;
+  display: inline-block;
+}
+
+.doc-search-input {
+  display: flex;
+  align-items: center;
+  border-radius: 0.75rem;
+  border: 1px solid #e2e8f0;
+  padding: 0 0.65rem;
+}
+
+.doc-search-icon {
+  color: #94a3b8;
+  margin-right: 0.5rem;
+}
+
+.doc-search-action {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.doc-search-submit {
+  width: 100%;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.9rem 1.25rem;
+  font-weight: 600;
+  background: #0f766e;
+  color: #fff;
+  display: flex;
+  gap: 0.35rem;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 20px 45px -25px rgba(15, 118, 110, 0.7);
+}
+
+.doc-search-submit:hover {
+  opacity: 0.92;
+}
+
+@media (max-width: 768px) {
+  .doc-search-modern {
+    grid-template-columns: 1fr;
+  }
+}
 .dropdown {
   float: right;
   list-style: none;

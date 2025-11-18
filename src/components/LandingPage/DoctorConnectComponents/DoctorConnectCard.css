@@ -23,7 +23,7 @@
 }
 
 .doctor-card:hover {
-  transform: scale(1.05);
+  transform: scale(1.006);
 }
 .doctor-card-main {
   display: flex;
@@ -31,14 +31,12 @@
   width: 90%;
 }
 /* Doctor Image */
-.doctor-image-container {
-  flex-shrink: 0;
-}
+
 
 .doctor-image {
-  height: 8rem;
+  height: 9rem;
   width: 8rem;
-  border: 4px solid #00415e;
+  border: 1px solid #00415e;
   border-radius: 50%;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -95,7 +93,7 @@
   color: #1e293b;
   font-weight: 700;
   font-size: 0.875rem;
-  margin-top: 0.5rem;
+  margin-top: 0.1rem;
 }
 
 .doctor-hospital {
@@ -203,6 +201,206 @@
 .book-button-icon {
   font-size: 1rem;
   margin-right: 0.25rem;
+}
+
+/* Modern layout enhancements */
+.doctor-card-modern {
+  border: 1px solid #dfe7f1;
+  border-radius: 1rem;
+  padding: 1.75rem;
+  box-shadow: 0 15px 25px -10px rgba(15, 23, 42, 0.35);
+  background-color: #ffffff;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.doctor-card-modern-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  width: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+.doctor-card-modern-main:hover {
+  text-decoration: none;
+}
+
+.doctor-card-modern .doctor-image-container {
+  flex-shrink: 0;
+}
+
+.doctor-card-modern .doctor-image {
+  border-radius: 1rem;
+  border: 1px solid #f1f5f9;
+  height: 130px;
+  width: 120px;
+  object-fit: cover;
+}
+
+@media (min-width: 1024px) {
+  .doctor-card-modern .doctor-image {
+    height: 130px;
+    width: 130px;
+  }
+}
+
+.doctor-card-details {
+  flex: 1;
+  margin-left: 0;
+  width: auto;
+}
+
+.doctor-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.doctor-specialty-text {
+  font-weight: 500;
+  color: #1d4ed8;
+
+}
+
+.doctor-card-location,
+.doctor-card-hospital {
+
+  color: #4b5563;
+  font-size: 0.95rem;
+}
+
+.doctor-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.9rem 0 0.75rem;
+}
+
+.doctor-pill {
+  background-color: #f1f5f9;
+  color: #0f172a;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.doctor-pill-fee {
+  background-color: #e6f4ef;
+  color: #0f5132;
+}
+
+.doctor-pill-rating {
+  background-color: #fff4e6;
+  color: #b45309;
+}
+
+.doctor-availability-badge {
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+
+.doctor-availability-badge.available {
+  background-color: #ecfffb;
+  color: #0c6b58;
+  border-color: #54d6b6;
+}
+
+.doctor-availability-badge.unavailable {
+  background-color: #fef2f2;
+  color: #c53030;
+  border-color: #feb2b2;
+}
+
+.doctor-card-about {
+  margin-top: 0.5rem;
+  color: #475569;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.doctor-card-actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+
+
+  margin-top: 0.5rem;
+  width: 50%;
+}
+
+.book-button-container.doctor-card-actions {
+  width: 100%;
+  justify-content: flex-start;
+
+
+
+}
+
+.doctor-card-actions .book-button {
+  padding: 0.5rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.doctor-secondary-button {
+  background-color: #edf2f7;
+  color: #1e293b;
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.doctor-secondary-button:hover {
+  background-color: #e2e8f0;
+}
+
+@media (max-width: 768px) {
+  .doctor-card-modern {
+    padding: 1.25rem;
+  }
+
+  .doctor-card-modern-main {
+    flex-direction: column;
+  }
+
+  .doctor-card-modern .doctor-image {
+    height: 90px;
+    width: 90px;
+  }
+
+  .doctor-card-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .doctor-card-actions .book-button,
+  .doctor-secondary-button {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 /* Modal Backdrop */

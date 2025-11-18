@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonIcon from "@mui/icons-material/Person";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faLeaf,
@@ -59,7 +60,7 @@ function DoctorConnectSearch({ changeSpeciality, speciality }) {
     <div className="search-container">
       <div className="search-input-group">
         {/* Search by Name */}
-        <div>
+        <div className="search-field">
           <label className="search-input-label">Search Doctor By Name</label>
           <div className="input-wrapper">
             <div className="input-icon">
@@ -67,12 +68,13 @@ function DoctorConnectSearch({ changeSpeciality, speciality }) {
             </div>
             <input
               type="text"
-              placeholder="Enter doctor's name"
+              placeholder="Dr. Sameer, Dr. Mohit…"
               value={searchName}
               onChange={(e) => setSearchName(e.target.value)}
               className="input-field"
             />
-            <div
+            <button
+              type="button"
               onClick={handleSearchByName}
               disabled={searchName.trim().length < 3}
               className={`input-button ${
@@ -81,13 +83,14 @@ function DoctorConnectSearch({ changeSpeciality, speciality }) {
                   : "input-button--disabled"
               }`}
             >
-              <SearchIcon />
-            </div>
+              <SearchIcon fontSize="small" />
+              <span>Search</span>
+            </button>
           </div>
         </div>
 
         {/* Search by City */}
-        <div>
+        <div className="search-field">
           <label className="search-input-label">Search Doctor By City</label>
           <div className="input-wrapper">
             <div className="input-icon">
@@ -95,12 +98,13 @@ function DoctorConnectSearch({ changeSpeciality, speciality }) {
             </div>
             <input
               type="text"
-              placeholder="Enter city name"
+              placeholder="Enter city or pin"
               value={searchCity}
               onChange={(e) => setSearchCity(e.target.value)}
               className="input-field"
             />
-            <div
+            <button
+              type="button"
               onClick={handleSearchByCity}
               disabled={searchCity.trim().length < 3}
               className={`input-button ${
@@ -109,19 +113,18 @@ function DoctorConnectSearch({ changeSpeciality, speciality }) {
                   : "input-button--disabled"
               }`}
             >
-              <SearchIcon />
-            </div>
+              <SearchIcon fontSize="small" />
+              <span>Search</span>
+            </button>
           </div>
         </div>
 
         {/* Filter by Speciality */}
-        <div>
-          <label className="search-input-label">
-            Filter Doctor by Speciality
-          </label>
-          <div className="input-wrapper">
+        <div className="search-field">
+          <label className="search-input-label">Filter Doctor by Speciality</label>
+          <div className="input-wrapper input-wrapper-select">
             <select
-              className="input-field"
+              className="input-field input-field-select"
               value={selectedSpeciality}
               onChange={handleSpecialityChange}
             >
@@ -132,8 +135,27 @@ function DoctorConnectSearch({ changeSpeciality, speciality }) {
                 </option>
               ))}
             </select>
+            <div className="select-icon">
+              <ArrowForwardIcon fontSize="small" />
+            </div>
           </div>
         </div>
+      </div>
+
+      <div className="search-pill-grid">
+        {fields.map((field) => (
+          <button
+            key={field.slug}
+            type="button"
+            className={`search-pill ${
+              selectedSpeciality === field.slug ? "search-pill--active" : ""
+            }`}
+            onClick={() => handleSpecialityChange({ target: { value: field.slug } })}
+          >
+            <FontAwesomeIcon icon={field.icon} />
+            {field.title}
+          </button>
+        ))}
       </div>
     </div>
   );

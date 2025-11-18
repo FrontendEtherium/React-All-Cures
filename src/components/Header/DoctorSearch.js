@@ -1,6 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
+import CircularProgress from "@mui/material/CircularProgress";
+import SearchIcon from "@mui/icons-material/Search";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import axios from "axios";
 import Test from "../LandingPage/test";
 
@@ -78,57 +82,85 @@ const DoctorSearch = () => {
               id="searchMain"
             >
               <div className="col-md-12 p-0" id="mt">
-                <div className="row">
-                  <div className="doc-name col-md-6 col-sm-12" id="searchDoc">
-                    <Autocomplete
-                      className="bg-white color-black"
-                      freeSolo
-                      value={name || ""} // Ensure value is a string
-                      onChange={(event, newValue) => setName(newValue || "")} // Default to an empty string
-                      inputValue={name || ""}
-                      onInputChange={(event, newInputValue) => {
-                        setName(newInputValue || ""); // Ensure no null/undefined
-                        debouncedFetchDoctors(newInputValue || ""); // Pass a valid string
-                      }}
-                      id="combo-box-demo-1"
-                      options={doctor.length ? doctor : ["Start typing ..."]}
-                      loading={loadingDoctors}
-                      renderInput={(params) => (
-                        <TextField {...params} label="Search Doctors (Name)" />
-                      )}
-                    />
+                <div className="doc-search-modern">
+                  <div className="doc-search-field">
+                    <label>Search doctor by name</label>
+                    <div className="doc-search-input">
+                      <EmojiPeopleIcon className="doc-search-icon" />
+                      <Autocomplete
+                        className="bg-white color-black"
+                        freeSolo
+                        value={name || ""}
+                        onChange={(event, newValue) => setName(newValue || "")}
+                        inputValue={name || ""}
+                        onInputChange={(event, newInputValue) => {
+                          setName(newInputValue || "");
+                          debouncedFetchDoctors(newInputValue || "");
+                        }}
+                        id="combo-box-demo-1"
+                        options={doctor.length ? doctor : ["Start typing ..."]}
+                        loading={loadingDoctors}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            placeholder="Dr. Shweta, Dr. Sameer..."
+                            InputProps={{
+                              ...params.InputProps,
+                              endAdornment: (
+                                <>
+                                  {loadingDoctors ? (
+                                    <CircularProgress color="inherit" size={18} />
+                                  ) : null}
+                                  {params.InputProps.endAdornment}
+                                </>
+                              ),
+                            }}
+                          />
+                        )}
+                      />
+                    </div>
                   </div>
-                  <div className="city-name col-md-5" id="searchCity">
-                    <Autocomplete
-                      className="bg-white p-0 color-black"
-                      freeSolo
-                      value={city || ""} // Ensure value is a string
-                      onChange={(event, newValue) => setCity(newValue || "")} // Default to an empty string
-                      inputValue={city || ""}
-                      onInputChange={(event, newInputValue) => {
-                        setCity(newInputValue || ""); // Ensure no null/undefined
-                        debouncedFetchCities(newInputValue || ""); // Pass a valid string
-                      }}
-                      id="combo-box-demo-2"
-                      options={
-                        cityList.length ? cityList : ["Start typing ..."]
-                      }
-                      loading={loadingCities}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          label="Search Doctors (City or Pin)"
-                        />
-                      )}
-                    />
+                  <div className="doc-search-field">
+                    <label>Search by city / pin</label>
+                    <div className="doc-search-input">
+                      <LocationOnIcon className="doc-search-icon" />
+                      <Autocomplete
+                        className="bg-white p-0 color-black"
+                        freeSolo
+                        value={city || ""}
+                        onChange={(event, newValue) => setCity(newValue || "")}
+                        inputValue={city || ""}
+                        onInputChange={(event, newInputValue) => {
+                          setCity(newInputValue || "");
+                          debouncedFetchCities(newInputValue || "");
+                        }}
+                        id="combo-box-demo-2"
+                        options={cityList.length ? cityList : ["Start typing ..."]}
+                        loading={loadingCities}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            placeholder="Jammu, Delhi, 110021..."
+                            InputProps={{
+                              ...params.InputProps,
+                              endAdornment: (
+                                <>
+                                  {loadingCities ? (
+                                    <CircularProgress color="inherit" size={18} />
+                                  ) : null}
+                                  {params.InputProps.endAdornment}
+                                </>
+                              ),
+                            }}
+                          />
+                        )}
+                      />
+                    </div>
                   </div>
-                  <div className="mainBtn col-md-1">
-                    <button
-                      type="submit"
-                      className="btn search-main-btns btn-article-search color-white float-right"
-                      id="searchBtn"
-                    >
-                      <i className="fas fa-search" id="iconSearch"></i>
+                  <div className="doc-search-action">
+                    <button type="submit" className="doc-search-submit">
+                      <SearchIcon />
+                      Find doctors
                     </button>
                   </div>
                 </div>

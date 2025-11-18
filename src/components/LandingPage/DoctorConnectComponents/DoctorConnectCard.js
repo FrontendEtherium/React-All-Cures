@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import LocalPharmacyIcon from "@mui/icons-material/LocalPharmacy";
+import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import DummyDoc from "../../../assets/healthcare/img/images/defaultDoc1.png";
 import { userId } from "../../UserId";
 import Test from "../test";
@@ -16,6 +17,72 @@ function DoctorConnectCard({ doc, onConsult }) {
   const [showModal, setShowModal] = useState(false);
   const [notAvailable, setNotAvailable] = useState(false);
 
+  const {
+    displayName,
+    location,
+    hospital,
+    degreeLabel,
+    feeLabel,
+    ratingLabel,
+    aboutSnippet,
+    showEllipsis,
+    availabilityText,
+    availabilityClass,
+  } = useMemo(() => {
+    const nameParts = [doc.prefix || "Dr.", doc.firstName, doc.lastName]
+      .filter(Boolean)
+      .join(" ")
+      .replace(/\s+/g, " ")
+      .trim();
+
+    const locationParts = [
+      doc.cityName,
+      doc.addressState || doc.stateName,
+      doc.addressCountry,
+    ].filter(Boolean);
+
+    const hospitalName = doc.hospitalAffiliated || doc.hospitalName || "";
+
+    const rawDegree =
+      doc.degreeDescription || doc.degreeName || doc.otherSpecializations;
+
+    const rawFee = doc.fee;
+    let formattedFee = "Consult fee on request";
+    if (rawFee !== null && rawFee !== undefined && rawFee !== "") {
+      const feeNumber = Number(rawFee);
+      formattedFee = Number.isNaN(feeNumber)
+        ? `${rawFee}`
+        : `₹${feeNumber.toLocaleString("en-IN")}`;
+      formattedFee += " / consult";
+    }
+
+    const ratingValue =
+      doc.ratingValueAverage ?? doc.overallRating ?? doc.ratingValue;
+    const numericRating = Number(ratingValue);
+    const formattedRating = Number.isNaN(numericRating)
+      ? null
+      : numericRating.toFixed(1);
+
+    const aboutText = doc.about ? doc.about.trim() : "";
+    const trimmedAbout = aboutText.slice(0, 180);
+    const needsEllipsis = aboutText.length > 180;
+
+    const isAvailable = doc.videoService === 1;
+
+    return {
+      displayName: nameParts,
+      location: locationParts.join(", "),
+      hospital: hospitalName,
+      degreeLabel: rawDegree,
+      feeLabel: formattedFee,
+      ratingLabel: formattedRating,
+      aboutSnippet: trimmedAbout,
+      showEllipsis: needsEllipsis,
+      availabilityText: isAvailable ? "Available" : "Offline",
+      availabilityClass: isAvailable ? "available" : "unavailable",
+    };
+  }, [doc]);
+
   const DoctorNotAvailable = async () => {
     setNotAvailable(true);
     try {
@@ -29,9 +96,7 @@ function DoctorConnectCard({ doc, onConsult }) {
 
   const consult = () => {
     if (doc.videoService === 1) {
-    
-        onConsult(doc.docID);
-     
+      onConsult(doc.docID);
     } else {
       DoctorNotAvailable();
     }
@@ -51,40 +116,81 @@ function DoctorConnectCard({ doc, onConsult }) {
 
   return (
     <>
-      <div className="doctor-card">
+      <div className="doctor-card doctor-card-modern">
         <Link
           to={`/doctor/${doc.docID}-${doc.firstName}-${doc.lastName}`}
           id="profile"
+          className="doctor-card-main doctor-card-modern-main"
         >
-          <div className="doctor-card-main">
-            <div className="doctor-image-container">
-              <img
-                src={imgLoc}
-                alt={`Dr.${doc.firstName} ${doc.lastName}`}
-                className="doctor-image"
-              />
-            </div>
-            <div className="doctor-details">
-              <div className="doctor-name">
-                Dr. {doc.firstName} {doc.lastName}{" "}
-                <VerifiedIcon color="success" style={{ fontSize: "12px" }} />
+          <div className="doctor-image-container doctor-card-avatar">
+            <img src={imgLoc} alt={displayName} className="doctor-image" />
+          </div>
+          <div className="doctor-details doctor-card-details">
+            <div className="doctor-card-header">
+              <div>
+                <div className="doctor-name">
+                  {displayName}
+                  {doc.verified ? (
+                    <VerifiedIcon
+                      color="success"
+                      style={{ fontSize: "16px", marginLeft: "0.35rem" }}
+                    />
+                  ) : null}
+                </div>
+                <div className="doctor-specialty doctor-specialty-text">
+                  {doc.medicineTypeName || doc.specialtyName}
+                </div>
               </div>
-              <div className="doctor-specialty">{doc.medicineTypeName}</div>
-              <div className="doctor-location">
-                {doc.cityName}, {doc.addressCountry}
+              <div className={`doctor-availability-badge ${availabilityClass}`}>
+                {availabilityText}
               </div>
-              <div className="doctor-hospital">{doc.hospitalAffiliated}</div>
-              <div className="doctor-separator"></div>
             </div>
+
+            {location && (
+              <div className="doctor-location doctor-card-location">
+                {location}
+              </div>
+            )}
+            {hospital && (
+              <div className="doctor-hospital doctor-card-hospital">
+                {hospital}
+              </div>
+            )}
+
+            <div className="doctor-card-tags">
+              {degreeLabel && (
+                <span className="doctor-pill">{degreeLabel}</span>
+              )}
+              {feeLabel && (
+                <span className="doctor-pill doctor-pill-fee">{feeLabel}</span>
+              )}
+              {ratingLabel && (
+                <span className="doctor-pill doctor-pill-rating">
+                  <StarRoundedIcon fontSize="small" />
+                  {ratingLabel}
+                </span>
+              )}
+            </div>
+
+            {/* {aboutSnippet && (
+              <p className="doctor-card-about">
+                {aboutSnippet}
+                {showEllipsis ? "..." : ""}
+              </p>
+            )} */}
           </div>
         </Link>
-        <div className="book-button-container">
-          {doc.videoService === 1 && (
-            <div className="book-availability">Available</div>
-          )}
-          <button className="book-button" onClick={consult}>
+        <div className="book-button-container doctor-card-actions">
+          <div className="book-button" onClick={consult}>
             <LocalPharmacyIcon className="book-button-icon" />
             Consult
+          </div>
+          <button
+            type="button"
+            className="doctor-secondary-button"
+            onClick={handleProfileVisit}
+          >
+            View profile
           </button>
         </div>
       </div>
