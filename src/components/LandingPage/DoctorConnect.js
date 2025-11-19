@@ -186,7 +186,7 @@ function DoctorConnect() {
               <div className="doc-sidebar-card doc-sidebar-search">
                 <div className="doc-sidebar-search-heading">
                   <p>Smart Filters</p>
-                  <h3>Find The Right Consultant Faster</h3>
+                 
                   <span>
                     Search by doctor name, city, or refine by speciality below.
                     Press enter to run a search instantly.
