@@ -11,6 +11,7 @@ import { backendHost } from "../../../api-config";
 import "./DoctorConnectCard.css";
 import { imgKitImagePath } from "../../../image-path";
 import { Link } from "react-router-dom";
+import RateTooltip from "../../../ui/Tooltip";
 
 function DoctorConnectCard({ doc, onConsult }) {
   const imgLoc = doc.imgLoc ? `${imgKitImagePath}/${doc.imgLoc}` : DummyDoc;
@@ -47,14 +48,6 @@ function DoctorConnectCard({ doc, onConsult }) {
       doc.degreeDescription || doc.degreeName || doc.otherSpecializations;
 
     const rawFee = doc.fee;
-    let formattedFee = "Consult fee on request";
-    if (rawFee !== null && rawFee !== undefined && rawFee !== "") {
-      const feeNumber = Number(rawFee);
-      formattedFee = Number.isNaN(feeNumber)
-        ? `${rawFee}`
-        : `₹${feeNumber.toLocaleString("en-IN")}`;
-      formattedFee += " / consult";
-    }
 
     const ratingValue =
       doc.ratingValueAverage ?? doc.overallRating ?? doc.ratingValue;
@@ -74,7 +67,7 @@ function DoctorConnectCard({ doc, onConsult }) {
       location: locationParts.join(", "),
       hospital: hospitalName,
       degreeLabel: rawDegree,
-      feeLabel: formattedFee,
+      feeLabel: rawFee,
       ratingLabel: formattedRating,
       aboutSnippet: trimmedAbout,
       showEllipsis: needsEllipsis,
@@ -161,8 +154,20 @@ function DoctorConnectCard({ doc, onConsult }) {
               {degreeLabel && (
                 <span className="doctor-pill">{degreeLabel}</span>
               )}
-              {feeLabel && (
-                <span className="doctor-pill doctor-pill-fee">{feeLabel}</span>
+              {doc?.fee?.totalFee && (
+                <span className="doctor-pill doctor-pill-fee">
+                  ₹{doc?.fee?.totalFee}
+                  <RateTooltip
+                    title={
+                      <>
+                        <strong>Base Fee:</strong> ₹{doc?.fee?.baseFee} <br />
+                        <strong>Platform Fee:</strong> ₹{doc?.fee?.etheriumPart}{" "}
+                        <br />
+                        <strong>GST:</strong> ₹{doc?.fee?.gst} <br />
+                      </>
+                    }
+                  />
+                </span>
               )}
               {ratingLabel && (
                 <span className="doctor-pill doctor-pill-rating">

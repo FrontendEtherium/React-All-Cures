@@ -1246,7 +1246,7 @@ class Profile extends Component {
             </div>
           </section>
           <div></div>
-          <div
+          {/* <div
             className="modal fade bd-example-modal-lg"
             tabindex="-1"
             role="dialog"
@@ -1297,7 +1297,7 @@ class Profile extends Component {
                 </section>
               </div>
             </div>
-          </div>
+          </div> */}
           <Footer />
         </div>
       );
