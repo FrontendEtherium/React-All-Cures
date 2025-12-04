@@ -859,6 +859,7 @@ const AppointmentModal = ({ show, onHide, alertBooking, docId }) => {
         amount: amount,
         currency: "INR",
       });
+      console.log("Creating")
 
       const responseObject = response.data;
       console.log("responseObject", responseObject);
